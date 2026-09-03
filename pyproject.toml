@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "py123detection"
+version = "0.1.0"
+description = "123D toolkit for 3D multi-view object detection: export 123D datasets to the mmcv/mmdetection3d ecosystem."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    "py123d>=0.6.0",
+    "numpy",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+# Only needed to rebuild native dataset tokens (e.g. nuScenes sample tokens).
+nuscenes = ["nuscenes-devkit"]
+# Only needed for `image_mode=extract` (writing embedded images back out to disk).
+images = ["opencv-python"]
+dev = ["pytest", "ruff"]
+
+[project.scripts]
+py123det-export-mmcv = "py123detection.mmcv_export.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+py123detection = ["py.typed"]
+
+[tool.ruff]
+line-length = 120
+lint.select = ["E", "F", "I"]
+lint.ignore = ["E501", "E741"]
+exclude = ["__init__.py"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = [
+    "integration: tests that need converted 123D data on disk (deselected by default)",
+]
+addopts = ["-m", "not integration"]
