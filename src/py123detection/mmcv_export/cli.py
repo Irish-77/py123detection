@@ -20,10 +20,21 @@ import sys
 from pathlib import Path
 from typing import List, Optional, Sequence
 
-from py123detection.mmcv_export.converter import DEFAULT_CAMERA_ORDER, ExportConfig
+from py123detection.annotations import BOX_LAYOUTS
+from py123detection.mmcv_export.converter import (
+    DEFAULT_CAMERA_ORDER,
+    EGO_POSE_SOURCES,
+    VELOCITY_SOURCES,
+    ExportConfig,
+)
 from py123detection.mmcv_export.export import export_to_mmdet3d
 from py123detection.mmcv_export.sensors import PathStyle, SensorMode, SensorResolverConfig
-from py123detection.mmcv_export.tokens import MappingTokenResolver, NuScenesTokenResolver, TokenResolver
+from py123detection.mmcv_export.tokens import (
+    LogTimestampTokenResolver,
+    MappingTokenResolver,
+    NuScenesTokenResolver,
+    TokenResolver,
+)
 from py123detection.sources import Source
 from py123detection.taxonomy import TAXONOMIES, get_taxonomy
 
@@ -144,6 +155,36 @@ def _add_export_arguments(parser: argparse.ArgumentParser) -> None:
         default="skip_frame",
         help="Behaviour when a configured camera has no data at a frame.",
     )
+    content.add_argument(
+        "--box-layout",
+        choices=BOX_LAYOUTS,
+        default="streampetr",
+        help="gt_boxes column layout: 'streampetr' = [x,y,z,l,w,h,yaw] (StreamPETR, mmdet3d>=1.0); "
+        "'mmdet3d_0.17' = [x,y,z,w,l,h,-yaw-pi/2] (mmdetection3d 0.17's own converter, PETR v1).",
+    )
+    content.add_argument(
+        "--velocity-source",
+        choices=VELOCITY_SOURCES,
+        default="stored",
+        help="'stored' writes the velocity the 123D log carries; 'tracks' derives it as a central "
+        "difference over each track at the log's native frame rate (for datasets without annotated "
+        "velocity, e.g. Argoverse 2).",
+    )
+    content.add_argument(
+        "--velocity-max-dt",
+        type=float,
+        default=0.25,
+        metavar="SECONDS",
+        help="Neighbour tolerance for --velocity-source tracks (default 0.25 s: one dropped 10 Hz frame).",
+    )
+    content.add_argument(
+        "--ego-pose-source",
+        choices=EGO_POSE_SOURCES,
+        default="sync",
+        help="'sync' takes the ego state the log's sync table associated with the frame; 'nearest' "
+        "looks it up by the frame timestamp instead, which is robust to sync tables built from "
+        "slightly-off ego timestamps (py123d 0.6.0 AV2 logs).",
+    )
 
     sensors = parser.add_argument_group("sensor payloads")
     sensors.add_argument(
@@ -176,6 +217,14 @@ def _add_export_arguments(parser: argparse.ArgumentParser) -> None:
     )
 
     tokens = parser.add_argument_group("tokens")
+    tokens.add_argument(
+        "--token-style",
+        choices=("uuid", "log_timestamp"),
+        default="uuid",
+        help="Token when no native token is restored: the deterministic 123D UUID, or "
+        "'{log_name}/{timestamp_us}' (reproducible by any converter; use it to diff against a "
+        "reference pickle for datasets without native frame tokens).",
+    )
     tokens.add_argument(
         "--nuscenes-root",
         type=Path,
@@ -222,6 +271,8 @@ def _build_token_resolver(args: argparse.Namespace) -> TokenResolver:
         return MappingTokenResolver.from_json(args.token_map)
     if args.nuscenes_root is not None:
         return NuScenesTokenResolver(args.nuscenes_root)
+    if args.token_style == "log_timestamp":
+        return LogTimestampTokenResolver()
     return TokenResolver()
 
 
@@ -252,6 +303,10 @@ def _run_export(args: argparse.Namespace) -> int:
         on_missing_camera=args.on_missing_camera,
         yaw_convention=args.yaw_convention,
         planar_velocity=not args.full_3d_velocity,
+        box_layout=args.box_layout,
+        velocity_source=args.velocity_source,
+        velocity_max_dt_s=args.velocity_max_dt,
+        ego_pose_source=args.ego_pose_source,
         sensors=SensorResolverConfig(
             camera_mode=SensorMode(args.camera_mode),
             lidar_mode=SensorMode(args.lidar_mode),

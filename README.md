@@ -9,9 +9,6 @@ Two branches share the 123D data model:
 | **mmcv export** — turn any 123D dataset into the `info` pickle the mmcv / mmdetection3d ecosystem reads, so existing PETR / StreamPETR / BEVDet configs train on 123D data unchanged | `py123detection.mmcv_export` (+ `py123detection.mmcv_plugin` on the training side) | implemented |
 | **modern stack** — the mmcv-free path from the master thesis | — | not started |
 
-This README covers the first branch. The notes this work started from are kept verbatim in
-[`docs/original-brief.md`](docs/original-brief.md).
-
 ---
 
 ## Why this exists
@@ -293,6 +290,17 @@ becomes identity), which is the right choice when referencing files a 123D parse
 reframed.
 
 ---
+
+## Other datasets
+
+Nothing in the converter is nuScenes-specific, but a new dataset does force a few *choices* —
+reference frame, taxonomy, tokens, velocity, box layout, ego-pose lookup — and each is a flag.
+[`docs/other-datasets.md`](docs/other-datasets.md) walks through them with Argoverse 2 as the
+worked example, including the reference-converter pattern used to prove an export right
+(`tools/reference_av2_converter.py` + `tools/compare_infos.py`: agreement to `1.8e-12 m`), the
+self-contained evaluator that scores any export with the nuScenes metric code and no nuScenes
+database, and the two py123d issues the comparison surfaced (camera sync convention, a 1 µs
+ego-timestamp round-trip error).
 
 ## Cross-dataset training
 

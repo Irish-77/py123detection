@@ -93,27 +93,111 @@ try:  # pragma: no cover - exercised only inside an mmdetection3d environment
     class Py123DNuScenesDataset(NuScenesDataset):
         """``NuScenesDataset`` that understands py123detection export pickles.
 
-        Two behaviours on top of the stock dataset:
+        Three behaviours on top of the stock dataset:
 
         * arrays are rebuilt after loading, so ``array_format="portable"`` exports work;
         * when ``classes`` is left unset, the taxonomy recorded in the pickle's metadata supplies
-          ``CLASSES``, keeping the class list in one place instead of duplicated in the config.
+          ``CLASSES``, keeping the class list in one place instead of duplicated in the config;
+        * evaluation is **self-contained** by default: the nuScenes metric code runs against the
+          ground truth held in the pickle itself, so any dataset evaluates without a nuScenes
+          database — see :mod:`py123detection.mmcv_plugin.evaluation`. Pass
+          ``eval_mode="nuscenes"`` to get the stock devkit path back.
         """
 
-        def __init__(self, *args, use_taxonomy_classes: bool = True, **kwargs) -> None:
+        def __init__(
+            self,
+            *args,
+            use_taxonomy_classes: bool = True,
+            eval_mode: str = "self_contained",
+            eval_class_range: Optional[Dict[str, float]] = None,
+            **kwargs,
+        ) -> None:
             """Initialize the dataset.
 
             :param use_taxonomy_classes: Adopt ``metadata['class_names']`` from the pickle when
                 the config does not pass ``classes`` explicitly.
+            :param eval_mode: ``"self_contained"`` (default) evaluates against the pickle's own GT;
+                ``"nuscenes"`` uses mmdet3d's stock ``NuScenes`` + ``NuScenesEval`` path.
+            :param eval_class_range: Per-class evaluation radius in metres. Classes spelled like
+                nuScenes classes default to the ``detection_cvpr_2019`` radii.
             """
+            if eval_mode not in ("self_contained", "nuscenes"):
+                raise ValueError(f"eval_mode must be 'self_contained' or 'nuscenes', got {eval_mode!r}.")
             self._use_taxonomy_classes = use_taxonomy_classes
+            self._eval_mode = eval_mode
+            self._eval_class_range: Dict[str, float] = dict(eval_class_range or {})
             self._py123d_metadata: Dict[str, Any] = {}
             super().__init__(*args, **kwargs)
+            # _format_bbox filters predictions by this radius before the metric ever runs, so
+            # every evaluated class must have an entry.
+            self.eval_detection_configs.class_range.update(self._eval_class_range)
+
+        def _evaluate_single(self, result_path, logger=None, metric="bbox", result_name="pts_bbox"):
+            """Evaluate one result file; self-contained unless ``eval_mode="nuscenes"``."""
+            if self._eval_mode == "nuscenes":
+                return super()._evaluate_single(result_path, logger=logger, metric=metric, result_name=result_name)
+
+            import os.path as osp
+
+            from py123detection.mmcv_plugin.evaluation import evaluate_from_infos
+
+            output_dir = osp.join(*osp.split(result_path)[:-1])
+            metrics = evaluate_from_infos(
+                result_path,
+                self.data_infos,
+                list(self.CLASSES),
+                output_dir,
+                class_range=self._eval_class_range or None,
+                eval_version=self.eval_version,
+                verbose=True,
+            )
+
+            # Same flattening as mmdet3d's _evaluate_single, so logs and hooks look identical.
+            detail: Dict[str, float] = {}
+            prefix = f"{result_name}_NuScenes"
+            for name in self.CLASSES:
+                for key, value in metrics["label_aps"][name].items():
+                    detail[f"{prefix}/{name}_AP_dist_{key}"] = float(f"{value:.4f}")
+                for key, value in metrics["label_tp_errors"][name].items():
+                    detail[f"{prefix}/{name}_{key}"] = float(f"{value:.4f}")
+            for key, value in metrics["tp_errors"].items():
+                detail[f"{prefix}/{self.ErrNameMapping[key]}"] = float(f"{value:.4f}")
+            detail[f"{prefix}/NDS"] = metrics["nd_score"]
+            detail[f"{prefix}/mAP"] = metrics["mean_ap"]
+            return detail
 
         @property
         def py123d_metadata(self) -> Dict[str, Any]:
             """The ``metadata`` block of the loaded pickle."""
             return self._py123d_metadata
+
+        def get_data_info(self, index: int) -> Dict[str, Any]:
+            """Stock ``get_data_info`` plus the per-camera keys the PETR family reads.
+
+            PETR, StreamPETR and their derivatives each ship a ``CustomNuScenesDataset`` whose
+            only addition over mmdet3d's is ``intrinsics`` / ``extrinsics`` (lidar-to-camera)
+            / ``img_timestamp`` next to ``lidar2img``. Providing the same keys here lets those
+            configs point at this dataset directly; other models ignore the extra keys.
+            """
+            input_dict = super().get_data_info(index)
+            if not self.modality["use_camera"]:
+                return input_dict
+            info = self.data_infos[index]
+            intrinsics, extrinsics, img_timestamp = [], [], []
+            for cam_info in info["cams"].values():
+                lidar2cam_r = np.linalg.inv(cam_info["sensor2lidar_rotation"])
+                lidar2cam_t = cam_info["sensor2lidar_translation"] @ lidar2cam_r.T
+                lidar2cam_rt = np.eye(4)
+                lidar2cam_rt[:3, :3] = lidar2cam_r.T
+                lidar2cam_rt[3, :3] = -lidar2cam_t
+                intrinsic = cam_info["cam_intrinsic"]
+                viewpad = np.eye(4)
+                viewpad[: intrinsic.shape[0], : intrinsic.shape[1]] = intrinsic
+                intrinsics.append(viewpad)
+                extrinsics.append(lidar2cam_rt)
+                img_timestamp.append(cam_info["timestamp"] / 1e6)
+            input_dict.update(dict(intrinsics=intrinsics, extrinsics=extrinsics, img_timestamp=img_timestamp))
+            return input_dict
 
         def load_annotations(self, ann_file: str) -> List[Dict[str, Any]]:
             """Load infos and restore numpy arrays.

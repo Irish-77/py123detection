@@ -27,6 +27,7 @@ from py123d.datatypes import BaseCameraMetadata, CameraID, LidarID, ModalityType
 from py123d.geometry import PoseSE3
 
 from py123detection.annotations import (
+    BOX_LAYOUTS,
     DetectionRecord,
     FrameAnnotations,
     build_frame_annotations,
@@ -37,6 +38,13 @@ from py123detection.mmcv_export.annotations2d import project_records_to_camera
 from py123detection.mmcv_export.sensors import SensorResolver, SensorResolverConfig
 from py123detection.mmcv_export.tokens import TokenResolver
 from py123detection.taxonomy import NUSCENES_DETECTION, Taxonomy
+from py123detection.velocity import TrackVelocityTable
+
+VELOCITY_SOURCES = ("stored", "tracks")
+"""Where ``gt_velocity`` comes from — see :attr:`ExportConfig.velocity_source`."""
+
+EGO_POSE_SOURCES = ("sync", "nearest")
+"""How a frame's ego state is looked up — see :attr:`ExportConfig.ego_pose_source`."""
 
 logger = logging.getLogger(__name__)
 
@@ -173,6 +181,45 @@ class ExportConfig:
     lidar mix the vertical component into ``(vx, vy)``.
     """
 
+    box_layout: str = "streampetr"
+    """Column layout of ``gt_boxes`` — see :data:`py123detection.annotations.BOX_LAYOUTS`.
+
+    ``"streampetr"`` (default) writes ``[x, y, z, l, w, h, yaw]``; ``"mmdet3d_0.17"`` writes
+    ``[x, y, z, w, l, h, -yaw - pi/2]`` for trainers pinned to mmdetection3d 0.17 (PETR v1), whose
+    dataset feeds the columns to ``LiDARInstance3DBoxes`` verbatim. Choosing the wrong one does not
+    crash — it trains on transposed, mis-rotated boxes — so match it to the trainer.
+    """
+
+    velocity_source: str = "stored"
+    """Where ``gt_velocity`` comes from.
+
+    ``"stored"`` (default) uses the velocity the 123D log carries (zero for datasets that annotate
+    none). ``"tracks"`` derives it per box as a central difference of the box centre over the
+    neighbouring annotations of the same track, at the log's native frame rate — the nuScenes
+    devkit's rule, see :mod:`py123detection.velocity`. Use it for datasets like Argoverse 2 whose
+    annotations have no velocity but whose tracks are dense enough to differentiate.
+    """
+
+    velocity_max_dt_s: float = 0.25
+    """Neighbour tolerance for ``velocity_source="tracks"``; see :mod:`py123detection.velocity`."""
+
+    ego_pose_source: str = "sync"
+    """Which ego state supplies a frame's ``ego2global`` (and a sweep's).
+
+    ``"sync"`` (default) trusts the log's sync table — the ego-state row 123D associated with
+    the frame when the log was written. ``"nearest"`` looks the ego state up by the frame's
+    timestamp and takes the closest row.
+
+    The two coincide when the ego stream holds a row at exactly the frame's timestamp, which is
+    what every parser emits. But the sync table is built as "first row at or after the
+    reference", so a stored timestamp that is even 1 us early makes it skip the exact row and
+    land on the next one, milliseconds later — on a moving vehicle, centimetres of pose error in
+    every box and camera extrinsic of that frame. Found on py123d 0.6.0's Argoverse 2 logs: the
+    parser round-trips the nanosecond stamps through float64 (``DataFrame.iterrows``), 5% of
+    ego rows come back 1 us early, and ~40% of frames get an ego pose 2-10 ms late (up to 9 cm
+    on a city log). ``"nearest"`` is immune to it and costs one timestamp search per frame.
+    """
+
     def __post_init__(self) -> None:
         for field_name in ("lidar2ego_mode", "camera2ego_mode"):
             value = getattr(self, field_name)
@@ -190,6 +237,14 @@ class ExportConfig:
             )
         if self.max_sweeps < 0:
             raise ValueError(f"max_sweeps must be >= 0, got {self.max_sweeps}.")
+        if self.box_layout not in BOX_LAYOUTS:
+            raise ValueError(f"box_layout must be one of {BOX_LAYOUTS}, got {self.box_layout!r}.")
+        if self.velocity_source not in VELOCITY_SOURCES:
+            raise ValueError(f"velocity_source must be one of {VELOCITY_SOURCES}, got {self.velocity_source!r}.")
+        if self.velocity_max_dt_s <= 0:
+            raise ValueError(f"velocity_max_dt_s must be > 0, got {self.velocity_max_dt_s}.")
+        if self.ego_pose_source not in EGO_POSE_SOURCES:
+            raise ValueError(f"ego_pose_source must be one of {EGO_POSE_SOURCES}, got {self.ego_pose_source!r}.")
 
 
 @dataclass
@@ -204,6 +259,9 @@ class ExportStats:
     frames_skipped_missing_lidar: int = 0
     logs_skipped: int = 0
     dynamic_extrinsic_fallbacks: int = 0
+    boxes_without_track_velocity: int = 0
+    ego_pose_fallbacks: int = 0
+    ego_pose_max_offset_us: int = 0
     dropped_cameras: Counter = field(default_factory=Counter)
     class_counts: Counter = field(default_factory=Counter)
     num_referenced_payloads: int = 0
@@ -220,6 +278,9 @@ class ExportStats:
             "frames_skipped_missing_lidar": self.frames_skipped_missing_lidar,
             "logs_skipped": self.logs_skipped,
             "dynamic_extrinsic_fallbacks": self.dynamic_extrinsic_fallbacks,
+            "boxes_without_track_velocity": self.boxes_without_track_velocity,
+            "ego_pose_fallbacks": self.ego_pose_fallbacks,
+            "ego_pose_max_offset_us": self.ego_pose_max_offset_us,
             "dropped_cameras": dict(self.dropped_cameras),
             "class_counts": dict(self.class_counts),
             "num_referenced_payloads": self.num_referenced_payloads,
@@ -258,7 +319,7 @@ class MMDet3DConverter:
         scenes: Sequence[SceneAPI],
         timestamp_offset_us: int = 0,
         progress: bool = True,
-        sweep_scenes: Optional[Dict[Tuple[str, str], SceneAPI]] = None,
+        native_scenes: Optional[Dict[Tuple[str, str], SceneAPI]] = None,
     ) -> List[Dict[str, Any]]:
         """Convert several scenes (one per log) into a flat list of infos.
 
@@ -266,9 +327,9 @@ class MMDet3DConverter:
         :param timestamp_offset_us: Constant added to every exported timestamp. See
             :attr:`py123detection.sources.Source.timestamp_offset_us`.
         :param progress: Show a progress bar.
-        :param sweep_scenes: Optional native-rate views of the same logs, keyed by
-            ``(split, log_name)``, used to build ``info['sweeps']`` at the log's own frame rate
-            when the export itself is subsampled.
+        :param native_scenes: Optional native-rate views of the same logs, keyed by
+            ``(split, log_name)``. Needed when the export itself is subsampled: ``info['sweeps']``
+            and track-derived velocities both want the log's own frame rate.
         :return: Infos in log order, and within a log in frame order.
         """
         iterator: Sequence[SceneAPI] = scenes
@@ -279,9 +340,9 @@ class MMDet3DConverter:
 
         infos: List[Dict[str, Any]] = []
         for scene in iterator:
-            sweep_scene = (sweep_scenes or {}).get((scene.split, scene.log_name))
+            native_scene = (native_scenes or {}).get((scene.split, scene.log_name))
             infos.extend(
-                self.convert_scene(scene, timestamp_offset_us=timestamp_offset_us, sweep_scene=sweep_scene)
+                self.convert_scene(scene, timestamp_offset_us=timestamp_offset_us, native_scene=native_scene)
             )
         return infos
 
@@ -289,13 +350,15 @@ class MMDet3DConverter:
         self,
         scene: SceneAPI,
         timestamp_offset_us: int = 0,
-        sweep_scene: Optional[SceneAPI] = None,
+        native_scene: Optional[SceneAPI] = None,
     ) -> List[Dict[str, Any]]:
         """Convert one scene (one full log) into a list of infos, one per frame.
 
         :param scene: The scene to convert.
         :param timestamp_offset_us: Constant added to every exported timestamp.
-        :param sweep_scene: Optional native-rate view of the same log, used for ``sweeps``.
+        :param native_scene: Optional native-rate view of the same log, used for ``sweeps`` and
+            for ``velocity_source="tracks"``. Omit when ``scene`` is not subsampled — it *is* the
+            native view then.
         :return: The infos for this log, in frame order.
         """
         rig = self._resolve_rig(scene)
@@ -303,6 +366,13 @@ class MMDet3DConverter:
             self._stats.logs_skipped += 1
             return []
         camera_metadatas, reference_lidar_id, lidar_data_id = rig
+
+        velocity_table: Optional[TrackVelocityTable] = None
+        if self._config.velocity_source == "tracks":
+            velocity_table = TrackVelocityTable.from_scene(
+                native_scene if native_scene is not None else scene,
+                max_dt_s=self._config.velocity_max_dt_s,
+            )
 
         scene_token = f"{scene.split}/{scene.log_name}"
         frames: List[Dict[str, Any]] = []
@@ -316,6 +386,7 @@ class MMDet3DConverter:
                 lidar_data_id=lidar_data_id,
                 scene_token=scene_token,
                 timestamp_offset_us=timestamp_offset_us,
+                velocity_table=velocity_table,
             )
             if info is not None:
                 frames.append(info)
@@ -324,8 +395,8 @@ class MMDet3DConverter:
         # Without a native-rate view the export already visited every frame of the log, so its own
         # infos are the sweep candidates — re-walking the scene would resolve each payload twice.
         candidates = (
-            self._build_sweep_table(sweep_scene, reference_lidar_id, lidar_data_id, timestamp_offset_us)
-            if sweep_scene is not None
+            self._build_sweep_table(native_scene, reference_lidar_id, lidar_data_id, timestamp_offset_us)
+            if native_scene is not None
             else self._sweep_table_from_frames(frames)
         )
         self._attach_sweeps(frames, candidates)
@@ -406,9 +477,10 @@ class MMDet3DConverter:
         lidar_data_id: LidarID,
         scene_token: str,
         timestamp_offset_us: int,
+        velocity_table: Optional[TrackVelocityTable] = None,
     ) -> Optional[Dict[str, Any]]:
         """Convert a single frame, or return ``None`` when the frame must be skipped."""
-        ego_state = scene.get_ego_state_se3_at_iteration(iteration)
+        ego_state = self._frame_ego_state(scene, iteration)
         if ego_state is None:
             self._stats.frames_skipped_missing_ego += 1
             return None
@@ -472,7 +544,7 @@ class MMDet3DConverter:
             "py123d_iteration": iteration,
         }
 
-        annotations = self._convert_annotations(scene, iteration, global_to_lidar)
+        annotations = self._convert_annotations(scene, iteration, global_to_lidar, velocity_table)
         info.update(
             {
                 "gt_boxes": annotations.gt_boxes,
@@ -583,6 +655,20 @@ class MMDet3DConverter:
             return None
         return cameras
 
+    def _frame_ego_state(self, scene: SceneAPI, iteration: int):
+        """The ego state that defines a frame's ``ego2global`` — see :attr:`ExportConfig.ego_pose_source`."""
+        if self._config.ego_pose_source == "nearest":
+            timestamp_us = int(scene.get_timestamp_at_iteration(iteration).time_us)
+            ego_state = scene.get_ego_state_se3_at_timestamp(timestamp_us, criteria="nearest")
+            if ego_state is not None:
+                ego_timestamp = getattr(ego_state, "timestamp", None)
+                if ego_timestamp is not None:
+                    offset = abs(int(ego_timestamp.time_us) - timestamp_us)
+                    self._stats.ego_pose_max_offset_us = max(self._stats.ego_pose_max_offset_us, offset)
+                return ego_state
+            self._stats.ego_pose_fallbacks += 1
+        return scene.get_ego_state_se3_at_iteration(iteration)
+
     def _lidar_to_ego(
         self,
         scene: SceneAPI,
@@ -641,15 +727,31 @@ class MMDet3DConverter:
             return None
         return pose_to_matrix(ego_state.imu_se3)
 
-    def _convert_annotations(self, scene: SceneAPI, iteration: int, global_to_lidar: np.ndarray) -> FrameAnnotations:
+    def _convert_annotations(
+        self,
+        scene: SceneAPI,
+        iteration: int,
+        global_to_lidar: np.ndarray,
+        velocity_table: Optional[TrackVelocityTable] = None,
+    ) -> FrameAnnotations:
         """Extract and transform the 3D annotations of one frame."""
         detections = scene.get_box_detections_se3_at_iteration(iteration)
-        records = extract_detection_records(detections, self._config.taxonomy)
+        velocity_overrides = None
+        if velocity_table is not None:
+            velocity_overrides = velocity_table.at(scene.get_timestamp_at_iteration(iteration).time_us)
+        records = extract_detection_records(
+            detections, self._config.taxonomy, velocity_overrides=velocity_overrides
+        )
+        if velocity_overrides is not None:
+            self._stats.boxes_without_track_velocity += sum(
+                1 for record in records if record.track_token not in velocity_overrides
+            )
         return build_frame_annotations(
             records,
             global_to_lidar,
             yaw_convention=self._config.yaw_convention,
             planar_velocity=self._config.planar_velocity,
+            box_layout=self._config.box_layout,
         )
 
     def _convert_2d_annotations(
@@ -724,7 +826,7 @@ class MMDet3DConverter:
 
         candidates: List[Dict[str, Any]] = []
         for iteration in range(scene.number_of_iterations):
-            ego_state = scene.get_ego_state_se3_at_iteration(iteration)
+            ego_state = self._frame_ego_state(scene, iteration)
             if ego_state is None:
                 continue
 

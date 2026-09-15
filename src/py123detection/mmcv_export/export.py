@@ -171,11 +171,13 @@ def export_to_mmdet3d(
             per_source_frames[source.label] = 0
             continue
 
-        # A subsampled export still wants sweeps at the log's own frame rate, so load a second,
-        # unsampled view of the same logs to draw them from. Scenes are lazy, so this is cheap.
-        sweep_scenes = None
-        if converter.config.max_sweeps > 0 and source.is_subsampled:
-            sweep_scenes = {
+        # A subsampled export still wants sweeps — and track-derived velocities — at the log's
+        # own frame rate, so load a second, unsampled view of the same logs to draw them from.
+        # Scenes are lazy, so this is cheap.
+        native_scenes = None
+        needs_native_rate = converter.config.max_sweeps > 0 or converter.config.velocity_source == "tracks"
+        if needs_native_rate and source.is_subsampled:
+            native_scenes = {
                 (scene.split, scene.log_name): scene for scene in source.load_scenes(native_rate=True)
             }
 
@@ -185,7 +187,7 @@ def export_to_mmdet3d(
                 scenes,
                 timestamp_offset_us=source.timestamp_offset_us,
                 progress=progress,
-                sweep_scenes=sweep_scenes,
+                native_scenes=native_scenes,
             )
         )
         per_source_frames[source.label] = len(infos) - before
@@ -216,6 +218,11 @@ def export_to_mmdet3d(
             "lidar_frame": converter.config.lidar_frame,
             "lidar2ego_mode": converter.config.lidar2ego_mode,
             "camera2ego_mode": converter.config.camera2ego_mode,
+            "yaw_convention": converter.config.yaw_convention,
+            "box_layout": converter.config.box_layout,
+            "velocity_source": converter.config.velocity_source,
+            "velocity_max_dt_s": converter.config.velocity_max_dt_s,
+            "ego_pose_source": converter.config.ego_pose_source,
             "per_source_frames": per_source_frames,
             "stats": stats.as_dict(),
         },

@@ -8,8 +8,11 @@ strings (or drops the box).
 Two mapping levels are available, checked in order:
 
 1. ``native_map`` — keyed by the dataset-native enum member name (e.g. ``"VEHICLE_CAR"`` for
-   :class:`~py123d.parser.registry.NuScenesBoxDetectionLabel`). Use it when a taxonomy needs
-   the full granularity of one dataset.
+   :class:`~py123d.parser.registry.NuScenesBoxDetectionLabel`), or by the *qualified* name
+   ``"<LabelEnum>.<MEMBER>"`` (``"AV2SensorBoxDetectionLabel.BICYCLIST"``) when the same member
+   name exists in several datasets' enums and only one of them should be overridden. Use it when
+   a taxonomy needs the full granularity of one dataset, or to carve out per-dataset exceptions
+   from an otherwise default-level taxonomy.
 2. ``default_map`` — keyed by the :class:`~py123d.datatypes.DefaultBoxDetectionLabel` member
    name (``"VEHICLE"``, ``"PERSON"``, ...). Every dataset enum in 123D implements
    ``to_default()``, so a taxonomy expressed at this level applies unchanged to *any* 123D
@@ -64,7 +67,11 @@ class Taxonomy:
             :class:`~py123d.datatypes.BoxDetectionSE3`.
         :return: The class name, or ``None`` if the box should be dropped.
         """
-        class_name = self.native_map.get(label.name)
+        # Most specific first: "<LabelEnum>.<MEMBER>" overrides one dataset's member without
+        # touching a same-named member of another dataset's enum.
+        class_name = self.native_map.get(f"{type(label).__name__}.{label.name}")
+        if class_name is None:
+            class_name = self.native_map.get(label.name)
         if class_name is None:
             class_name = self.default_map.get(label.to_default().name)
         if class_name is None or class_name == VOID:
@@ -164,6 +171,55 @@ Because it only uses the default label level it works for every 123D dataset, wh
 mixed-dataset training (as in CoIn3D) needs.
 """
 
+_COIN3D_3CLS_NATIVE: Dict[str, str] = {
+    # Argoverse 2 annotates the *rider* of a bicycle / motorcycle / scooter as its own box, on
+    # top of the vehicle's box. nuScenes has no rider category — the rider is part of the
+    # two-wheeler box ("cycle.with_rider") — and CoIn3D's mapping inherits that. Keeping the
+    # vehicle and dropping the rider preserves those semantics and avoids labelling one
+    # physical object twice. Qualified keys, so a RIDER member of another dataset is untouched.
+    "AV2SensorBoxDetectionLabel.BICYCLIST": VOID,
+    "AV2SensorBoxDetectionLabel.MOTORCYCLIST": VOID,
+    "AV2SensorBoxDetectionLabel.WHEELED_RIDER": VOID,
+    # CoIn3D's nuScenes mapping lists exactly the mmdet3d benchmark categories; the ones
+    # mmdet3d's NameMapping omits stay out here too, matching its pickles box for box.
+    "NuScenesBoxDetectionLabel.HUMAN_PEDESTRIAN_PERSONAL_MOBILITY": VOID,
+    "NuScenesBoxDetectionLabel.HUMAN_PEDESTRIAN_STROLLER": VOID,
+    "NuScenesBoxDetectionLabel.HUMAN_PEDESTRIAN_WHEELCHAIR": VOID,
+    "NuScenesBoxDetectionLabel.VEHICLE_EMERGENCY_AMBULANCE": VOID,
+    "NuScenesBoxDetectionLabel.VEHICLE_EMERGENCY_POLICE": VOID,
+}
+
+COIN3D_3CLS = Taxonomy(
+    name="coin3d_3cls",
+    class_names=("car", "pedestrian", "motorcycle"),
+    native_map=_COIN3D_3CLS_NATIVE,
+    default_map={
+        "VEHICLE": "car",
+        "TRAIN": "car",
+        "PERSON": "pedestrian",
+        "TWO_WHEELER": "motorcycle",
+        "EGO": VOID,
+        "ANIMAL": VOID,
+        "TRAFFIC_SIGN": VOID,
+        "TRAFFIC_CONE": VOID,
+        "TRAFFIC_LIGHT": VOID,
+        "BARRIER": VOID,
+        "GENERIC_OBJECT": VOID,
+        "OTHER": VOID,
+    },
+)
+"""CoIn3D's cross-dataset taxonomy: vehicle / pedestrian / two-wheeler, **spelled with nuScenes
+names** (``car`` / ``pedestrian`` / ``motorcycle``).
+
+The spelling is the point. The nuScenes devkit's ``DetectionBox`` asserts that a class name is one
+of the ten nuScenes detection names, so CoIn3D reuses three of them for its unified classes and
+can evaluate any dataset with the unmodified nuScenes metric code. Their published mapping
+(``data_preprocess/README.md``) is nuScenes ``car, truck, trailer, bus, construction_vehicle ->
+car``, ``pedestrian -> pedestrian``, ``bicycle, motorcycle -> motorcycle``, Lyft ``car, truck, bus,
+emergency_vehicle, other_vehicle -> car``, Waymo ``VEHICLE / PEDESTRIAN / CYCLIST``. Expressed over
+123D's default labels (plus the per-dataset exceptions above) it applies to every 123D dataset.
+"""
+
 VEHICLE_1CLS = Taxonomy(
     name="vehicle_1cls",
     class_names=("vehicle",),
@@ -204,7 +260,8 @@ DEFAULT_123D = Taxonomy(
 """Identity taxonomy over :class:`DefaultBoxDetectionLabel` (minus ``EGO``)."""
 
 TAXONOMIES: Dict[str, Taxonomy] = {
-    taxonomy.name: taxonomy for taxonomy in (NUSCENES_DETECTION, GENERAL_3CLS, VEHICLE_1CLS, DEFAULT_123D)
+    taxonomy.name: taxonomy
+    for taxonomy in (NUSCENES_DETECTION, GENERAL_3CLS, COIN3D_3CLS, VEHICLE_1CLS, DEFAULT_123D)
 }
 """All built-in taxonomies, keyed by name — the values accepted by ``--taxonomy`` on the CLI."""
 

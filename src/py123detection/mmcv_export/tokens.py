@@ -10,6 +10,10 @@ will reject or mis-score results whose tokens it does not recognise. When the or
 is still on disk, :class:`NuScenesTokenResolver` recovers the native tokens by joining on
 ``(log_name, timestamp_us)`` — the same pair the UUID was derived from — restoring full
 evaluation compatibility.
+
+Datasets without a native frame token (Argoverse 2, Waymo, ...) can use
+:class:`LogTimestampTokenResolver`, which spells the token as ``"{log_name}/{timestamp_us}"``:
+unique, human-readable, and trivially reproducible by an independent converter.
 """
 
 from __future__ import annotations
@@ -39,6 +43,21 @@ class TokenResolver:
         :return: The token to store.
         """
         return uuid
+
+
+class LogTimestampTokenResolver(TokenResolver):
+    """``"{log_name}/{timestamp_us}"`` — readable, dataset-agnostic, and reproducible by anyone.
+
+    The right choice when there is no native frame token to restore (Argoverse 2, Waymo, ...)
+    but a second converter built from the raw dataset must still produce the *same* tokens, so
+    that the two pickles can be aligned frame by frame.
+    """
+
+    name = "log_timestamp"
+
+    def resolve(self, dataset: str, split: str, log_name: str, timestamp_us: int, uuid: str) -> str:
+        """Inherited, see superclass."""
+        return f"{log_name}/{int(timestamp_us)}"
 
 
 class MappingTokenResolver(TokenResolver):

@@ -21,7 +21,7 @@ import argparse
 import os
 import pickle
 from collections import defaultdict
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 import numpy as np
 from pyquaternion import Quaternion
@@ -98,14 +98,16 @@ def wrap_angle(values: np.ndarray) -> np.ndarray:
     return np.arctan2(np.sin(values), np.cos(values))
 
 
-def filter_reference_boxes(info: Dict[str, Any]) -> Dict[str, Any]:
-    """Drop reference boxes whose category is outside the 10-class benchmark.
+def filter_reference_boxes(info: Dict[str, Any], categories: Set[str] = BENCHMARK_CATEGORIES) -> Dict[str, Any]:
+    """Drop reference boxes whose category is outside the compared class set.
 
     :param info: A reference info.
+    :param categories: Class names to keep — the candidate's taxonomy when it records one,
+        otherwise the nuScenes 10-class benchmark.
     :return: A shallow copy with the annotation arrays masked.
     """
     names = np.asarray(info["gt_names"])
-    mask = np.array([name in BENCHMARK_CATEGORIES for name in names], dtype=bool)
+    mask = np.array([name in categories for name in names], dtype=bool)
     filtered = dict(info)
     filtered["gt_names"] = names[mask]
     filtered["gt_boxes"] = np.asarray(info["gt_boxes"])[mask]
@@ -141,6 +143,11 @@ def compare(
     print(f"            taxonomy={candidate_meta.get('taxonomy')} classes={candidate_meta.get('class_names')}")
     print("=" * 100)
 
+    # Compare over the candidate's class set: a taxonomy-driven export only emits its own classes,
+    # while a reference converter may keep every raw category.
+    compared_classes: Set[str] = set(candidate_meta.get("class_names") or BENCHMARK_CATEGORIES)
+    print(f"reference boxes filtered to the compared classes: {sorted(compared_classes)}")
+
     reference_by_token = {info["token"]: info for info in reference_infos}
     candidate_by_token = {info["token"]: info for info in candidate_infos}
     shared = [token for token in reference_by_token if token in candidate_by_token]
@@ -154,8 +161,10 @@ def compare(
     print(f"  reference-only          : {only_reference}")
     print(f"  candidate-only          : {only_candidate}")
     if not shared:
-        print("\n  No frames matched by token. If the export used 123D UUIDs, re-run it with")
-        print("  --nuscenes-root so native sample tokens are restored, then compare again.")
+        print("\n  No frames matched by token. Both pickles must spell tokens the same way: for")
+        print("  nuScenes re-export with --nuscenes-root (native sample tokens); for datasets without")
+        print("  native frame tokens export with --token-style log_timestamp and have the reference")
+        print("  converter write '{log_name}/{timestamp_us}' as well.")
         return 1
 
     if max_frames is not None:
@@ -196,7 +205,7 @@ def compare(
     sweep_lengths: Dict[str, List[int]] = defaultdict(list)
 
     for token in shared:
-        reference = filter_reference_boxes(reference_by_token[token])
+        reference = filter_reference_boxes(reference_by_token[token], compared_classes)
         candidate = candidate_by_token[token]
         context = f"token={token[:8]}"
 

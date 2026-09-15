@@ -13,7 +13,7 @@ frame plus the taxonomy lookup.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Mapping, Optional
 
 import numpy as np
 import numpy.typing as npt
@@ -23,6 +23,18 @@ from py123detection.geometry import YAW_CONVENTIONS
 from py123detection.taxonomy import Taxonomy
 
 Array = npt.NDArray[np.float64]
+
+BOX_LAYOUTS = ("streampetr", "mmdet3d_0.17")
+"""Selectable ``gt_boxes`` column layouts.
+
+``"streampetr"`` — ``[x, y, z, l, w, h, yaw]``: what StreamPETR's converter and mmdetection3d
+>= 1.0 write and read.
+
+``"mmdet3d_0.17"`` — ``[x, y, z, w, l, h, -yaw - pi/2]``: what mmdetection3d 0.17's own nuScenes
+converter writes (``tools/data_converter/nuscenes_converter.py``) and what its
+``NuScenesDataset.get_ann_info`` feeds verbatim into ``LiDARInstance3DBoxes``; PETR v1 pins that
+version. The map between the two is exact — a column swap and an affine yaw change.
+"""
 
 
 @dataclass
@@ -92,11 +104,15 @@ class FrameAnnotations:
 def extract_detection_records(
     detections: Optional[BoxDetectionsSE3],
     taxonomy: Taxonomy,
+    velocity_overrides: Optional[Mapping[str, Array]] = None,
 ) -> List[DetectionRecord]:
     """Map 123D box detections onto taxonomy classes, dropping anything unmapped.
 
     :param detections: The 123D detections at one iteration, or ``None``.
     :param taxonomy: Taxonomy deciding class names and label ids.
+    :param velocity_overrides: Optional global-frame velocities keyed by track token, e.g. from
+        :class:`py123detection.velocity.TrackVelocityTable`. A track present here replaces the
+        velocity the log stores; a track absent from it keeps the stored one.
     :return: One record per kept detection.
     """
     records: List[DetectionRecord] = []
@@ -112,6 +128,17 @@ def extract_detection_records(
         center = bounding_box.center_se3
         velocity = detection.velocity_3d
         num_lidar_points = detection.attributes.num_lidar_points
+        track_token = str(detection.attributes.track_token)
+
+        velocity_global = (
+            np.array([velocity.x, velocity.y, velocity.z], dtype=np.float64)
+            if velocity is not None
+            else np.zeros(3, dtype=np.float64)
+        )
+        if velocity_overrides is not None:
+            override = velocity_overrides.get(track_token)
+            if override is not None:
+                velocity_global = np.asarray(override, dtype=np.float64).reshape(3)
 
         records.append(
             DetectionRecord(
@@ -123,13 +150,9 @@ def extract_detection_records(
                     [bounding_box.length, bounding_box.width, bounding_box.height],
                     dtype=np.float64,
                 ),
-                velocity_global=(
-                    np.array([velocity.x, velocity.y, velocity.z], dtype=np.float64)
-                    if velocity is not None
-                    else np.zeros(3, dtype=np.float64)
-                ),
+                velocity_global=velocity_global,
                 num_lidar_points=int(num_lidar_points) if num_lidar_points is not None else -1,
-                track_token=str(detection.attributes.track_token),
+                track_token=track_token,
                 corners_global=np.asarray(bounding_box.corners_array, dtype=np.float64),
             )
         )
@@ -141,6 +164,7 @@ def build_frame_annotations(
     global_to_lidar: Array,
     yaw_convention: str = "mmdet3d",
     planar_velocity: bool = True,
+    box_layout: str = "streampetr",
 ) -> FrameAnnotations:
     """Project global-frame records into the lidar frame and assemble the mmdet3d arrays.
 
@@ -153,8 +177,11 @@ def build_frame_annotations(
         frame, as mmdetection3d does. Leaving it set keeps exports interchangeable; clearing it
         keeps the true 3D velocity, which leaks the vertical component into the lidar-frame
         ``(vx, vy)`` whenever the lidar is tilted.
+    :param box_layout: Column layout of ``gt_boxes`` — see :data:`BOX_LAYOUTS`.
     :return: The assembled annotation block.
     """
+    if box_layout not in BOX_LAYOUTS:
+        raise ValueError(f"box_layout must be one of {BOX_LAYOUTS}, got {box_layout!r}.")
     yaw_from_rotation = YAW_CONVENTIONS[yaw_convention]
     count = len(records)
     gt_boxes = np.zeros((count, 7), dtype=np.float64)
@@ -184,6 +211,11 @@ def build_frame_annotations(
         gt_names.append(record.class_name)
         num_lidar_pts[index] = record.num_lidar_points
         track_tokens.append(record.track_token)
+
+    if box_layout == "mmdet3d_0.17":
+        # (l, w, h, yaw) -> (w, l, h, -yaw - pi/2): mmdetection3d 0.17's converter layout.
+        gt_boxes[:, 3:6] = gt_boxes[:, [4, 3, 5]]
+        gt_boxes[:, 6] = -gt_boxes[:, 6] - np.pi / 2
 
     # 123D does not carry radar point counts, so mmdet3d's `valid_flag`
     # (num_lidar_pts + num_radar_pts > 0) reduces to the lidar term alone. Logs without point
