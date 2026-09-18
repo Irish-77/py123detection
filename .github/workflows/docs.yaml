@@ -15,7 +15,7 @@ name: docs
 # whole site and cannot be placed under a sub-path.
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
     paths:
       - 'docs/**'
       - 'src/**'
