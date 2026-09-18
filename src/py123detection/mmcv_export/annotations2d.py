@@ -1,19 +1,10 @@
-"""Per-camera 2D / mono-3D annotations, as StreamPETR's dataset expects them.
+"""Per-camera 2D / mono-3D annotations, which StreamPETR's dataset reads during training.
 
-``CustomNuScenesDataset.get_data_info`` reads ``info['bboxes2d']``, ``['labels2d']``,
-``['centers2d']``, ``['depths']`` and ``['bboxes_ignore']`` unconditionally during training, so
-an export that only carries 3D boxes cannot train StreamPETR. Those fields are lists with one
-entry per camera, in the same order as ``info['cams']``.
-
-They are pure geometry: take the 3D box, move it into the camera frame using that camera's own
-pose (cameras fire at slightly different times than the lidar keyframe), project the corners,
-and intersect the projected hull with the image rectangle. This mirrors ``get_2d_boxes`` in
-mmdetection3d's nuScenes converter, with two differences that follow from what 123D stores:
-
-* visibility bins are a nuScenes annotation attribute that 123D does not carry, so
-  ``visibilities`` is exported as empty strings ("unknown") rather than ``'1'``–``'4'``;
-* the projection uses 123D's camera model, so a distorted (non-pre-rectified) camera projects
-  through its distortion coefficients instead of a bare pinhole matrix.
+This mirrors ``get_2d_boxes`` in mmdetection3d's nuScenes converter: move each box into the
+camera frame with that camera's own pose, project the corners and intersect their hull with the
+image. Two differences follow from what 123D stores: ``visibilities`` are empty strings (123D has
+no nuScenes visibility bins), and distorted cameras project through 123D's camera model instead
+of a bare pinhole matrix.
 """
 
 from __future__ import annotations
@@ -22,76 +13,54 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Sequence, Tuple
 
 import numpy as np
-import numpy.typing as npt
 from py123d.datatypes import BaseCameraMetadata
 
 from py123detection.annotations import DetectionRecord
 from py123detection.geometry import YAW_CONVENTIONS, invert_rigid
 
-Array = npt.NDArray[np.float64]
-
+# Same minimum box side as the mmdet3d converter.
 MIN_BOX_SIDE_PX = 1.0
-"""Boxes narrower or shorter than this (in pixels) are dropped, matching the mmdet3d converter."""
 
 
 @dataclass
 class Camera2DAnnotations:
-    """The 2D / mono-3D annotation arrays for a single camera at a single frame."""
+    """2D / mono-3D annotation arrays of one camera at one frame."""
 
-    bboxes2d: Array = field(default_factory=lambda: np.zeros((0, 4), dtype=np.float32))
-    """``(M, 4)`` ``[x1, y1, x2, y2]`` image-space boxes."""
-
-    labels2d: npt.NDArray[np.int64] = field(default_factory=lambda: np.zeros((0,), dtype=np.int64))
-    """``(M,)`` taxonomy label ids."""
-
-    centers2d: Array = field(default_factory=lambda: np.zeros((0, 2), dtype=np.float32))
-    """``(M, 2)`` projected 3D box centers, in pixels."""
-
-    depths: Array = field(default_factory=lambda: np.zeros((0,), dtype=np.float32))
-    """``(M,)`` depth of the projected centers, in metres."""
-
-    bboxes3d_cam: Array = field(default_factory=lambda: np.zeros((0, 7), dtype=np.float32))
-    """``(M, 7)`` camera-frame boxes as ``[x, y, z, l, h, w, -yaw]`` (mmdet3d's mono-3D layout)."""
-
-    bboxes_ignore: Array = field(default_factory=lambda: np.zeros((0, 4), dtype=np.float32))
-    """``(K, 4)`` ignored boxes. Always empty: 123D has no crowd flag."""
-
+    bboxes2d: np.ndarray = field(default_factory=lambda: np.zeros((0, 4), dtype=np.float32))  # [x1, y1, x2, y2]
+    labels2d: np.ndarray = field(default_factory=lambda: np.zeros((0,), dtype=np.int64))
+    centers2d: np.ndarray = field(default_factory=lambda: np.zeros((0, 2), dtype=np.float32))
+    depths: np.ndarray = field(default_factory=lambda: np.zeros((0,), dtype=np.float32))
+    # [x, y, z, l, h, w, -yaw], mmdet3d's mono-3D layout
+    bboxes3d_cam: np.ndarray = field(default_factory=lambda: np.zeros((0, 7), dtype=np.float32))
+    # always empty, 123D has no crowd flag
+    bboxes_ignore: np.ndarray = field(default_factory=lambda: np.zeros((0, 4), dtype=np.float32))
     visibilities: List[str] = field(default_factory=list)
-    """``(M,)`` visibility tokens. Always ``""`` — 123D does not carry nuScenes visibility bins."""
 
 
 def project_records_to_camera(
     records: Sequence[DetectionRecord],
     camera_metadata: BaseCameraMetadata,
-    camera_to_global: Array,
+    camera_to_global: np.ndarray,
     yaw_convention: str = "mmdet3d",
 ) -> Camera2DAnnotations:
-    """Project 3D records into one camera and build its 2D annotation arrays.
+    """Project a frame's global-frame records into one camera.
 
-    :param records: Global-frame detection records for the frame.
-    :param camera_metadata: 123D camera metadata (intrinsics, distortion, image size).
-    :param camera_to_global: ``(4, 4)`` camera-to-global transform at the camera's own timestamp.
-    :param yaw_convention: Yaw read-out for ``bboxes3d_cam``; see
-        :func:`py123detection.geometry.mmdet3d_yaw`. The two conventions differ substantially
-        here, because a box lying in a camera frame carries a large roll/pitch.
-    :return: The camera's annotation arrays. Empty when nothing projects into the image.
+    :param camera_to_global: ``(4, 4)`` camera pose at the camera's own timestamp.
+    :param yaw_convention: Yaw read-out for ``bboxes3d_cam``. The conventions differ a lot here,
+        because a box seen from a camera frame carries a large roll/pitch.
     """
-    yaw_from_rotation = YAW_CONVENTIONS[yaw_convention]
+    compute_yaw = YAW_CONVENTIONS[yaw_convention]
     annotations = Camera2DAnnotations()
     if len(records) == 0:
         return annotations
 
     global_to_camera = invert_rigid(camera_to_global)
+    rotation, translation = global_to_camera[:3, :3], global_to_camera[:3, 3]
     width, height = camera_metadata.width, camera_metadata.height
 
-    bboxes2d: List[List[float]] = []
-    labels2d: List[int] = []
-    centers2d: List[List[float]] = []
-    depths: List[float] = []
-    bboxes3d_cam: List[List[float]] = []
-
+    bboxes2d, labels2d, centers2d, depths, bboxes3d_cam = [], [], [], [], []
     for record in records:
-        corners_camera = record.corners_global @ global_to_camera[:3, :3].T + global_to_camera[:3, 3]
+        corners_camera = record.corners_global @ rotation.T + translation
         in_front = corners_camera[:, 2] > 0
         if not in_front.any():
             continue
@@ -100,22 +69,20 @@ def project_records_to_camera(
         box2d = _clip_to_image(pixels, width, height)
         if box2d is None:
             continue
-
         x1, y1, x2, y2 = box2d
         if (x2 - x1) < MIN_BOX_SIDE_PX or (y2 - y1) < MIN_BOX_SIDE_PX:
             continue
 
-        center_camera = global_to_camera[:3, :3] @ record.center_global + global_to_camera[:3, 3]
+        center_camera = rotation @ record.center_global + translation
         center_pixels, _, center_depth = camera_metadata.project_to_image(center_camera[None, :])
         depth = float(center_depth[0])
         if depth <= 0:
             continue
 
-        rotation_camera = global_to_camera[:3, :3] @ record.rotation_global
-        # mmdet3d's mono-3D convention: dimensions reordered from (l, w, h) to (l, h, w), and the
-        # yaw negated because the camera frame's y axis points down.
+        # Mono-3D convention: (l, w, h) becomes (l, h, w), and the yaw is negated because the
+        # camera's y axis points down.
         length, box_width, box_height = record.size_lwh
-        yaw_camera = yaw_from_rotation(rotation_camera)
+        yaw = compute_yaw(rotation @ record.rotation_global)
 
         bboxes2d.append([x1, y1, x2, y2])
         labels2d.append(record.label_id)
@@ -129,7 +96,7 @@ def project_records_to_camera(
                 float(length),
                 float(box_height),
                 float(box_width),
-                -yaw_camera,
+                -yaw,
             ]
         )
 
@@ -143,18 +110,11 @@ def project_records_to_camera(
     return annotations
 
 
-def _clip_to_image(pixels: Array, width: int, height: int) -> Optional[Tuple[float, float, float, float]]:
-    """Intersect the convex hull of the projected corners with the image rectangle.
+def _clip_to_image(pixels: np.ndarray, width: int, height: int) -> Optional[Tuple[float, float, float, float]]:
+    """Bounds of the projected corners' convex hull intersected with the image, or ``None``.
 
-    Clipping the *hull* rather than its bounding rectangle matters: a box that grazes the frame
-    edge has a hull whose intersection with the image is far smaller than the clipped bounding
-    box of its corners. mmdetection3d's ``post_process_coords`` does the hull intersection, so
-    doing anything cheaper here would produce visibly different 2D boxes at frame edges.
-
-    :param pixels: ``(K, 2)`` projected corner coordinates.
-    :param width: Image width in pixels.
-    :param height: Image height in pixels.
-    :return: ``(x1, y1, x2, y2)``, or ``None`` when the box misses the image entirely.
+    Clipping the hull rather than its bounding box matters for boxes grazing the image edge, and
+    is what mmdetection3d's ``post_process_coords`` does.
     """
     from shapely.geometry import MultiPoint, box
 
@@ -162,8 +122,7 @@ def _clip_to_image(pixels: Array, width: int, height: int) -> Optional[Tuple[flo
     canvas = box(0, 0, float(width), float(height))
     if not hull.intersects(canvas):
         return None
-    intersection = hull.intersection(canvas)
-    min_x, min_y, max_x, max_y = intersection.bounds
+    min_x, min_y, max_x, max_y = hull.intersection(canvas).bounds
     if max_x <= min_x or max_y <= min_y:
         return None
     return float(min_x), float(min_y), float(max_x), float(max_y)

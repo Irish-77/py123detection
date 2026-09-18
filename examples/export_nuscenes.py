@@ -21,7 +21,6 @@ from py123detection.mmcv_export import ExportConfig, NuScenesTokenResolver, Toke
 
 
 def main() -> int:
-    """Export the mini train and val splits."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--data-root", type=Path, default=None, help="123D root (default: $PY123D_DATA_ROOT).")
     parser.add_argument("--out-dir", type=Path, required=True)

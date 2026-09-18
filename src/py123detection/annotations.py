@@ -1,13 +1,8 @@
-"""Extracting per-frame 3D annotations from a 123D scene into mmdetection3d's layout.
+"""Per-frame 3D annotations in mmdetection3d's nuScenes layout.
 
-mmdet3d's nuScenes info schema stores boxes in the **lidar frame** of the keyframe:
-``gt_boxes`` is ``(N, 7)`` as ``[x, y, z, dx, dy, dz, yaw]`` with ``(dx, dy, dz)`` the box's
-``(length, width, height)``, the position being the box *center* (mmdet3d re-anchors it to the
-bottom face at load time via ``origin=(0.5, 0.5, 0.5)``), and ``gt_velocity`` the ``(N, 2)``
-lidar-frame ground-plane velocity.
-
-123D stores all of that in the **global frame**, so the work here is one rigid transform per
-frame plus the taxonomy lookup.
+123D stores boxes in the global frame, mmdet3d wants them in the keyframe's lidar frame:
+``gt_boxes`` ``(N, 7)`` as ``[x, y, z, l, w, h, yaw]`` around the box center (mmdet3d moves the
+origin to the bottom face at load time) and ``gt_velocity`` ``(N, 2)``.
 """
 
 from __future__ import annotations
@@ -16,86 +11,44 @@ from dataclasses import dataclass
 from typing import List, Mapping, Optional
 
 import numpy as np
-import numpy.typing as npt
 from py123d.datatypes import BoxDetectionsSE3
 
 from py123detection.geometry import YAW_CONVENTIONS
 from py123detection.taxonomy import Taxonomy
 
-Array = npt.NDArray[np.float64]
-
+#: "streampetr": [x, y, z, l, w, h, yaw], written and read by StreamPETR and mmdetection3d >= 1.0.
+#: "mmdet3d_0.17": [x, y, z, w, l, h, -yaw - pi/2], written by mmdetection3d 0.17's nuScenes
+#: converter and fed verbatim into LiDARInstance3DBoxes by its dataset (PETR v1 pins 0.17).
 BOX_LAYOUTS = ("streampetr", "mmdet3d_0.17")
-"""Selectable ``gt_boxes`` column layouts.
-
-``"streampetr"`` — ``[x, y, z, l, w, h, yaw]``: what StreamPETR's converter and mmdetection3d
->= 1.0 write and read.
-
-``"mmdet3d_0.17"`` — ``[x, y, z, w, l, h, -yaw - pi/2]``: what mmdetection3d 0.17's own nuScenes
-converter writes (``tools/data_converter/nuscenes_converter.py``) and what its
-``NuScenesDataset.get_ann_info`` feeds verbatim into ``LiDARInstance3DBoxes``; PETR v1 pins that
-version. The map between the two is exact — a column swap and an affine yaw change.
-"""
 
 
 @dataclass
 class DetectionRecord:
-    """One annotated object, kept in the global frame until it is projected into a target frame."""
+    """One annotated object, in the global frame."""
 
     class_name: str
-    """Taxonomy class name (an entry of :attr:`Taxonomy.class_names`)."""
-
     label_id: int
-    """Index of :attr:`class_name` in the taxonomy."""
-
-    center_global: Array
-    """``(3,)`` box center in the global frame."""
-
-    rotation_global: Array
-    """``(3, 3)`` box orientation in the global frame."""
-
-    size_lwh: Array
-    """``(3,)`` box extent as ``(length, width, height)``, i.e. along the box's own x/y/z."""
-
-    velocity_global: Array
-    """``(3,)`` velocity in the global frame. Zero when the source log carries none."""
-
-    num_lidar_points: int
-    """Lidar points inside the box, or ``-1`` when the source log does not record it."""
-
+    center_global: np.ndarray
+    rotation_global: np.ndarray  # (3, 3)
+    size_lwh: np.ndarray  # along the box's own x/y/z
+    velocity_global: np.ndarray  # zero when the log carries none
+    num_lidar_points: int  # -1 when the log does not record it
     track_token: str
-    """Instance identifier, consistent across frames of a log."""
-
-    corners_global: Array
-    """``(8, 3)`` box corners in the global frame, reused for 2D reprojection."""
+    corners_global: np.ndarray  # (8, 3), reused for the 2D projection
 
 
 @dataclass
 class FrameAnnotations:
-    """The 3D annotation block of one exported info, already in the lidar frame."""
+    """The 3D annotation block of one info, in the lidar frame."""
 
-    gt_boxes: Array
-    """``(N, 7)`` ``[x, y, z, dx, dy, dz, yaw]`` in the lidar frame."""
-
-    gt_names: npt.NDArray[np.str_]
-    """``(N,)`` taxonomy class names."""
-
-    gt_velocity: Array
-    """``(N, 2)`` lidar-frame ``(vx, vy)``."""
-
-    num_lidar_pts: npt.NDArray[np.int64]
-    """``(N,)`` lidar point counts."""
-
-    num_radar_pts: npt.NDArray[np.int64]
-    """``(N,)`` radar point counts. Always zero — 123D does not carry this field."""
-
-    valid_flag: npt.NDArray[np.bool_]
-    """``(N,)`` mmdet3d's ``use_valid_flag`` mask."""
-
+    gt_boxes: np.ndarray
+    gt_names: np.ndarray
+    gt_velocity: np.ndarray
+    num_lidar_pts: np.ndarray
+    num_radar_pts: np.ndarray
+    valid_flag: np.ndarray
     track_tokens: List[str]
-    """``(N,)`` instance identifiers, kept as an export extra for tracking work."""
-
     records: List[DetectionRecord]
-    """The underlying global-frame records, reused by the 2D reprojection."""
 
     def __len__(self) -> int:
         return int(self.gt_boxes.shape[0])
@@ -104,16 +57,12 @@ class FrameAnnotations:
 def extract_detection_records(
     detections: Optional[BoxDetectionsSE3],
     taxonomy: Taxonomy,
-    velocity_overrides: Optional[Mapping[str, Array]] = None,
+    velocity_overrides: Optional[Mapping[str, np.ndarray]] = None,
 ) -> List[DetectionRecord]:
-    """Map 123D box detections onto taxonomy classes, dropping anything unmapped.
+    """Map 123D detections onto taxonomy classes, dropping unmapped ones.
 
-    :param detections: The 123D detections at one iteration, or ``None``.
-    :param taxonomy: Taxonomy deciding class names and label ids.
-    :param velocity_overrides: Optional global-frame velocities keyed by track token, e.g. from
-        :class:`py123detection.velocity.TrackVelocityTable`. A track present here replaces the
-        velocity the log stores; a track absent from it keeps the stored one.
-    :return: One record per kept detection.
+    :param velocity_overrides: Global-frame velocities by track token (see
+        :class:`py123detection.velocity.TrackVelocityTable`). Tracks not in it keep the stored velocity.
     """
     records: List[DetectionRecord] = []
     if detections is None:
@@ -124,21 +73,19 @@ def extract_detection_records(
         if class_name is None:
             continue
 
-        bounding_box = detection.bounding_box_se3
-        center = bounding_box.center_se3
+        box = detection.bounding_box_se3
+        center = box.center_se3
         velocity = detection.velocity_3d
         num_lidar_points = detection.attributes.num_lidar_points
         track_token = str(detection.attributes.track_token)
 
-        velocity_global = (
-            np.array([velocity.x, velocity.y, velocity.z], dtype=np.float64)
-            if velocity is not None
-            else np.zeros(3, dtype=np.float64)
-        )
-        if velocity_overrides is not None:
-            override = velocity_overrides.get(track_token)
-            if override is not None:
-                velocity_global = np.asarray(override, dtype=np.float64).reshape(3)
+        if velocity is not None:
+            velocity_global = np.array([velocity.x, velocity.y, velocity.z], dtype=np.float64)
+        else:
+            velocity_global = np.zeros(3, dtype=np.float64)
+        override = velocity_overrides.get(track_token) if velocity_overrides is not None else None
+        if override is not None:
+            velocity_global = np.asarray(override, dtype=np.float64).reshape(3)
 
         records.append(
             DetectionRecord(
@@ -146,14 +93,11 @@ def extract_detection_records(
                 label_id=taxonomy.label_id(class_name),
                 center_global=np.array([center.x, center.y, center.z], dtype=np.float64),
                 rotation_global=np.asarray(center.rotation_matrix, dtype=np.float64),
-                size_lwh=np.array(
-                    [bounding_box.length, bounding_box.width, bounding_box.height],
-                    dtype=np.float64,
-                ),
+                size_lwh=np.array([box.length, box.width, box.height], dtype=np.float64),
                 velocity_global=velocity_global,
                 num_lidar_points=int(num_lidar_points) if num_lidar_points is not None else -1,
                 track_token=track_token,
-                corners_global=np.asarray(bounding_box.corners_array, dtype=np.float64),
+                corners_global=np.asarray(box.corners_array, dtype=np.float64),
             )
         )
     return records
@@ -161,75 +105,55 @@ def extract_detection_records(
 
 def build_frame_annotations(
     records: List[DetectionRecord],
-    global_to_lidar: Array,
+    global_to_lidar: np.ndarray,
     yaw_convention: str = "mmdet3d",
     planar_velocity: bool = True,
     box_layout: str = "streampetr",
 ) -> FrameAnnotations:
-    """Project global-frame records into the lidar frame and assemble the mmdet3d arrays.
+    """Move global-frame records into the lidar frame and build the mmdet3d arrays.
 
-    :param records: Records from :func:`extract_detection_records`.
-    :param global_to_lidar: ``(4, 4)`` transform from the global frame into the keyframe lidar frame.
-    :param yaw_convention: ``"mmdet3d"`` reproduces the yaw mmdetection3d's own converter writes;
-        ``"heading"`` uses the geometric heading the nuScenes devkit assumes. See
-        :func:`py123detection.geometry.mmdet3d_yaw`.
-    :param planar_velocity: Zero the global vertical velocity before rotating into the lidar
-        frame, as mmdetection3d does. Leaving it set keeps exports interchangeable; clearing it
-        keeps the true 3D velocity, which leaks the vertical component into the lidar-frame
-        ``(vx, vy)`` whenever the lidar is tilted.
-    :param box_layout: Column layout of ``gt_boxes`` — see :data:`BOX_LAYOUTS`.
-    :return: The assembled annotation block.
+    :param yaw_convention: See :data:`py123detection.geometry.YAW_CONVENTIONS`.
+    :param planar_velocity: Zero the vertical velocity before rotating, as mmdetection3d does.
+        Otherwise a tilted lidar leaks it into ``(vx, vy)``.
+    :param box_layout: One of :data:`BOX_LAYOUTS`.
     """
     if box_layout not in BOX_LAYOUTS:
         raise ValueError(f"box_layout must be one of {BOX_LAYOUTS}, got {box_layout!r}.")
-    yaw_from_rotation = YAW_CONVENTIONS[yaw_convention]
+    compute_yaw = YAW_CONVENTIONS[yaw_convention]
     count = len(records)
     gt_boxes = np.zeros((count, 7), dtype=np.float64)
     gt_velocity = np.zeros((count, 2), dtype=np.float64)
-    gt_names: List[str] = []
     num_lidar_pts = np.zeros((count,), dtype=np.int64)
-    track_tokens: List[str] = []
 
     rotation = global_to_lidar[:3, :3]
     translation = global_to_lidar[:3, 3]
 
     for index, record in enumerate(records):
-        center_lidar = rotation @ record.center_global + translation
-        # Compose the full rotation rather than rotating the yaw alone: lidar-to-ego extrinsics
-        # generally carry a little roll/pitch, which the yaw read-out below is sensitive to.
-        box_rotation_lidar = rotation @ record.rotation_global
-        yaw = yaw_from_rotation(box_rotation_lidar)
-
-        velocity_global = record.velocity_global
+        velocity = record.velocity_global
         if planar_velocity:
-            velocity_global = np.array([velocity_global[0], velocity_global[1], 0.0], dtype=np.float64)
+            velocity = np.array([velocity[0], velocity[1], 0.0], dtype=np.float64)
 
-        gt_boxes[index, :3] = center_lidar
+        gt_boxes[index, :3] = rotation @ record.center_global + translation
         gt_boxes[index, 3:6] = record.size_lwh
-        gt_boxes[index, 6] = yaw
-        gt_velocity[index] = (rotation @ velocity_global)[:2]
-        gt_names.append(record.class_name)
+        # Rotate the full box orientation, not just the yaw: lidar extrinsics carry a little
+        # roll/pitch, and the yaw read-out is sensitive to it.
+        gt_boxes[index, 6] = compute_yaw(rotation @ record.rotation_global)
+        gt_velocity[index] = (rotation @ velocity)[:2]
         num_lidar_pts[index] = record.num_lidar_points
-        track_tokens.append(record.track_token)
 
     if box_layout == "mmdet3d_0.17":
-        # (l, w, h, yaw) -> (w, l, h, -yaw - pi/2): mmdetection3d 0.17's converter layout.
         gt_boxes[:, 3:6] = gt_boxes[:, [4, 3, 5]]
         gt_boxes[:, 6] = -gt_boxes[:, 6] - np.pi / 2
 
-    # 123D does not carry radar point counts, so mmdet3d's `valid_flag`
-    # (num_lidar_pts + num_radar_pts > 0) reduces to the lidar term alone. Logs without point
-    # counts report -1, which we treat as "unknown" and keep valid rather than silently drop.
-    num_radar_pts = np.zeros((count,), dtype=np.int64)
-    valid_flag = (num_lidar_pts > 0) | (num_lidar_pts < 0)
-
+    # mmdet3d's valid_flag is num_lidar_pts + num_radar_pts > 0. 123D has no radar counts, and
+    # logs without lidar counts report -1, which stays valid instead of being dropped.
     return FrameAnnotations(
         gt_boxes=gt_boxes,
-        gt_names=np.array(gt_names, dtype="<U32") if gt_names else np.array([], dtype="<U32"),
+        gt_names=np.array([record.class_name for record in records], dtype="<U32"),
         gt_velocity=gt_velocity,
         num_lidar_pts=num_lidar_pts,
-        num_radar_pts=num_radar_pts,
-        valid_flag=valid_flag,
-        track_tokens=track_tokens,
+        num_radar_pts=np.zeros((count,), dtype=np.int64),
+        valid_flag=num_lidar_pts != 0,
+        track_tokens=[record.track_token for record in records],
         records=records,
     )

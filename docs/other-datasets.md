@@ -7,7 +7,7 @@ a 10 Hz log rate, and 30 categories. This page records what it took, so that the
 (Waymo, KITTI-360, PandaSet, ...) is a checklist rather than a research project.
 
 The short version: **no converter code changes per dataset.** The export is driven entirely by
-flags; what *is* dataset-specific is (1) the taxonomy, (2) a handful of convention choices, and
+flags; what is dataset-specific is (1) the taxonomy, (2) a handful of convention choices, and
 (3) if you want proof, a small reference converter written from the raw data.
 
 ---
@@ -25,9 +25,9 @@ flags; what *is* dataset-specific is (1) the taxonomy, (2) a handful of conventi
 | Sweeps | `--max-sweeps` from the native-rate stream even when the export is subsampled | |
 | Frame tokens | `--token-style log_timestamp` (§4) | no native token needed |
 | Velocity | `--velocity-source tracks` (§5) | derived from tracks, not read from the dataset |
-| Reference frame | `--lidar-frame sensor|ego` (§2) | |
-| Box layout | `--box-layout streampetr|mmdet3d_0.17` (§6) | trainer-, not dataset-specific |
-| Ego pose | `--ego-pose-source sync|nearest` (§7) | |
+| Reference frame | `--lidar-frame sensor\|ego` (§2) | |
+| Box layout | `--box-layout streampetr\|mmdet3d_0.17` (§6) | trainer-, not dataset-specific |
+| Ego pose | `--ego-pose-source sync\|nearest` (§7) | |
 
 Everything the pickle needs is read through the 123D scene API, never from the raw dataset.
 
@@ -37,7 +37,7 @@ Everything the pickle needs is read through the 123D scene API, never from the r
 
 mmdetection3d's nuScenes convention expresses boxes and camera extrinsics in the frame of the
 top lidar, because nuScenes point-cloud files are stored in that frame. Argoverse 2 (like Waymo)
-stores sweeps and annotations in the **egovehicle frame**. Exporting AV2 with the default
+stores sweeps and annotations in the **ego-vehicle frame**. Exporting AV2 with the default
 `--lidar-frame sensor` would put the boxes in the `up_lidar` frame while the referenced point
 clouds stay in the ego frame — harmless for a camera-only model, wrong for anything that reads
 the points. Use `--lidar-frame ego`: `lidar2ego` becomes the identity, `sensor2lidar` becomes
@@ -139,7 +139,7 @@ own converter. For a dataset without one, write a **reference converter** from t
 * write the same `metadata` keys (`class_names`, `box_layout`, ...).
 
 Then `tools/compare_infos.py REF.pkl EXPORT.pkl --no-2d` reports the maximum absolute deviation
-of every field. On AV2 val the export matches the reference to `1.8e-12 m` on box centres and
+of every field. On AV2 val the export matches the reference to `3.6e-12 m` on box centres and
 camera extrinsics, `0` on intrinsics, sizes, timestamps, paths and point counts, `9e-12 m/s` on
 velocity — i.e. float round-off of the two implementations' matrix products. Anything at `1e-3`
 or above is a convention mismatch, and the deviation table tells you which one.

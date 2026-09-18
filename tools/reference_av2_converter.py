@@ -114,9 +114,6 @@ FORWARD_TOLERANCE_NS = 102_000_000  # LIDAR_SWEEP_INTERVAL_W_BUFFER_NS, py123d's
 BOX_LAYOUTS = ("streampetr", "mmdet3d_0.17")
 
 
-# --------------------------------------------------------------------------------------------
-# Small geometry helpers
-# --------------------------------------------------------------------------------------------
 
 
 def pose_matrix(qw: float, qx: float, qy: float, qz: float, tx: float, ty: float, tz: float) -> np.ndarray:
@@ -170,9 +167,6 @@ def track_velocities(times_ns: np.ndarray, centers: np.ndarray, max_dt_s: float)
     return velocities
 
 
-# --------------------------------------------------------------------------------------------
-# Per-log conversion
-# --------------------------------------------------------------------------------------------
 
 
 def convert_log(task: Tuple[str, str, str, Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
@@ -286,7 +280,7 @@ def convert_log(task: Tuple[str, str, str, Dict[str, Any]]) -> Tuple[List[Dict[s
             stats["frames_skipped_missing_camera"] += 1
             continue
 
-        # --- annotations, verbatim in the ego (= lidar) frame ---------------------------------
+        # annotations, verbatim in the ego (= lidar) frame
         gt_boxes: List[List[float]] = []
         gt_names: List[str] = []
         gt_velocity: List[List[float]] = []
@@ -313,7 +307,7 @@ def convert_log(task: Tuple[str, str, str, Dict[str, Any]]) -> Tuple[List[Dict[s
                 instance_tokens.append(str(row.track_uuid))
                 stats[f"class:{class_name}"] += 1
 
-        # --- sweeps: preceding native-rate lidar frames, newest first ------------------------
+        # sweeps: preceding native-rate lidar frames, newest first
         sweeps: List[Dict[str, Any]] = []
         for sweep_ts in reversed(lidar_ts[max(0, sweep_index - max_sweeps) : sweep_index]):
             sweep_pose = ego_pose.get(sweep_ts)
@@ -371,9 +365,6 @@ def convert_log(task: Tuple[str, str, str, Dict[str, Any]]) -> Tuple[List[Dict[s
     return infos, stats
 
 
-# --------------------------------------------------------------------------------------------
-# CLI
-# --------------------------------------------------------------------------------------------
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:

@@ -1,21 +1,15 @@
-"""Command line interface: ``py123det-export-mmcv``.
+"""``py123det-export-mmcv``: export 123D splits to an mmdetection3d pickle.
 
-Three subcommands:
-
-``export``
-    123D splits -> one mmdetection3d info pickle.
-``inspect``
-    Load a pickle and print its metadata and a sample frame. Run this in the *training*
-    environment to prove the file survived the Python/numpy hop.
-``token-map``
-    Dump a nuScenes ``sample_token`` map so exports can restore native tokens without the
-    devkit installed at export time.
+``export`` writes the pickle, ``inspect`` prints its metadata and first frame (run it in the
+training environment to check the file survived the Python/numpy hop), and ``token-map`` dumps
+nuScenes sample tokens so exports can restore them without the devkit installed.
 """
 
 from __future__ import annotations
 
 import argparse
 import logging
+import pickle
 import sys
 from pathlib import Path
 from typing import List, Optional, Sequence
@@ -28,21 +22,20 @@ from py123detection.mmcv_export.converter import (
     ExportConfig,
 )
 from py123detection.mmcv_export.export import export_to_mmdet3d
+from py123detection.mmcv_export.schema import validate_info
 from py123detection.mmcv_export.sensors import PathStyle, SensorMode, SensorResolverConfig
 from py123detection.mmcv_export.tokens import (
     LogTimestampTokenResolver,
     MappingTokenResolver,
     NuScenesTokenResolver,
     TokenResolver,
+    dump_nuscenes_token_map,
 )
 from py123detection.sources import Source
 from py123detection.taxonomy import TAXONOMIES, get_taxonomy
 
-logger = logging.getLogger("py123detection")
-
 
 def _add_export_arguments(parser: argparse.ArgumentParser) -> None:
-    """Register the arguments of the ``export`` subcommand."""
     data = parser.add_argument_group("input")
     data.add_argument("--data-root", type=Path, default=None, help="123D data root (default: $PY123D_DATA_ROOT).")
     data.add_argument(
@@ -235,7 +228,6 @@ def _add_export_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def _parse_sensor_roots(values: Optional[Sequence[str]]) -> dict:
-    """Parse ``DATASET=PATH`` overrides into a dictionary."""
     roots = {}
     for value in values or []:
         if "=" not in value:
@@ -245,9 +237,9 @@ def _parse_sensor_roots(values: Optional[Sequence[str]]) -> dict:
     return roots
 
 
-def _parse_merge_sources(values: Optional[Sequence[str]], template: Source) -> List[Source]:
-    """Parse ``ROOT:SPLIT[,SPLIT...]`` merge specs, inheriting sampling from the primary source."""
-    sources: List[Source] = []
+def _parse_merge_sources(values: Optional[Sequence[str]], primary: Source) -> List[Source]:
+    """``ROOT:SPLIT[,SPLIT...]`` specs. Merged sources inherit sampling from the primary source."""
+    sources = []
     for value in values or []:
         if ":" not in value:
             raise SystemExit(f"--merge expects ROOT:SPLIT[,SPLIT...], got {value!r}.")
@@ -256,17 +248,16 @@ def _parse_merge_sources(values: Optional[Sequence[str]], template: Source) -> L
             Source(
                 data_root=Path(root),
                 splits=[split for split in splits.split(",") if split],
-                sample_rate_hz=template.sample_rate_hz,
-                frame_stride=template.frame_stride,
-                required_modalities=template.required_modalities,
-                max_logs=template.max_logs,
+                sample_rate_hz=primary.sample_rate_hz,
+                frame_stride=primary.frame_stride,
+                required_modalities=primary.required_modalities,
+                max_logs=primary.max_logs,
             )
         )
     return sources
 
 
 def _build_token_resolver(args: argparse.Namespace) -> TokenResolver:
-    """Build the token resolver implied by the CLI arguments."""
     if args.token_map is not None:
         return MappingTokenResolver.from_json(args.token_map)
     if args.nuscenes_root is not None:
@@ -277,7 +268,6 @@ def _build_token_resolver(args: argparse.Namespace) -> TokenResolver:
 
 
 def _run_export(args: argparse.Namespace) -> int:
-    """Execute the ``export`` subcommand."""
     primary = Source(
         data_root=args.data_root,
         splits=args.splits,
@@ -333,22 +323,16 @@ def _run_export(args: argparse.Namespace) -> int:
 
 
 def _run_inspect(args: argparse.Namespace) -> int:
-    """Execute the ``inspect`` subcommand."""
-    import pickle
-
     with open(args.path, "rb") as handle:
         payload = pickle.load(handle)
 
-    metadata = payload.get("metadata", {})
     infos = payload.get("infos", [])
     print(f"{args.path}: {len(infos)} frames")
     print("metadata:")
-    for key, value in metadata.items():
+    for key, value in payload.get("metadata", {}).items():
         print(f"  {key}: {value}")
 
     if infos:
-        from py123detection.mmcv_export.schema import validate_info
-
         info = infos[0]
         print("\nfirst frame:")
         for key in ("token", "scene_token", "frame_idx", "timestamp", "lidar_path"):
@@ -361,16 +345,12 @@ def _run_inspect(args: argparse.Namespace) -> int:
 
 
 def _run_token_map(args: argparse.Namespace) -> int:
-    """Execute the ``token-map`` subcommand."""
-    from py123detection.mmcv_export.tokens import dump_nuscenes_token_map
-
     count = dump_nuscenes_token_map(args.nuscenes_root, args.out)
     print(f"Wrote {count} tokens to {args.out}")
     return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Build the argument parser for ``py123det-export-mmcv``."""
     parser = argparse.ArgumentParser(
         prog="py123det-export-mmcv",
         description="Export 123D datasets to mmdetection3d info pickles.",
@@ -395,13 +375,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
-    """CLI entry point.
-
-    :param argv: Argument vector; defaults to ``sys.argv[1:]``.
-    :return: Process exit code.
-    """
-    parser = build_parser()
-    args = parser.parse_args(argv)
+    args = build_parser().parse_args(argv)
     logging.basicConfig(
         level=logging.DEBUG if args.verbose else logging.INFO,
         format="%(levelname)s %(name)s: %(message)s",

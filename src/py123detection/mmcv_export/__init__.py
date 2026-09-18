@@ -1,8 +1,8 @@
-"""Export 123D datasets into the mmcv / mmdetection3d ecosystem.
+"""Export 123D datasets to mmdetection3d info pickles.
 
-The entry point is :func:`export_to_mmdet3d`, which turns one or more :class:`~py123detection.sources.Source`
-definitions into a single ``.pkl`` that ``mmdet3d.datasets.NuScenesDataset`` — and therefore
-PETR, StreamPETR and BEVDet/CoIn3D — can use as its ``ann_file``.
+:func:`~py123detection.mmcv_export.export.export_to_mmdet3d` writes one ``.pkl`` from one or more
+:class:`~py123detection.sources.Source`, usable as the ``ann_file`` of ``NuScenesDataset`` and
+its PETR / StreamPETR / BEVDet derivatives.
 """
 
 from py123detection.mmcv_export.annotations2d import Camera2DAnnotations, project_records_to_camera

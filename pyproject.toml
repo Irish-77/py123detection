@@ -30,6 +30,17 @@ nuscenes = ["nuscenes-devkit"]
 # Only needed for `image_mode=extract` (writing embedded images back out to disk).
 images = ["opencv-python"]
 dev = ["pytest", "ruff"]
+# Only needed to build the documentation site (see docs/development.md).
+docs = [
+    "sphinx>=8",
+    "furo",
+    "myst-parser>=2",
+    "sphinx-autodoc-typehints",
+    "sphinx-copybutton",
+    "sphinx-argparse",
+    "sphinxcontrib-mermaid",
+    "sphinx-autobuild",
+]
 
 [project.scripts]
 py123det-export-mmcv = "py123detection.mmcv_export.cli:main"

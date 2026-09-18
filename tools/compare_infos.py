@@ -211,27 +211,24 @@ def compare(
 
         deviations["timestamp"].update(np.array([reference["timestamp"] - candidate["timestamp"]]), context)
 
-        # --- frame-level poses -----------------------------------------------------------
-        for key, dev_t, dev_r in (
-            ("lidar2ego", "lidar2ego_t", "lidar2ego_R"),
-            ("ego2global", "ego2global_t", "ego2global_R"),
-        ):
-            deviations[dev_t].update(
+        # frame-level poses
+        for key in ("lidar2ego", "ego2global"):
+            deviations[f"{key}_t"].update(
                 np.asarray(reference[f"{key}_translation"], dtype=np.float64)
                 - np.asarray(candidate[f"{key}_translation"], dtype=np.float64),
                 context,
             )
-            deviations[dev_r].update(
+            deviations[f"{key}_R"].update(
                 quaternion_matrix(reference[f"{key}_rotation"]) - quaternion_matrix(candidate[f"{key}_rotation"]),
                 context,
             )
 
-        # --- lidar path --------------------------------------------------------------------
+        # lidar path
         path_total += 1
         if not _same_file(reference["lidar_path"], candidate["lidar_path"]):
             path_mismatches += 1
 
-        # --- cameras -----------------------------------------------------------------------
+        # cameras
         if set(reference["cams"]) != set(candidate["cams"]):
             structural_problems.append(
                 f"{context}: camera keys differ: reference={sorted(reference['cams'])} "
@@ -257,26 +254,17 @@ def compare(
                     - np.asarray(candidate_cam["cam_intrinsic"], dtype=np.float64),
                     camera_context,
                 )
-                deviations["cam_sensor2ego_t"].update(
-                    np.asarray(reference_cam["sensor2ego_translation"], dtype=np.float64)
-                    - np.asarray(candidate_cam["sensor2ego_translation"], dtype=np.float64),
-                    camera_context,
-                )
-                deviations["cam_sensor2ego_R"].update(
-                    quaternion_matrix(reference_cam["sensor2ego_rotation"])
-                    - quaternion_matrix(candidate_cam["sensor2ego_rotation"]),
-                    camera_context,
-                )
-                deviations["cam_ego2global_t"].update(
-                    np.asarray(reference_cam["ego2global_translation"], dtype=np.float64)
-                    - np.asarray(candidate_cam["ego2global_translation"], dtype=np.float64),
-                    camera_context,
-                )
-                deviations["cam_ego2global_R"].update(
-                    quaternion_matrix(reference_cam["ego2global_rotation"])
-                    - quaternion_matrix(candidate_cam["ego2global_rotation"]),
-                    camera_context,
-                )
+                for key in ("sensor2ego", "ego2global"):
+                    deviations[f"cam_{key}_t"].update(
+                        np.asarray(reference_cam[f"{key}_translation"], dtype=np.float64)
+                        - np.asarray(candidate_cam[f"{key}_translation"], dtype=np.float64),
+                        camera_context,
+                    )
+                    deviations[f"cam_{key}_R"].update(
+                        quaternion_matrix(reference_cam[f"{key}_rotation"])
+                        - quaternion_matrix(candidate_cam[f"{key}_rotation"]),
+                        camera_context,
+                    )
                 deviations["cam_sensor2lidar_t"].update(
                     np.asarray(reference_cam["sensor2lidar_translation"], dtype=np.float64)
                     - np.asarray(candidate_cam["sensor2lidar_translation"], dtype=np.float64),
@@ -288,11 +276,11 @@ def compare(
                     camera_context,
                 )
 
-        # --- sweeps ------------------------------------------------------------------------
+        # sweeps
         sweep_lengths["reference"].append(len(reference["sweeps"]))
         sweep_lengths["candidate"].append(len(candidate["sweeps"]))
 
-        # --- 3D boxes, matched by instance token --------------------------------------------
+        # 3D boxes, matched by instance token
         box_counts["reference"] += len(reference["gt_names"])
         box_counts["candidate"] += len(candidate["gt_names"])
         matched = _match_boxes(reference, candidate)
@@ -323,11 +311,9 @@ def compare(
             if reference["gt_names"][reference_index] != candidate["gt_names"][candidate_index]:
                 label_mismatches += 1
 
-        # --- per-camera 2D annotations -------------------------------------------------------
+        # per-camera 2D annotations
         if compare_2d and "bboxes2d" in reference and "bboxes2d" in candidate:
             _compare_2d(reference, candidate, deviations, counts_2d, context)
-
-    # ------------------------------------------------------------------------------------
     print("\n[2] Paths")
     print(f"  compared                : {path_total}")
     print(f"  mismatched              : {path_mismatches}")

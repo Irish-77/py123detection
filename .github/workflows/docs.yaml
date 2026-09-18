@@ -1,0 +1,97 @@
+name: docs
+
+# main is published at the site root on every push. Any other branch can be published as a
+# preview under a directory named after it, on demand:
+#
+#   https://irish-77.github.io/py123detection/            <- main, automatically
+#   https://irish-77.github.io/py123detection/<branch>/   <- Actions -> docs -> Run workflow
+#
+# Previews are opt-in so that a shareable link exists when someone else needs to see work in
+# progress, without a CI run on every feature push -- for your own iteration, serve the build
+# locally instead (see docs/development.md).
+#
+# This needs Pages to be served from the gh-pages branch (Settings -> Pages -> "Deploy from a
+# branch" -> gh-pages / (root)), because the actions/deploy-pages artifact always replaces the
+# whole site and cannot be placed under a sub-path.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'src/**'
+      - 'pyproject.toml'
+      - '.github/workflows/docs.yaml'
+      - '.github/scripts/**'
+  # Run workflow -> choose a branch. On main this refreshes the root, on any other branch it
+  # publishes (or refreshes) that branch's preview.
+  workflow_dispatch:
+
+permissions:
+  contents: write  # the deploy commits to gh-pages
+
+# One deploy at a time: every branch writes into the same gh-pages branch.
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        # py123d pinned to the version the docs are built against locally.
+        run: |
+          pip install uv
+          uv pip install --system "py123d==0.6.0" -e ".[docs]"
+
+      - name: Resolve the branch's place on the site
+        id: target
+        run: |
+          set -euo pipefail
+          owner="$(printf '%s' "${GITHUB_REPOSITORY%%/*}" | tr '[:upper:]' '[:lower:]')"
+          repo="${GITHUB_REPOSITORY#*/}"
+          site="https://${owner}.github.io/${repo}"
+          # A <user>.github.io repository is served from the domain root, not a sub-path.
+          [ "$(printf '%s' "$repo" | tr '[:upper:]' '[:lower:]')" = "${owner}.github.io" ] \
+            && site="https://${owner}.github.io"
+
+          if [ "$GITHUB_REF_NAME" = "$DEFAULT_BRANCH" ]; then
+            slug=""
+            base="${site}/"
+          else
+            slug="$(.github/scripts/branch-slug.sh "$GITHUB_REF_NAME")"
+            base="${site}/${slug}/"
+          fi
+
+          {
+            echo "slug=$slug"
+            echo "site=$site"
+            echo "base=$base"
+          } >> "$GITHUB_OUTPUT"
+          echo "Publishing $GITHUB_REF_NAME to $base"
+
+      - name: Build Sphinx documentation
+        env:
+          # Read by docs/conf.py: canonical URLs, and a banner on branch previews.
+          DOCS_BASE_URL: ${{ steps.target.outputs.base }}
+          DOCS_SITE_ROOT: ${{ steps.target.outputs.site }}
+          DOCS_PREVIEW_BRANCH: ${{ steps.target.outputs.slug && github.ref_name || '' }}
+          DOCS_PREVIEW_COMMIT: ${{ github.sha }}
+        run: sphinx-build -b dirhtml docs docs/_build
+
+      - name: Publish to gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: .github/scripts/publish-docs.sh "${{ steps.target.outputs.slug }}" docs/_build
+
+      - name: Summary
+        run: echo "Published to ${{ steps.target.outputs.base }}" >> "$GITHUB_STEP_SUMMARY"
