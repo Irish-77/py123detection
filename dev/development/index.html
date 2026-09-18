@@ -1,0 +1,479 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex/"><link rel="search" title="Search" href="../search/"><link rel="prev" title="Contributing" href="../contributing/">
+        <link rel="canonical" href="https://irish-77.github.io/py123detection/dev/development/">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Development - py123detection 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../"><div class="brand">py123detection 0.1.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../">
+  
+  <span class="sidebar-brand-text">py123detection 0.1.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search/" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cross-dataset-training/">Cross-dataset training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../validation/">Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">CLI reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/generated/py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.geometry/">py123detection.geometry</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.export/">py123detection.mmcv_export.export</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.schema/">py123detection.mmcv_export.schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.sensors/">py123detection.mmcv_export.sensors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.tokens/">py123detection.mmcv_export.tokens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.sources/">py123detection.sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.velocity/">py123detection.velocity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/">Contributing</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Development</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/development.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="development">
+<h1>Development<a class="headerlink" href="#development" title="Link to this heading">¶</a></h1>
+<section id="layout">
+<h2>Layout<a class="headerlink" href="#layout" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">src</span><span class="o">/</span><span class="n">py123detection</span><span class="o">/</span>
+  <span class="n">sources</span><span class="o">.</span><span class="n">py</span>                 <span class="n">Source</span><span class="p">:</span> <span class="n">a</span> <span class="mi">123</span><span class="n">D</span> <span class="n">data</span> <span class="n">root</span> <span class="o">+</span> <span class="n">splits</span> <span class="o">-&gt;</span> <span class="n">scenes</span><span class="p">,</span> <span class="k">with</span> <span class="n">sampling</span>
+  <span class="n">taxonomy</span><span class="o">.</span><span class="n">py</span>                <span class="n">Taxonomy</span> <span class="o">+</span> <span class="n">presets</span><span class="p">:</span> <span class="mi">123</span><span class="n">D</span> <span class="n">labels</span> <span class="o">-&gt;</span> <span class="n">mmdet3d</span> <span class="k">class</span><span class="w"> </span><span class="nc">names</span>
+  <span class="n">annotations</span><span class="o">.</span><span class="n">py</span>             <span class="k">global</span><span class="o">-</span><span class="n">frame</span> <span class="n">records</span> <span class="o">-&gt;</span> <span class="n">lidar</span><span class="o">-</span><span class="n">frame</span> <span class="n">gt_boxes</span> <span class="o">/</span> <span class="n">gt_velocity</span>
+  <span class="n">velocity</span><span class="o">.</span><span class="n">py</span>                <span class="n">track</span> <span class="n">central</span> <span class="n">differences</span><span class="p">,</span> <span class="k">for</span> <span class="n">datasets</span> <span class="k">with</span> <span class="n">no</span> <span class="n">annotated</span> <span class="n">velocity</span>
+  <span class="n">geometry</span><span class="o">.</span><span class="n">py</span>                <span class="n">SE</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">helpers</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">two</span> <span class="n">yaw</span> <span class="n">conventions</span>
+  <span class="n">mmcv_export</span><span class="o">/</span>
+    <span class="n">export</span><span class="o">.</span><span class="n">py</span>                <span class="n">export_to_mmdet3d</span><span class="p">:</span> <span class="n">the</span> <span class="n">one</span><span class="o">-</span><span class="n">call</span> <span class="n">entry</span> <span class="n">point</span>
+    <span class="n">converter</span><span class="o">.</span><span class="n">py</span>             <span class="n">ExportConfig</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">scenes</span> <span class="o">-&gt;</span> <span class="n">info</span> <span class="n">dicts</span> <span class="n">conversion</span>
+    <span class="n">annotations2d</span><span class="o">.</span><span class="n">py</span>         <span class="n">per</span><span class="o">-</span><span class="n">camera</span> <span class="mi">2</span><span class="n">D</span> <span class="o">/</span> <span class="n">mono</span><span class="o">-</span><span class="mi">3</span><span class="n">D</span> <span class="n">annotations</span> <span class="p">(</span><span class="n">StreamPETR</span><span class="p">)</span>
+    <span class="n">sensors</span><span class="o">.</span><span class="n">py</span>               <span class="n">reference</span> <span class="n">vs</span> <span class="n">extract</span><span class="p">;</span> <span class="n">path</span> <span class="n">resolution</span>
+    <span class="n">tokens</span><span class="o">.</span><span class="n">py</span>                <span class="mi">123</span><span class="n">D</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">native</span> <span class="n">dataset</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">log</span><span class="o">/</span><span class="n">timestamp</span> <span class="n">tokens</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">py</span>                <span class="n">pickle</span> <span class="n">writing</span><span class="p">,</span> <span class="n">portability</span> <span class="n">validation</span><span class="p">,</span> <span class="n">numpy</span> <span class="n">compatibility</span>
+    <span class="n">schema</span><span class="o">.</span><span class="n">py</span>                <span class="n">the</span> <span class="n">info</span> <span class="n">schema</span><span class="p">,</span> <span class="n">documented</span> <span class="ow">and</span> <span class="n">checkable</span>
+    <span class="n">cli</span><span class="o">.</span><span class="n">py</span>                   <span class="n">py123det</span><span class="o">-</span><span class="n">export</span><span class="o">-</span><span class="n">mmcv</span>
+  <span class="n">mmcv_plugin</span><span class="o">/</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">py</span>               <span class="n">Py123DNuScenesDataset</span> <span class="p">(</span><span class="n">training</span> <span class="n">side</span><span class="p">;</span> <span class="n">imports</span> <span class="n">mmdet3d</span> <span class="n">lazily</span><span class="p">)</span>
+    <span class="n">evaluation</span><span class="o">.</span><span class="n">py</span>            <span class="n">nuScenes</span><span class="o">-</span><span class="n">metric</span> <span class="n">evaluation</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">pickle</span><span class="s1">'s own ground truth</span>
+<span class="n">tools</span><span class="o">/</span>
+  <span class="n">reference_nuscenes_converter</span><span class="o">.</span><span class="n">py</span>   <span class="n">ground</span> <span class="n">truth</span><span class="p">:</span> <span class="n">the</span> <span class="n">mmdet3d</span><span class="o">/</span><span class="n">StreamPETR</span> <span class="n">converter</span><span class="p">,</span> <span class="n">ported</span>
+  <span class="n">reference_av2_converter</span><span class="o">.</span><span class="n">py</span>        <span class="n">the</span> <span class="n">same</span> <span class="n">idea</span> <span class="k">for</span> <span class="n">Argoverse</span> <span class="mi">2</span><span class="p">,</span> <span class="n">written</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">raw</span> <span class="n">files</span>
+  <span class="n">compare_infos</span><span class="o">.</span><span class="n">py</span>                  <span class="n">field</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">field</span> <span class="n">diff</span> <span class="n">of</span> <span class="n">two</span> <span class="n">info</span> <span class="n">pickles</span>
+<span class="n">docs</span><span class="o">/</span>
+  <span class="n">conf</span><span class="o">.</span><span class="n">py</span>                    <span class="n">Sphinx</span> <span class="n">configuration</span> <span class="k">for</span> <span class="n">this</span> <span class="n">site</span>
+  <span class="n">guides</span><span class="o">/</span>                    <span class="n">task</span><span class="o">-</span><span class="n">oriented</span> <span class="n">pages</span><span class="p">:</span> <span class="n">what</span> <span class="n">to</span> <span class="n">export</span><span class="p">,</span> <span class="n">extrinsics</span><span class="p">,</span> <span class="n">sensors</span><span class="p">,</span> <span class="o">...</span>
+  <span class="n">api</span><span class="o">/</span>                       <span class="n">API</span> <span class="n">reference</span><span class="p">,</span> <span class="n">generated</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">docstrings</span>
+  <span class="n">other</span><span class="o">-</span><span class="n">datasets</span><span class="o">.</span><span class="n">md</span>          <span class="n">exporting</span> <span class="n">a</span> <span class="n">dataset</span> <span class="n">that</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">nuScenes</span>
+<span class="n">tests</span><span class="o">/</span>                       <span class="mi">179</span> <span class="n">unit</span> <span class="n">tests</span> <span class="o">+</span> <span class="mi">12</span> <span class="n">integration</span> <span class="n">tests</span>
+</pre></div>
+</div>
+</section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w">                                  </span><span class="c1"># 179 unit tests, no data needed</span>
+<span class="nv">NUSCENES_DATA_ROOT</span><span class="o">=</span>...<span class="w"> </span><span class="nv">PY123D_DATA_ROOT</span><span class="o">=</span>...<span class="w"> </span>pytest<span class="w"> </span>-m<span class="w"> </span>integration<span class="w">    </span><span class="c1"># the round-trip comparison</span>
+</pre></div>
+</div>
+</section>
+<section id="building-the-docs">
+<h2>Building the docs<a class="headerlink" href="#building-the-docs" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">"py123detection[docs]"</span>
+sphinx-build<span class="w"> </span>-b<span class="w"> </span>dirhtml<span class="w"> </span>docs<span class="w"> </span>docs/_build<span class="w">              </span><span class="c1"># one-off build, same builder as CI</span>
+sphinx-autobuild<span class="w"> </span>--builder<span class="w"> </span>dirhtml<span class="w"> </span>docs<span class="w"> </span>docs/_build<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span><span class="w">   </span><span class="c1"># live-reloading preview</span>
+</pre></div>
+</div>
+<p>The API pages import the package, so build in an environment that has py123d. mmcv, mmdet3d and
+torch are mocked (<code class="docutils literal notranslate"><span class="pre">autodoc_mock_imports</span></code> in <code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code>), so the training-side classes are
+documented without them. The <a class="reference internal" href="../cli/"><span class="std std-doc">CLI reference</span></a> is generated from
+<code class="docutils literal notranslate"><span class="pre">py123detection.mmcv_export.cli.build_parser</span></code>, so new flags show up without editing the docs.</p>
+<section id="serving-a-build-locally">
+<h3>Serving a build locally<a class="headerlink" href="#serving-a-build-locally" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">sphinx-autobuild</span></code> is the usual way to look at the docs while writing them. To serve a finished
+build instead – any static file server will do, since the site is plain HTML:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8000</span><span class="w"> </span>--directory<span class="w"> </span>docs/_build<span class="w">     </span><span class="c1"># -&gt; http://localhost:8000</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dirhtml</span></code> builder writes <code class="docutils literal notranslate"><span class="pre">validation/index.html</span></code> rather than <code class="docutils literal notranslate"><span class="pre">validation.html</span></code>, so pages live
+at <code class="docutils literal notranslate"><span class="pre">http://localhost:8000/validation/</span></code>, exactly as they do on the published site.</p>
+<p>To reproduce the published layout including the branch prefix (below), build into a per-branch
+directory and serve the parent:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">slug</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>.github/scripts/branch-slug.sh<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>git<span class="w"> </span>rev-parse<span class="w"> </span>--abbrev-ref<span class="w"> </span>HEAD<span class="k">)</span><span class="s2">"</span><span class="k">)</span><span class="s2">"</span>
+sphinx-build<span class="w"> </span>-b<span class="w"> </span>dirhtml<span class="w"> </span>docs<span class="w"> </span><span class="s2">"docs/_site/</span><span class="nv">$slug</span><span class="s2">"</span>
+python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8000</span><span class="w"> </span>--directory<span class="w"> </span>docs/_site<span class="w">      </span><span class="c1"># -&gt; http://localhost:8000/$slug/</span>
+</pre></div>
+</div>
+<p>On a cluster without a browser, run the server on the login node and forward the port:
+<code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-L</span> <span class="pre">8000:localhost:8000</span> <span class="pre">&lt;login-node&gt;</span></code>, then open <code class="docutils literal notranslate"><span class="pre">http://localhost:8000</span></code>.</p>
+</section>
+</section>
+<section id="publishing">
+<h2>Publishing<a class="headerlink" href="#publishing" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">.github/workflows/docs.yaml</span></code> publishes into the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch, which GitHub Pages serves
+(Settings -&gt; Pages -&gt; <em>Deploy from a branch</em> -&gt; <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> / <code class="docutils literal notranslate"><span class="pre">(root)</span></code>):</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>what</p></th>
+<th class="head"><p>when</p></th>
+<th class="head"><p>directory</p></th>
+<th class="head"><p>URL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">main</span></code></p></td>
+<td><p>every push touching <code class="docutils literal notranslate"><span class="pre">docs/</span></code>, <code class="docutils literal notranslate"><span class="pre">src/</span></code>, <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> or the workflow files</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/</span></code></p></td>
+<td><p><a class="reference external" href="https://irish-77.github.io/py123detection/validation/">https://irish-77.github.io/py123detection/validation/</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>any other branch</p></td>
+<td><p>on demand: Actions -&gt; <em>docs</em> -&gt; <em>Run workflow</em> -&gt; pick the branch</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/&lt;branch&gt;/</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">https://irish-77.github.io/py123detection/&lt;branch&gt;/validation/</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Previews are opt-in because a published preview is only worth having when someone else needs to
+read it – for your own iteration the local server above beats a CI round-trip. A preview is a
+snapshot of the commit it was built from and says so in a banner naming the branch and short SHA,
+so it is mistaken neither for the released docs nor for the branch’s current state; re-run the
+workflow to refresh it.</p>
+<p>The branch directory is the branch name lowercased with URL-unfriendly characters replaced by
+<code class="docutils literal notranslate"><span class="pre">-</span></code>. <code class="docutils literal notranslate"><span class="pre">.github/scripts/branch-slug.sh</span></code> is the single definition of that mapping, used by both
+workflows and by the local command above.</p>
+<p>A preview is removed when its branch is deleted (<code class="docutils literal notranslate"><span class="pre">docs-cleanup.yaml</span></code>), and any that outlive that
+event are collected the next time <code class="docutils literal notranslate"><span class="pre">main</span></code> deploys: a root deploy keeps only the directories of
+branches that still exist on the remote.</p>
+<p>One thing to keep in mind when naming a branch: previews sit next to <code class="docutils literal notranslate"><span class="pre">main</span></code>’s own top-level
+pages, so a branch named <code class="docutils literal notranslate"><span class="pre">guides</span></code> or <code class="docutils literal notranslate"><span class="pre">api</span></code> would publish over that page’s URL. Anything with a
+<code class="docutils literal notranslate"><span class="pre">feat/</span></code>, <code class="docutils literal notranslate"><span class="pre">fix/</span></code> or similar prefix is clear of them.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="../contributing/">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Contributing</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Development</a><ul>
+<li><a class="reference internal" href="#layout">Layout</a></li>
+<li><a class="reference internal" href="#tests">Tests</a></li>
+<li><a class="reference internal" href="#building-the-docs">Building the docs</a><ul>
+<li><a class="reference internal" href="#serving-a-build-locally">Serving a build locally</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#publishing">Publishing</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=b2731ba4"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

@@ -1,0 +1,24 @@
+py123detection.geometry
+=======================
+
+.. automodule:: py123detection.geometry
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      YAW_CONVENTIONS
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      heading_yaw
+      invert_rigid
+      matrix_to_translation_quaternion
+      mmdet3d_yaw
+      pose_to_matrix
+      rotate_vectors
+      transform_points
+   

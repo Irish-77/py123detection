@@ -1,0 +1,14 @@
+py123detection.mmcv\_plugin
+===========================
+
+.. automodule:: py123detection.mmcv_plugin
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   dataset
+   evaluation

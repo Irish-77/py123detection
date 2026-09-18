@@ -1,0 +1,30 @@
+py123detection.taxonomy
+=======================
+
+.. automodule:: py123detection.taxonomy
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      VOID
+      NUSCENES_DETECTION
+      GENERAL_3CLS
+      COIN3D_3CLS
+      VEHICLE_1CLS
+      DEFAULT_123D
+      TAXONOMIES
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_taxonomy
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Taxonomy
+   

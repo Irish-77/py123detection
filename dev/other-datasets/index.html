@@ -1,0 +1,657 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex/"><link rel="search" title="Search" href="../search/"><link rel="next" title="Validation" href="../validation/"><link rel="prev" title="Crossing the Python version boundary" href="../guides/python-version-boundary/">
+        <link rel="canonical" href="https://irish-77.github.io/py123detection/dev/other-datasets/">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Exporting other 123D datasets (and proving the export right) - py123detection 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../"><div class="brand">py123detection 0.1.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../">
+  
+  <span class="sidebar-brand-text">py123detection 0.1.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search/" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cross-dataset-training/">Cross-dataset training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Exporting other 123D datasets (and proving the export right)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../validation/">Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/">CLI reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/generated/py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.geometry/">py123detection.geometry</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.export/">py123detection.mmcv_export.export</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.schema/">py123detection.mmcv_export.schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.sensors/">py123detection.mmcv_export.sensors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.tokens/">py123detection.mmcv_export.tokens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.sources/">py123detection.sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.velocity/">py123detection.velocity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/">Development</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/other-datasets.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="exporting-other-123d-datasets-and-proving-the-export-right">
+<h1>Exporting other 123D datasets (and proving the export right)<a class="headerlink" href="#exporting-other-123d-datasets-and-proving-the-export-right" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">py123det-export-mmcv</span></code> was validated first on nuScenes, where the target format was born, and
+then on Argoverse 2 (sensor), where nothing about the source looks like nuScenes: 7 cameras with
+one portrait view, no native frame token, no annotated velocity, annotations in the ego frame,
+a 10 Hz log rate, and 30 categories. This page records what it took, so that the next dataset
+(Waymo, KITTI-360, PandaSet, …) is a checklist rather than a research project.</p>
+<p>The short version: <strong>no converter code changes per dataset.</strong> The export is driven entirely by
+flags; what is dataset-specific is (1) the taxonomy, (2) a handful of convention choices, and
+(3) if you want proof, a small reference converter written from the raw data.</p>
+<hr class="docutils" />
+<section id="what-is-already-dataset-agnostic">
+<h2>1. What is already dataset-agnostic<a class="headerlink" href="#what-is-already-dataset-agnostic" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Concern</p></th>
+<th class="head"><p>Mechanism</p></th>
+<th class="head"><p>Why it generalises</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Which logs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--split</span></code>, <code class="docutils literal notranslate"><span class="pre">--dataset</span></code>, <code class="docutils literal notranslate"><span class="pre">--log-name</span></code>, <code class="docutils literal notranslate"><span class="pre">--max-logs</span></code></p></td>
+<td><p>123D’s own split registry</p></td>
+</tr>
+<tr class="row-odd"><td><p>Which cameras, in which order</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--camera-order</span></code> with 123D <code class="docutils literal notranslate"><span class="pre">CameraID</span></code> names (<code class="docutils literal notranslate"><span class="pre">PCAM_F0,PCAM_R0,...</span></code>)</p></td>
+<td><p>ids, not dataset channel names</p></td>
+</tr>
+<tr class="row-even"><td><p>Camera dictionary keys</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--camera-key</span> <span class="pre">native</span></code> (dataset names) or <code class="docutils literal notranslate"><span class="pre">camera_id</span></code> (123D ids, for merged exports)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Where images/point clouds live</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--sensor-root</span> <span class="pre">&lt;dataset&gt;=&lt;path&gt;</span></code></p></td>
+<td><p>123D logs store paths <em>relative</em> to the dataset root</p></td>
+</tr>
+<tr class="row-even"><td><p>Class mapping</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--taxonomy</span></code> over 123D’s <code class="docutils literal notranslate"><span class="pre">DefaultBoxDetectionLabel</span></code> (see §3)</p></td>
+<td><p>every parser implements <code class="docutils literal notranslate"><span class="pre">to_default()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Frame rate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--frame-stride</span> <span class="pre">N</span></code> / <code class="docutils literal notranslate"><span class="pre">--sample-rate-hz</span></code></p></td>
+<td><p>applied to the log’s native sync table</p></td>
+</tr>
+<tr class="row-even"><td><p>Sweeps</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--max-sweeps</span></code> from the native-rate stream even when the export is subsampled</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Frame tokens</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--token-style</span> <span class="pre">log_timestamp</span></code> (§4)</p></td>
+<td><p>no native token needed</p></td>
+</tr>
+<tr class="row-even"><td><p>Velocity</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--velocity-source</span> <span class="pre">tracks</span></code> (§5)</p></td>
+<td><p>derived from tracks, not read from the dataset</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reference frame</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--lidar-frame</span> <span class="pre">sensor|ego</span></code> (§2)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Box layout</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--box-layout</span> <span class="pre">streampetr|mmdet3d_0.17</span></code> (§6)</p></td>
+<td><p>trainer-, not dataset-specific</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ego pose</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--ego-pose-source</span> <span class="pre">sync|nearest</span></code> (§7)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Everything the pickle needs is read through the 123D scene API, never from the raw dataset.</p>
+</section>
+<hr class="docutils" />
+<section id="reference-frame-lidar-frame">
+<h2>2. Reference frame: <code class="docutils literal notranslate"><span class="pre">--lidar-frame</span></code><a class="headerlink" href="#reference-frame-lidar-frame" title="Link to this heading">¶</a></h2>
+<p>mmdetection3d’s nuScenes convention expresses boxes and camera extrinsics in the frame of the
+top lidar, because nuScenes point-cloud files are stored in that frame. Argoverse 2 (like Waymo)
+stores sweeps and annotations in the <strong>ego-vehicle frame</strong>. Exporting AV2 with the default
+<code class="docutils literal notranslate"><span class="pre">--lidar-frame</span> <span class="pre">sensor</span></code> would put the boxes in the <code class="docutils literal notranslate"><span class="pre">up_lidar</span></code> frame while the referenced point
+clouds stay in the ego frame — harmless for a camera-only model, wrong for anything that reads
+the points. Use <code class="docutils literal notranslate"><span class="pre">--lidar-frame</span> <span class="pre">ego</span></code>: <code class="docutils literal notranslate"><span class="pre">lidar2ego</span></code> becomes the identity, <code class="docutils literal notranslate"><span class="pre">sensor2lidar</span></code> becomes
+camera-to-ego, and the boxes are the annotation rows verbatim.</p>
+<p>Rule of thumb: match the frame the dataset’s point clouds are stored in.</p>
+</section>
+<hr class="docutils" />
+<section id="taxonomy">
+<h2>3. Taxonomy<a class="headerlink" href="#taxonomy" title="Link to this heading">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">Taxonomy</span></code> maps a 123D label to one of an ordered list of class names, or drops it. Two levels:</p>
+<ul class="simple">
+<li><p><strong>default level</strong> — keys are <code class="docutils literal notranslate"><span class="pre">DefaultBoxDetectionLabel</span></code> names (<code class="docutils literal notranslate"><span class="pre">VEHICLE</span></code>, <code class="docutils literal notranslate"><span class="pre">PERSON</span></code>,
+<code class="docutils literal notranslate"><span class="pre">TWO_WHEELER</span></code>, …). A taxonomy written only at this level applies to <em>every</em> 123D dataset,
+which is what cross-dataset training wants.</p></li>
+<li><p><strong>native level</strong> — keys are dataset enum member names, either bare (<code class="docutils literal notranslate"><span class="pre">VEHICLE_CAR</span></code>) or
+<strong>qualified</strong> with the enum class (<code class="docutils literal notranslate"><span class="pre">AV2SensorBoxDetectionLabel.BICYCLIST</span></code>). Qualified keys
+let one taxonomy carve out per-dataset exceptions without touching same-named members of
+another dataset’s enum. Lookup order: qualified native → bare native → default.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">COIN3D_3CLS</span></code> is the worked example: CoIn3D’s vehicle / pedestrian / two-wheel classes, spelled
+<code class="docutils literal notranslate"><span class="pre">car</span></code> / <code class="docutils literal notranslate"><span class="pre">pedestrian</span></code> / <code class="docutils literal notranslate"><span class="pre">motorcycle</span></code> because the nuScenes devkit’s <code class="docutils literal notranslate"><span class="pre">DetectionBox</span></code> only accepts
+nuScenes class names (§8). It is a default-level taxonomy plus qualified exceptions: AV2’s
+rider boxes (<code class="docutils literal notranslate"><span class="pre">BICYCLIST</span></code>, <code class="docutils literal notranslate"><span class="pre">MOTORCYCLIST</span></code>, <code class="docutils literal notranslate"><span class="pre">WHEELED_RIDER</span></code>) are dropped because nuScenes — and so
+CoIn3D — has no rider class; the rider is part of the two-wheeler box.</p>
+<p>To add a taxonomy: append a <code class="docutils literal notranslate"><span class="pre">Taxonomy(...)</span></code> to <code class="docutils literal notranslate"><span class="pre">py123detection/taxonomy.py</span></code> and register it in
+<code class="docutils literal notranslate"><span class="pre">TAXONOMIES</span></code>; it becomes a <code class="docutils literal notranslate"><span class="pre">--taxonomy</span></code> choice. Keep the semantics written down in its docstring
+— that is what a reviewer will read.</p>
+</section>
+<hr class="docutils" />
+<section id="tokens-token-style-log-timestamp">
+<h2>4. Tokens: <code class="docutils literal notranslate"><span class="pre">--token-style</span> <span class="pre">log_timestamp</span></code><a class="headerlink" href="#tokens-token-style-log-timestamp" title="Link to this heading">¶</a></h2>
+<p>123D stamps frames with a deterministic UUID. nuScenes exports restore the native
+<code class="docutils literal notranslate"><span class="pre">sample_token</span></code> (<code class="docutils literal notranslate"><span class="pre">--nuscenes-root</span></code> / <code class="docutils literal notranslate"><span class="pre">--token-map</span></code>) because the official evaluation keys on it.
+Most datasets have no such token, and a UUID is impossible for an independent converter to
+reproduce. <code class="docutils literal notranslate"><span class="pre">--token-style</span> <span class="pre">log_timestamp</span></code> writes <code class="docutils literal notranslate"><span class="pre">&quot;{log_name}/{timestamp_us}&quot;</span></code> instead: unique,
+readable, and trivially reproducible, so <code class="docutils literal notranslate"><span class="pre">tools/compare_infos.py</span></code> can align frames.</p>
+</section>
+<hr class="docutils" />
+<section id="velocity-velocity-source-tracks">
+<h2>5. Velocity: <code class="docutils literal notranslate"><span class="pre">--velocity-source</span> <span class="pre">tracks</span></code><a class="headerlink" href="#velocity-velocity-source-tracks" title="Link to this heading">¶</a></h2>
+<p>PETR-family models regress velocity and the nuScenes metric scores it (mAVE). Datasets that do
+not annotate it (AV2, KITTI-360) leave zeros in the 123D log, which trains the head to predict
+zero and makes mAVE meaningless. <code class="docutils literal notranslate"><span class="pre">--velocity-source</span> <span class="pre">tracks</span></code> derives velocity per box as the
+central difference of the global box centre over the neighbouring annotations of the same track
+at the log’s native rate (one-sided at track ends, zero without a neighbour within
+<code class="docutils literal notranslate"><span class="pre">--velocity-max-dt</span></code>, default 0.25 s). That is the nuScenes devkit’s <code class="docutils literal notranslate"><span class="pre">box_velocity</span></code> rule, so the
+result is what mmdetection3d would have written had the dataset been nuScenes. The rule is
+specified in <code class="docutils literal notranslate"><span class="pre">py123detection/velocity.py</span></code> precisely so a reference converter can reproduce it.</p>
+</section>
+<hr class="docutils" />
+<section id="box-layout-box-layout">
+<h2>6. Box layout: <code class="docutils literal notranslate"><span class="pre">--box-layout</span></code><a class="headerlink" href="#box-layout-box-layout" title="Link to this heading">¶</a></h2>
+<p>Two incompatible <code class="docutils literal notranslate"><span class="pre">gt_boxes</span></code> layouts exist in the mmdet3d ecosystem:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>layout</p></th>
+<th class="head"><p>columns</p></th>
+<th class="head"><p>who reads it</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">streampetr</span></code> (default)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">l,</span> <span class="pre">w,</span> <span class="pre">h,</span> <span class="pre">yaw]</span></code></p></td>
+<td><p>StreamPETR, mmdetection3d ≥ 1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mmdet3d_0.17</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">w,</span> <span class="pre">l,</span> <span class="pre">h,</span> <span class="pre">-yaw</span> <span class="pre">-</span> <span class="pre">π/2]</span></code></p></td>
+<td><p>mmdetection3d 0.17’s own converter and dataset — PETR v1’s pin</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Choosing the wrong one does not crash; it trains on transposed, mis-rotated boxes. Match the
+trainer, and if in doubt diff against the trainer’s own converter output.</p>
+</section>
+<hr class="docutils" />
+<section id="ego-pose-ego-pose-source-nearest">
+<h2>7. Ego pose: <code class="docutils literal notranslate"><span class="pre">--ego-pose-source</span> <span class="pre">nearest</span></code><a class="headerlink" href="#ego-pose-ego-pose-source-nearest" title="Link to this heading">¶</a></h2>
+<p>By default a frame’s <code class="docutils literal notranslate"><span class="pre">ego2global</span></code> is the ego-state row the log’s sync table associated with the
+frame. The sync table is built as “first row at or after the reference timestamp”, so it relies
+on the ego stream carrying a row at <em>exactly</em> the frame timestamp. On py123d 0.6.0’s AV2 logs it
+does not: the parser round-tripped nanosecond stamps through float64 (<code class="docutils literal notranslate"><span class="pre">DataFrame.iterrows</span></code>),
+~5% of ego rows came back 1 µs early, and for ~40% of frames the sync table skipped the exact row
+and took the next one, 2–10 ms later — up to 9 cm of ego pose on a city log, propagated into
+every box and camera extrinsic of the frame. <code class="docutils literal notranslate"><span class="pre">--ego-pose-source</span> <span class="pre">nearest</span></code> looks the ego state up
+by the frame’s timestamp and is immune. The parser is fixed in this tree
+(<code class="docutils literal notranslate"><span class="pre">py123d/parser/av2/av2_sensor_parser.py</span></code>, <code class="docutils literal notranslate"><span class="pre">itertuples</span></code>), but already-converted logs keep the
+old stamps, so use the flag.</p>
+<p>The flag is cheap and never wrong when an exact row exists, so it is a sensible default for any
+dataset whose ego stream is denser than its frames.</p>
+</section>
+<hr class="docutils" />
+<section id="proving-an-export-the-reference-converter-pattern">
+<h2>8. Proving an export: the reference-converter pattern<a class="headerlink" href="#proving-an-export-the-reference-converter-pattern" title="Link to this heading">¶</a></h2>
+<p>A diff needs two independent implementations. For nuScenes the second one was mmdetection3d’s
+own converter. For a dataset without one, write a <strong>reference converter</strong> from the raw files —
+<code class="docutils literal notranslate"><span class="pre">tools/reference_av2_converter.py</span></code> is the template:</p>
+<ul class="simple">
+<li><p>read the raw tables directly (feather / JSON), no 123D, no py123detection imports;</p></li>
+<li><p>implement the same conventions the export is configured with (frame selection, sync rule,
+reference frame, velocity rule, class map, tokens, box layout) — each one documented in the
+module docstring, so a reviewer can check both sides against one description;</p></li>
+<li><p>write the same <code class="docutils literal notranslate"><span class="pre">metadata</span></code> keys (<code class="docutils literal notranslate"><span class="pre">class_names</span></code>, <code class="docutils literal notranslate"><span class="pre">box_layout</span></code>, …).</p></li>
+</ul>
+<p>Then <code class="docutils literal notranslate"><span class="pre">tools/compare_infos.py</span> <span class="pre">REF.pkl</span> <span class="pre">EXPORT.pkl</span> <span class="pre">--no-2d</span></code> reports the maximum absolute deviation
+of every field. On AV2 val the export matches the reference to <code class="docutils literal notranslate"><span class="pre">3.6e-12</span> <span class="pre">m</span></code> on box centres and
+camera extrinsics, <code class="docutils literal notranslate"><span class="pre">0</span></code> on intrinsics, sizes, timestamps, paths and point counts, <code class="docutils literal notranslate"><span class="pre">9e-12</span> <span class="pre">m/s</span></code> on
+velocity — i.e. float round-off of the two implementations’ matrix products. Anything at <code class="docutils literal notranslate"><span class="pre">1e-3</span></code>
+or above is a convention mismatch, and the deviation table tells you which one.</p>
+<p>Two 123D-side issues surfaced this way on AV2 and are worth knowing about:</p>
+<ol class="arabic simple">
+<li><p><strong>Camera sync convention.</strong> py123d pairs each lidar sweep with the <em>first</em> image after the
+sweep start (<code class="docutils literal notranslate"><span class="pre">forward</span></code>, +40 ms on AV2); av2-api’s <code class="docutils literal notranslate"><span class="pre">SensorDataloader</span></code> pairs the <em>nearest</em>
+image (−10 ms). The reference converter implements both (<code class="docutils literal notranslate"><span class="pre">--camera-matching</span></code>), so the
+provenance test (<code class="docutils literal notranslate"><span class="pre">forward</span></code> vs export) and the convention effect (<code class="docutils literal notranslate"><span class="pre">nearest</span></code> vs <code class="docutils literal notranslate"><span class="pre">forward</span></code>) are
+separable.</p></li>
+<li><p><strong>The 1 µs ego timestamp error</strong> of §7.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="training-side">
+<h2>9. Training side<a class="headerlink" href="#training-side" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">py123detection.mmcv_plugin.Py123DNuScenesDataset</span></code> reads any export and adds three things to
+mmdetection3d’s <code class="docutils literal notranslate"><span class="pre">NuScenesDataset</span></code>:</p>
+<ul class="simple">
+<li><p><strong>PETR-family keys</strong> — <code class="docutils literal notranslate"><span class="pre">get_data_info</span></code> also returns <code class="docutils literal notranslate"><span class="pre">intrinsics</span></code>, <code class="docutils literal notranslate"><span class="pre">extrinsics</span></code> (lidar-to-camera)
+and <code class="docutils literal notranslate"><span class="pre">img_timestamp</span></code>, the additions PETR’s and StreamPETR’s <code class="docutils literal notranslate"><span class="pre">CustomNuScenesDataset</span></code> make, so
+their configs can point at this dataset directly.</p></li>
+<li><p><strong>Self-contained evaluation</strong> — <code class="docutils literal notranslate"><span class="pre">eval_mode=&quot;self_contained&quot;</span></code> (default) builds the nuScenes
+devkit’s GT boxes from the pickle itself and runs the devkit’s metric code, so no nuScenes
+database and no official split are needed. GT goes through the same
+<code class="docutils literal notranslate"><span class="pre">output_to_nusc_box</span></code> → <code class="docutils literal notranslate"><span class="pre">lidar_nusc_box_to_global</span></code> path as predictions, so the box layout cannot
+be misread on one side only. Differences from the official protocol: no bike-rack filter, ego
+distance from the pickle’s <code class="docutils literal notranslate"><span class="pre">ego2global_translation</span></code>, and — because exports carry no attributes —
+<code class="docutils literal notranslate"><span class="pre">mAAE</span> <span class="pre">=</span> <span class="pre">1.0</span></code> by construction (CoIn3D’s Lyft and Waymo tables show the same). <code class="docutils literal notranslate"><span class="pre">eval_class_range</span></code>
+overrides the per-class radius. Feeding the GT back as predictions must give mAP 1.0 and zero
+TP errors; the AV2 dry run does.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eval_mode=&quot;nuscenes&quot;</span></code> restores the stock devkit path for nuScenes exports with native tokens.</p></li>
+</ul>
+<p><strong>Constraint:</strong> the devkit’s <code class="docutils literal notranslate"><span class="pre">DetectionBox</span></code> asserts that class names are nuScenes detection names
+(<code class="docutils literal notranslate"><span class="pre">car</span></code>, <code class="docutils literal notranslate"><span class="pre">truck</span></code>, <code class="docutils literal notranslate"><span class="pre">bus</span></code>, <code class="docutils literal notranslate"><span class="pre">trailer</span></code>, <code class="docutils literal notranslate"><span class="pre">construction_vehicle</span></code>, <code class="docutils literal notranslate"><span class="pre">pedestrian</span></code>, <code class="docutils literal notranslate"><span class="pre">motorcycle</span></code>,
+<code class="docutils literal notranslate"><span class="pre">bicycle</span></code>, <code class="docutils literal notranslate"><span class="pre">traffic_cone</span></code>, <code class="docutils literal notranslate"><span class="pre">barrier</span></code>), and mmdet3d’s <code class="docutils literal notranslate"><span class="pre">_format_bbox</span></code> looks attributes up by those
+names. A taxonomy meant for this evaluator must spell its classes with them — which is exactly
+why CoIn3D did.</p>
+<p>The training environment does not need py123d: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">py123detection</span></code> degrades to
+<code class="docutils literal notranslate"><span class="pre">HAS_EXPORT_SIDE</span> <span class="pre">=</span> <span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">py123detection.mmcv_plugin</span></code> keeps working. Put
+<code class="docutils literal notranslate"><span class="pre">py123detection/src</span></code> on <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> and add to the config:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">custom_imports</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">imports</span><span class="o">=</span><span class="p">[</span><span class="s1">'py123detection.mmcv_plugin'</span><span class="p">],</span> <span class="n">allow_failed_imports</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">dataset_type</span> <span class="o">=</span> <span class="s1">'Py123DNuScenesDataset'</span>
+</pre></div>
+</div>
+<section id="mixed-image-sizes-av2-s-portrait-front-camera">
+<h3>Mixed image sizes (AV2’s portrait front camera)<a class="headerlink" href="#mixed-image-sizes-av2-s-portrait-front-camera" title="Link to this heading">¶</a></h3>
+<p>mmdetection3d’s <code class="docutils literal notranslate"><span class="pre">LoadMultiViewImageFromFiles</span></code> <code class="docutils literal notranslate"><span class="pre">np.stack</span></code>s the views and PETR’s
+<code class="docutils literal notranslate"><span class="pre">ResizeCropFlipImage</span></code> derives resize dims from the config’s <code class="docutils literal notranslate"><span class="pre">H,</span> <span class="pre">W</span></code>, so a rig with one portrait
+camera either crashes or gets that view squashed. PETR’s plugin in this tree gains two classes
+(<code class="docutils literal notranslate"><span class="pre">projects/mmdet3d_plugin/datasets/pipelines/</span></code>): <code class="docutils literal notranslate"><span class="pre">LoadMultiViewImageFromFilesMixedSize</span></code> keeps the
+views as a list, and <code class="docutils literal notranslate"><span class="pre">ResizeCropFlipImagePerView</span></code> applies one shared scale to each view’s true
+size, crops bottom-aligned and right-pads the narrow view — what Far3D’s AV2 pipeline does. On a
+uniform rig they reproduce the stock behaviour, so they are safe defaults for any dataset. See
+<code class="docutils literal notranslate"><span class="pre">PETR/projects/configs/petr/petr_r50dcn_gridmask_p4_av2.py</span></code> for the full recipe.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="worked-example-argoverse-2">
+<h2>10. Worked example: Argoverse 2<a class="headerlink" href="#worked-example-argoverse-2" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PY123D_DATA_ROOT</span><span class="o">=</span>/data/py123d
+py123det-export-mmcv<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--split<span class="w"> </span>av2-sensor_val<span class="w"> </span>--frame-stride<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--taxonomy<span class="w"> </span>coin3d_3cls<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--camera-order<span class="w"> </span>PCAM_F0,PCAM_R0,PCAM_L0,PCAM_L1,PCAM_R1,PCAM_L2,PCAM_R2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--lidar-frame<span class="w"> </span>ego<span class="w"> </span>--token-style<span class="w"> </span>log_timestamp<span class="w"> </span>--box-layout<span class="w"> </span>mmdet3d_0.17<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--velocity-source<span class="w"> </span>tracks<span class="w"> </span>--ego-pose-source<span class="w"> </span>nearest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--max-sweeps<span class="w"> </span><span class="m">10</span><span class="w"> </span>--no-2d-annotations<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--sensor-root<span class="w"> </span>av2-sensor<span class="o">=</span>/data/av2/sensor<span class="w"> </span>--version<span class="w"> </span>av2-sensor<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--out<span class="w"> </span>/data/av2/py123d_av2_infos_val.pkl
+
+python<span class="w"> </span>tools/reference_av2_converter.py<span class="w"> </span>--av2-root<span class="w"> </span>/data/av2/sensor<span class="w"> </span>--split<span class="w"> </span>val<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--camera-matching<span class="w"> </span>forward<span class="w"> </span>--out<span class="w"> </span>/data/av2/av2_infos_val.pkl
+python<span class="w"> </span>tools/compare_infos.py<span class="w"> </span>/data/av2/av2_infos_val.pkl<span class="w"> </span>/data/av2/py123d_av2_infos_val.pkl<span class="w"> </span>--no-2d
+</pre></div>
+</div>
+<p>Checklist for the next dataset:</p>
+<ol class="arabic simple">
+<li><p>One-log export with <code class="docutils literal notranslate"><span class="pre">--max-logs</span> <span class="pre">1</span></code>, then <code class="docutils literal notranslate"><span class="pre">py123det-export-mmcv</span> <span class="pre">inspect</span></code> — check cameras,
+frame count, class histogram, velocity statistics.</p></li>
+<li><p>Decide <code class="docutils literal notranslate"><span class="pre">--lidar-frame</span></code> from where the point clouds live (§2).</p></li>
+<li><p>Pick or write the taxonomy (§3); spell classes with nuScenes names if you want the
+self-contained evaluator (§9).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--token-style</span> <span class="pre">log_timestamp</span></code>, <code class="docutils literal notranslate"><span class="pre">--velocity-source</span> <span class="pre">tracks</span></code> if the dataset annotates none,
+<code class="docutils literal notranslate"><span class="pre">--ego-pose-source</span> <span class="pre">nearest</span></code>, the trainer’s <code class="docutils literal notranslate"><span class="pre">--box-layout</span></code>.</p></li>
+<li><p>Write the reference converter from the raw files, diff, and expect <code class="docutils literal notranslate"><span class="pre">≤1e-9</span></code> everywhere; chase
+anything larger to a convention.</p></li>
+<li><p>Train with <code class="docutils literal notranslate"><span class="pre">Py123DNuScenesDataset</span></code>; if the rig mixes image sizes, use the two PETR pipeline
+classes.</p></li>
+</ol>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../validation/">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Validation</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../guides/python-version-boundary/">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Crossing the Python version boundary</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Exporting other 123D datasets (and proving the export right)</a><ul>
+<li><a class="reference internal" href="#what-is-already-dataset-agnostic">1. What is already dataset-agnostic</a></li>
+<li><a class="reference internal" href="#reference-frame-lidar-frame">2. Reference frame: <code class="docutils literal notranslate"><span class="pre">--lidar-frame</span></code></a></li>
+<li><a class="reference internal" href="#taxonomy">3. Taxonomy</a></li>
+<li><a class="reference internal" href="#tokens-token-style-log-timestamp">4. Tokens: <code class="docutils literal notranslate"><span class="pre">--token-style</span> <span class="pre">log_timestamp</span></code></a></li>
+<li><a class="reference internal" href="#velocity-velocity-source-tracks">5. Velocity: <code class="docutils literal notranslate"><span class="pre">--velocity-source</span> <span class="pre">tracks</span></code></a></li>
+<li><a class="reference internal" href="#box-layout-box-layout">6. Box layout: <code class="docutils literal notranslate"><span class="pre">--box-layout</span></code></a></li>
+<li><a class="reference internal" href="#ego-pose-ego-pose-source-nearest">7. Ego pose: <code class="docutils literal notranslate"><span class="pre">--ego-pose-source</span> <span class="pre">nearest</span></code></a></li>
+<li><a class="reference internal" href="#proving-an-export-the-reference-converter-pattern">8. Proving an export: the reference-converter pattern</a></li>
+<li><a class="reference internal" href="#training-side">9. Training side</a><ul>
+<li><a class="reference internal" href="#mixed-image-sizes-av2-s-portrait-front-camera">Mixed image sizes (AV2’s portrait front camera)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#worked-example-argoverse-2">10. Worked example: Argoverse 2</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=b2731ba4"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

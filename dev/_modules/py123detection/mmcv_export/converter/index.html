@@ -1,0 +1,1383 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex/"><link rel="search" title="Search" href="../../../../search/">
+        <link rel="canonical" href="https://irish-77.github.io/py123detection/dev/_modules/py123detection/mmcv_export/converter/">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>py123detection.mmcv_export.converter - py123detection 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../"><div class="brand">py123detection 0.1.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../">
+  
+  <span class="sidebar-brand-text">py123detection 0.1.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search/" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation/">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quickstart/">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/cross-dataset-training/">Cross-dataset training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../validation/">Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli/">CLI reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api/">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api/generated/py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/generated/py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/generated/py123detection.geometry/">py123detection.geometry</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export.export/">py123detection.mmcv_export.export</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export.schema/">py123detection.mmcv_export.schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export.sensors/">py123detection.mmcv_export.sensors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export.tokens/">py123detection.mmcv_export.tokens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../api/generated/py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/generated/py123detection.sources/">py123detection.sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/generated/py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api/generated/py123detection.velocity/">py123detection.velocity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../development/">Development</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for py123detection.mmcv_export.converter</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""123D scenes -&gt; mmdetection3d ``info`` dicts, one per frame.</span>
+
+<span class="sd">The reference frame is the keyframe's lidar frame, as in mmdet3d. 123D stores everything in the</span>
+<span class="sd">global frame, so each frame composes ``lidar -&gt; ego -&gt; global`` from the ego state and rig</span>
+<span class="sd">extrinsics and inverts it. See :mod:`py123detection.mmcv_export.schema` for the fields.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bisect</span><span class="w"> </span><span class="kn">import</span> <span class="n">bisect_left</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">fields</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123d.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">SceneAPI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123d.common.utils.uuid_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_deterministic_uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123d.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCameraMetadata</span><span class="p">,</span> <span class="n">CameraID</span><span class="p">,</span> <span class="n">LidarID</span><span class="p">,</span> <span class="n">ModalityType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123d.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">PoseSE3</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BOX_LAYOUTS</span><span class="p">,</span>
+    <span class="n">DetectionRecord</span><span class="p">,</span>
+    <span class="n">FrameAnnotations</span><span class="p">,</span>
+    <span class="n">build_frame_annotations</span><span class="p">,</span>
+    <span class="n">extract_detection_records</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">invert_rigid</span><span class="p">,</span> <span class="n">matrix_to_translation_quaternion</span><span class="p">,</span> <span class="n">pose_to_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.mmcv_export.annotations2d</span><span class="w"> </span><span class="kn">import</span> <span class="n">project_records_to_camera</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.mmcv_export.sensors</span><span class="w"> </span><span class="kn">import</span> <span class="n">SensorResolver</span><span class="p">,</span> <span class="n">SensorResolverConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.mmcv_export.tokens</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenResolver</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.taxonomy</span><span class="w"> </span><span class="kn">import</span> <span class="n">NUSCENES_DETECTION</span><span class="p">,</span> <span class="n">Taxonomy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.velocity</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrackVelocityTable</span>
+
+<span class="n">VELOCITY_SOURCES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"stored"</span><span class="p">,</span> <span class="s2">"tracks"</span><span class="p">)</span>
+<span class="n">EGO_POSE_SOURCES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"sync"</span><span class="p">,</span> <span class="s2">"nearest"</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1">#: 123D camera ids. On a nuScenes rig this is CAM_FRONT, CAM_FRONT_RIGHT, CAM_FRONT_LEFT, CAM_BACK,</span>
+<span class="c1">#: CAM_BACK_LEFT, CAM_BACK_RIGHT, the order mmdetection3d's converter uses and pretrained</span>
+<span class="c1">#: multi-view models expect.</span>
+<span class="n">DEFAULT_CAMERA_ORDER</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"PCAM_F0"</span><span class="p">,</span> <span class="s2">"PCAM_R0"</span><span class="p">,</span> <span class="s2">"PCAM_L0"</span><span class="p">,</span> <span class="s2">"PCAM_B0"</span><span class="p">,</span> <span class="s2">"PCAM_L1"</span><span class="p">,</span> <span class="s2">"PCAM_R1"</span><span class="p">)</span>
+
+<span class="c1"># A camera as resolved for one log: (id, dataset-native name, metadata).</span>
+<span class="n">Camera</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">CameraID</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">BaseCameraMetadata</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="ExportConfig">
+<a class="viewcode-back" href="../../../../api/generated/py123detection.mmcv_export.converter/#py123detection.mmcv_export.converter.ExportConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExportConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Everything that shapes an export, independent of which scenes are exported."""</span>
+
+    <span class="n">taxonomy</span><span class="p">:</span> <span class="n">Taxonomy</span> <span class="o">=</span> <span class="n">NUSCENES_DETECTION</span>
+
+    <span class="n">camera_order</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_CAMERA_ORDER</span>
+<span class="w">    </span><span class="sd">"""123D :class:`~py123d.datatypes.CameraID` names, in model input order."""</span>
+
+    <span class="n">camera_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"native"</span>
+<span class="w">    </span><span class="sd">"""Key of each camera in ``info['cams']``: ``"native"`` (``CAM_FRONT``, what stock configs</span>
+<span class="sd">    expect) or ``"camera_id"`` (``PCAM_F0``, consistent across datasets in merged exports)."""</span>
+
+    <span class="n">reference_lidar</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">""":class:`~py123d.datatypes.LidarID` name of the reference frame. ``None`` picks ``LIDAR_TOP``, else the first lidar."""</span>
+
+    <span class="n">max_sweeps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="w">    </span><span class="sd">"""Preceding lidar frames per info, taken at the log's own rate rather than the export rate.</span>
+
+<span class="sd">    A keyframe-only nuScenes conversion only holds 2 Hz lidar, so its sweeps are 2 Hz. The first</span>
+<span class="sd">    frame of a log always gets an empty list, which StreamPETR reads as a sequence start.</span>
+<span class="sd">    """</span>
+
+    <span class="n">with_2d_annotations</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">    </span><span class="sd">"""Per-camera 2D / mono-3D annotations, required by StreamPETR."""</span>
+
+    <span class="n">on_missing_camera</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"skip_frame"</span>
+<span class="w">    </span><span class="sd">"""``"skip_frame"`` (multi-view models need a fixed camera count), ``"drop_camera"`` or ``"error"``."""</span>
+
+    <span class="n">sensors</span><span class="p">:</span> <span class="n">SensorResolverConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">SensorResolverConfig</span><span class="p">)</span>
+    <span class="n">token_resolver</span><span class="p">:</span> <span class="n">TokenResolver</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">TokenResolver</span><span class="p">)</span>
+
+    <span class="n">include_track_tokens</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">    </span><span class="sd">"""Also write per-box ``instance_tokens``."""</span>
+
+    <span class="n">yaw_convention</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"mmdet3d"</span>
+<span class="w">    </span><span class="sd">"""``"mmdet3d"`` matches pickles from mmdetection3d's converter, ``"heading"`` the nuScenes</span>
+<span class="sd">    devkit. See :func:`py123detection.geometry.mmdet3d_yaw`."""</span>
+
+    <span class="n">lidar2ego_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"static"</span>
+<span class="w">    </span><span class="sd">"""``"static"`` writes the rig extrinsic, like mmdetection3d's converter.</span>
+
+<span class="sd">    ``"dynamic"`` also folds in the ego motion between the frame timestamp and the lidar's own</span>
+<span class="sd">    timestamp: ``inv(ego2global_at_frame) @ ego2global_at_lidar_time @ lidar2ego_static``. 123D</span>
+<span class="sd">    stores no per-row lidar pose, so this only differs from static when the ego stream is denser</span>
+<span class="sd">    than the frames (not for keyframe-only nuScenes).</span>
+<span class="sd">    """</span>
+
+    <span class="n">camera2ego_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"static"</span>
+<span class="w">    </span><span class="sd">"""Where a camera's timing offset to the frame is booked.</span>
+
+<span class="sd">    ``"static"`` keeps ``sensor2ego`` at the rig calibration and moves ``ego2global`` to the</span>
+<span class="sd">    camera timestamp, like mmdetection3d. ``"dynamic"`` keeps the frame's ``ego2global`` and folds</span>
+<span class="sd">    the offset into ``sensor2ego``. ``sensor2lidar``, which PETR and StreamPETR use, is the same</span>
+<span class="sd">    either way; BEVDet-style configs read the two parts separately.</span>
+<span class="sd">    """</span>
+
+    <span class="n">lidar_frame</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"sensor"</span>
+<span class="w">    </span><span class="sd">"""``"sensor"`` uses the reference lidar's frame (mmdet3d's convention, and the frame of a</span>
+<span class="sd">    referenced point cloud file). ``"ego"`` uses the ego/IMU frame, so ``lidar2ego`` is the identity."""</span>
+
+    <span class="n">planar_velocity</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">    </span><span class="sd">"""Drop the global vertical velocity before rotating into the lidar frame. mmdetection3d does</span>
+<span class="sd">    this and its evaluation assumes it."""</span>
+
+    <span class="n">box_layout</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"streampetr"</span>
+<span class="w">    </span><span class="sd">"""``gt_boxes`` column layout, see :data:`py123detection.annotations.BOX_LAYOUTS`. A wrong</span>
+<span class="sd">    choice does not crash, it trains on transposed, mis-rotated boxes."""</span>
+
+    <span class="n">velocity_source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"stored"</span>
+<span class="w">    </span><span class="sd">"""``"stored"`` uses the log's velocity (zero if the dataset has none). ``"tracks"`` derives it</span>
+<span class="sd">    from neighbouring annotations of each track, see :mod:`py123detection.velocity`."""</span>
+
+    <span class="n">velocity_max_dt_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+    <span class="n">ego_pose_source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"sync"</span>
+<span class="w">    </span><span class="sd">"""Which ego state gives a frame's ``ego2global``: the sync table row (``"sync"``) or the</span>
+<span class="sd">    state nearest to the frame timestamp (``"nearest"``).</span>
+
+<span class="sd">    The sync table takes the first ego row at or after the frame timestamp, so an ego timestamp</span>
+<span class="sd">    that is 1 us early skips the right row. py123d 0.6.0's Argoverse 2 parser round-trips the</span>
+<span class="sd">    nanosecond stamps through float64: 5% of ego rows come back 1 us early and ~40% of frames get</span>
+<span class="sd">    an ego pose 2-10 ms late (up to 9 cm). ``"nearest"`` avoids that.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"lidar2ego_mode"</span><span class="p">,</span> <span class="s2">"camera2ego_mode"</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"static"</span><span class="p">,</span> <span class="s2">"dynamic"</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2"> must be 'static' or 'dynamic', got </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lidar_frame</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"sensor"</span><span class="p">,</span> <span class="s2">"ego"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"lidar_frame must be 'sensor' or 'ego', got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lidar_frame</span><span class="si">!r}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">yaw_convention</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"mmdet3d"</span><span class="p">,</span> <span class="s2">"heading"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"yaw_convention must be 'mmdet3d' or 'heading', got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">yaw_convention</span><span class="si">!r}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"native"</span><span class="p">,</span> <span class="s2">"camera_id"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"camera_key must be 'native' or 'camera_id', got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_key</span><span class="si">!r}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_missing_camera</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"skip_frame"</span><span class="p">,</span> <span class="s2">"drop_camera"</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"on_missing_camera must be 'skip_frame', 'drop_camera' or 'error', got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">on_missing_camera</span><span class="si">!r}</span><span class="s2">."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_sweeps</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"max_sweeps must be &gt;= 0, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_sweeps</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_layout</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">BOX_LAYOUTS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"box_layout must be one of </span><span class="si">{</span><span class="n">BOX_LAYOUTS</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">box_layout</span><span class="si">!r}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_source</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VELOCITY_SOURCES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"velocity_source must be one of </span><span class="si">{</span><span class="n">VELOCITY_SOURCES</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity_source</span><span class="si">!r}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_max_dt_s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"velocity_max_dt_s must be &gt; 0, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity_max_dt_s</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ego_pose_source</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">EGO_POSE_SOURCES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ego_pose_source must be one of </span><span class="si">{</span><span class="n">EGO_POSE_SOURCES</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ego_pose_source</span><span class="si">!r}</span><span class="s2">."</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ExportStats">
+<a class="viewcode-back" href="../../../../api/generated/py123detection.mmcv_export.converter/#py123detection.mmcv_export.converter.ExportStats">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExportStats</span><span class="p">:</span>
+    <span class="n">num_logs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">num_frames</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">num_boxes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">frames_skipped_missing_camera</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">frames_skipped_missing_ego</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">frames_skipped_missing_lidar</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">logs_skipped</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dynamic_extrinsic_fallbacks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">boxes_without_track_velocity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ego_pose_fallbacks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ego_pose_max_offset_us</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dropped_cameras</span><span class="p">:</span> <span class="n">Counter</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Counter</span><span class="p">)</span>
+    <span class="n">class_counts</span><span class="p">:</span> <span class="n">Counter</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Counter</span><span class="p">)</span>
+    <span class="n">num_referenced_payloads</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">num_extracted_payloads</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="ExportStats.as_dict">
+<a class="viewcode-back" href="../../../../api/generated/py123detection.mmcv_export.converter/#py123detection.mmcv_export.converter.ExportStats.as_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)}</span>
+        <span class="c1"># Plain dicts, so the pickle does not reference collections.Counter.</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">"dropped_cameras"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropped_cameras</span><span class="p">)</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">"class_counts"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_counts</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stats</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MMDet3DConverter">
+<a class="viewcode-back" href="../../../../api/generated/py123detection.mmcv_export.converter/#py123detection.mmcv_export.converter.MMDet3DConverter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MMDet3DConverter</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ExportConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span> <span class="ow">or</span> <span class="n">ExportConfig</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sensors</span> <span class="o">=</span> <span class="n">SensorResolver</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sensors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">ExportStats</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExportStats</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">num_referenced_payloads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensors</span><span class="o">.</span><span class="n">num_referenced</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">num_extracted_payloads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensors</span><span class="o">.</span><span class="n">num_extracted</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span>
+
+<div class="viewcode-block" id="MMDet3DConverter.convert_scenes">
+<a class="viewcode-back" href="../../../../api/generated/py123detection.mmcv_export.converter/#py123detection.mmcv_export.converter.MMDet3DConverter.convert_scenes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert_scenes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scenes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">SceneAPI</span><span class="p">],</span>
+        <span class="n">timestamp_offset_us</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">native_scenes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">SceneAPI</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""Convert scenes (one per log) into a flat list of infos.</span>
+
+<span class="sd">        :param native_scenes: Native-rate views of the same logs by ``(split, log_name)``, needed</span>
+<span class="sd">            for sweeps and track velocities when ``scenes`` are subsampled.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
+            <span class="n">scenes</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">scenes</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"Exporting logs"</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"log"</span><span class="p">)</span>
+
+        <span class="n">infos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">scene</span> <span class="ow">in</span> <span class="n">scenes</span><span class="p">:</span>
+            <span class="n">native_scene</span> <span class="o">=</span> <span class="p">(</span><span class="n">native_scenes</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">scene</span><span class="o">.</span><span class="n">split</span><span class="p">,</span> <span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">))</span>
+            <span class="n">infos</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_scene</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">timestamp_offset_us</span><span class="o">=</span><span class="n">timestamp_offset_us</span><span class="p">,</span> <span class="n">native_scene</span><span class="o">=</span><span class="n">native_scene</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">infos</span></div>
+
+
+<div class="viewcode-block" id="MMDet3DConverter.convert_scene">
+<a class="viewcode-back" href="../../../../api/generated/py123detection.mmcv_export.converter/#py123detection.mmcv_export.converter.MMDet3DConverter.convert_scene">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert_scene</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">,</span>
+        <span class="n">timestamp_offset_us</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">native_scene</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SceneAPI</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""Convert one full log into infos, in frame order.</span>
+
+<span class="sd">        :param native_scene: Native-rate view of the log, for sweeps and ``velocity_source="tracks"``.</span>
+<span class="sd">            Omit when ``scene`` is not subsampled.</span>
+<span class="sd">        """</span>
+        <span class="n">rig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_rig</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">logs_skipped</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">cameras</span><span class="p">,</span> <span class="n">reference_lidar_id</span><span class="p">,</span> <span class="n">lidar_data_id</span> <span class="o">=</span> <span class="n">rig</span>
+
+        <span class="n">velocity_table</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">velocity_source</span> <span class="o">==</span> <span class="s2">"tracks"</span><span class="p">:</span>
+            <span class="n">velocity_table</span> <span class="o">=</span> <span class="n">TrackVelocityTable</span><span class="o">.</span><span class="n">from_scene</span><span class="p">(</span>
+                <span class="n">native_scene</span> <span class="k">if</span> <span class="n">native_scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">scene</span><span class="p">,</span> <span class="n">max_dt_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">velocity_max_dt_s</span>
+            <span class="p">)</span>
+
+        <span class="n">scene_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">scene</span><span class="o">.</span><span class="n">split</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s2">"</span>
+        <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scene</span><span class="o">.</span><span class="n">number_of_iterations</span><span class="p">):</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_frame</span><span class="p">(</span>
+                <span class="n">scene</span><span class="p">,</span>
+                <span class="n">iteration</span><span class="p">,</span>
+                <span class="n">cameras</span><span class="p">,</span>
+                <span class="n">reference_lidar_id</span><span class="p">,</span>
+                <span class="n">lidar_data_id</span><span class="p">,</span>
+                <span class="n">scene_token</span><span class="p">,</span>
+                <span class="n">timestamp_offset_us</span><span class="p">,</span>
+                <span class="n">velocity_table</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frames</span><span class="p">):</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">"frame_idx"</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">"prev"</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="s2">"token"</span><span class="p">]</span> <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">""</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">"next"</span><span class="p">]</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="s2">"token"</span><span class="p">]</span> <span class="k">if</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span> <span class="k">else</span> <span class="s2">""</span>
+
+        <span class="c1"># Without a native-rate view the frames already are every frame of the log, so reuse them</span>
+        <span class="c1"># as sweep candidates instead of resolving every payload a second time.</span>
+        <span class="k">if</span> <span class="n">native_scene</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">candidates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sweep_candidates</span><span class="p">(</span><span class="n">native_scene</span><span class="p">,</span> <span class="n">reference_lidar_id</span><span class="p">,</span> <span class="n">lidar_data_id</span><span class="p">,</span> <span class="n">timestamp_offset_us</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">_sweep_candidate_from_info</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attach_sweeps</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">candidates</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">num_logs</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">num_frames</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">frames</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_rig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Camera</span><span class="p">],</span> <span class="n">LidarID</span><span class="p">,</span> <span class="n">LidarID</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""Cameras, reference lidar and lidar data stream of a log, or ``None`` to skip the log."""</span>
+        <span class="n">available_cameras</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_camera_metadatas</span><span class="p">()</span>
+        <span class="n">cameras</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">camera_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">camera_order</span><span class="p">:</span>
+            <span class="n">camera_id</span> <span class="o">=</span> <span class="n">CameraID</span><span class="o">.</span><span class="n">from_arbitrary</span><span class="p">(</span><span class="n">camera_name</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="n">available_cameras</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">camera_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">"Log '</span><span class="si">%s</span><span class="s2">' has no camera </span><span class="si">%s</span><span class="s2">; skipping the log (available: </span><span class="si">%s</span><span class="s2">)."</span><span class="p">,</span>
+                    <span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">,</span>
+                    <span class="n">camera_name</span><span class="p">,</span>
+                    <span class="nb">sorted</span><span class="p">(</span><span class="n">camera</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">camera</span> <span class="ow">in</span> <span class="n">available_cameras</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">cameras</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">camera_id</span><span class="p">,</span> <span class="n">metadata</span><span class="o">.</span><span class="n">camera_name</span><span class="p">,</span> <span class="n">metadata</span><span class="p">))</span>
+
+        <span class="n">lidar_metadatas</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_lidar_metadatas</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">lidar_metadatas</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Log '</span><span class="si">%s</span><span class="s2">' has no lidar; skipping the log."</span><span class="p">,</span> <span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">reference_lidar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">reference_lidar_id</span> <span class="o">=</span> <span class="n">LidarID</span><span class="o">.</span><span class="n">from_arbitrary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">reference_lidar</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">reference_lidar_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lidar_metadatas</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">"Log '</span><span class="si">%s</span><span class="s2">' has no lidar </span><span class="si">%s</span><span class="s2">; skipping the log (available: </span><span class="si">%s</span><span class="s2">)."</span><span class="p">,</span>
+                    <span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">reference_lidar</span><span class="p">,</span>
+                    <span class="nb">sorted</span><span class="p">(</span><span class="n">lidar</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">lidar</span> <span class="ow">in</span> <span class="n">lidar_metadatas</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">LidarID</span><span class="o">.</span><span class="n">LIDAR_TOP</span> <span class="ow">in</span> <span class="n">lidar_metadatas</span><span class="p">:</span>
+            <span class="n">reference_lidar_id</span> <span class="o">=</span> <span class="n">LidarID</span><span class="o">.</span><span class="n">LIDAR_TOP</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reference_lidar_id</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lidar_metadatas</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">int</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Point clouds usually live in the merged stream, but the reference frame still comes from</span>
+        <span class="c1"># a physical sensor.</span>
+        <span class="n">lidar_data_id</span> <span class="o">=</span> <span class="n">reference_lidar_id</span>
+        <span class="k">if</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_modality_metadata</span><span class="p">(</span><span class="n">ModalityType</span><span class="o">.</span><span class="n">LIDAR</span><span class="p">,</span> <span class="n">LidarID</span><span class="o">.</span><span class="n">LIDAR_MERGED</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lidar_data_id</span> <span class="o">=</span> <span class="n">LidarID</span><span class="o">.</span><span class="n">LIDAR_MERGED</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lidar_metadatas</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">"Log '</span><span class="si">%s</span><span class="s2">' merges </span><span class="si">%d</span><span class="s2"> lidars; exported point clouds are referenced as-is and may not be "</span>
+                    <span class="s2">"expressed in the '</span><span class="si">%s</span><span class="s2">' frame that boxes use."</span><span class="p">,</span>
+                    <span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">,</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="n">lidar_metadatas</span><span class="p">),</span>
+                    <span class="n">reference_lidar_id</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cameras</span><span class="p">,</span> <span class="n">reference_lidar_id</span><span class="p">,</span> <span class="n">lidar_data_id</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_frame</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">,</span>
+        <span class="n">iteration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">cameras</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Camera</span><span class="p">],</span>
+        <span class="n">reference_lidar_id</span><span class="p">:</span> <span class="n">LidarID</span><span class="p">,</span>
+        <span class="n">lidar_data_id</span><span class="p">:</span> <span class="n">LidarID</span><span class="p">,</span>
+        <span class="n">scene_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">timestamp_offset_us</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">velocity_table</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TrackVelocityTable</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""One info, or ``None`` when the frame has to be skipped."""</span>
+        <span class="n">ego_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frame_ego_state</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ego_state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">frames_skipped_missing_ego</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">ego_to_global</span> <span class="o">=</span> <span class="n">pose_to_matrix</span><span class="p">(</span><span class="n">ego_state</span><span class="o">.</span><span class="n">imu_se3</span><span class="p">)</span>
+        <span class="n">lidar_to_ego</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lidar_to_ego</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">reference_lidar_id</span><span class="p">,</span> <span class="n">lidar_data_id</span><span class="p">,</span> <span class="n">ego_to_global</span><span class="p">)</span>
+        <span class="n">global_to_lidar</span> <span class="o">=</span> <span class="n">invert_rigid</span><span class="p">(</span><span class="n">ego_to_global</span> <span class="o">@</span> <span class="n">lidar_to_ego</span><span class="p">)</span>
+
+        <span class="n">lidar_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensors</span><span class="o">.</span><span class="n">resolve_lidar</span><span class="p">(</span>
+            <span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">lidar_data_id</span><span class="p">,</span> <span class="n">ego_to_lidar</span><span class="o">=</span><span class="n">invert_rigid</span><span class="p">(</span><span class="n">lidar_to_ego</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">lidar_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">frames_skipped_missing_lidar</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">camera_payloads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_cameras</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">cameras</span><span class="p">,</span> <span class="n">global_to_lidar</span><span class="p">,</span> <span class="n">ego_to_global</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">camera_payloads</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">frames_skipped_missing_camera</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">timestamp_us</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_timestamp_at_iteration</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span><span class="o">.</span><span class="n">time_us</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_frame_uuid</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">timestamp_us</span><span class="p">)</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">token_resolver</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="o">=</span><span class="n">scene</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">scene</span><span class="o">.</span><span class="n">split</span><span class="p">,</span> <span class="n">log_name</span><span class="o">=</span><span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">,</span> <span class="n">timestamp_us</span><span class="o">=</span><span class="n">timestamp_us</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span>
+        <span class="p">)</span>
+        <span class="n">lidar_translation</span><span class="p">,</span> <span class="n">lidar_rotation</span> <span class="o">=</span> <span class="n">matrix_to_translation_quaternion</span><span class="p">(</span><span class="n">lidar_to_ego</span><span class="p">)</span>
+        <span class="n">ego_translation</span><span class="p">,</span> <span class="n">ego_rotation</span> <span class="o">=</span> <span class="n">matrix_to_translation_quaternion</span><span class="p">(</span><span class="n">ego_to_global</span><span class="p">)</span>
+
+        <span class="n">info</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"lidar_path"</span><span class="p">:</span> <span class="n">lidar_path</span><span class="p">,</span>
+            <span class="s2">"token"</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+            <span class="s2">"prev"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"next"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"sweeps"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">"frame_idx"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"cams"</span><span class="p">:</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">payload</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">payload</span> <span class="ow">in</span> <span class="n">camera_payloads</span><span class="p">},</span>
+            <span class="s2">"scene_token"</span><span class="p">:</span> <span class="n">scene_token</span><span class="p">,</span>
+            <span class="s2">"lidar2ego_translation"</span><span class="p">:</span> <span class="n">lidar_translation</span><span class="p">,</span>
+            <span class="s2">"lidar2ego_rotation"</span><span class="p">:</span> <span class="n">lidar_rotation</span><span class="p">,</span>
+            <span class="s2">"ego2global_translation"</span><span class="p">:</span> <span class="n">ego_translation</span><span class="p">,</span>
+            <span class="s2">"ego2global_rotation"</span><span class="p">:</span> <span class="n">ego_rotation</span><span class="p">,</span>
+            <span class="s2">"timestamp"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp_us</span> <span class="o">+</span> <span class="n">timestamp_offset_us</span><span class="p">),</span>
+            <span class="c1"># Provenance, ignored by mmdet3d.</span>
+            <span class="s2">"py123d_uuid"</span><span class="p">:</span> <span class="n">uuid</span><span class="p">,</span>
+            <span class="s2">"py123d_dataset"</span><span class="p">:</span> <span class="n">scene</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span>
+            <span class="s2">"py123d_split"</span><span class="p">:</span> <span class="n">scene</span><span class="o">.</span><span class="n">split</span><span class="p">,</span>
+            <span class="s2">"py123d_log_name"</span><span class="p">:</span> <span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">,</span>
+            <span class="s2">"py123d_location"</span><span class="p">:</span> <span class="n">scene</span><span class="o">.</span><span class="n">location</span><span class="p">,</span>
+            <span class="s2">"py123d_iteration"</span><span class="p">:</span> <span class="n">iteration</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_annotations</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">global_to_lidar</span><span class="p">,</span> <span class="n">velocity_table</span><span class="p">)</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">"gt_boxes"</span><span class="p">]</span> <span class="o">=</span> <span class="n">annotations</span><span class="o">.</span><span class="n">gt_boxes</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">"gt_names"</span><span class="p">]</span> <span class="o">=</span> <span class="n">annotations</span><span class="o">.</span><span class="n">gt_names</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">"gt_velocity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">annotations</span><span class="o">.</span><span class="n">gt_velocity</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">"num_lidar_pts"</span><span class="p">]</span> <span class="o">=</span> <span class="n">annotations</span><span class="o">.</span><span class="n">num_lidar_pts</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">"num_radar_pts"</span><span class="p">]</span> <span class="o">=</span> <span class="n">annotations</span><span class="o">.</span><span class="n">num_radar_pts</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">"valid_flag"</span><span class="p">]</span> <span class="o">=</span> <span class="n">annotations</span><span class="o">.</span><span class="n">valid_flag</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">include_track_tokens</span><span class="p">:</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">"instance_tokens"</span><span class="p">]</span> <span class="o">=</span> <span class="n">annotations</span><span class="o">.</span><span class="n">track_tokens</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">with_2d_annotations</span><span class="p">:</span>
+            <span class="n">info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_2d_annotations</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">records</span><span class="p">,</span> <span class="n">camera_payloads</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">num_boxes</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">class_counts</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">gt_names</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">info</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_cameras</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">,</span>
+        <span class="n">iteration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">cameras</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Camera</span><span class="p">],</span>
+        <span class="n">global_to_lidar</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">frame_ego_to_global</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseCameraMetadata</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]]:</span>
+<span class="w">        </span><span class="sd">"""``(key, metadata, payload)`` per camera, or ``None`` to skip the frame."""</span>
+        <span class="n">payloads</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">camera_id</span><span class="p">,</span> <span class="n">camera_name</span><span class="p">,</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="n">cameras</span><span class="p">:</span>
+            <span class="n">camera_to_global_pose</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_modality_column_at_iteration</span><span class="p">(</span>
+                <span class="n">iteration</span><span class="o">=</span><span class="n">iteration</span><span class="p">,</span>
+                <span class="n">column</span><span class="o">=</span><span class="s2">"camera_to_global_se3"</span><span class="p">,</span>
+                <span class="n">modality_type</span><span class="o">=</span><span class="n">ModalityType</span><span class="o">.</span><span class="n">CAMERA</span><span class="p">,</span>
+                <span class="n">modality_id</span><span class="o">=</span><span class="n">camera_id</span><span class="p">,</span>
+                <span class="n">deserialize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">camera_timestamp_us</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_modality_column_at_iteration</span><span class="p">(</span>
+                <span class="n">iteration</span><span class="o">=</span><span class="n">iteration</span><span class="p">,</span>
+                <span class="n">column</span><span class="o">=</span><span class="s2">"timestamp_us"</span><span class="p">,</span>
+                <span class="n">modality_type</span><span class="o">=</span><span class="n">ModalityType</span><span class="o">.</span><span class="n">CAMERA</span><span class="p">,</span>
+                <span class="n">modality_id</span><span class="o">=</span><span class="n">camera_id</span><span class="p">,</span>
+                <span class="n">deserialize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">camera_to_global_pose</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">camera_timestamp_us</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">on_missing_camera</span> <span class="o">==</span> <span class="s2">"error"</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">"Camera </span><span class="si">{</span><span class="n">camera_name</span><span class="si">}</span><span class="s2"> missing at iteration </span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2"> of log '</span><span class="si">{</span><span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s2">'."</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">dropped_cameras</span><span class="p">[</span><span class="n">camera_name</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">on_missing_camera</span> <span class="o">==</span> <span class="s2">"skip_frame"</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">continue</span>
+
+            <span class="n">data_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensors</span><span class="o">.</span><span class="n">resolve_camera</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">camera_id</span><span class="p">,</span> <span class="n">camera_name</span><span class="p">)</span>
+
+            <span class="n">camera_to_global</span> <span class="o">=</span> <span class="n">pose_to_matrix</span><span class="p">(</span><span class="n">camera_to_global_pose</span><span class="p">)</span>
+            <span class="n">camera_to_lidar</span> <span class="o">=</span> <span class="n">global_to_lidar</span> <span class="o">@</span> <span class="n">camera_to_global</span>
+
+            <span class="c1"># 123D's camera_to_global is already taken at the camera's own timestamp. The mode only</span>
+            <span class="c1"># decides whether that offset shows up in ego2global (static) or sensor2ego (dynamic);</span>
+            <span class="c1"># both compose to the same camera_to_global.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">camera2ego_mode</span> <span class="o">==</span> <span class="s2">"dynamic"</span><span class="p">:</span>
+                <span class="n">camera_to_ego</span> <span class="o">=</span> <span class="n">invert_rigid</span><span class="p">(</span><span class="n">frame_ego_to_global</span><span class="p">)</span> <span class="o">@</span> <span class="n">camera_to_global</span>
+                <span class="n">camera_ego_to_global</span> <span class="o">=</span> <span class="n">frame_ego_to_global</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">camera_to_ego</span> <span class="o">=</span> <span class="n">pose_to_matrix</span><span class="p">(</span><span class="n">metadata</span><span class="o">.</span><span class="n">camera_to_imu_se3</span><span class="p">)</span>
+                <span class="n">camera_ego_to_global</span> <span class="o">=</span> <span class="n">camera_to_global</span> <span class="o">@</span> <span class="n">invert_rigid</span><span class="p">(</span><span class="n">camera_to_ego</span><span class="p">)</span>
+
+            <span class="n">sensor_translation</span><span class="p">,</span> <span class="n">sensor_rotation</span> <span class="o">=</span> <span class="n">matrix_to_translation_quaternion</span><span class="p">(</span><span class="n">camera_to_ego</span><span class="p">)</span>
+            <span class="n">ego_translation</span><span class="p">,</span> <span class="n">ego_rotation</span> <span class="o">=</span> <span class="n">matrix_to_translation_quaternion</span><span class="p">(</span><span class="n">camera_ego_to_global</span><span class="p">)</span>
+
+            <span class="n">intrinsics</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">intrinsics</span>
+            <span class="k">if</span> <span class="n">intrinsics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Camera </span><span class="si">{</span><span class="n">camera_name</span><span class="si">}</span><span class="s2"> of log '</span><span class="si">{</span><span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s2">' has no intrinsics."</span><span class="p">)</span>
+
+            <span class="n">key</span> <span class="o">=</span> <span class="n">camera_name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">camera_key</span> <span class="o">==</span> <span class="s2">"native"</span> <span class="k">else</span> <span class="n">camera_id</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">"data_path"</span><span class="p">:</span> <span class="n">data_path</span><span class="p">,</span>
+                <span class="s2">"type"</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+                <span class="s2">"sample_data_token"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">scene</span><span class="o">.</span><span class="n">split</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">camera_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">camera_timestamp_us</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="s2">"sensor2ego_translation"</span><span class="p">:</span> <span class="n">sensor_translation</span><span class="p">,</span>
+                <span class="s2">"sensor2ego_rotation"</span><span class="p">:</span> <span class="n">sensor_rotation</span><span class="p">,</span>
+                <span class="s2">"ego2global_translation"</span><span class="p">:</span> <span class="n">ego_translation</span><span class="p">,</span>
+                <span class="s2">"ego2global_rotation"</span><span class="p">:</span> <span class="n">ego_rotation</span><span class="p">,</span>
+                <span class="s2">"timestamp"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">camera_timestamp_us</span><span class="p">),</span>
+                <span class="s2">"sensor2lidar_rotation"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">camera_to_lidar</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]),</span>
+                <span class="s2">"sensor2lidar_translation"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">camera_to_lidar</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span>
+                <span class="s2">"cam_intrinsic"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">intrinsics</span><span class="o">.</span><span class="n">camera_matrix</span><span class="p">),</span>
+                <span class="s2">"width"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">metadata</span><span class="o">.</span><span class="n">width</span><span class="p">),</span>
+                <span class="s2">"height"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">metadata</span><span class="o">.</span><span class="n">height</span><span class="p">),</span>
+            <span class="p">}</span>
+            <span class="n">payloads</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">payload</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">payloads</span> <span class="ow">or</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_frame_ego_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">,</span> <span class="n">iteration</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ego_pose_source</span> <span class="o">==</span> <span class="s2">"nearest"</span><span class="p">:</span>
+            <span class="n">timestamp_us</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">scene</span><span class="o">.</span><span class="n">get_timestamp_at_iteration</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span><span class="o">.</span><span class="n">time_us</span><span class="p">)</span>
+            <span class="n">ego_state</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_ego_state_se3_at_timestamp</span><span class="p">(</span><span class="n">timestamp_us</span><span class="p">,</span> <span class="n">criteria</span><span class="o">=</span><span class="s2">"nearest"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ego_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ego_state</span><span class="o">.</span><span class="n">timestamp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">offset</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ego_state</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">time_us</span><span class="p">)</span> <span class="o">-</span> <span class="n">timestamp_us</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">ego_pose_max_offset_us</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">ego_pose_max_offset_us</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">ego_state</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">ego_pose_fallbacks</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_ego_state_se3_at_iteration</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_lidar_to_ego</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">,</span>
+        <span class="n">iteration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">reference_lidar_id</span><span class="p">:</span> <span class="n">LidarID</span><span class="p">,</span>
+        <span class="n">lidar_data_id</span><span class="p">:</span> <span class="n">LidarID</span><span class="p">,</span>
+        <span class="n">ego_to_global</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The export's ``lidar2ego``, see :attr:`ExportConfig.lidar_frame` and :attr:`ExportConfig.lidar2ego_mode`."""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lidar_frame</span> <span class="o">==</span> <span class="s2">"ego"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="n">static</span> <span class="o">=</span> <span class="n">pose_to_matrix</span><span class="p">(</span><span class="n">scene</span><span class="o">.</span><span class="n">get_lidar_metadatas</span><span class="p">()[</span><span class="n">reference_lidar_id</span><span class="p">]</span><span class="o">.</span><span class="n">lidar_to_imu_se3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lidar2ego_mode</span> <span class="o">==</span> <span class="s2">"static"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">static</span>
+
+        <span class="n">lidar_timestamp_us</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_modality_column_at_iteration</span><span class="p">(</span>
+            <span class="n">iteration</span><span class="o">=</span><span class="n">iteration</span><span class="p">,</span>
+            <span class="n">column</span><span class="o">=</span><span class="s2">"timestamp_us"</span><span class="p">,</span>
+            <span class="n">modality_type</span><span class="o">=</span><span class="n">ModalityType</span><span class="o">.</span><span class="n">LIDAR</span><span class="p">,</span>
+            <span class="n">modality_id</span><span class="o">=</span><span class="n">lidar_data_id</span><span class="p">,</span>
+            <span class="n">deserialize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">lidar_timestamp_us</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">static</span>
+        <span class="c1"># Nearest stored ego state, not an interpolated one: inventing poses would hide how coarse</span>
+        <span class="c1"># the ego stream is.</span>
+        <span class="n">ego_state</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_ego_state_se3_at_timestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">lidar_timestamp_us</span><span class="p">),</span> <span class="n">criteria</span><span class="o">=</span><span class="s2">"nearest"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ego_state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">dynamic_extrinsic_fallbacks</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">static</span>
+        <span class="c1"># Relative to the ego pose this frame reports, so that ego2global @ lidar2ego lands where</span>
+        <span class="c1"># the lidar was when it fired.</span>
+        <span class="k">return</span> <span class="n">invert_rigid</span><span class="p">(</span><span class="n">ego_to_global</span><span class="p">)</span> <span class="o">@</span> <span class="n">pose_to_matrix</span><span class="p">(</span><span class="n">ego_state</span><span class="o">.</span><span class="n">imu_se3</span><span class="p">)</span> <span class="o">@</span> <span class="n">static</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_annotations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">,</span>
+        <span class="n">iteration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">global_to_lidar</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">velocity_table</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TrackVelocityTable</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FrameAnnotations</span><span class="p">:</span>
+        <span class="n">detections</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_box_detections_se3_at_iteration</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
+        <span class="n">velocity_overrides</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">velocity_table</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">velocity_overrides</span> <span class="o">=</span> <span class="n">velocity_table</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">scene</span><span class="o">.</span><span class="n">get_timestamp_at_iteration</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span><span class="o">.</span><span class="n">time_us</span><span class="p">)</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">extract_detection_records</span><span class="p">(</span><span class="n">detections</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">taxonomy</span><span class="p">,</span> <span class="n">velocity_overrides</span><span class="o">=</span><span class="n">velocity_overrides</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">velocity_overrides</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">boxes_without_track_velocity</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span>
+                <span class="mi">1</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span> <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">track_token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">velocity_overrides</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">build_frame_annotations</span><span class="p">(</span>
+            <span class="n">records</span><span class="p">,</span>
+            <span class="n">global_to_lidar</span><span class="p">,</span>
+            <span class="n">yaw_convention</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">yaw_convention</span><span class="p">,</span>
+            <span class="n">planar_velocity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">planar_velocity</span><span class="p">,</span>
+            <span class="n">box_layout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">box_layout</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_2d_annotations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">records</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectionRecord</span><span class="p">],</span> <span class="n">camera_payloads</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseCameraMetadata</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""StreamPETR's per-camera 2D fields, one list entry per camera."""</span>
+        <span class="n">fields_2d</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"bboxes2d"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">"labels2d"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">"centers2d"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">"depths"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">"bboxes3d_cams"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">"bboxes_ignore"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">"visibilities"</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">payload</span> <span class="ow">in</span> <span class="n">camera_payloads</span><span class="p">:</span>
+            <span class="c1"># Records are global-frame, so project them through the camera pose stored in the payload.</span>
+            <span class="n">annotations</span> <span class="o">=</span> <span class="n">project_records_to_camera</span><span class="p">(</span>
+                <span class="n">records</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">_sensor_to_global</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="s2">"sensor"</span><span class="p">),</span> <span class="n">yaw_convention</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">yaw_convention</span>
+            <span class="p">)</span>
+            <span class="n">fields_2d</span><span class="p">[</span><span class="s2">"bboxes2d"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">bboxes2d</span><span class="p">)</span>
+            <span class="n">fields_2d</span><span class="p">[</span><span class="s2">"labels2d"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">labels2d</span><span class="p">)</span>
+            <span class="n">fields_2d</span><span class="p">[</span><span class="s2">"centers2d"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">centers2d</span><span class="p">)</span>
+            <span class="n">fields_2d</span><span class="p">[</span><span class="s2">"depths"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">depths</span><span class="p">)</span>
+            <span class="n">fields_2d</span><span class="p">[</span><span class="s2">"bboxes3d_cams"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">bboxes3d_cam</span><span class="p">)</span>
+            <span class="n">fields_2d</span><span class="p">[</span><span class="s2">"bboxes_ignore"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">bboxes_ignore</span><span class="p">)</span>
+            <span class="n">fields_2d</span><span class="p">[</span><span class="s2">"visibilities"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotations</span><span class="o">.</span><span class="n">visibilities</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fields_2d</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sweep_candidates</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">,</span> <span class="n">reference_lidar_id</span><span class="p">:</span> <span class="n">LidarID</span><span class="p">,</span> <span class="n">lidar_data_id</span><span class="p">:</span> <span class="n">LidarID</span><span class="p">,</span> <span class="n">timestamp_offset_us</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">"""Every lidar frame of a (native-rate) scene, in time order. Point clouds are not decoded."""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_sweeps</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">reference_lidar_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_lidar_metadatas</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="n">candidates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scene</span><span class="o">.</span><span class="n">number_of_iterations</span><span class="p">):</span>
+            <span class="n">ego_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frame_ego_state</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ego_state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">ego_to_global</span> <span class="o">=</span> <span class="n">pose_to_matrix</span><span class="p">(</span><span class="n">ego_state</span><span class="o">.</span><span class="n">imu_se3</span><span class="p">)</span>
+            <span class="n">lidar_to_ego</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lidar_to_ego</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">reference_lidar_id</span><span class="p">,</span> <span class="n">lidar_data_id</span><span class="p">,</span> <span class="n">ego_to_global</span><span class="p">)</span>
+            <span class="n">lidar_translation</span><span class="p">,</span> <span class="n">lidar_rotation</span> <span class="o">=</span> <span class="n">matrix_to_translation_quaternion</span><span class="p">(</span><span class="n">lidar_to_ego</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">lidar_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensors</span><span class="o">.</span><span class="n">resolve_lidar</span><span class="p">(</span>
+                    <span class="n">scene</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">lidar_data_id</span><span class="p">,</span> <span class="n">ego_to_lidar</span><span class="o">=</span><span class="n">invert_rigid</span><span class="p">(</span><span class="n">lidar_to_ego</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>  <span class="c1"># sweeps are optional context, never fail the export for one</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Skipping sweep at iteration </span><span class="si">%d</span><span class="s2"> of '</span><span class="si">%s</span><span class="s2">': </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">lidar_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">timestamp_us</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">get_timestamp_at_iteration</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span><span class="o">.</span><span class="n">time_us</span>
+            <span class="n">ego_translation</span><span class="p">,</span> <span class="n">ego_rotation</span> <span class="o">=</span> <span class="n">matrix_to_translation_quaternion</span><span class="p">(</span><span class="n">ego_to_global</span><span class="p">)</span>
+            <span class="n">candidates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">"lidar_to_global"</span><span class="p">:</span> <span class="n">ego_to_global</span> <span class="o">@</span> <span class="n">lidar_to_ego</span><span class="p">,</span>
+                    <span class="s2">"payload"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">"data_path"</span><span class="p">:</span> <span class="n">lidar_path</span><span class="p">,</span>
+                        <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"lidar"</span><span class="p">,</span>
+                        <span class="s2">"sample_data_token"</span><span class="p">:</span> <span class="n">_frame_uuid</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">timestamp_us</span><span class="p">),</span>
+                        <span class="s2">"sensor2ego_translation"</span><span class="p">:</span> <span class="n">lidar_translation</span><span class="p">,</span>
+                        <span class="s2">"sensor2ego_rotation"</span><span class="p">:</span> <span class="n">lidar_rotation</span><span class="p">,</span>
+                        <span class="s2">"ego2global_translation"</span><span class="p">:</span> <span class="n">ego_translation</span><span class="p">,</span>
+                        <span class="s2">"ego2global_rotation"</span><span class="p">:</span> <span class="n">ego_rotation</span><span class="p">,</span>
+                        <span class="s2">"timestamp"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp_us</span> <span class="o">+</span> <span class="n">timestamp_offset_us</span><span class="p">),</span>
+                    <span class="p">},</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">candidates</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_attach_sweeps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">candidates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Fill ``info['sweeps']`` with the candidates before each frame, newest first like mmdetection3d."""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_sweeps</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">candidates</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">timestamps</span> <span class="o">=</span> <span class="p">[</span><span class="n">candidate</span><span class="p">[</span><span class="s2">"payload"</span><span class="p">][</span><span class="s2">"timestamp"</span><span class="p">]</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">info</span><span class="p">[</span><span class="s2">"timestamp"</span><span class="p">])</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_sweeps</span><span class="p">)</span>
+            <span class="n">global_to_lidar</span> <span class="o">=</span> <span class="n">invert_rigid</span><span class="p">(</span><span class="n">_sensor_to_global</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="s2">"lidar"</span><span class="p">))</span>
+
+            <span class="n">sweeps</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]):</span>
+                <span class="n">sweep_to_lidar</span> <span class="o">=</span> <span class="n">global_to_lidar</span> <span class="o">@</span> <span class="n">candidate</span><span class="p">[</span><span class="s2">"lidar_to_global"</span><span class="p">]</span>
+                <span class="n">sweep</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">candidate</span><span class="p">[</span><span class="s2">"payload"</span><span class="p">])</span>
+                <span class="n">sweep</span><span class="p">[</span><span class="s2">"sensor2lidar_rotation"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">sweep_to_lidar</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+                <span class="n">sweep</span><span class="p">[</span><span class="s2">"sensor2lidar_translation"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">sweep_to_lidar</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+                <span class="n">sweeps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">"sweeps"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sweeps</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_frame_uuid</span><span class="p">(</span><span class="n">scene</span><span class="p">:</span> <span class="n">SceneAPI</span><span class="p">,</span> <span class="n">timestamp_us</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">create_deterministic_uuid</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="n">scene</span><span class="o">.</span><span class="n">split</span><span class="p">,</span> <span class="n">log_name</span><span class="o">=</span><span class="n">scene</span><span class="o">.</span><span class="n">log_name</span><span class="p">,</span> <span class="n">timestamp_us</span><span class="o">=</span><span class="n">timestamp_us</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sweep_candidate_from_info</span><span class="p">(</span><span class="n">info</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"lidar_to_global"</span><span class="p">:</span> <span class="n">_sensor_to_global</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="s2">"lidar"</span><span class="p">),</span>
+        <span class="s2">"payload"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"data_path"</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="s2">"lidar_path"</span><span class="p">],</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"lidar"</span><span class="p">,</span>
+            <span class="s2">"sample_data_token"</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="s2">"token"</span><span class="p">],</span>
+            <span class="s2">"sensor2ego_translation"</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="s2">"lidar2ego_translation"</span><span class="p">],</span>
+            <span class="s2">"sensor2ego_rotation"</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="s2">"lidar2ego_rotation"</span><span class="p">],</span>
+            <span class="s2">"ego2global_translation"</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="s2">"ego2global_translation"</span><span class="p">],</span>
+            <span class="s2">"ego2global_rotation"</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="s2">"ego2global_rotation"</span><span class="p">],</span>
+            <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="s2">"timestamp"</span><span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_pose_pair_to_matrix</span><span class="p">(</span><span class="n">translation</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">rotation</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">pose</span> <span class="o">=</span> <span class="n">PoseSE3</span><span class="o">.</span><span class="n">from_R_t</span><span class="p">(</span>
+        <span class="n">rotation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rotation</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">translation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">translation</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pose</span><span class="o">.</span><span class="n">transformation_matrix</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sensor_to_global</span><span class="p">(</span><span class="n">entry</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">sensor</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Rebuild ``sensor -&gt; global`` from the pose pairs of an info (``"lidar"``) or camera payload (``"sensor"``)."""</span>
+    <span class="n">sensor_to_ego</span> <span class="o">=</span> <span class="n">_pose_pair_to_matrix</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">sensor</span><span class="si">}</span><span class="s2">2ego_translation"</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">sensor</span><span class="si">}</span><span class="s2">2ego_rotation"</span><span class="p">])</span>
+    <span class="n">ego_to_global</span> <span class="o">=</span> <span class="n">_pose_pair_to_matrix</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">"ego2global_translation"</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="s2">"ego2global_rotation"</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ego_to_global</span> <span class="o">@</span> <span class="n">sensor_to_ego</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=b2731ba4"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    </body>
+</html>

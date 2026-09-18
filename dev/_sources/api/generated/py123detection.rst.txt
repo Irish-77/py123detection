@@ -1,0 +1,19 @@
+﻿py123detection
+==============
+
+.. automodule:: py123detection
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   annotations
+   geometry
+   mmcv_export
+   mmcv_plugin
+   sources
+   taxonomy
+   velocity

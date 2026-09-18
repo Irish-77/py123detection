@@ -1,0 +1,12 @@
+py123detection.mmcv\_export.schema
+==================================
+
+.. automodule:: py123detection.mmcv_export.schema
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      validate_info
+   
