@@ -1,0 +1,20 @@
+py123detection.mmcv\_export.converter
+=====================================
+
+.. automodule:: py123detection.mmcv_export.converter
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      DEFAULT_CAMERA_ORDER
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ExportConfig
+      ExportStats
+      MMDet3DConverter
+   

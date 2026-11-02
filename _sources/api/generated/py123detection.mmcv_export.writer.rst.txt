@@ -1,0 +1,29 @@
+py123detection.mmcv\_export.writer
+==================================
+
+.. automodule:: py123detection.mmcv_export.writer
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_metadata
+      dump_infos
+      inspect_pickle
+      numpy_compatibility_warnings
+      to_portable_arrays
+      validate_portable
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      WriteResult
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      PortabilityError
+   

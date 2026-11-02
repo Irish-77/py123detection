@@ -1,0 +1,18 @@
+py123detection.mmcv\_export.annotations2d
+=========================================
+
+.. automodule:: py123detection.mmcv_export.annotations2d
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      project_records_to_camera
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Camera2DAnnotations
+   

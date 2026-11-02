@@ -1,0 +1,13 @@
+py123detection.mmcv\_export.cli
+===============================
+
+.. automodule:: py123detection.mmcv_export.cli
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_parser
+      main
+   

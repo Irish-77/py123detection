@@ -1,0 +1,21 @@
+py123detection.mmcv\_export.sensors
+===================================
+
+.. automodule:: py123detection.mmcv_export.sensors
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PathStyle
+      SensorMode
+      SensorResolver
+      SensorResolverConfig
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      SensorExtractionError
+   
