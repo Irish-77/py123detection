@@ -18,7 +18,7 @@ The same call from Python:
 
 ```python
 from py123detection import Source
-from py123detection.mmcv_export import export_to_mmdet3d
+from py123detection.mmcv.export import export_to_mmdet3d
 
 report = export_to_mmdet3d(
     Source(data_root="/data/py123d", splits=["nuscenes-mini_train"]),
@@ -33,7 +33,7 @@ Both files must be written with the same settings, so build the config once and 
 
 ```python
 from py123detection import Source
-from py123detection.mmcv_export import ExportConfig, export_to_mmdet3d
+from py123detection.mmcv.export import ExportConfig, export_to_mmdet3d
 
 config = ExportConfig()
 
@@ -95,8 +95,8 @@ enum members and override single labels.
 
 ```python
 from py123detection import Source, Taxonomy
-from py123detection.taxonomy import VOID
-from py123detection.mmcv_export import ExportConfig, export_to_mmdet3d
+from py123detection.core.taxonomy import VOID
+from py123detection.mmcv.export import ExportConfig, export_to_mmdet3d
 
 ROAD_USERS = Taxonomy(
     name="road_users_2cls",
@@ -170,7 +170,7 @@ Pass several sources and they land in one file under one class list.
 
 ```python
 from py123detection import Source, get_taxonomy
-from py123detection.mmcv_export import ExportConfig, export_to_mmdet3d
+from py123detection.mmcv.export import ExportConfig, export_to_mmdet3d
 
 sources = [
     Source(data_root="/data/py123d", splits=["nuscenes_train"]),

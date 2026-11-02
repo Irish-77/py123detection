@@ -79,7 +79,7 @@ def reference_infos(tmp_path_factory) -> Dict[str, dict]:
 def exported_infos(tmp_path_factory) -> Dict[str, dict]:
     """Infos from the 123D export, keyed by the same (restored) sample token."""
     from py123detection import Source
-    from py123detection.mmcv_export import ExportConfig, NuScenesTokenResolver, export_to_mmdet3d
+    from py123detection.mmcv.export import ExportConfig, NuScenesTokenResolver, export_to_mmdet3d
 
     out = tmp_path_factory.mktemp("export") / "infos.pkl"
     report = export_to_mmdet3d(
@@ -276,7 +276,7 @@ def test_prev_next_links_are_consistent(exported_infos) -> None:
 
 @requires_data
 def test_exported_infos_satisfy_the_schema(exported_infos) -> None:
-    from py123detection.mmcv_export import validate_info
+    from py123detection.mmcv.export import validate_info
 
     for info in exported_infos.values():
         assert validate_info(info) == []

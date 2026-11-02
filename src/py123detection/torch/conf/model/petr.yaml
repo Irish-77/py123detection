@@ -1,0 +1,19 @@
+# @package model
+name: petr
+_target_: py123detection.torch.models.PETR
+num_query: 900
+num_decoder_layers: 6
+hidden_dim: 256
+backbone_name: resnet50
+# In the ego (IMU) frame, not mmdet3d's lidar frame. The IMU sits over the rear axle, about
+# two metres below nuScenes' roof lidar, so the same objects are two metres higher here and the
+# lidar-frame [-5, 3] would cut the tops off tall vehicles and put half the range underground.
+pc_range: [-51.2, -51.2, -3.0, 51.2, 51.2, 5.0]
+# Wider than pc_range on purpose: an object at the edge of the detection range still gets a
+# meaningful positional embedding rather than a saturated one.
+position_range: [-61.2, -61.2, -10.0, 61.2, 61.2, 10.0]
+use_grid_mask: true
+backbone_checkpointing: false
+head_checkpointing: false
+learning_rate: 2e-4
+weight_decay: 0.01

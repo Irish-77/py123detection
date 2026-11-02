@@ -27,9 +27,9 @@ from py123d.datatypes.vehicle_state.ego_state import EgoStateSE3
 from py123d.geometry import PoseSE3
 from pyquaternion import Quaternion
 
-from py123detection.geometry import invert_rigid, pose_to_matrix
-from py123detection.mmcv_export.converter import ExportConfig, MMDet3DConverter
-from py123detection.mmcv_export.sensors import SensorResolverConfig
+from py123detection.core.geometry import invert_rigid, pose_to_matrix
+from py123detection.mmcv.export.converter import ExportConfig, MMDet3DConverter
+from py123detection.mmcv.export.sensors import SensorResolverConfig
 
 LIDAR_TO_EGO = PoseSE3(0.98, 0.0, 1.84, *Quaternion(axis=[0, 0, 1], radians=0.01).elements)
 CAMERA_TO_EGO = PoseSE3(1.7, 0.0, 1.5, *Quaternion(axis=[0, 1, 0], radians=0.02).elements)

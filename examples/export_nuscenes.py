@@ -17,7 +17,7 @@ import logging
 from pathlib import Path
 
 from py123detection import Source
-from py123detection.mmcv_export import ExportConfig, NuScenesTokenResolver, TokenResolver, export_to_mmdet3d
+from py123detection.mmcv.export import ExportConfig, NuScenesTokenResolver, TokenResolver, export_to_mmdet3d
 
 
 def main() -> int:

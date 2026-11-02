@@ -1,0 +1,6 @@
+# @package images
+# Half resolution, for a machine that cannot hold the reference size. The augmentation's zoom is
+# relative to the covering scale, so the same `augment` settings are right here too.
+size: [320, 800]
+mode: crop
+pad_divisor: 32

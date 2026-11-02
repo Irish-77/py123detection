@@ -1,0 +1,15 @@
+# @package taxonomy
+# Three coarse classes. The safest cross-dataset choice, since all three survive every mapping intact.
+#
+# Resolved by py123detection.core.taxonomy.get_taxonomy, which owns the class list, the label
+# mapping from each dataset, and any rider-merging rules.
+name: mixed2_3cls
+# Short form, used in run and directory names.
+label: 3cls
+
+# How far out each class is scored, in metres. The devkit has no radius for a class
+# it does not know, and guessing one silently decides how much of the scene counts.
+class_range:
+  vehicle: 50.0
+  pedestrian: 40.0
+  bicycle: 40.0

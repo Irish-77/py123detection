@@ -1,0 +1,23 @@
+# @package model
+name: bevformer
+_target_: py123detection.torch.models.BEVFormer
+num_query: 900
+num_decoder_layers: 6
+hidden_dim: 256
+backbone_name: resnet50
+# In the ego (IMU) frame, not mmdet3d's lidar frame. The IMU sits over the rear axle, about
+# two metres below nuScenes' roof lidar, so the same objects are two metres higher here and the
+# lidar-frame [-5, 3] would cut the tops off tall vehicles and put half the range underground.
+pc_range: [-51.2, -51.2, -3.0, 51.2, 51.2, 5.0]
+bev_h: 50
+bev_w: 50
+num_encoder_layers: 3
+with_box_refine: true
+# "none" keeps the model rig-agnostic, which is what lets it train across datasets whose camera
+# counts differ. "bevformer" reproduces the paper's learned per-camera token on one dataset.
+camera_embedding: none
+use_grid_mask: true
+backbone_checkpointing: false
+head_checkpointing: false
+learning_rate: 2e-4
+weight_decay: 0.01

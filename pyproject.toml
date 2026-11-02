@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "py123detection"
 version = "0.1.0"
-description = "123D toolkit for 3D multi-view object detection: export 123D datasets to the mmcv/mmdetection3d ecosystem."
+description = "123D toolkit for 3D multi-view object detection: export 123D datasets for the mmcv/mmdetection3d ecosystem, or train PETR and BEVFormer on them directly."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "Apache-2.0" }
@@ -25,10 +25,30 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Only needed to rebuild native dataset tokens (e.g. nuScenes sample tokens).
+# --- mmcv export branch -----------------------------------------------------
+# The exporter itself needs only the base dependencies: py123d and numpy.
+# The nuScenes devkit. Needed to rebuild native dataset tokens (e.g. nuScenes sample tokens),
+# and by py123detection.core.evaluation, which scores with the devkit's own algo.py.
 nuscenes = ["nuscenes-devkit"]
 # Only needed for `image_mode=extract` (writing embedded images back out to disk).
 images = ["opencv-python"]
+
+# --- torch branch -----------------------------------------------------------
+# Everything `py123det-train` and `py123det-eval` import. Install it in its own environment:
+# these pin nothing the exporter needs, and mmcv/mmdet3d pin versions that conflict with them.
+# torch itself is deliberately unpinned to a build — install the wheel matching your CUDA first.
+torch = [
+    "torch>=2.1",
+    "torchvision>=0.16",
+    "lightning>=2.2",
+    "hydra-core>=1.3",
+    "omegaconf>=2.3",
+    "scipy>=1.10",
+    "opencv-python",
+    # py123det-eval scores with the devkit's own metric implementation.
+    "nuscenes-devkit",
+]
+
 dev = ["pytest", "ruff"]
 # Only needed to build the documentation site (see docs/development.md).
 docs = [
@@ -43,13 +63,18 @@ docs = [
 ]
 
 [project.scripts]
-py123det-export-mmcv = "py123detection.mmcv_export.cli:main"
+# mmcv export branch: base install is enough.
+py123det-export-mmcv = "py123detection.mmcv.export.cli:main"
+# torch branch: both need the `torch` extra.
+py123det-train = "py123detection.torch.train:main"
+py123det-eval = "py123detection.torch.evaluate:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
 py123detection = ["py.typed"]
+"py123detection.torch" = ["conf/**/*.yaml"]
 
 [tool.ruff]
 line-length = 120

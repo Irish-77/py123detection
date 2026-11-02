@@ -1,0 +1,12 @@
+# @package _global_
+# Single dataset. The baseline everything else is compared against.
+data:
+  name: nuscenes
+  train:
+    - dataset: nuscenes
+      splits: [nuscenes_train]
+      sample_rate_hz: 2.0
+  val:
+    - dataset: nuscenes
+      splits: [nuscenes_val]
+      sample_rate_hz: 2.0

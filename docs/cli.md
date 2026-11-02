@@ -5,7 +5,7 @@ metadata and first frame, and `token-map` dumps nuScenes sample tokens. This pag
 the argument parser, so it always matches the installed version.
 
 ```{argparse}
-:module: py123detection.mmcv_export.cli
+:module: py123detection.mmcv.export.cli
 :func: build_parser
 :prog: py123det-export-mmcv
 ```

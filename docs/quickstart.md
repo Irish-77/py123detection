@@ -23,7 +23,7 @@ Same thing from Python:
 
 ```python
 from py123detection import Source
-from py123detection.mmcv_export import export_to_mmdet3d
+from py123detection.mmcv.export import export_to_mmdet3d
 
 report = export_to_mmdet3d(
     Source(data_root="/data/py123d", splits=["nuscenes-mini_train"], sample_rate_hz=2.0),
@@ -47,4 +47,4 @@ data = dict(
 ```
 
 Nothing else changes. The pickle *is* the nuScenes info schema. See
-{py:mod}`schema.py <py123detection.mmcv_export.schema>` for the field-by-field description.
+{py:mod}`schema.py <py123detection.mmcv.export.schema>` for the field-by-field description.

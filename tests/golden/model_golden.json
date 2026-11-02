@@ -1,0 +1,76 @@
+{
+ "model_kwargs": {
+  "backbone_name": "resnet50",
+  "backbone_with_cp": false,
+  "hidden_dim": 256,
+  "image_height": 320,
+  "image_width": 800,
+  "num_classes": 10,
+  "num_decoder_layers": 2,
+  "num_query": 50,
+  "optimizer_fused": false,
+  "patches_x": 50,
+  "patches_y": 20,
+  "pc_range": [
+   -51.2,
+   -51.2,
+   -5.0,
+   51.2,
+   51.2,
+   3.0
+  ],
+  "position_range": [
+   -61.2,
+   -61.2,
+   -10.0,
+   61.2,
+   61.2,
+   10.0
+  ],
+  "transformer_with_cp": false,
+  "use_grid_mask": false
+ },
+ "note": "Generated from the master-thesis PETR with every extension at its default (off). Do not edit by hand; regenerate with tools/freeze_model_golden.py.",
+ "petr": {
+  "losses": {
+   "d0.loss_bbox": 5.189359,
+   "d0.loss_ce": 2.10069,
+   "loss_bbox": 5.145412,
+   "loss_ce": 2.090299
+  },
+  "outputs": {
+   "all_bbox_preds": {
+    "max": 50.880283,
+    "mean": -0.380115,
+    "min": -50.842381,
+    "shape": [
+     2,
+     2,
+     50,
+     10
+    ],
+    "sum": -760.2294
+   },
+   "all_cls_scores": {
+    "max": -3.816622,
+    "mean": -4.422409,
+    "min": -5.351191,
+    "shape": [
+     2,
+     2,
+     50,
+     10
+    ],
+    "sum": -8844.8184
+   }
+  },
+  "parameters": 30406119
+ },
+ "seed": 20260919,
+ "shape": {
+  "batch": 2,
+  "cameras": 6,
+  "height": 320,
+  "width": 800
+ }
+}

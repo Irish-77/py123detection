@@ -14,25 +14,25 @@ import sys
 from pathlib import Path
 from typing import List, Optional, Sequence
 
-from py123detection.annotations import BOX_LAYOUTS
-from py123detection.mmcv_export.converter import (
+from py123detection.core.annotations import BOX_LAYOUTS
+from py123detection.core.sources import Source
+from py123detection.core.taxonomy import TAXONOMIES, get_taxonomy
+from py123detection.mmcv.export.converter import (
     DEFAULT_CAMERA_ORDER,
     EGO_POSE_SOURCES,
     VELOCITY_SOURCES,
     ExportConfig,
 )
-from py123detection.mmcv_export.export import export_to_mmdet3d
-from py123detection.mmcv_export.schema import validate_info
-from py123detection.mmcv_export.sensors import PathStyle, SensorMode, SensorResolverConfig
-from py123detection.mmcv_export.tokens import (
+from py123detection.mmcv.export.export import export_to_mmdet3d
+from py123detection.mmcv.export.schema import validate_info
+from py123detection.mmcv.export.sensors import PathStyle, SensorMode, SensorResolverConfig
+from py123detection.mmcv.export.tokens import (
     LogTimestampTokenResolver,
     MappingTokenResolver,
     NuScenesTokenResolver,
     TokenResolver,
     dump_nuscenes_token_map,
 )
-from py123detection.sources import Source
-from py123detection.taxonomy import TAXONOMIES, get_taxonomy
 
 
 def _add_export_arguments(parser: argparse.ArgumentParser) -> None:
@@ -79,7 +79,7 @@ def _add_export_arguments(parser: argparse.ArgumentParser) -> None:
         choices=("numpy", "portable"),
         default="numpy",
         help="'portable' stores arrays as nested lists, sidestepping numpy's pickle format "
-        "(needs py123detection.mmcv_plugin on the training side).",
+        "(needs py123detection.mmcv.plugin on the training side).",
     )
     output.add_argument("--pickle-protocol", type=int, default=4, help="Pickle protocol (4 reads on Python >= 3.4).")
 

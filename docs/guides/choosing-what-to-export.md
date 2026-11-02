@@ -45,7 +45,7 @@ without per-dataset code. Custom taxonomies are a dataclass:
 
 ```python
 from py123detection import Taxonomy
-from py123detection.taxonomy import VOID
+from py123detection.core.taxonomy import VOID
 
 MY_TAXONOMY = Taxonomy(
     name="cars_and_people",

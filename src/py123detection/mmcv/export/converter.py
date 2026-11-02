@@ -2,7 +2,7 @@
 
 The reference frame is the keyframe's lidar frame, as in mmdet3d. 123D stores everything in the
 global frame, so each frame composes ``lidar -> ego -> global`` from the ego state and rig
-extrinsics and inverts it. See :mod:`py123detection.mmcv_export.schema` for the fields.
+extrinsics and inverts it. See :mod:`py123detection.mmcv.export.schema` for the fields.
 """
 
 from __future__ import annotations
@@ -19,19 +19,19 @@ from py123d.common.utils.uuid_utils import create_deterministic_uuid
 from py123d.datatypes import BaseCameraMetadata, CameraID, LidarID, ModalityType
 from py123d.geometry import PoseSE3
 
-from py123detection.annotations import (
+from py123detection.core.annotations import (
     BOX_LAYOUTS,
     DetectionRecord,
     FrameAnnotations,
     build_frame_annotations,
     extract_detection_records,
 )
-from py123detection.geometry import invert_rigid, matrix_to_translation_quaternion, pose_to_matrix
-from py123detection.mmcv_export.annotations2d import project_records_to_camera
-from py123detection.mmcv_export.sensors import SensorResolver, SensorResolverConfig
-from py123detection.mmcv_export.tokens import TokenResolver
-from py123detection.taxonomy import NUSCENES_DETECTION, Taxonomy
-from py123detection.velocity import TrackVelocityTable
+from py123detection.core.geometry import invert_rigid, matrix_to_translation_quaternion, pose_to_matrix
+from py123detection.core.taxonomy import NUSCENES_DETECTION, Taxonomy
+from py123detection.core.velocity import TrackVelocityTable
+from py123detection.mmcv.export.annotations2d import project_records_to_camera
+from py123detection.mmcv.export.sensors import SensorResolver, SensorResolverConfig
+from py123detection.mmcv.export.tokens import TokenResolver
 
 VELOCITY_SOURCES = ("stored", "tracks")
 EGO_POSE_SOURCES = ("sync", "nearest")
@@ -84,7 +84,7 @@ class ExportConfig:
 
     yaw_convention: str = "mmdet3d"
     """``"mmdet3d"`` matches pickles from mmdetection3d's converter, ``"heading"`` the nuScenes
-    devkit. See :func:`py123detection.geometry.mmdet3d_yaw`."""
+    devkit. See :func:`py123detection.core.geometry.mmdet3d_yaw`."""
 
     lidar2ego_mode: str = "static"
     """``"static"`` writes the rig extrinsic, like mmdetection3d's converter.
@@ -113,12 +113,12 @@ class ExportConfig:
     this and its evaluation assumes it."""
 
     box_layout: str = "streampetr"
-    """``gt_boxes`` column layout, see :data:`py123detection.annotations.BOX_LAYOUTS`. A wrong
+    """``gt_boxes`` column layout, see :data:`py123detection.core.annotations.BOX_LAYOUTS`. A wrong
     choice does not crash, it trains on transposed, mis-rotated boxes."""
 
     velocity_source: str = "stored"
     """``"stored"`` uses the log's velocity (zero if the dataset has none). ``"tracks"`` derives it
-    from neighbouring annotations of each track, see :mod:`py123detection.velocity`."""
+    from neighbouring annotations of each track, see :mod:`py123detection.core.velocity`."""
 
     velocity_max_dt_s: float = 0.25
 

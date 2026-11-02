@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Sequence
 
 import numpy as np
 
-from py123detection.mmcv_plugin.evaluation import evaluate_from_infos
+from py123detection.mmcv.plugin.evaluation import evaluate_from_infos
 
 logger = logging.getLogger(__name__)
 

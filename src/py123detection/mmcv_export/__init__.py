@@ -1,67 +1,12 @@
-"""Export 123D datasets to mmdetection3d info pickles.
+"""Deprecated alias for :mod:`py123detection.mmcv.export`."""
 
-:func:`~py123detection.mmcv_export.export.export_to_mmdet3d` writes one ``.pkl`` from one or more
-:class:`~py123detection.sources.Source`, usable as the ``ann_file`` of ``NuScenesDataset`` and
-its PETR / StreamPETR / BEVDet derivatives.
-"""
+from py123detection._compat import alias as _alias
 
-from py123detection.mmcv_export.annotations2d import Camera2DAnnotations, project_records_to_camera
-from py123detection.mmcv_export.converter import (
-    DEFAULT_CAMERA_ORDER,
-    ExportConfig,
-    ExportStats,
-    MMDet3DConverter,
+_module = _alias(
+    "mmcv_export",
+    "mmcv.export",
+    ("annotations2d", "cli", "converter", "export", "schema", "sensors", "tokens", "writer"),
 )
-from py123detection.mmcv_export.export import ExportReport, check_timestamp_ordering, export_to_mmdet3d
-from py123detection.mmcv_export.schema import validate_info
-from py123detection.mmcv_export.sensors import (
-    PathStyle,
-    SensorExtractionError,
-    SensorMode,
-    SensorResolver,
-    SensorResolverConfig,
-)
-from py123detection.mmcv_export.tokens import (
-    MappingTokenResolver,
-    NuScenesTokenResolver,
-    TokenResolver,
-    build_nuscenes_token_map,
-    dump_nuscenes_token_map,
-)
-from py123detection.mmcv_export.writer import (
-    PortabilityError,
-    WriteResult,
-    build_metadata,
-    dump_infos,
-    inspect_pickle,
-    validate_portable,
-)
-
-__all__ = [
-    "Camera2DAnnotations",
-    "DEFAULT_CAMERA_ORDER",
-    "ExportConfig",
-    "ExportReport",
-    "ExportStats",
-    "MMDet3DConverter",
-    "MappingTokenResolver",
-    "NuScenesTokenResolver",
-    "PathStyle",
-    "PortabilityError",
-    "SensorExtractionError",
-    "SensorMode",
-    "SensorResolver",
-    "SensorResolverConfig",
-    "TokenResolver",
-    "WriteResult",
-    "build_metadata",
-    "build_nuscenes_token_map",
-    "check_timestamp_ordering",
-    "dump_infos",
-    "dump_nuscenes_token_map",
-    "export_to_mmdet3d",
-    "inspect_pickle",
-    "project_records_to_camera",
-    "validate_info",
-    "validate_portable",
-]
+globals().update({k: v for k, v in vars(_module).items() if not k.startswith("__")})
+__all__ = list(getattr(_module, "__all__", []))
+del _alias, _module

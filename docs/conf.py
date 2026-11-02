@@ -45,8 +45,9 @@ myst_fence_as_directive = ["mermaid"]
 autosummary_generate = True
 
 # The training-side plugin subclasses mmdet3d's NuScenesDataset and only defines it when mmdet3d
-# imports. Mocking lets the docs build in a conversion environment and still document it.
-autodoc_mock_imports = ["mmcv", "mmdet3d", "torch"]
+# imports, and the torch branch needs torch and Lightning. Mocking lets the docs build in a
+# conversion environment and still document both.
+autodoc_mock_imports = ["mmcv", "mmdet3d", "torch", "torchvision", "lightning"]
 
 # A mocked ``@DATASETS.register_module()`` would replace the class with a mock and hide its methods,
 # so mmdet's registry gets a pass-through decorator instead (only when mmdet is not installed).
@@ -65,7 +66,7 @@ autodoc_preserve_defaults = True
 # Dataclass signatures (``ExportConfig``) and module constants (``TAXONOMIES``) still show defaults
 # by repr, and a Taxonomy's generated repr runs to ~1500 characters. Shorten it for the docs only.
 if py123detection.HAS_EXPORT_SIDE:
-    from py123detection.taxonomy import Taxonomy
+    from py123detection.core.taxonomy import Taxonomy
 
     Taxonomy.__repr__ = lambda self: f"Taxonomy(name={self.name!r})"
 

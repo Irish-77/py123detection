@@ -8,7 +8,7 @@ and numpy 1.x. Three things break a pickle across that gap:
    :func:`validate_portable` rejects everything but built-ins and numpy arrays before writing.
 3. Arrays pickled under numpy 2 fail to load under numpy 1 (``No module named 'numpy._core'``).
    Either install ``numpy<2`` for the conversion, or write ``array_format="portable"``, which
-   stores arrays as nested lists and needs :mod:`py123detection.mmcv_plugin` to rebuild them.
+   stores arrays as nested lists and needs :mod:`py123detection.mmcv.plugin` to rebuild them.
 """
 
 from __future__ import annotations
@@ -95,7 +95,7 @@ def numpy_compatibility_warnings(array_format: str) -> List[str]:
         f"Exporting with numpy {np.__version__}. Arrays pickled by numpy 2.x cannot be loaded by "
         "numpy 1.x ('No module named numpy._core'), and mmdetection3d environments are almost "
         "always on numpy 1.x. Either install 'numpy<2' in this conversion environment, or "
-        "re-run with array_format='portable' and load the pickle through py123detection.mmcv_plugin."
+        "re-run with array_format='portable' and load the pickle through py123detection.mmcv.plugin."
     ]
 
 

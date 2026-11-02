@@ -1,0 +1,14 @@
+# @package taxonomy
+# One class: everything that drives. What the thesis called "mixed3", and the right setting for a
+# rig comparison — with one class, a difference in the score cannot come from classification.
+#
+# Resolved by py123detection.core.taxonomy.get_taxonomy, which owns the class list, the label
+# mapping from each dataset, and any rider-merging rules.
+name: mixed3_1cls
+# Short form, used in run and directory names.
+label: mixed3
+
+# How far out each class is scored, in metres. The devkit has no radius for a class
+# it does not know, and guessing one silently decides how much of the scene counts.
+class_range:
+  vehicle: 50.0

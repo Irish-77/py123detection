@@ -6,10 +6,10 @@ import numpy as np
 import pytest
 from py123d.api import SceneFilter
 
-from py123detection.mmcv_export.export import _assign_disjoint_offsets, check_timestamp_ordering
-from py123detection.mmcv_export.schema import validate_info
-from py123detection.mmcv_export.tokens import MappingTokenResolver, TokenResolver
-from py123detection.sources import Source
+from py123detection.core.sources import Source
+from py123detection.mmcv.export.export import _assign_disjoint_offsets, check_timestamp_ordering
+from py123detection.mmcv.export.schema import validate_info
+from py123detection.mmcv.export.tokens import MappingTokenResolver, TokenResolver
 
 # -- Source ------------------------------------------------------------------------------------
 

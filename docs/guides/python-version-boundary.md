@@ -28,7 +28,7 @@ Two ways out:
   exporter detects numpy 2 and prints exactly this advice.
 - **`--array-format portable`.** Stores every array as nested Python lists, so the pickle references
   no modules at all and loads under any Python and any (or no) numpy. Then use
-  `Py123DNuScenesDataset` from `py123detection.mmcv_plugin`, which rebuilds the arrays, including
+  `Py123DNuScenesDataset` from `py123detection.mmcv.plugin`, which rebuilds the arrays, including
   the shapes of empty ones, so a frame with no boxes still yields `(0, 7)`:
 
   ```python

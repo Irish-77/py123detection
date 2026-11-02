@@ -1,0 +1,11 @@
+# @package taxonomy
+# The CoIn3D comparison classes.
+#
+# Resolved by py123detection.core.taxonomy.get_taxonomy, which owns the class list, the label
+# mapping from each dataset, and any rider-merging rules.
+name: coin3d_3cls
+# Short form, used in run and directory names.
+label: coin3
+
+# Every class here is a nuScenes class, so the devkit's own detection radii apply.
+class_range: null

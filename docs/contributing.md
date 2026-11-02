@@ -41,7 +41,7 @@ Three commands, none of which need any data on disk:
 
 ```bash
 ruff check .                                # lint; the configuration lives in pyproject.toml
-pytest                                      # 179 unit tests, about 10 seconds
+pytest                                      # 289 unit tests, about 25 seconds
 sphinx-build -b dirhtml docs docs/_build    # only if you touched docs/ or a docstring
 ```
 

@@ -157,7 +157,7 @@ Two 123D-side issues surfaced this way on AV2 and are worth knowing about:
 
 ## 9. Training side
 
-`py123detection.mmcv_plugin.Py123DNuScenesDataset` reads any export and adds three things to
+`py123detection.mmcv.plugin.Py123DNuScenesDataset` reads any export and adds three things to
 mmdetection3d's `NuScenesDataset`:
 
 * **PETR-family keys** — `get_data_info` also returns `intrinsics`, `extrinsics` (lidar-to-camera)
@@ -181,11 +181,11 @@ names. A taxonomy meant for this evaluator must spell its classes with them — 
 why CoIn3D did.
 
 The training environment does not need py123d: `import py123detection` degrades to
-`HAS_EXPORT_SIDE = False` and `py123detection.mmcv_plugin` keeps working. Put
+`HAS_EXPORT_SIDE = False` and `py123detection.mmcv.plugin` keeps working. Put
 `py123detection/src` on `PYTHONPATH` and add to the config:
 
 ```python
-custom_imports = dict(imports=['py123detection.mmcv_plugin'], allow_failed_imports=False)
+custom_imports = dict(imports=['py123detection.mmcv.plugin'], allow_failed_imports=False)
 dataset_type = 'Py123DNuScenesDataset'
 ```
 

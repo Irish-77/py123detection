@@ -1,0 +1,24 @@
+# @package _global_
+# Two datasets, two different camera rigs. This is the case the package exists for: the rigs
+# differ in camera count and placement, so the model has to work from calibration rather than
+# from a fixed camera order. Use a taxonomy both datasets can express — mixed2_3cls or mixed_8cls.
+#
+# Argoverse 2 stores no box velocity, so it is derived from track positions over time.
+data:
+  name: nuscenes_av2
+  train:
+    - dataset: nuscenes
+      splits: [nuscenes_train]
+      sample_rate_hz: 2.0
+    - dataset: av2
+      splits: [av2-sensor_train]
+      sample_rate_hz: 2.0
+      compute_velocity: true
+  val:
+    - dataset: nuscenes
+      splits: [nuscenes_val]
+      sample_rate_hz: 2.0
+    - dataset: av2
+      splits: [av2-sensor_val]
+      sample_rate_hz: 2.0
+      compute_velocity: true

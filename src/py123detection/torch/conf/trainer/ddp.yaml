@@ -1,0 +1,13 @@
+# @package trainer
+# Multi-GPU. The per-dataset loss split reduces its box count once before splitting, so ranks
+# holding different dataset mixes stay in step. See Detector3D.sync_box_count.
+max_epochs: 24
+precision: 16-mixed
+devices: 2
+strategy: ddp
+accumulate_grad_batches: 1
+gradient_clip_val: 35.0
+warmup_steps: 500
+limit_train_batches: 1.0
+limit_val_batches: 1.0
+log_every_n_steps: 50

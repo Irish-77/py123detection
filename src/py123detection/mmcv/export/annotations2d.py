@@ -15,8 +15,8 @@ from typing import List, Optional, Sequence, Tuple
 import numpy as np
 from py123d.datatypes import BaseCameraMetadata
 
-from py123detection.annotations import DetectionRecord
-from py123detection.geometry import YAW_CONVENTIONS, invert_rigid
+from py123detection.core.annotations import DetectionRecord
+from py123detection.core.geometry import YAW_CONVENTIONS, invert_rigid
 
 # Same minimum box side as the mmdet3d converter.
 MIN_BOX_SIDE_PX = 1.0

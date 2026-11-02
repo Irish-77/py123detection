@@ -1,0 +1,37 @@
+# @package _global_
+# Three datasets. Waymo's rig is front-biased and has no rear camera at all, so a model trained
+# here cannot be leaning on a fixed camera layout.
+#
+# At 2 Hz the logs alone decide the mix (nuScenes ~28k frames, Argoverse 2 ~22k, Waymo ~32k). To
+# choose it instead, give an entry a frame count, spread evenly over its logs:
+#
+#   py123det-train experiment=nuscenes_av2_wod +data.train.0.num_frames=10000 \
+#       +data.train.1.num_frames=10000 +data.train.2.num_frames=10000
+#
+# `frame_stride: N` (every Nth frame of the native log) is the alternative to `sample_rate_hz`.
+data:
+  name: nuscenes_av2_wod
+  train:
+    - dataset: nuscenes
+      splits: [nuscenes_train]
+      sample_rate_hz: 2.0
+    - dataset: av2
+      splits: [av2-sensor_train]
+      sample_rate_hz: 2.0
+      compute_velocity: true
+    - dataset: wod
+      splits: [wod-perception_train]
+      sample_rate_hz: 2.0
+      compute_velocity: true
+  val:
+    - dataset: nuscenes
+      splits: [nuscenes_val]
+      sample_rate_hz: 2.0
+    - dataset: av2
+      splits: [av2-sensor_val]
+      sample_rate_hz: 2.0
+      compute_velocity: true
+    - dataset: wod
+      splits: [wod-perception_val]
+      sample_rate_hz: 2.0
+      compute_velocity: true

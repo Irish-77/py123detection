@@ -1,7 +1,7 @@
 """One-call export: 123D sources in, an mmdetection3d ``.pkl`` out::
 
     from py123detection import Source
-    from py123detection.mmcv_export import export_to_mmdet3d
+    from py123detection.mmcv.export import export_to_mmdet3d
 
     export_to_mmdet3d(
         Source(data_root="/data/py123d", splits=["nuscenes-mini_train"]),
@@ -19,9 +19,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Union
 
-from py123detection.mmcv_export.converter import ExportConfig, ExportStats, MMDet3DConverter
-from py123detection.mmcv_export.writer import WriteResult, build_metadata, dump_infos
-from py123detection.sources import Source
+from py123detection.core.sources import Source
+from py123detection.mmcv.export.converter import ExportConfig, ExportStats, MMDet3DConverter
+from py123detection.mmcv.export.writer import WriteResult, build_metadata, dump_infos
 
 logger = logging.getLogger(__name__)
 
@@ -114,7 +114,7 @@ def export_to_mmdet3d(
     """Export one or more 123D sources into a single mmdetection3d info pickle.
 
     :param version: Stored as ``metadata['version']``, which mmdet3d reads back.
-    :param array_format: ``"numpy"`` or ``"portable"``, see :func:`~py123detection.mmcv_export.writer.dump_infos`.
+    :param array_format: ``"numpy"`` or ``"portable"``, see :func:`~py123detection.mmcv.export.writer.dump_infos`.
     :param disjoint_timestamps: Offset each source's timestamps so mmdet3d's timestamp sort cannot
         interleave datasets.
     """

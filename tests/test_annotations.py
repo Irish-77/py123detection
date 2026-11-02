@@ -12,9 +12,9 @@ from py123d.geometry import BoundingBoxSE3, PoseSE3, Vector3D
 from py123d.parser.registry import NuScenesBoxDetectionLabel
 from pyquaternion import Quaternion
 
-from py123detection.annotations import build_frame_annotations, extract_detection_records
-from py123detection.geometry import invert_rigid
-from py123detection.taxonomy import NUSCENES_DETECTION
+from py123detection.core.annotations import build_frame_annotations, extract_detection_records
+from py123detection.core.geometry import invert_rigid
+from py123detection.core.taxonomy import NUSCENES_DETECTION
 
 METADATA = BoxDetectionsSE3Metadata(box_detection_label_class=NuScenesBoxDetectionLabel)
 

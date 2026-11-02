@@ -6,7 +6,7 @@ Two branches share the 123D data model:
 
 | Branch | Module | Status |
 | --- | --- | --- |
-| **mmcv export**: turn any 123D dataset into the `info` pickle the mmcv / mmdetection3d ecosystem reads, so existing PETR / StreamPETR / BEVDet configs train on 123D data unchanged | `py123detection.mmcv_export`, plus `py123detection.mmcv_plugin` on the training side | implemented |
+| **mmcv export**: turn any 123D dataset into the `info` pickle the mmcv / mmdetection3d ecosystem reads, so existing PETR / StreamPETR / BEVDet configs train on 123D data unchanged | `py123detection.mmcv.export`, plus `py123detection.mmcv.plugin` on the training side | implemented |
 | **modern stack**: the mmcv-free path from the master thesis | | not started |
 
 ## Why this exists
@@ -58,8 +58,8 @@ flowchart TD
     subgraph EXPORTENV ["conversion environment: py123d + numpy"]
         SRC["<b>Source</b><br/><code>py123detection</code><br/>which logs, which splits,<br/>what frame rate"]
         TAX["<b>Taxonomy</b><br/><code>py123detection</code><br/>123D labels to class names<br/><i>presets: nuscenes_detection_10cls,<br/>general_3cls, coin3d_3cls, ...</i>"]
-        CONF["<b>ExportConfig</b><br/><code>py123detection.mmcv_export</code><br/>cameras, reference frame, box layout,<br/>sweeps, velocity, tokens, paths"]
-        RUN["<b>export_to_mmdet3d()</b><br/><code>py123detection.mmcv_export</code>"]
+        CONF["<b>ExportConfig</b><br/><code>py123detection.mmcv.export</code><br/>cameras, reference frame, box layout,<br/>sweeps, velocity, tokens, paths"]
+        RUN["<b>export_to_mmdet3d()</b><br/><code>py123detection.mmcv.export</code>"]
         REP["<b>ExportReport</b><br/>frame / box / class counts,<br/>skips, warnings"]
 
         SRC --> RUN
@@ -72,7 +72,7 @@ flowchart TD
 
     subgraph TRAINENV ["training environment: mmcv / mmdet3d"]
         STOCK["<b>NuScenesDataset</b><br/>stock mmdet3d,<br/>nothing to install"]
-        PLUG["<b>Py123DNuScenesDataset</b><br/><code>py123detection.mmcv_plugin</code><br/>portable arrays, taxonomy classes,<br/>evaluation without a nuScenes DB"]
+        PLUG["<b>Py123DNuScenesDataset</b><br/><code>py123detection.mmcv.plugin</code><br/>portable arrays, taxonomy classes,<br/>evaluation without a nuScenes DB"]
     end
 
     PKL --> STOCK
@@ -102,6 +102,7 @@ guides/choosing-what-to-export
 guides/extrinsics
 guides/sensor-payloads
 guides/cross-dataset-training
+guides/training
 guides/tokens-and-evaluation
 guides/python-version-boundary
 other-datasets
