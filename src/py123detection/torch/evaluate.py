@@ -32,7 +32,7 @@ from typing import Any, Dict, Iterator, List, Optional, Sequence
 import hydra
 import lightning as L
 import numpy as np
-import torch
+from lightning.pytorch.callbacks import BasePredictionWriter
 from omegaconf import DictConfig, OmegaConf
 from torch.utils.data import DataLoader
 
@@ -41,7 +41,13 @@ from py123detection.core.geometry import heading_yaw, transform_points
 from py123detection.core.taxonomy import get_taxonomy
 from py123detection.torch.build import build_datasets, build_filters
 from py123detection.torch.data.collate import collate_rigs
-from py123detection.torch.predictions import FramePrediction, PredictionWriter, frames_for
+from py123detection.torch.predictions import (
+    FramePrediction,
+    PredictionWriter,
+    frames_for,
+    merge_rank_files,
+    rank_files,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -127,54 +133,92 @@ def top_scoring(scores: np.ndarray, limit: Optional[int]) -> Optional[np.ndarray
     return np.argsort(-np.asarray(scores, dtype=np.float64), kind="stable")[:limit]
 
 
-def predict_frames(
-    model: L.LightningModule,
-    loader: DataLoader,
-    device: torch.device,
+def frame_from_prediction(
+    item: Dict[str, Any],
+    batch: Dict[str, Any],
+    index: int,
     max_boxes_per_sample: Optional[int] = None,
-) -> Iterator[FramePrediction]:
-    """Run the model over the loader, yielding one frame at a time.
+) -> FramePrediction:
+    """One sample of :meth:`Detector3D.predict_step`'s output, as the record written to disk.
 
-    A generator rather than a dict of everything: the caller writes each frame out and keeps none,
-    which is what bounds the memory of a long split.
-
-    Ground truth is yielded for every frame the loader serves, including frames with no boxes — a
-    frame left out is a frame the model is not penalised for missing. Whether empty frames reach
-    the loader at all is decided upstream by ``evaluation.score_empty_frames``.
+    The model predicts in the ego frame; this is where predictions and ground truth are moved into
+    the global frame together, by the same call, so an error in the conversion cannot flatter the
+    score. Ground truth is taken from the batch rather than returned by ``predict_step``, which
+    leaves the model's inference contract about predictions alone.
     """
-    model = model.to(device).eval()
+    pose = item["ego_pose"].detach().cpu().numpy().astype(np.float64)
+    boxes = item["boxes"].detach().cpu().numpy().astype(np.float64)
+    scores = item["scores"].detach().cpu().numpy().astype(np.float64)
+    labels = item["labels"].detach().cpu().numpy().astype(np.int64)
 
-    with torch.no_grad():
-        for batch in loader:
-            on_device = {
-                key: value.to(device) if torch.is_tensor(value) else value
-                for key, value in batch.items()
-            }
-            decoded = model.head.get_bboxes(model(on_device))
+    keep = top_scoring(scores, max_boxes_per_sample)
+    if keep is not None:
+        boxes, scores, labels = boxes[keep], scores[keep], labels[keep]
 
-            for index, (boxes, scores) in enumerate(decoded):
-                metas = batch["img_metas"][index]
-                pose = batch["ego_pose"][index].cpu().numpy().astype(np.float64)
+    return FramePrediction(
+        token=frame_token(item),
+        dataset=item.get("dataset_name") or "unknown",
+        ego_translation=pose[:3, 3],
+        boxes=to_global(boxes, pose),
+        scores=scores,
+        labels=labels,
+        gt_boxes=to_global(batch["gt_bboxes_3d"][index].detach().cpu().numpy().astype(np.float64), pose),
+        gt_labels=batch["gt_labels_3d"][index].detach().cpu().numpy().astype(np.int64),
+    )
 
-                confidence, labels = scores.max(dim=-1)
-                predicted = boxes.cpu().numpy().astype(np.float64)
-                confidence = confidence.cpu().numpy().astype(np.float64)
-                labels = labels.cpu().numpy().astype(np.int64)
 
-                keep = top_scoring(confidence, max_boxes_per_sample)
-                if keep is not None:
-                    predicted, confidence, labels = predicted[keep], confidence[keep], labels[keep]
+class FramePredictionWriter(BasePredictionWriter):
+    """Write each rank's predictions to its own file as they are made.
 
-                yield FramePrediction(
-                    token=frame_token(metas),
-                    dataset=metas.get("dataset_name", "unknown"),
-                    ego_translation=pose[:3, 3],
-                    boxes=to_global(predicted, pose),
-                    scores=confidence,
-                    labels=labels,
-                    gt_boxes=to_global(batch["gt_bboxes_3d"][index].cpu().numpy().astype(np.float64), pose),
-                    gt_labels=batch["gt_labels_3d"][index].cpu().numpy().astype(np.int64),
-                )
+    Lightning's own prediction return path collects every batch on every rank, which is the thing
+    this stage exists to avoid: ``Trainer.predict(return_predictions=False)`` with a per-batch
+    writer keeps the peak at one batch. One file per rank rather than a cross-rank gather, so a
+    rank that dies leaves its share on disk instead of taking the whole run's output with it.
+
+    Files are routed by each frame's own ``dataset`` field, not by ``dataloader_idx``, so the
+    layout follows the data whether the datasets arrive as separate loaders or one concatenation.
+    """
+
+    def __init__(self, output_dir: Path, max_boxes_per_sample: Optional[int] = None) -> None:
+        super().__init__(write_interval="batch")
+        self.output_dir = Path(output_dir)
+        self.max_boxes_per_sample = max_boxes_per_sample
+        self.rank = 0
+        self.frames = 0
+        self._writers: Dict[str, PredictionWriter] = {}
+
+    def on_predict_start(self, trainer: L.Trainer, pl_module: L.LightningModule) -> None:
+        self.rank = trainer.global_rank
+        self.frames = 0
+        self._writers = {}
+
+    def _writer_for(self, dataset: str) -> PredictionWriter:
+        writer = self._writers.get(dataset)
+        if writer is None:
+            path = self.output_dir / dataset / f"predictions_rank{self.rank}.jsonl"
+            writer = PredictionWriter(path).__enter__()
+            self._writers[dataset] = writer
+        return writer
+
+    def write_on_batch_end(
+        self,
+        trainer: L.Trainer,
+        pl_module: L.LightningModule,
+        prediction: Any,
+        batch_indices: Optional[Sequence[int]],
+        batch: Any,
+        batch_idx: int,
+        dataloader_idx: int,
+    ) -> None:
+        for index, item in enumerate(prediction or []):
+            frame = frame_from_prediction(item, batch, index, self.max_boxes_per_sample)
+            self._writer_for(frame.dataset).write(frame)
+            self.frames += 1
+
+    def on_predict_end(self, trainer: L.Trainer, pl_module: L.LightningModule) -> None:
+        for writer in self._writers.values():
+            writer.__exit__()
+        self._writers = {}
 
 
 def score_frames(
@@ -299,46 +343,79 @@ def main(cfg: DictConfig) -> None:
         logger.info("Scoring frames with no ground truth, so empty-scene false positives count")
 
     datasets = build_datasets(cfg, "val", filters=filters)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    results: Dict[str, Any] = {}
-    for dataset in datasets:
-        name = dataset.name
-        target = output_dir / name
-        loader = DataLoader(
+    loaders = [
+        DataLoader(
             dataset,
             batch_size=cfg.dataloader.batch_size,
             shuffle=False,
             num_workers=cfg.dataloader.num_workers,
             collate_fn=collate_rigs,
         )
+        for dataset in datasets
+    ]
 
+    # Inference runs under a Trainer so that `evaluation.devices` shards it across GPUs, which also
+    # makes Detector3D.predict_step the one inference path rather than a second copy of it here.
+    #
+    # Precision is evaluation's own setting and defaults to fp32. It deliberately does NOT inherit
+    # cfg.trainer.precision: every shipped trainer config is 16-mixed, evaluation has always run in
+    # fp32, and quietly adopting the training precision would move every score.
+    writer = FramePredictionWriter(output_dir, max_boxes_per_sample=max_boxes)
+    trainer = L.Trainer(
+        accelerator="auto",
+        devices=cfg.evaluation.get("devices", 1),
+        strategy=cfg.evaluation.get("strategy", "auto"),
+        precision=cfg.evaluation.get("precision", "32-true"),
+        logger=False,
+        enable_checkpointing=False,
+        callbacks=[writer],
+    )
+    trainer.predict(model, dataloaders=loaders, return_predictions=False)
+    # Every rank has to have finished writing before rank zero reads any of it.
+    trainer.strategy.barrier("predictions-written")
+    logger.info("rank %d wrote %d frames", trainer.global_rank, writer.frames)
+
+    if not trainer.is_global_zero:
+        return
+
+    results: Dict[str, Any] = {}
+    for dataset in datasets:
+        name = dataset.name
+        target = output_dir / name
         predictions_path = target / "predictions.jsonl"
-        with PredictionWriter(predictions_path) as writer:
-            for frame in predict_frames(model, loader, device, max_boxes_per_sample=max_boxes):
-                writer.write(frame)
-        logger.info("%s: wrote %d frames to %s", name, writer.frames, predictions_path)
+
+        shards = rank_files(target)
+        if not shards:
+            logger.warning("%s: no predictions written, skipping", name)
+            continue
+        merged = merge_rank_files(shards, predictions_path)
+        logger.info(
+            "%s: merged %d shard(s) into %d frames (%d duplicate(s) from sampler padding)",
+            name, len(shards), merged["frames"], merged["duplicates"],
+        )
 
         summary = score_predictions(
             predictions_path, class_names, output_dir=target, class_range=class_range, tp_metrics=tp_metrics
         )
         summary["evaluation"].update(settings)
         summary["evaluation"]["dataset"] = name
+        summary["evaluation"]["shards"] = len(shards)
+        summary["evaluation"]["duplicate_frames_dropped"] = merged["duplicates"]
         _write(target / "metrics.json", summary)
         print(f"\n######## {name} ########")
         print(format_summary(summary))
 
         results[name] = _headline(summary)
         # The whole reason scoring happens per dataset: let this one go before the next begins.
-        del summary, loader
+        del summary
         gc.collect()
 
     index: Dict[str, Any] = {"evaluation": settings, "datasets": results}
 
-    if cfg.evaluation.get("combined") and len(datasets) > 1:
+    if cfg.evaluation.get("combined") and len(results) > 1:
         logger.info("Scoring every dataset together as well; this holds all of them in memory at once")
         combined = score_frames(
-            _chain(output_dir / dataset.name / "predictions.jsonl" for dataset in datasets),
+            _chain(output_dir / name / "predictions.jsonl" for name in results),
             class_names,
             output_dir=output_dir / "combined",
             class_range=class_range,

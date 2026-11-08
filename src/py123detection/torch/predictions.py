@@ -141,3 +141,44 @@ def frames_for(path: Path, dataset: Optional[str] = None) -> Iterable[FramePredi
     for frame in read_predictions(path):
         if dataset is None or frame.dataset == dataset:
             yield frame
+
+
+def rank_files(directory: Path) -> List[Path]:
+    """Per-rank prediction files in a stable order, so a merge is reproducible."""
+    return sorted(Path(directory).glob("predictions_rank*.jsonl"))
+
+
+def merge_rank_files(paths: Sequence[Path], out: Path) -> Dict[str, int]:
+    """Concatenate per-rank prediction files into one, keeping each frame once.
+
+    Deduplication is not tidiness, it is correctness. ``DistributedSampler`` pads the last batch so
+    every rank sees the same number of samples, which means the first few frames of a split are
+    handed to two ranks and would otherwise be scored twice. The dataset can repeat a token on its
+    own account too: when a frame is rejected by the box filters it walks forward to the next usable
+    one, so two indices can return the same frame.
+
+    Scoring a frame twice inflates both its hits and its misses, and scoring a subset inflates
+    recall — neither shows up as an error, so the counts are returned for the caller to log.
+
+    :returns: ``{"frames": kept, "duplicates": dropped}``.
+    """
+    out = Path(out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    seen: Dict[str, None] = {}
+    duplicates = 0
+
+    with out.open("w", encoding="utf-8") as handle:
+        for path in paths:
+            with Path(path).open("r", encoding="utf-8") as source:
+                for line in source:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    token = json.loads(line)["token"]
+                    if token in seen:
+                        duplicates += 1
+                        continue
+                    seen[token] = None
+                    handle.write(line + "\n")
+
+    return {"frames": len(seen), "duplicates": duplicates}

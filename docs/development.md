@@ -59,13 +59,13 @@ docs/
   guides/                    task-oriented pages: what to export, extrinsics, training, ...
   api/                       API reference, generated from the docstrings
   other-datasets.md          exporting a dataset that is not nuScenes
-tests/                       363 unit tests + 28 integration tests
+tests/                       376 unit tests + 28 integration tests
 ```
 
 ## Tests
 
 ```bash
-pytest                                  # 363 unit tests, no data needed
+pytest                                  # 376 unit tests, no data needed
 NUSCENES_DATA_ROOT=... PY123D_DATA_ROOT=... pytest -m integration    # the round-trip comparison
 ```
 
@@ -75,7 +75,9 @@ fixed seed and compares against a fixture frozen from the thesis implementation 
 the models by parameter count, forward outputs and every loss term, the dataset by every array in
 every sample.
 
-`test_evaluate.py` does the same for the metric. Its fixture was frozen from the implementation
+`test_evaluate.py` does the same for the metric, and `test_evaluate_distributed.py` pins that
+sharding inference across ranks cannot reach it — including a real `Trainer.predict` run on CPU, so
+the Lightning wiring is covered rather than assumed. Its fixture was frozen from the implementation
 that scored every dataset together in one process, so the per-dataset rework had to prove it
 changed no score — and two of its checks compare against the previous implementation inlined in the
 test file rather than a stored number, which makes them bit-exact rather than rounded.

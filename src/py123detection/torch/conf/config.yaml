@@ -79,6 +79,14 @@ evaluation:
   combined: false
   # Score the predictions a previous run wrote under this directory, with no model and no data.
   rescore_from: null
+  # Shard inference across this many GPUs. Each rank writes its own predictions file and rank zero
+  # merges them, dropping the frames DistributedSampler padding hands to two ranks.
+  devices: 1
+  strategy: auto
+  # Evaluation's own precision, deliberately NOT inherited from trainer.precision: every shipped
+  # trainer config is 16-mixed, evaluation has always run in fp32, and adopting the training
+  # precision here would move every score.
+  precision: 32-true
 
 hydra:
   run:

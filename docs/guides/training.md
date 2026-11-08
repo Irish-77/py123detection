@@ -189,6 +189,21 @@ py123det-eval experiment=nuscenes evaluation.rescore_from=work_dirs/petr_nuscene
 That is the way to try a different `tp_metrics`, `class_range` or box cap on a finished run; it
 needs no checkpoint and no 123D logs.
 
+**Inference shards across GPUs.** `evaluation.devices=4` runs it under a Lightning `Trainer`, each
+rank writing `predictions_rank<N>.jsonl` and rank zero merging them into `predictions.jsonl` before
+scoring. The merge drops duplicates, which is correctness rather than tidiness: `DistributedSampler`
+pads the last batch so every rank sees the same number of samples, handing the first few frames of a
+split to two ranks, and scoring a frame twice inflates its hits and its misses together. The number
+dropped is logged and recorded in `metrics.json` as `duplicate_frames_dropped`.
+
+```bash
+py123det-eval experiment=nuscenes_av2_wod evaluation.checkpoint=... evaluation.devices=4
+```
+
+Note `evaluation.precision`, which defaults to `32-true` and is **not** inherited from
+`trainer.precision`. Every shipped trainer config trains at `16-mixed`, evaluation has always run in
+fp32, and quietly adopting the training precision would move every score.
+
 Two settings usually need attention on non-nuScenes data:
 
 `evaluation.tp_metrics` selects which true-positive errors count. The default here is
