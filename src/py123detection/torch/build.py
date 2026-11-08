@@ -56,12 +56,17 @@ def build_augmentation(cfg: DictConfig) -> Optional[Augmentation]:
     )
 
 
-def build_datasets(cfg: DictConfig, stage: str) -> List[Py123DDetectionDataset]:
+def build_datasets(
+    cfg: DictConfig, stage: str, filters: Optional[BoxFilters] = None
+) -> List[Py123DDetectionDataset]:
     """One dataset per entry under ``data.<stage>``.
 
     Training entries get augmentation, validation entries never do. Everything else — the
     taxonomy, the filters, the image size — is shared, which is what makes a mixed-dataset run a
     fair comparison rather than several differently prepared ones.
+
+    :param filters: Use these instead of the config's, which evaluation needs in order to score
+        frames whose ground truth is empty without otherwise changing the box population.
     """
     entries = cfg.data.get(stage)
     if not entries:
@@ -71,7 +76,7 @@ def build_datasets(cfg: DictConfig, stage: str) -> List[Py123DDetectionDataset]:
     taxonomy = get_taxonomy(cfg.taxonomy.name)
     images = build_images(cfg)
     augmentation = build_augmentation(cfg) if training else None
-    filters = build_filters(cfg)
+    filters = filters if filters is not None else build_filters(cfg)
 
     datasets = []
     for entry in entries:

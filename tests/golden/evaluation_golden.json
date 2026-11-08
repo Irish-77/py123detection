@@ -1,0 +1,162 @@
+{
+  "all_frames": {
+    "evaluation": {
+      "mode": "py123detection.self_contained",
+      "num_frames": 32,
+      "tp_metrics": [
+        "trans_err",
+        "scale_err",
+        "orient_err",
+        "vel_err"
+      ]
+    },
+    "mean_ap": 0.23002469,
+    "mean_dist_aps": {
+      "bicycle": 0.25771234,
+      "pedestrian": 0.19132616,
+      "vehicle": 0.24103557
+    },
+    "nd_score": 0.44333695,
+    "tp_errors": {
+      "attr_err": NaN,
+      "orient_err": 0.14374956,
+      "scale_err": 0.12952102,
+      "trans_err": 1.2439591,
+      "vel_err": 0.1001326
+    }
+  },
+  "class_names": [
+    "vehicle",
+    "pedestrian",
+    "bicycle"
+  ],
+  "class_range": {
+    "bicycle": 40.0,
+    "pedestrian": 40.0,
+    "vehicle": 50.0
+  },
+  "datasets": [
+    "nuscenes",
+    "av2",
+    "wod"
+  ],
+  "empty_every": 4,
+  "frame_counts": {
+    "all_frames": 32,
+    "nonempty_only": 24
+  },
+  "nonempty_only": {
+    "evaluation": {
+      "mode": "py123detection.self_contained",
+      "num_frames": 24,
+      "tp_metrics": [
+        "trans_err",
+        "scale_err",
+        "orient_err",
+        "vel_err"
+      ]
+    },
+    "mean_ap": 0.24888253,
+    "mean_dist_aps": {
+      "bicycle": 0.27686336,
+      "pedestrian": 0.21386495,
+      "vehicle": 0.25591929
+    },
+    "nd_score": 0.45275151,
+    "tp_errors": {
+      "attr_err": NaN,
+      "orient_err": 0.14378423,
+      "scale_err": 0.12951771,
+      "trans_err": 1.24395427,
+      "vel_err": 0.10021609
+    }
+  },
+  "note": "Frozen from py123detection.torch.evaluate before the per-dataset and streaming rework. all_frames keeps empty-ground-truth frames (evaluation.score_empty_frames=true); nonempty_only drops them, which is today's default. per_dataset is the reference the new per-dataset path must reproduce.",
+  "per_dataset": {
+    "av2": {
+      "evaluation": {
+        "mode": "py123detection.self_contained",
+        "num_frames": 6,
+        "tp_metrics": [
+          "trans_err",
+          "scale_err",
+          "orient_err",
+          "vel_err"
+        ]
+      },
+      "mean_ap": 0.2701111,
+      "mean_dist_aps": {
+        "bicycle": 0.2463343,
+        "pedestrian": 0.24724272,
+        "vehicle": 0.31675627
+      },
+      "nd_score": 0.48578092,
+      "tp_errors": {
+        "attr_err": NaN,
+        "orient_err": 0.07588154,
+        "scale_err": 0.11831549,
+        "trans_err": 1.19857347,
+        "vel_err": 0.0
+      }
+    },
+    "nuscenes": {
+      "evaluation": {
+        "mode": "py123detection.self_contained",
+        "num_frames": 12,
+        "tp_metrics": [
+          "trans_err",
+          "scale_err",
+          "orient_err",
+          "vel_err"
+        ]
+      },
+      "mean_ap": 0.23715572,
+      "mean_dist_aps": {
+        "bicycle": 0.31808661,
+        "pedestrian": 0.12966775,
+        "vehicle": 0.26371279
+      },
+      "nd_score": 0.4606539,
+      "tp_errors": {
+        "attr_err": NaN,
+        "orient_err": 0.12781121,
+        "scale_err": 0.13107478,
+        "trans_err": 1.20925599,
+        "vel_err": 0.00450565
+      }
+    },
+    "wod": {
+      "evaluation": {
+        "mode": "py123detection.self_contained",
+        "num_frames": 6,
+        "tp_metrics": [
+          "trans_err",
+          "scale_err",
+          "orient_err",
+          "vel_err"
+        ]
+      },
+      "mean_ap": 0.30916518,
+      "mean_dist_aps": {
+        "bicycle": 0.37707231,
+        "pedestrian": 0.33034162,
+        "vehicle": 0.2200816
+      },
+      "nd_score": 0.46484402,
+      "tp_errors": {
+        "attr_err": NaN,
+        "orient_err": 0.18539525,
+        "scale_err": 0.13591216,
+        "trans_err": 1.40988678,
+        "vel_err": 0.19660117
+      }
+    }
+  },
+  "seed": 20261108,
+  "shape": {
+    "frames_per_scene": 8,
+    "gt_per_frame": 7,
+    "queries": 40,
+    "scenes": 4
+  }
+}

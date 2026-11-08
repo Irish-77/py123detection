@@ -65,6 +65,20 @@ evaluation:
   class_range: ${taxonomy.class_range}
   output_dir: ${paths.work_dir}/${run.name}/eval
   checkpoint: null
+  # Score frames whose ground truth is empty. Default false, which is what every number published
+  # from this branch so far was produced with -- but it flatters the score, because a model is
+  # never charged for the boxes it invents on an empty scene. Every metrics file records which
+  # setting produced it, so a number is never ambiguous.
+  score_empty_frames: false
+  # Keep only this many highest-scoring boxes per frame. The devkit caps a submission at 500; this
+  # branch has never capped, so null keeps that. Setting it changes scores.
+  max_boxes_per_sample: null
+  # Also score every dataset together, the single number older runs reported. Off by default: a
+  # per-dataset score is what tells you which dataset moved, and the combined pass has to hold
+  # every dataset's boxes in memory at once.
+  combined: false
+  # Score the predictions a previous run wrote under this directory, with no model and no data.
+  rescore_from: null
 
 hydra:
   run:

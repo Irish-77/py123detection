@@ -171,6 +171,24 @@ This runs the nuScenes detection metric — the real one, from the devkit's own 
 predicts in the ego frame and the metric measures in the global frame, so predictions and ground
 truth are converted together by the same function.
 
+**You get one score per dataset.** A mixed run writes `<output_dir>/<dataset>/metrics.json` for
+each, plus an index at `<output_dir>/metrics.json` and a table on stdout. A single number averaged
+over nuScenes, Argoverse 2 and Waymo cannot tell you which of them regressed, which is the same
+reason the training loop keeps its validation losses apart. `evaluation.combined=true` additionally
+scores every frame together, the number older runs reported.
+
+**Predictions are kept.** Each dataset streams to `<output_dir>/<dataset>/predictions.jsonl` as it
+is predicted, one line per frame, with ground truth alongside. Inference therefore holds one frame
+rather than the whole split, and a run can be scored again without the model:
+
+```bash
+py123det-eval experiment=nuscenes evaluation.rescore_from=work_dirs/petr_nuscenes_10cls/eval \
+    evaluation.tp_metrics=nuscenes
+```
+
+That is the way to try a different `tp_metrics`, `class_range` or box cap on a finished run; it
+needs no checkpoint and no 123D logs.
+
 Two settings usually need attention on non-nuScenes data:
 
 `evaluation.tp_metrics` selects which true-positive errors count. The default here is
@@ -181,6 +199,19 @@ NDS. `nuscenes` gives you the official five.
 `taxonomy.class_range` is how far out each class is scored. The devkit knows radii for its own ten
 classes and nothing else, so a custom taxonomy declares its own — and is refused rather than
 guessed at, because that radius silently decides how much of the scene counts.
+
+Two further settings change the score, so both default to leaving it as it was:
+
+`evaluation.score_empty_frames` decides whether frames with no ground truth are scored at all. It
+defaults to `false`, because `filters.drop_frames_without_boxes` is on and every number published
+from this branch so far was produced that way. Be aware of what the default costs: a frame with no
+ground truth that the model puts boxes on is pure false positive, so dropping those frames cannot
+help the score and in general flatters it. On the synthetic fixture in `tests/test_evaluate.py` the
+difference is mAP 0.2489 against 0.2300. Every metrics file records which setting produced it.
+
+`evaluation.max_boxes_per_sample` caps each frame at its highest-scoring boxes. The devkit caps a
+submission at 500; this branch never has, so `null` keeps all 900 queries. Setting it saves memory
+and time — the cap is applied before the metric's box objects are built — but it changes scores.
 
 ## Checking a change
 

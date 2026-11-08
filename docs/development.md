@@ -52,27 +52,36 @@ tools/
   compare_infos.py                  field-by-field diff of two info pickles
   freeze_model_golden.py            freezes the model fixture the equivalence test compares against
   freeze_bevformer_golden.py        the same for BEVFormer, in both camera-embedding modes
+  freeze_dataset_golden.py          freezes the dataset fixture, including expected differences
+  freeze_evaluation_golden.py       freezes the metric, so an evaluation change proves it moved nothing
 docs/
   conf.py                    Sphinx configuration for this site
   guides/                    task-oriented pages: what to export, extrinsics, training, ...
   api/                       API reference, generated from the docstrings
   other-datasets.md          exporting a dataset that is not nuScenes
-tests/                       349 unit tests + 28 integration tests
+tests/                       363 unit tests + 28 integration tests
 ```
 
 ## Tests
 
 ```bash
-pytest                                  # 349 unit tests, no data needed
+pytest                                  # 363 unit tests, no data needed
 NUSCENES_DATA_ROOT=... PY123D_DATA_ROOT=... pytest -m integration    # the round-trip comparison
 ```
 
-`test_model_equivalence.py` and `test_bevformer_equivalence.py` are the ones to watch when you
-touch a model. Each replays one fixed batch at one fixed seed and compares the parameter count,
-the forward outputs and every loss term against a fixture frozen from the thesis implementation
-(`tests/golden/`). Regenerate a fixture only when the thesis numbers themselves are meant to
-change; otherwise a failure there means the port moved, which is exactly what the fixtures exist
-to catch.
+`test_model_equivalence.py`, `test_bevformer_equivalence.py` and `test_dataset_equivalence.py`
+are the ones to watch when you touch a model or the data pipeline. Each replays fixed input at a
+fixed seed and compares against a fixture frozen from the thesis implementation (`tests/golden/`):
+the models by parameter count, forward outputs and every loss term, the dataset by every array in
+every sample.
+
+`test_evaluate.py` does the same for the metric. Its fixture was frozen from the implementation
+that scored every dataset together in one process, so the per-dataset rework had to prove it
+changed no score — and two of its checks compare against the previous implementation inlined in the
+test file rather than a stored number, which makes them bit-exact rather than rounded.
+
+Regenerate a fixture only when the numbers themselves are meant to change; otherwise a failure
+there means the code moved, which is exactly what the fixtures exist to catch.
 
 ## Building the docs
 
