@@ -1,0 +1,91 @@
+name: tests
+
+# Until this existed, nothing ran on a pull request at all -- not the suite, not the linter, not
+# even the docs build, which only fires on pushes to main and dev.
+#
+# Two jobs, because the package's central claim is that the export side needs neither torch nor
+# mmcv. A single job that installs everything would pass whether or not that was still true.
+on:
+  pull_request:
+  push:
+    branches: [main, dev]
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  export:
+    name: export side, without torch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: |
+          pip install uv
+          uv pip install --system "py123d==0.6.0" -e ".[dev]"
+
+      - name: torch really is absent
+        # The point of this job. If the base install ever starts dragging torch in, the suite would
+        # still pass and the claim in docs/contributing.md would quietly stop being true.
+        run: |
+          python - <<'PY'
+          import importlib.util, sys
+          leaked = [name for name in ("torch", "lightning", "mmcv", "mmdet3d")
+                    if importlib.util.find_spec(name) is not None]
+          if leaked:
+              sys.exit(f"the base install pulled in {leaked}; the export side is meant to need none of it")
+          print("base install is free of torch, lightning, mmcv and mmdet3d")
+          PY
+
+      - name: Lint
+        run: ruff check src tests tools
+
+      - name: Test
+        # -o addopts="" drops the config's default marker expression so this one is the only
+        # selection in play.
+        run: pytest -o addopts="" -m "not torch and not integration" --strict-markers -ra
+
+  full:
+    name: whole suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: |
+          pip install uv
+          # CPU wheels explicitly: the default index would fetch the CUDA build, which is an order
+          # of magnitude larger and useless on a runner with no GPU.
+          uv pip install --system --index-url https://download.pytorch.org/whl/cpu torch torchvision
+          uv pip install --system "py123d==0.6.0" -e ".[dev,torch,nuscenes,images]"
+
+      - name: The torch extra must be importable
+        # This step is the reason the job exists in this shape. Seven test modules skip themselves
+        # when torch is missing, so an extra that failed to install used to mean ~150 tests
+        # vanishing from the run while it still reported green. Fail here instead, loudly.
+        run: |
+          python - <<'PY'
+          import sys
+          missing = []
+          for name in ("torch", "torchvision", "lightning", "hydra", "omegaconf", "nuscenes", "cv2", "scipy"):
+              try:
+                  __import__(name)
+              except ImportError as error:
+                  missing.append(f"{name} ({error})")
+          if missing:
+              sys.exit("the torch extra did not install: " + "; ".join(missing))
+          print("torch extra present")
+          PY
+
+      - name: Test
+        run: pytest -o addopts="" -m "not integration" --strict-markers -ra

@@ -11,6 +11,9 @@ import pytest
 
 pytest.importorskip("torch", reason="the torch branch needs torch")
 
+#: Needs the torch extra; see the `torch` marker in pyproject.toml.
+pytestmark = pytest.mark.torch
+
 from py123detection.torch.evaluate import as_eval_boxes, frame_token, to_global  # noqa: E402
 
 

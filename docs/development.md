@@ -12,6 +12,7 @@ src/py123detection/
     geometry.py              SE(3) helpers and the two yaw conventions
     visibility.py            which cameras can see a box, for visibility filtering
     evaluation.py            the nuScenes detection metric, run without the devkit's database
+    lidar_points.py          cached per-box lidar return counts, for logs that record none
   mmcv/                      branch one: export to the mmdetection3d info pickle
     export/
       export.py              export_to_mmdet3d: the one-call entry point

@@ -25,6 +25,9 @@ import pytest
 torch = pytest.importorskip("torch", reason="the torch branch needs torch")
 pytest.importorskip("nuscenes")
 
+#: Needs the torch extra; see the `torch` marker in pyproject.toml.
+pytestmark = pytest.mark.torch
+
 import lightning as L  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]

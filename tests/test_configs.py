@@ -13,6 +13,9 @@ import pytest
 
 pytest.importorskip("hydra", reason="the torch branch needs hydra")
 
+#: Needs the torch extra; see the `torch` marker in pyproject.toml.
+pytestmark = pytest.mark.torch
+
 from hydra import compose, initialize_config_dir  # noqa: E402
 
 from py123detection.core.taxonomy import TAXONOMIES  # noqa: E402

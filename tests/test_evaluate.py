@@ -23,6 +23,9 @@ import pytest
 pytest.importorskip("torch")
 pytest.importorskip("nuscenes")
 
+#: Needs the torch extra; see the `torch` marker in pyproject.toml.
+pytestmark = pytest.mark.torch
+
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "tools"))
 

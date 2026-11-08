@@ -251,7 +251,7 @@ The training config then reads it through the plugin dataset, which rebuilds the
 
 ```python
 plugin = True
-plugin_dir = "py123detection/mmcv_plugin/"
+plugin_dir = "py123detection/mmcv/plugin/"
 
 data = dict(train=dict(type="Py123DNuScenesDataset", ann_file="py123d_infos_train.pkl"))
 ```

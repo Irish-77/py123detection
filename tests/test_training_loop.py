@@ -10,6 +10,9 @@ import pytest
 
 torch = pytest.importorskip("torch", reason="the torch branch needs torch")
 
+#: Needs the torch extra; see the `torch` marker in pyproject.toml.
+pytestmark = pytest.mark.torch
+
 from py123detection.torch.models.base import Detector3D  # noqa: E402
 
 

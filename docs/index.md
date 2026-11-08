@@ -7,7 +7,7 @@ Two branches share the 123D data model:
 | Branch | Module | Status |
 | --- | --- | --- |
 | **mmcv export**: turn any 123D dataset into the `info` pickle the mmcv / mmdetection3d ecosystem reads, so existing PETR / StreamPETR / BEVDet configs train on 123D data unchanged | `py123detection.mmcv.export`, plus `py123detection.mmcv.plugin` on the training side | implemented |
-| **modern stack**: the mmcv-free path from the master thesis | | not started |
+| **modern stack**: read 123D logs straight into PyTorch and train PETR or BEVFormer, no mmcv anywhere | `py123detection.torch` | implemented |
 
 ## Why this exists
 

@@ -12,10 +12,14 @@ The short version:
 ```bash
 pip install -e ".[dev]"
 ruff check .    # lint
-pytest          # 179 unit tests, no data needed, about 10 seconds
+pytest          # 376 unit tests, no data needed, about a minute
 ```
 
-There is no CI for tests or linting yet, so please run both locally before opening a pull request.
-The twelve `integration` tests are deselected by default because they need a nuScenes tree and its
-123D conversion; run them with `pytest -m integration` if you change anything under
-`src/py123detection/mmcv_export/`.
+CI runs both on every pull request (`.github/workflows/tests.yaml`), in two jobs: one installs
+only `[dev]` and runs `-m "not torch"`, which is what keeps the export side honest about needing
+neither torch nor hydra; the other installs every extra and runs the whole suite. Running them
+locally first is still faster than finding out from a red tick.
+
+The 28 `integration` tests are deselected by default because they need a nuScenes tree and its 123D
+conversion; run them with `pytest -m integration` if you change anything under
+`src/py123detection/mmcv/export/`.

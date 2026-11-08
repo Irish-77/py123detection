@@ -15,10 +15,13 @@ pip install -e ".[dev]"
 ```
 
 The export side needs only py123d and numpy: it never imports mmcv, mmdet3d or torch, and the
-training-side plugin imports mmdet3d lazily, inside the one module that needs it. The whole unit
-test suite therefore runs in a plain conversion environment, so **you do not need a working
-mmdet3d installation to work on most of this codebase** -- which is deliberate, because a
-mmcv/mmdet3d environment is pinned to Python 3.8 and sometimes painful to build.
+training-side plugin imports mmdet3d lazily, inside the one module that needs it. So **you do not
+need a working mmdet3d installation to work on most of this codebase** -- which is deliberate,
+because a mmcv/mmdet3d environment is pinned to Python 3.8 and sometimes painful to build.
+
+Concretely: 219 of the 376 unit tests run with nothing but `[dev]` installed, and `pytest -m "not
+torch"` is how you select exactly those. The rest need the `torch` extra. CI runs both selections as
+separate jobs, so neither can quietly stop working.
 
 Add the extras for the part you are touching:
 
@@ -28,6 +31,7 @@ Add the extras for the part you are touching:
 | `docs` | sphinx, furo, myst-parser, ... | editing anything under `docs/`, or a docstring you want to see rendered |
 | `nuscenes` | nuscenes-devkit | working on native nuScenes token restoration |
 | `images` | opencv-python | working on `image_mode=extract` |
+| `torch` | torch, torchvision, lightning, hydra, nuscenes-devkit, ... | anything under `py123detection.torch` -- install it in its own environment |
 
 One environment caveat worth knowing before you debug a confusing pickle failure: if your
 conversion environment is on numpy 2, the pickles it writes will not load under the numpy 1 that
@@ -41,21 +45,25 @@ Three commands, none of which need any data on disk:
 
 ```bash
 ruff check .                                # lint; the configuration lives in pyproject.toml
-pytest                                      # 289 unit tests, about 25 seconds
+pytest                                      # 376 unit tests, about a minute
 sphinx-build -b dirhtml docs docs/_build    # only if you touched docs/ or a docstring
 ```
 
 Note that `ruff format` is deliberately **not** on that list. The tree is not formatter-managed,
-and running it today would reformat 14 files that have nothing to do with your change. Match the
+and running it today would reformat 26 files that have nothing to do with your change. Match the
 style of the code around you instead.
 
-Please do run these locally: there is no CI for tests or linting yet, so nothing else will catch a
-regression. The only automated workflow builds the documentation.
+`.github/workflows/tests.yaml` runs the suite and `ruff check` on every pull request, as two jobs
+-- one without the `torch` extra, one with everything -- and the full job fails outright if the
+extra did not install, because seven test modules skip themselves when torch is missing and a run
+that quietly drops them would otherwise report green. Running the checks locally first is still the
+quicker loop.
 
 ### The integration tests
 
-Twelve tests are marked `integration` and deselected by default (`addopts` in `pyproject.toml`),
-because they need a real nuScenes tree and its 123D conversion side by side:
+Twenty-eight tests are marked `integration` and deselected by default (`addopts` in
+`pyproject.toml`). Twelve of them need a real nuScenes tree and its 123D conversion side by side;
+the other sixteen are the dataset-equivalence fixtures, which need converted 123D logs:
 
 ```bash
 export NUSCENES_DATA_ROOT=/path/to/nuscenes    # holds v1.0-mini/, samples/, sweeps/
@@ -66,7 +74,7 @@ pytest -m integration
 They export a pickle, build the reference pickle on the fly with
 `tools/reference_nuscenes_converter.py` -- a port of the converter mmdetection3d and StreamPETR
 ship -- and compare the two field by field. That comparison is the project's central claim, so
-run it if you change anything under `src/py123detection/mmcv_export/`, and say in the pull request
+run it if you change anything under `src/py123detection/mmcv/export/`, and say in the pull request
 whether it still holds. [Validation](validation.md) describes what it checks and the two
 differences that are expected.
 

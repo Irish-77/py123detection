@@ -17,6 +17,9 @@ import pytest
 
 torch = pytest.importorskip("torch", reason="the torch branch needs torch")
 
+#: Needs the torch extra; see the `torch` marker in pyproject.toml.
+pytestmark = pytest.mark.torch
+
 import sys  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))

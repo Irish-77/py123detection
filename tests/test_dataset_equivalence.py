@@ -57,6 +57,7 @@ FIXTURE = Path(__file__).parent / "golden" / "dataset_golden.json"
 pytestmark = [
     pytest.mark.integration,
     pytest.mark.skipif(not Path(DATA_ROOT).exists(), reason=f"no 123D logs at {DATA_ROOT}"),
+    pytest.mark.torch,
 ]
 
 

@@ -23,7 +23,7 @@ Five groups, each a directory of files you can list:
 | Group | Choices | What it decides |
 | --- | --- | --- |
 | `model` | `petr`, `bevformer` | Which detector |
-| `taxonomy` | `nuscenes_10cls`, `mixed_8cls`, `mixed2_3cls`, `general_3cls`, `coin3d_3cls`, `vehicle_1cls`, `default_123d` | Which classes, and how each dataset's labels map onto them |
+| `taxonomy` | `nuscenes_10cls`, `mixed_8cls`, `mixed2_3cls`, `mixed3_1cls`, `general_3cls`, `coin3d_3cls`, `vehicle_1cls`, `default_123d` | Which classes, and how each dataset's labels map onto them |
 | `images` | `petr_704`, `petr_320` | Input resolution |
 | `trainer` | `default`, `smoke`, `ddp` | Epochs, precision, devices |
 | `experiment` | `nuscenes`, `nuscenes_mini`, `nuscenes_av2`, `nuscenes_av2_wod`, `carla_nuscenes`, `carla_multirig` | Which datasets, and how many frames of each |

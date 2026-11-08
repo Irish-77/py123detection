@@ -87,5 +87,10 @@ pythonpath = ["src"]
 testpaths = ["tests"]
 markers = [
     "integration: tests that need converted 123D data on disk (deselected by default)",
+    # The export side genuinely needs neither torch nor hydra, so its suite has to be runnable
+    # without them -- `-m "not torch"` is how you ask for exactly that. The modules below also keep
+    # an importorskip, so a local run without the extra skips rather than failing to collect; the
+    # marker is what makes the exclusion deliberate instead of accidental.
+    "torch: needs the torch extra (torch, lightning, hydra, nuscenes-devkit)",
 ]
 addopts = ["-m", "not integration"]
