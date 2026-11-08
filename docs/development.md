@@ -60,13 +60,13 @@ docs/
   guides/                    task-oriented pages: what to export, extrinsics, training, ...
   api/                       API reference, generated from the docstrings
   other-datasets.md          exporting a dataset that is not nuScenes
-tests/                       376 unit tests + 28 integration tests
+tests/                       469 unit tests + 28 integration tests
 ```
 
 ## Tests
 
 ```bash
-pytest                                  # 376 unit tests, no data needed
+pytest                                  # 469 unit tests, no data needed
 NUSCENES_DATA_ROOT=... PY123D_DATA_ROOT=... pytest -m integration    # the round-trip comparison
 ```
 
@@ -78,7 +78,17 @@ every sample.
 
 `test_evaluate.py` does the same for the metric, and `test_evaluate_distributed.py` pins that
 sharding inference across ranks cannot reach it — including a real `Trainer.predict` run on CPU, so
-the Lightning wiring is covered rather than assumed. Its fixture was frozen from the implementation
+the Lightning wiring is covered rather than assumed.
+
+Four more modules cover what the fixtures reach only incidentally. `test_loss.py` drives the
+Hungarian matcher and the criterion directly — the matching is a bijection onto the targets, and a
+matcher that pairs the wrong query with the wrong target still produces a loss that falls, just to
+a worse place. `test_model_utils.py` pins the box encoding's unusual column order, the BEV grid and
+the camera projection. `test_train_smoke.py` runs a real optimiser step, including one that
+overfits a single batch, which is the only check here that the thing actually trains.
+`test_compat_shims.py` covers the deprecated import paths, asserting the old name resolves to the
+*same module object* — a copy would re-run `@DATASETS.register_module()` and leave mmdet3d with two
+classes under one name. Its fixture was frozen from the implementation
 that scored every dataset together in one process, so the per-dataset rework had to prove it
 changed no score — and two of its checks compare against the previous implementation inlined in the
 test file rather than a stored number, which makes them bit-exact rather than rounded.

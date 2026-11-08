@@ -12,7 +12,7 @@ The short version:
 ```bash
 pip install -e ".[dev]"
 ruff check .    # lint
-pytest          # 376 unit tests, no data needed, about a minute
+pytest          # 469 unit tests, no data needed, about a minute
 ```
 
 CI runs both on every pull request (`.github/workflows/tests.yaml`), in two jobs: one installs
