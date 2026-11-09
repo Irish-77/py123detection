@@ -9,3 +9,13 @@ the argument parser, so it always matches the installed version.
 :func: build_parser
 :prog: py123det-export-mmcv
 ```
+
+## py123det-viz
+
+Rendering a run's predictions. See [Looking at what the model found](guides/visualisation.md).
+
+```{argparse}
+:module: py123detection.torch.visualize.cli
+:func: build_parser
+:prog: py123det-viz
+```

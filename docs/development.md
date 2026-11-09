@@ -47,6 +47,7 @@ src/py123detection/
       petr/                  PETR: 3D position embedding on image features
       bevformer/             BEVFormer: an explicit bird's-eye grid
       common/                backbone, losses, grid mask, shared helpers
+    visualize/             bird's-eye and camera renders of a predictions file
 tools/
   reference_nuscenes_converter.py   ground truth: the mmdet3d/StreamPETR converter, ported
   reference_av2_converter.py        the same idea for Argoverse 2, written from the raw files
@@ -60,13 +61,13 @@ docs/
   guides/                    task-oriented pages: what to export, extrinsics, training, ...
   api/                       API reference, generated from the docstrings
   other-datasets.md          exporting a dataset that is not nuScenes
-tests/                       469 unit tests + 28 integration tests
+tests/                       504 unit tests + 28 integration tests
 ```
 
 ## Tests
 
 ```bash
-pytest                                  # 469 unit tests, no data needed
+pytest                                  # 504 unit tests, no data needed
 NUSCENES_DATA_ROOT=... PY123D_DATA_ROOT=... pytest -m integration    # the round-trip comparison
 ```
 

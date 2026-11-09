@@ -49,6 +49,17 @@ torch = [
     "nuscenes-devkit",
 ]
 
+# --- rendering ---------------------------------------------------------------
+# `py123det-viz` and py123detection.torch.visualize. Kept out of `torch` so a training environment
+# does not pull a plotting stack; cv2 already comes with `torch` and `images`.
+viz = [
+    # 3.8 is where matplotlib gained NumPy 2 support. Anything older raises on `np.Inf` inside
+    # its own title positioning, which this project found the hard way: envs/modern pairs
+    # matplotlib 3.5.3 with numpy 2.4.6 and cannot save a titled figure.
+    "matplotlib>=3.8",
+    "opencv-python",
+]
+
 dev = ["pytest", "ruff"]
 # Only needed to build the documentation site (see docs/development.md).
 docs = [
@@ -68,6 +79,8 @@ py123det-export-mmcv = "py123detection.mmcv.export.cli:main"
 # torch branch: both need the `torch` extra.
 py123det-train = "py123detection.torch.train:main"
 py123det-eval = "py123detection.torch.evaluate:main"
+# rendering: needs the `viz` extra as well.
+py123det-viz = "py123detection.torch.visualize.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

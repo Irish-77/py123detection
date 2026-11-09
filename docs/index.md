@@ -103,6 +103,7 @@ guides/extrinsics
 guides/sensor-payloads
 guides/cross-dataset-training
 guides/training
+guides/visualisation
 guides/tokens-and-evaluation
 guides/python-version-boundary
 other-datasets

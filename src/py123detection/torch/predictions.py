@@ -56,6 +56,13 @@ class FramePrediction:
     """``(M, 9)`` ground-truth boxes."""
     gt_labels: np.ndarray
     """``(M,)`` class indices."""
+    ego_pose: Optional[np.ndarray] = None
+    """``(4, 4)`` ego-to-global pose, when the writer had it.
+
+    The metric needs only the translation, to measure each box's distance from the vehicle. A
+    bird's-eye view wants the rotation too, so it can draw the scene the way the vehicle was facing
+    rather than aligned to global north. Optional so a file written before this field still reads.
+    """
 
     def as_json(self) -> Dict[str, Any]:
         """A plain dict, with full float precision so a re-score reproduces the first one exactly."""
@@ -68,6 +75,11 @@ class FramePrediction:
             "labels": np.asarray(self.labels, dtype=np.int64).tolist(),
             "gt_boxes": np.asarray(self.gt_boxes, dtype=np.float64).tolist(),
             "gt_labels": np.asarray(self.gt_labels, dtype=np.int64).tolist(),
+            **(
+                {"ego_pose": np.asarray(self.ego_pose, dtype=np.float64).tolist()}
+                if self.ego_pose is not None
+                else {}
+            ),
         }
 
     @classmethod
@@ -81,6 +93,9 @@ class FramePrediction:
             labels=np.asarray(content["labels"], dtype=np.int64),
             gt_boxes=_rows(content["gt_boxes"]),
             gt_labels=np.asarray(content["gt_labels"], dtype=np.int64),
+            ego_pose=(
+                np.asarray(content["ego_pose"], dtype=np.float64) if "ego_pose" in content else None
+            ),
         )
 
 

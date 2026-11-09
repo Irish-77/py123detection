@@ -159,6 +159,7 @@ def frame_from_prediction(
         token=frame_token(item),
         dataset=item.get("dataset_name") or "unknown",
         ego_translation=pose[:3, 3],
+        ego_pose=pose,
         boxes=to_global(boxes, pose),
         scores=scores,
         labels=labels,

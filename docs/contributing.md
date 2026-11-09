@@ -19,7 +19,7 @@ training-side plugin imports mmdet3d lazily, inside the one module that needs it
 need a working mmdet3d installation to work on most of this codebase** -- which is deliberate,
 because a mmcv/mmdet3d environment is pinned to Python 3.8 and sometimes painful to build.
 
-Concretely: 252 of the 469 unit tests run with nothing but `[dev]` installed, and `pytest -m "not
+Concretely: 252 of the 504 unit tests run with nothing but `[dev]` installed, and `pytest -m "not
 torch"` is how you select exactly those. The rest need the `torch` extra. CI runs both selections as
 separate jobs, so neither can quietly stop working.
 
@@ -32,6 +32,7 @@ Add the extras for the part you are touching:
 | `nuscenes` | nuscenes-devkit | working on native nuScenes token restoration |
 | `images` | opencv-python | working on `image_mode=extract` |
 | `torch` | torch, torchvision, lightning, hydra, nuscenes-devkit, ... | anything under `py123detection.torch` -- install it in its own environment |
+| `viz` | matplotlib (>= 3.8), opencv-python | `py123det-viz` and `py123detection.torch.visualize` |
 
 One environment caveat worth knowing before you debug a confusing pickle failure: if your
 conversion environment is on numpy 2, the pickles it writes will not load under the numpy 1 that
@@ -45,7 +46,7 @@ Three commands, none of which need any data on disk:
 
 ```bash
 ruff check .                                # lint; the configuration lives in pyproject.toml
-pytest                                      # 469 unit tests, about a minute
+pytest                                      # 504 unit tests, about a minute
 sphinx-build -b dirhtml docs docs/_build    # only if you touched docs/ or a docstring
 ```
 
