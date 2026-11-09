@@ -51,26 +51,38 @@ def build_parser() -> argparse.ArgumentParser:
 
     bev = subcommands.add_parser("bev", help="bird's-eye view; needs nothing but the file")
     common(bev)
-    bev.add_argument("--radius", type=float, default=60.0, help="half-width of the view in metres")
+    bev.add_argument("--radius", type=float, default=50.0, help="half-width of the view in metres")
+
+    def needs_images(sub: argparse.ArgumentParser) -> None:
+        common(sub)
+        sub.add_argument(
+            "--experiment", required=True, help="the experiment config naming the datasets and splits"
+        )
+        sub.add_argument("--images", default="petr_704", help="the images config group to use")
+        sub.add_argument(
+            "-O",
+            "--override",
+            action="append",
+            default=[],
+            metavar="KEY=VALUE",
+            help="an extra Hydra override, repeatable. Needed whenever the run was not scored on a "
+            "stock config: -O 'hydra.searchpath=[file:///path/to/conf]' to reach an experiment "
+            "outside the package, and -O 'data.val=[...]' to rebuild the exact frames it scored.",
+        )
 
     cameras = subcommands.add_parser(
-        "cameras", help="boxes drawn on the camera images; needs the 123D logs"
+        "cameras", help="boxes drawn on every camera image; needs the 123D logs"
     )
-    common(cameras)
-    cameras.add_argument(
-        "--experiment", required=True, help="the experiment config naming the datasets and splits"
-    )
-    cameras.add_argument("--images", default="petr_704", help="the images config group to use")
+    needs_images(cameras)
     cameras.add_argument("--columns", type=int, default=3, help="cameras per row in the tiled image")
-    cameras.add_argument(
-        "-O",
-        "--override",
-        action="append",
-        default=[],
-        metavar="KEY=VALUE",
-        help="an extra Hydra override, repeatable. Needed whenever the run was not scored on a "
-        "stock config: -O 'hydra.searchpath=[file:///path/to/conf]' to reach an experiment "
-        "outside the package, and -O 'data.val=[...]' to rebuild the exact frames it scored.",
+
+    frame = subcommands.add_parser(
+        "frame", help="front camera beside the bird's-eye view; needs the 123D logs"
+    )
+    needs_images(frame)
+    frame.add_argument("--radius", type=float, default=50.0, help="half-width of the view in metres")
+    frame.add_argument(
+        "--camera", type=int, default=0, help="which camera of the rig; 0 is the front one"
     )
     return parser
 
@@ -168,14 +180,17 @@ def _token_index(datasets) -> dict:
     return locations
 
 
-def _run_cameras(args: argparse.Namespace) -> int:
+def _run_images(args: argparse.Namespace) -> int:
+    """The two views that need the images: every camera tiled, or the front one beside the BEV."""
     import numpy as np
 
     from py123detection.torch.evaluate import frame_token
     from py123detection.torch.visualize.boxes import to_ego
     from py123detection.torch.visualize.cameras import render_camera, save_cameras
+    from py123detection.torch.visualize.frame import save_frame
 
     args.out.mkdir(parents=True, exist_ok=True)
+    names = _class_names(args.taxonomy)
     datasets = _dataset_index(args)
     logger.info("built %d validation dataset(s)", len(datasets))
 
@@ -208,22 +223,37 @@ def _run_cameras(args: argparse.Namespace) -> int:
         truth = to_ego(frame.gt_boxes, frame.ego_pose)
 
         images = np.asarray(sample["img"])
-        rendered = [
-            render_camera(
-                np.ascontiguousarray(images[camera].transpose(1, 2, 0)[..., ::-1]),
-                np.asarray(sample["imu2img"])[camera],
+        stem = f"{frame.dataset}_{frame.token.replace(':', '_')}"
+
+        if args.command == "frame":
+            save_frame(
+                args.out / f"{stem}_frame.png",
+                np.ascontiguousarray(images[args.camera].transpose(1, 2, 0)),
+                np.asarray(sample["imu2img"])[args.camera],
+                frame,
                 predictions,
                 ground_truth=truth,
-                scores=frame.scores,
+                class_names=names,
                 score_threshold=args.score_threshold,
+                radius=args.radius,
+                camera_name=dataset.cameras.rig.cameras[args.camera],
             )
-            for camera in range(images.shape[0])
-        ]
-        target = args.out / f"{frame.dataset}_{frame.token.replace(':', '_')}_cameras.png"
-        save_cameras(target, rendered, columns=args.columns)
+        else:
+            rendered = [
+                render_camera(
+                    np.ascontiguousarray(images[camera].transpose(1, 2, 0)[..., ::-1]),
+                    np.asarray(sample["imu2img"])[camera],
+                    predictions,
+                    ground_truth=truth,
+                    scores=frame.scores,
+                    score_threshold=args.score_threshold,
+                )
+                for camera in range(images.shape[0])
+            ]
+            save_cameras(args.out / f"{stem}_cameras.png", rendered, columns=args.columns)
         written += 1
 
-    logger.info("wrote %d camera view(s) to %s", written, args.out)
+    logger.info("wrote %d %s view(s) to %s", written, args.command, args.out)
     return 0
 
 
@@ -233,7 +263,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if not args.predictions.exists():
         logger.error("no predictions file at %s", args.predictions)
         return 1
-    return _run_bev(args) if args.command == "bev" else _run_cameras(args)
+    return _run_bev(args) if args.command == "bev" else _run_images(args)
 
 
 if __name__ == "__main__":

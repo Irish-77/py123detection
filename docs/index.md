@@ -1,13 +1,24 @@
 # py123detection
 
-A [123D](https://kesai.eu/py123d/) toolkit for 3D multi-view object detection.
+Camera-based 3D object detection on [123D](https://kesai.eu/py123d/) data.
 
-Two branches share the 123D data model:
+The package is two halves that share a data model, a taxonomy and an evaluation metric. Pick the
+one that matches the stack you are already in.
 
-| Branch | Module | Status |
-| --- | --- | --- |
-| **mmcv export**: turn any 123D dataset into the `info` pickle the mmcv / mmdetection3d ecosystem reads, so existing PETR / StreamPETR / BEVDet configs train on 123D data unchanged | `py123detection.mmcv.export`, plus `py123detection.mmcv.plugin` on the training side | implemented |
-| **modern stack**: read 123D logs straight into PyTorch and train PETR or BEVFormer, no mmcv anywhere | `py123detection.torch` | implemented |
+## Export to mmdetection3d — `py123detection.mmcv`
+
+Writes the `info` pickle mmdet3d reads, so existing PETR, StreamPETR, BEVDet and CoIn3D configs
+train on any 123D dataset, or several at once, unchanged. The exporter itself needs no mmcv; only
+the environment that trains does.
+
+Start at [Quick start](quickstart.md).
+
+## Train without mmcv — `py123detection.torch`
+
+Reads 123D logs straight into PyTorch. PETR and BEVFormer on Lightning and Hydra, no mmcv
+anywhere. Ported from the thesis these numbers come from and held to it by frozen fixtures.
+
+Start at [First run](guides/first-run.md).
 
 ## Why this exists
 
@@ -87,26 +98,33 @@ The CLI is the same three objects behind a flag parser: `py123det-export-mmcv ex
 
 ```{toctree}
 :hidden:
-:caption: Getting started
+:caption: Start here
 
 installation
+```
+
+```{toctree}
+:hidden:
+:caption: Export to mmdetection3d
+
 quickstart
+guides/choosing-what-to-export
+guides/cross-dataset-training
+guides/extrinsics
+guides/sensor-payloads
+guides/tokens-and-evaluation
+guides/python-version-boundary
+other-datasets
 examples
 ```
 
 ```{toctree}
 :hidden:
-:caption: Guides
+:caption: Train without mmcv
 
-guides/choosing-what-to-export
-guides/extrinsics
-guides/sensor-payloads
-guides/cross-dataset-training
+guides/first-run
 guides/training
 guides/visualisation
-guides/tokens-and-evaluation
-guides/python-version-boundary
-other-datasets
 ```
 
 ```{toctree}

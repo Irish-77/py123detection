@@ -15,15 +15,18 @@ pip install -e "py123detection[viz]"
 py123det-viz bev work_dirs/petr_nuscenes_10cls/eval/nuscenes/predictions.jsonl -o frames/
 ```
 
-Ground truth in grey, predictions in red, and each prediction's opacity is its confidence — so a
-dense frame still reads, and the boxes you can barely see are the ones the model was not sure
-about. A grey box with nothing on it is a miss; a red box with nothing under it is a false
-positive. The title says how many predictions fell below the threshold, because a count of what
-you are *not* seeing is part of reading the picture.
+Ground truth is filled orange, predictions are hollow blue outlines on top, and a prediction's
+outline fades to grey as its confidence drops. Filled against hollow is what separates them at a
+thumbnail size; colour alone does not. An orange box with nothing on it is a miss, a blue box with
+nothing under it is a false positive.
 
-This needs nothing but the file. The boxes in it are in the global frame, and the view puts them
-back into the ego frame so the vehicle sits at the origin facing +x — a file written before the ego
-pose was recorded still renders, with the axes aligned to global north instead, and says so.
+The layout is the thesis's, so figures from the two are comparable: forward is up, left is left,
+range rings at 10, 25 and 50 m, and a tick from each box's centre to its leading edge for heading.
+Boxes whose centre falls outside the window are dropped rather than clipped.
+
+This needs nothing but the file. The boxes in it are global, and the view puts them back into the
+ego frame — a file written before the ego pose was recorded still renders, aligned to global north
+instead, and says so on the axes.
 
 Useful switches:
 
@@ -32,18 +35,32 @@ Useful switches:
 | `--score-threshold` | default 0.3. A detector emits one box per query — 900 for the shipped configs — so an unfiltered view is a solid block and shows nothing. |
 | `--limit` | how many frames to render, default 20. |
 | `--dataset` | only frames of one dataset, for a file covering several. |
-| `--radius` | half-width of the view in metres, default 60. |
+| `--radius` | half-width of the view in metres, default 50. |
 | `--taxonomy` | name classes in the legend. Either spelling works: the config group (`nuscenes_10cls`) or the registry name (`nuscenes_detection_10cls`). |
 
-## On the camera images
+## The front camera beside it
+
+```bash
+py123det-viz frame .../predictions.jsonl -o frames/ --experiment nuscenes_av2_wod
+```
+
+One figure per frame: the front camera on the left, the bird's-eye view on the right, same colours
+in both. This is the thesis's qualitative figure and the most useful single picture of a detector —
+the camera panel says what the model was looking at, the BEV panel says where it put the box. A
+miss that is invisible in the image and a miss that is plainly visible look identical in a metric
+and nothing alike here.
+
+`--camera` picks a different camera of the rig; 0, the default, is the front one in every rig.
+Like `cameras` below, it needs the 123D logs, so it takes the same `--experiment` and `-O`.
+
+## On every camera image
 
 ```bash
 py123det-viz cameras .../predictions.jsonl -o frames/ --experiment nuscenes_av2_wod
 ```
 
-The same boxes projected onto the images they were predicted from, one tiled picture per frame.
-Between the two views you can separate the two failures that look identical in a metric: the object
-was invisible, or it was visible and the model missed it.
+The same boxes on every camera of the rig, tiled into one picture per frame. Use this instead of
+`frame` when the interesting object is not in front.
 
 This one additionally needs the 123D logs the run was scored on, because the file holds boxes and
 not pixels — hence `--experiment`, which composes the same dataset the evaluation used so the

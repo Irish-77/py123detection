@@ -18,9 +18,25 @@ import numpy as np
 
 from py123detection.torch.visualize.boxes import EDGES, corners
 
-TRUTH_COLOUR = (120, 120, 120)
-PREDICTION_COLOUR = (40, 40, 220)  # BGR, since cv2 draws in BGR
+#: BGR, since cv2 draws in BGR. The same two colours the bird's-eye view uses, so the two panels
+#: of a frame read as one picture: ground truth orange, predictions blue shaded by confidence.
+TRUTH_COLOUR = (0, 140, 255)  # darkorange
+PREDICTION_COLOUR = (255, 144, 30)  # dodgerblue
+LOW_CONFIDENCE_COLOUR = (204, 204, 204)
 SCORE_THRESHOLD = 0.3
+
+#: Stroke width in pixels. Predictions get the full width and ground truth half of it, which keeps
+#: them apart where a 3D box drawn on a 2D image cannot use fill.
+THICKNESS = 3
+
+
+def shade(colour: Tuple[int, int, int], score: float) -> Tuple[int, int, int]:
+    """A prediction's colour: grey at score 0, the full colour at 1."""
+    weight = float(np.clip(score, 0.0, 1.0))
+    return tuple(
+        int(round(LOW_CONFIDENCE_COLOUR[channel] * (1.0 - weight) + colour[channel] * weight))
+        for channel in range(3)
+    )
 
 
 def project_corners(
@@ -54,7 +70,8 @@ def draw_boxes(
     boxes: np.ndarray,
     imu2img: np.ndarray,
     colour: Tuple[int, int, int] = PREDICTION_COLOUR,
-    thickness: int = 1,
+    thickness: int = THICKNESS,
+    scores: Optional[Sequence[float]] = None,
 ) -> np.ndarray:
     """Draw each box's twelve edges onto a copy of ``image``.
 
@@ -68,7 +85,9 @@ def draw_boxes(
     height, width = canvas.shape[:2]
     pixels, valid = project_corners(corners(boxes), imu2img, (height, width))
 
-    for box_pixels, box_valid in zip(pixels, valid):
+    shades = [shade(colour, score) for score in scores] if scores is not None else None
+    for index, (box_pixels, box_valid) in enumerate(zip(pixels, valid)):
+        edge_colour = shades[index] if shades is not None else colour
         for start, end in EDGES:
             if not (box_valid[start] and box_valid[end]):
                 continue
@@ -76,7 +95,7 @@ def draw_boxes(
                 canvas,
                 (int(round(box_pixels[start, 0])), int(round(box_pixels[start, 1]))),
                 (int(round(box_pixels[end, 0])), int(round(box_pixels[end, 1]))),
-                colour,
+                edge_colour,
                 thickness,
                 lineType=cv2.LINE_AA,
             )
@@ -90,22 +109,24 @@ def render_camera(
     ground_truth: Optional[np.ndarray] = None,
     scores: Optional[Sequence[float]] = None,
     score_threshold: float = SCORE_THRESHOLD,
-    thickness: int = 1,
+    thickness: int = THICKNESS,
 ) -> np.ndarray:
     """One camera image with ground truth under the predictions.
 
-    Ground truth is drawn first and in grey so the predictions sit on top of it; boxes are in the
-    frame ``imu2img`` projects from, which for this dataset is the ego frame.
+    Ground truth goes down first, in orange and at half the stroke width; predictions go on top in
+    blue, shaded towards grey by their score. Boxes are in the frame ``imu2img`` projects from,
+    which for this dataset is the ego frame.
     """
     canvas = image
     if ground_truth is not None and len(ground_truth):
-        canvas = draw_boxes(canvas, ground_truth, imu2img, TRUTH_COLOUR, thickness)
+        canvas = draw_boxes(canvas, ground_truth, imu2img, TRUTH_COLOUR, max(1, thickness // 2))
 
-    kept = predictions
+    kept, kept_scores = predictions, None
     if scores is not None and len(predictions):
         keep = np.asarray(scores, dtype=np.float64) >= score_threshold
         kept = predictions[keep]
-    return draw_boxes(canvas, kept, imu2img, PREDICTION_COLOUR, thickness)
+        kept_scores = np.asarray(scores, dtype=np.float64)[keep]
+    return draw_boxes(canvas, kept, imu2img, PREDICTION_COLOUR, thickness, scores=kept_scores)
 
 
 def tile(images: Sequence[np.ndarray], columns: int = 3) -> np.ndarray:

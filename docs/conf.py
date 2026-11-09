@@ -91,6 +91,8 @@ intersphinx_mapping = {
 
 html_theme = "furo"
 html_title = f"py123detection {release}"
+html_static_path = ["_static"]
+html_css_files = ["custom.css"]
 
 # The docs workflow publishes the default branch at the site root and every other branch under
 # /<branch>/, and passes the resulting URL in. Both are unset locally, which is fine: Sphinx

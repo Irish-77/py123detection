@@ -26,7 +26,6 @@ pytestmark = pytest.mark.torch
 from py123detection.torch.evaluate import to_global  # noqa: E402
 from py123detection.torch.predictions import FramePrediction, PredictionWriter  # noqa: E402
 from py123detection.torch.visualize.bev import (  # noqa: E402
-    PREDICTION_COLOUR,
     TRUTH_COLOUR,
     render_bev,
     save_bev,
@@ -158,40 +157,62 @@ class TestToEgo:
 
 
 class TestBev:
-    def outlines(self, ax, colour):
-        """Patches drawn in one colour, which is stabler than a total: the ego vehicle adds a
-        rectangle and an arrow, and decorations should not be able to break a box count."""
+    def truth(self, ax):
+        """Ground-truth rectangles: filled, and the only ones edged in the truth colour."""
         from matplotlib.colors import to_rgba
 
-        # RGB only: predictions carry their confidence as alpha, so a full comparison never
-        # matches one.
-        wanted = to_rgba(colour)[:3]
+        wanted = to_rgba(TRUTH_COLOUR)[:3]
         return [
             patch for patch in ax.patches
             if getattr(patch, "get_edgecolor", None) and to_rgba(patch.get_edgecolor())[:3] == wanted
         ]
 
-    def test_it_draws_ground_truth_predictions_and_the_vehicle(self):
+    def predictions(self, ax):
+        """Prediction rectangles: hollow, which the ego marker and the range rings are not.
+
+        Matching on fill rather than colour, because a prediction's edge colour is its confidence
+        and no two need be the same.
+        """
+        from matplotlib.colors import to_rgba
+        from matplotlib.patches import Polygon
+
+        return [
+            patch for patch in ax.patches
+            if isinstance(patch, Polygon) and to_rgba(patch.get_facecolor())[3] == 0.0
+        ]
+
+    def test_it_draws_ground_truth_filled_and_predictions_hollow(self):
+        """The distinction that survives a thumbnail: colour alone does not."""
         figure = render_bev(frame(), class_names=CLASS_NAMES, score_threshold=0.0)
         ax = figure.axes[0]
-        assert len(self.outlines(ax, TRUTH_COLOUR)) == 3
-        assert len(self.outlines(ax, PREDICTION_COLOUR)) == 4
+        assert len(self.truth(ax)) == 3
+        assert len(self.predictions(ax)) == 4
         assert "nuscenes" in ax.get_title() and "scene-abc:7" in ax.get_title()
         matplotlib.pyplot.close(figure)
 
-    def test_the_score_threshold_removes_boxes_and_the_title_says_how_many(self):
+    def test_the_score_threshold_removes_boxes_and_the_title_counts_both(self):
         low = render_bev(frame(), score_threshold=0.0)
         high = render_bev(frame(), score_threshold=0.5)
-        assert len(self.outlines(high.axes[0], PREDICTION_COLOUR)) < len(
-            self.outlines(low.axes[0], PREDICTION_COLOUR)
-        )
-        assert "below" in high.axes[0].get_title()
+        assert len(self.predictions(high.axes[0])) < len(self.predictions(low.axes[0]))
+        assert "of 4 predictions" in high.axes[0].get_title()
         matplotlib.pyplot.close(low)
         matplotlib.pyplot.close(high)
 
-    def test_with_a_pose_the_view_is_vehicle_forward(self):
+    def test_confidence_shades_the_outline(self):
+        """A faint box is one the model was unsure of, which a fixed colour cannot say."""
+        from matplotlib.colors import to_rgba
+
+        figure = render_bev(frame(), score_threshold=0.0)
+        shades = {to_rgba(patch.get_edgecolor())[:3] for patch in self.predictions(figure.axes[0])}
+        assert len(shades) == 4
+        matplotlib.pyplot.close(figure)
+
+    def test_with_a_pose_the_view_is_forward_up_and_left_left(self):
+        """The thesis's convention: ego x up the figure, ego y to the left, so x is inverted."""
         figure = render_bev(frame(with_pose=True))
-        assert "vehicle forward" in figure.axes[0].get_xlabel()
+        ax = figure.axes[0]
+        assert ax.get_xlabel() == "ego y (m)" and ax.get_ylabel() == "ego x (m)"
+        assert ax.get_xlim()[0] > ax.get_xlim()[1]
         matplotlib.pyplot.close(figure)
 
     def test_without_a_pose_it_still_renders_and_says_the_axes_are_global(self):
@@ -207,8 +228,8 @@ class TestBev:
             gt_boxes=np.zeros((0, 9)), gt_labels=np.zeros(0, dtype=int),
         )
         figure = render_bev(empty)
-        assert self.outlines(figure.axes[0], TRUTH_COLOUR) == []
-        assert self.outlines(figure.axes[0], PREDICTION_COLOUR) == []
+        assert self.truth(figure.axes[0]) == []
+        assert self.predictions(figure.axes[0]) == []
         matplotlib.pyplot.close(figure)
 
     def test_saving_writes_a_png_and_leaves_no_open_figure(self, tmp_path):
@@ -354,3 +375,61 @@ class TestCli:
         out = tmp_path / "pics"
         main(["bev", str(source), "-o", str(out)])
         assert any(token.replace(":", "_") in png.name for png in out.glob("*.png"))
+
+
+class TestFrame:
+    """The two-panel figure: front camera beside the bird's-eye view."""
+
+    def pinhole(self) -> np.ndarray:
+        matrix = np.eye(4, dtype=np.float64)
+        matrix[0, 0], matrix[0, 2] = 500.0, 320.0
+        matrix[1, 1], matrix[1, 2] = 500.0, 240.0
+        return matrix
+
+    def ahead(self, count: int = 4) -> np.ndarray:
+        """One box per score in ``frame()``: the two panels draw the same boxes."""
+        boxes = np.repeat(np.array([[0.0, 0.0, 20.0, 2.0, 4.0, 1.6, 0.0, 0.0, 0.0]]), count, axis=0)
+        boxes[:, 0] = np.arange(count) * 3.0
+        return boxes
+
+    def render(self, **kwargs):
+        from py123detection.torch.visualize.frame import render_frame
+
+        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        return render_frame(image, self.pinhole(), frame(), self.ahead(), **kwargs)
+
+    def test_it_has_both_panels_and_one_title_over_them(self):
+        figure = self.render()
+        assert len(figure.axes) == 2
+        assert "scene-abc:7" in figure._suptitle.get_text()
+        matplotlib.pyplot.close(figure)
+
+    def test_the_camera_panel_keeps_the_images_aspect_ratio(self):
+        """A 4:3 image in a square panel is letterboxed; the figure is sized to the image."""
+        figure = self.render()
+        width, height = figure.get_size_inches()
+        matplotlib.pyplot.close(figure)
+        assert width > height, "the camera panel should widen the figure, not squash the image"
+
+    def test_the_camera_name_is_shown_so_a_rig_is_readable(self):
+        figure = self.render(camera_name="PCAM_F0")
+        assert figure.axes[0].get_title() == "PCAM_F0"
+        matplotlib.pyplot.close(figure)
+
+    def test_a_prediction_count_that_cannot_match_the_scores_is_refused(self):
+        """The two panels take the same boxes in two frames; a mismatch would mislabel them."""
+        from py123detection.torch.visualize.frame import render_frame
+
+        with pytest.raises(ValueError, match="same boxes in two frames"):
+            render_frame(np.zeros((480, 640, 3), np.uint8), self.pinhole(), frame(), self.ahead(2))
+
+    def test_saving_leaves_no_open_figure(self, tmp_path):
+        import matplotlib.pyplot as plt
+
+        from py123detection.torch.visualize.frame import save_frame
+
+        before = len(plt.get_fignums())
+        target = tmp_path / "frame.png"
+        save_frame(target, np.zeros((480, 640, 3), dtype=np.uint8), self.pinhole(), frame(), self.ahead())
+        assert target.exists() and target.stat().st_size > 1000
+        assert len(plt.get_fignums()) == before

@@ -1,0 +1,11 @@
+/* The two halves of the package are separate stacks with separate environments, so the sidebar
+   draws them as separate blocks rather than one long list of pages. */
+.sidebar-tree .caption {
+    border-top: 1px solid var(--color-background-border);
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+}
+.sidebar-tree > .caption:first-of-type {
+    border-top: none;
+    margin-top: 0;
+}
