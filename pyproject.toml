@@ -81,6 +81,8 @@ py123det-train = "py123detection.torch.train:main"
 py123det-eval = "py123detection.torch.evaluate:main"
 # rendering: needs the `viz` extra as well.
 py123det-viz = "py123detection.torch.visualize.cli:main"
+# the interactive viewer: py123d's own, with the run's predictions added as one element.
+py123det-view = "py123detection.torch.visualize.viewer:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

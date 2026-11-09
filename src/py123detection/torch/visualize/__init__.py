@@ -4,8 +4,10 @@ Both views read a predictions file written by ``py123det-eval``, so neither need
 GPU. The bird's-eye view needs nothing else at all; drawing on camera images needs the dataset the
 run was scored on, because the file holds boxes and not pixels.
 
-There is no viewer here: py123d ships one, and :mod:`py123detection.torch.visualize.py123d_interop`
-converts a predictions file into the detection type it draws, which is the piece that was missing.
+For an interactive view there is :mod:`py123detection.torch.visualize.viewer` and the
+``py123det-view`` command, which add the run's predictions to py123d's own Viser viewer as one
+more element rather than writing a second viewer.  It is deliberately not imported here: it pulls
+viser and trimesh, which rendering a PNG has no use for.
 
 Needs the ``viz`` extra (matplotlib; ``cv2`` comes with ``torch`` and ``images``).
 """

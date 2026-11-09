@@ -193,12 +193,17 @@ def add_to_viser(
     colour: Tuple[int, int, int] = (214, 39, 40),
     line_width: float = 3.0,
     ground_truth: bool = False,
+    origin: Optional[np.ndarray] = None,
 ) -> Any:
     """Draw one frame's boxes into a running viser server as wireframes.
 
     Wireframes rather than solid meshes so predictions read as an overlay on whatever the scene
     already shows, which is how the thesis distinguished them from ground truth.
 
+    :param origin: Subtracted from every point. py123d's viewer draws a scene relative to its
+        centre, because a 123D scene sits at global coordinates large enough to cost visible
+        precision; an overlay that skips this lands hundreds of metres from everything else.
+        :class:`py123detection.torch.visualize.viewer.PredictionsElement` passes the scene centre.
     :returns: the viser handle, so a caller stepping through frames can update or hide it.
     """
     boxes = frame.gt_boxes if ground_truth else frame.boxes
@@ -207,6 +212,8 @@ def add_to_viser(
         boxes = boxes[keep]
 
     points = wireframe(boxes).reshape(-1, 2, 3)
+    if origin is not None:
+        points = points - np.asarray(origin, dtype=np.float64)[:3]
     # One colour per endpoint of every segment: viser wants colors shaped exactly like points, and
     # a per-box array is twelve times too short.
     colours = np.broadcast_to(

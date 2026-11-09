@@ -19,3 +19,14 @@ Rendering a run's predictions. See [Looking at what the model found](guides/visu
 :func: build_parser
 :prog: py123det-viz
 ```
+
+## py123det-view
+
+The same predictions in py123d's interactive viewer. See
+[Looking at what the model found](guides/visualisation.md).
+
+```{argparse}
+:module: py123detection.torch.visualize.viewer
+:func: build_parser
+:prog: py123det-view
+```

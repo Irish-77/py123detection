@@ -62,6 +62,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     cameras.add_argument("--images", default="petr_704", help="the images config group to use")
     cameras.add_argument("--columns", type=int, default=3, help="cameras per row in the tiled image")
+    cameras.add_argument(
+        "-O",
+        "--override",
+        action="append",
+        default=[],
+        metavar="KEY=VALUE",
+        help="an extra Hydra override, repeatable. Needed whenever the run was not scored on a "
+        "stock config: -O 'hydra.searchpath=[file:///path/to/conf]' to reach an experiment "
+        "outside the package, and -O 'data.val=[...]' to rebuild the exact frames it scored.",
+    )
     return parser
 
 
@@ -136,9 +146,26 @@ def _dataset_index(args: argparse.Namespace) -> Any:
     overrides = [f"experiment={args.experiment}", f"images={args.images}"]
     if args.taxonomy:
         overrides.append(f"taxonomy={args.taxonomy}")
+    overrides.extend(args.override)
     with initialize_config_module(config_module="py123detection.torch.conf", version_base=None):
         cfg = compose(config_name="config", overrides=overrides)
     return build_datasets(cfg, "val")
+
+
+def _token_index(datasets) -> dict:
+    """``token -> (dataset, index)``, built from the frame index alone.
+
+    A dataset is addressed by position and a predictions file by token. Loading ``dataset[index]``
+    to learn its token would decode every camera of every frame of the split — six images a frame,
+    hours of it on a full validation set — to answer a question the frame index already holds.
+    """
+    locations = {}
+    for dataset in datasets:
+        for index in range(len(dataset)):
+            scene_index, iteration = dataset.frames[index]
+            token = f"{dataset.scenes[scene_index].scene_uuid}:{iteration}"
+            locations.setdefault(token, (dataset, index))
+    return locations
 
 
 def _run_cameras(args: argparse.Namespace) -> int:
@@ -152,13 +179,7 @@ def _run_cameras(args: argparse.Namespace) -> int:
     datasets = _dataset_index(args)
     logger.info("built %d validation dataset(s)", len(datasets))
 
-    # One pass over each dataset, building token -> index, because a Py123DDetectionDataset is
-    # addressed by position and a predictions file by token.
-    locations = {}
-    for dataset in datasets:
-        for index in range(len(dataset)):
-            sample = dataset[index]
-            locations[frame_token(sample["img_metas"])] = (dataset, index)
+    locations = _token_index(datasets)
 
     written = 0
     for frame in _frames(args.predictions, args.dataset, args.limit):
@@ -168,6 +189,17 @@ def _run_cameras(args: argparse.Namespace) -> int:
             continue
         dataset, index = found
         sample = dataset[index]
+        # `get` walks past a frame its filters reject and returns the next usable one, so the
+        # index a token maps to can hand back a different frame. Drawing the predictions of one
+        # frame onto the images of another would look entirely plausible, so check.
+        served = frame_token(sample["img_metas"])
+        if served != frame.token:
+            logger.warning(
+                "%s is rejected by the filters built here; the dataset served %s in its place, so "
+                "it is skipped rather than drawn on the wrong images",
+                frame.token, served,
+            )
+            continue
 
         if frame.ego_pose is None:
             logger.warning("%s has no ego pose, so its boxes cannot be put back in the ego frame", frame.token)
