@@ -112,6 +112,6 @@ Build the site with `pip install -e "py123detection[docs]"` and
 ## Tests
 
 ```bash
-pytest                                  # 504 unit tests, no data needed
+pytest                                  # 541 unit tests, no data needed
 NUSCENES_DATA_ROOT=... PY123D_DATA_ROOT=... pytest -m integration    # the round-trip comparison
 ```

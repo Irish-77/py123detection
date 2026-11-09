@@ -71,12 +71,38 @@ for frame in read_predictions("eval/nuscenes/predictions.jsonl"):
 image and returns a new array; `tile` lays a rig's cameras out in a grid, padding rather than
 assuming they share a resolution, because Argoverse 2's do not.
 
-## An interactive viewer
+## In py123d's viewer
 
-There is no viewer in this package, and that is deliberate: py123d already ships one
+There is no viewer in this package, deliberately: py123d already ships one
 (`py123d.visualization.viser`), and a second would be a copy of several thousand lines of somebody
-else's maintained code. What is missing is only the adapter that turns these predictions into the
-detection type that viewer draws. See `docs/development.md` for where that would go.
+else's maintained code. What this package provides is the piece that was missing — the conversion
+from a predictions file to the detection type that viewer draws.
+
+```python
+from py123detection.core.taxonomy import get_taxonomy
+from py123detection.torch.visualize import add_to_viser, frames_by_token, tokens_in_order, to_detections
+
+taxonomy = get_taxonomy("general_3cls")
+frames = frames_by_token("eval/nuscenes/predictions.jsonl")
+
+# As py123d's own type, for anything in its visualisation stack:
+detections = to_detections(frames["<scene uuid>:118"], taxonomy, score_threshold=0.4)
+
+# Or straight onto a running viser server, as a wireframe overlay:
+handle = add_to_viser(server, frames["<scene uuid>:118"], score_threshold=0.4)
+```
+
+`tokens_in_order` sorts tokens by frame number rather than as text, so stepping through a scene
+plays in order instead of jumping from frame 1 to frame 10.
+
+One limitation worth knowing before you read the colours. py123d's label vocabulary is coarse on
+purpose — `VEHICLE` and `TWO_WHEELER`, not car, truck, bus, trailer, bicycle, motorcycle — so a
+fine-grained taxonomy cannot round-trip through it. `mixed_8cls` loses four of its eight classes
+and `nuscenes_detection_10cls` loses all ten, because it is built from `native_map`, which does not
+name py123d labels at all. Those boxes still draw, as `GENERIC_OBJECT`; what they lose is being
+told apart by colour. The conversion logs which classes that applies to, once per taxonomy, rather
+than letting you discover it from a picture. `unmapped_classes(taxonomy)` answers the same question
+up front.
 
 ## A note on matplotlib
 

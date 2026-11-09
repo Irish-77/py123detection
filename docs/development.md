@@ -61,13 +61,13 @@ docs/
   guides/                    task-oriented pages: what to export, extrinsics, training, ...
   api/                       API reference, generated from the docstrings
   other-datasets.md          exporting a dataset that is not nuScenes
-tests/                       504 unit tests + 28 integration tests
+tests/                       541 unit tests + 28 integration tests
 ```
 
 ## Tests
 
 ```bash
-pytest                                  # 504 unit tests, no data needed
+pytest                                  # 541 unit tests, no data needed
 NUSCENES_DATA_ROOT=... PY123D_DATA_ROOT=... pytest -m integration    # the round-trip comparison
 ```
 
