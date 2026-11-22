@@ -121,9 +121,8 @@ class Py123DDetectionDataset(Dataset):
         """One sample, or the next usable one.
 
         A frame can be unusable, because a camera dropped out or every box was filtered away.
-        Rather than returning nothing and breaking the batch, the next frame is tried; scanning the
-        whole
-        dataset without success is an error worth raising.
+        Rather than returning nothing and breaking the batch, the next frame is tried. Scanning the
+        whole dataset without success is an error worth raising.
 
         :param draw: Use this augmentation instead of drawing one, to reproduce a sample exactly.
         """
