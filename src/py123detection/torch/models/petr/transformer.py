@@ -263,11 +263,10 @@ class PETRTransformer(nn.Module):
 
     def forward(self, x, mask, query_embed, pos_embed, reg_branch=None):
         """
-        Args:
-            x (Tensor): Input features [bs, n, c, h, w] -> memory
-            mask (Tensor): key_padding_mask [bs, n, h, w]
-            query_embed (Tensor): [num_query, c]
-            pos_embed (Tensor): [bs, n, c, h, w]
+        :param x: Image features, ``[bs, n, c, h, w]``, flattened here into the decoder's memory.
+        :param mask: Key padding mask, ``[bs, n, h, w]``.
+        :param query_embed: ``[num_query, c]``.
+        :param pos_embed: The 3D position embedding, ``[bs, n, c, h, w]``.
         """
         bs, n, c, h, w = x.shape
         memory = x.permute(1, 3, 4, 0, 2).reshape(-1, bs, c)  # [n*h*w, bs, c]

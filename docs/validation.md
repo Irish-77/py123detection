@@ -56,8 +56,8 @@ cases against a converter written independently from the raw files. See
 
 ## Other datasets
 
-Nothing in the converter is nuScenes-specific, but a new dataset does force a few choices, and each
-one is a flag: reference frame, taxonomy, tokens, velocity, box layout, ego-pose lookup.
+Nothing in the converter is nuScenes-specific, but a new dataset does force a few choices, and
+each one is a flag: reference frame, taxonomy, tokens, velocity, box layout, ego-pose lookup.
 [`docs/other-datasets.md`](other-datasets.md) walks through them with Argoverse 2 as the worked
 example.
 
@@ -74,14 +74,14 @@ Everything below is a consequence of what 123D stores, not of the conversion. No
 from the native converter.
 
 **`gt_velocity` agrees to ~1e-5 m/s, not exactly.** The nuScenes devkit computes box velocity as a
-central difference over an annotation's `prev`/`next`; 123D recomputes the same central difference
-over the same keyframes at conversion time (`infer_box_dynamics`). Same formula, same inputs, so
-the residual is float noise in the timestamp division. Where the devkit returns `NaN` (at track
-boundaries) 123D returns a one-sided difference or zero, and mmdet3d zeroes NaN at load time
+central difference over an annotation's `prev`/`next`, and 123D recomputes the same central
+difference over the same keyframes at conversion time (`infer_box_dynamics`). Same formula, same
+inputs, so the residual is float noise in the timestamp division. Where the devkit returns `NaN` (at
+track boundaries) 123D returns a one-sided difference or zero, and mmdet3d zeroes NaN at load time
 anyway.
 
 **`sweeps` are as dense as the 123D log, not as dense as the dataset.** nuScenes' native sweeps are
-20 Hz; a keyframe-only 123D conversion contains 2 Hz lidar and has no intermediate sweeps to offer.
+20 Hz. A keyframe-only 123D conversion contains 2 Hz lidar and has no intermediate sweeps to offer.
 Convert with the interpolated (10 Hz) nuScenes profile if you need denser ones. Camera-only models
 do not read sweeps. StreamPETR only uses the *empty* list at a log's first frame to detect sequence
 starts, and those line up exactly (asserted in the integration test).
@@ -103,12 +103,12 @@ per-row lidar extrinsic. See [Static vs. dynamic extrinsics](guides/extrinsics.m
 at conversion time by the native converter, and nothing in the training path reads it.
 
 **Yaw convention.** mmdetection3d's converter reads yaw through `pyquaternion`'s `yaw_pitch_roll`,
-which is *not* the textbook z-y-x yaw: it computes `atan2(2(wz − xy), 1 − 2(y² + z²))` where the
+which is *not* the textbook z-y-x yaw. It computes `atan2(2(wz − xy), 1 − 2(y² + z²))` where the
 standard form has `+xy`. The two agree for an upright box and diverge as roll/pitch grows, by a few
 milliradians in a lidar frame and by a large angle in a camera frame. The export reproduces
 mmdet3d's read-out by default so pickles stay interchangeable. `--yaw-convention heading` switches
 to the geometric heading the nuScenes *evaluation* devkit assumes.
 
 **Velocity convention.** mmdet3d drops the global vertical velocity before rotating into the lidar
-frame, and its evaluation path inverts the same assumption. The export does the same;
+frame, and its evaluation path inverts the same assumption. The export does the same.
 `--full-3d-velocity` keeps `vz`, at the cost of letting a tilted lidar mix it into `(vx, vy)`.

@@ -31,8 +31,8 @@ PREDICTION_COLOUR = "dodgerblue"
 LOW_CONFIDENCE_COLOUR = "#cccccc"
 TRUTH_FILL_ALPHA = 0.35
 
-#: Default score below which a prediction is not drawn. A detector emits one box per query — 900
-#: for the shipped configs — so an unfiltered view is a solid block and shows nothing.
+#: Default score below which a prediction is not drawn. A detector emits one box per query, 900 for
+#: the shipped configs, so an unfiltered view is a solid block and shows nothing.
 SCORE_THRESHOLD = 0.3
 
 #: Half-extent of the view in metres, forward and sideways.

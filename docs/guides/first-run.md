@@ -19,7 +19,7 @@ py123det-train experiment=nuscenes_mini trainer=smoke images=petr_320
 ```
 
 `trainer=smoke` is two batches of training and two of validation on the smallest input size. It
-exists to fail in two minutes rather than two hours: if the data root, the rig or the taxonomy is
+exists to fail in two minutes rather than two hours. If the data root, the rig or the taxonomy is
 wrong, you find out here.
 
 ## 2. Train

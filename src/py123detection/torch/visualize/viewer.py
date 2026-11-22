@@ -3,8 +3,8 @@
     py123det-view work_dirs/petr_nuscenes/eval/nuscenes/predictions.jsonl --split nuscenes_val
 
 py123d ships a Viser viewer with lidar, map, camera frustums, ground truth and playback. This adds
-one element to it — the model's boxes for the frame on screen — rather than writing a second
-viewer, so everything else in the picture stays py123d's and keeps working when py123d improves it.
+one element to it, the model's boxes for the frame on screen, rather than writing a second viewer,
+so everything else in the picture stays py123d's and keeps working when py123d improves it.
 
 Two things have to line up for a prediction to land on the right frame, and both are checked
 rather than assumed:
@@ -53,7 +53,7 @@ class PredictionsElement(ViewerElement):
     meshes, and a second set of meshes would hide them. An outline reads as an overlay.
 
     The frame's own ground truth can be drawn too. It is not the same thing as the scene's
-    detections, which is the point of offering it — this is ground truth *after* the box filters
+    detections, which is the point of offering it: this is ground truth *after* the box filters
     the run was scored with, so a box the scene shows and this does not is a box the model was
     never charged for missing.
     """
@@ -241,8 +241,8 @@ def check_alignment(scenes: Sequence, predictions: Dict[str, Dict[int, FramePred
     """Fail loudly when the frame numbering cannot be the one the predictions were written with.
 
     A prediction whose iteration is past the end of the scene is proof that the two disagree. The
-    reverse — a stride that happens to leave enough frames — cannot be detected from the file, so
-    this is a floor, not a guarantee, and the error says which knob fixes it.
+    reverse, a stride that happens to leave enough frames, cannot be detected from the file, so
+    this is a floor rather than a guarantee, and the error says which knob fixes it.
     """
     for scene in scenes:
         frames = predictions.get(scene.scene_uuid)

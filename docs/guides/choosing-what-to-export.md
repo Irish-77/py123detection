@@ -24,7 +24,7 @@ takes scenes you built yourself. Both work as long as the filter yields whole lo
 ## How many frames
 
 `sample_rate_hz` (or `frame_stride`) thins the exported frames. **Sweeps are not thinned with
-them**: the exporter loads a second, unsampled view of each log and draws `info['sweeps']` from
+them.** The exporter loads a second, unsampled view of each log and draws `info['sweeps']` from
 that, so a 2 Hz export off a 10 Hz log still gets 10 Hz sweeps. Measured on the mini kit, a 1 Hz
 export produced frames 1.0 s apart with sweeps 0.5 s apart.
 
@@ -50,13 +50,14 @@ box**; pick one of the others.
 because the nuScenes devkit's `DetectionBox` rejects anything else — see
 [the evaluation constraint](../other-datasets.md#9-training-side).
 
-`vehicle_1cls` and `mixed3_1cls` both have one `vehicle` class and are not the same: `vehicle_1cls`
-is the default label `VEHICLE` plus `TRAIN`, while `mixed3_1cls` adds the per-dataset rules that
-make nuScenes, AV2 and Waymo agree on what a vehicle is — a motorcycle counts, a tram does not.
+`vehicle_1cls` and `mixed3_1cls` both have one `vehicle` class and are not the same.
+`vehicle_1cls` is the default label `VEHICLE` plus `TRAIN`, while `mixed3_1cls` adds the
+per-dataset rules that make nuScenes, AV2 and Waymo agree on what a vehicle is. A motorcycle
+counts, a tram does not.
 
-### The two levels
+### How a label is looked up
 
-A taxonomy maps a label at either level, and the first hit wins:
+A taxonomy can key on three kinds of name, and the first hit wins:
 
 1. **qualified native** — `"AV2SensorBoxDetectionLabel.BICYCLIST"`, which changes one dataset
    without touching a same-named member of another;
@@ -81,7 +82,7 @@ merge_rules=(MergeRule(target="vehicle", sources=("av2_motorcycle", "av2_motorcy
 
 The sources are intermediate class names the native map produces and `class_names` does not
 contain, so they cannot leak into `gt_names`. Secondaries are paired to primaries by bird's-eye
-IoU, greedily and highest first; a pair becomes the tight box around both sets of corners, keeping
+IoU, greedily and highest first. A pair becomes the tight box around both sets of corners, keeping
 the primary's orientation and velocity, and a secondary that pairs with nothing is dropped.
 `mixed2_3cls` and `mixed3_1cls` use this for Argoverse 2, which boxes riders separately.
 

@@ -8,7 +8,7 @@ The merge has to deduplicate. ``DistributedSampler`` pads the last batch so ever
 number of samples, which hands the first few frames of a split to two ranks; the dataset can repeat
 a frame on its own account too, because a frame rejected by the box filters walks forward to the
 next usable one. Scoring a frame twice inflates its hits and its misses together, and scoring a
-subset inflates recall — neither announces itself.
+subset inflates recall, and neither announces itself.
 
 And the conversion from ``predict_step``'s output has to match what the in-process loop did before
 this change, bit for bit, or sharding would be "free" at the cost of a different number.
@@ -301,7 +301,7 @@ class StubPredictDetector(Detector3D):
 def test_a_real_predict_run_writes_one_file_per_rank_and_dataset(tmp_path):
     """The Lightning wiring: predict_step is reached, the writer routes by dataset, nothing is lost.
 
-    ``return_predictions=False`` is the point — Lightning's own return path would collect every
+    ``return_predictions=False`` is the point: Lightning's own return path would collect every
     batch on every rank, which is what this stage exists to avoid.
     """
     frames = fixed_frames()[:9]

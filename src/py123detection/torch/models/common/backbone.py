@@ -1,3 +1,17 @@
+"""The image backbone both detectors run over a camera rig.
+
+A ResNet-50 or ResNet-101 with deformable convolutions in its last two stages, feeding PETR's CPFPN
+rather than a standard FPN. This is the configuration the PETR paper reports and the thesis
+trained, so it is kept as it is rather than generalised.
+
+Three things here exist for memory and for distributed training rather than for accuracy. Gradient
+checkpointing is applied by wrapping each ResNet block's ``forward``, which recomputes activations
+instead of storing them. BatchNorm is frozen, as official PETR's ``requires_grad=False`` config
+does, because a batch of two frames is too small to estimate statistics from. And early stages can
+be frozen outright, which is also what keeps DDP from complaining about parameters that never
+receive a gradient.
+"""
+
 from typing import List
 
 import torch
@@ -11,12 +25,12 @@ from torchvision.ops import DeformConv2d
 
 
 class DCNWrapper(nn.Module):
-    """Wrapper for Deformable Convolution.
+    """A deformable convolution that learns its own sampling offsets.
 
-    In a nutshell, deformable convolutions are a type of convolutional layer
-    that allows the weights to be deformed by learning a set of offsets and
-    masks. This can be used to learn a more complex and adaptive convolutional
-    layer.
+    An ordinary convolution reads a fixed grid of neighbours. This one predicts a per-pixel offset
+    and a per-pixel weight for each tap first, so the kernel can follow an object rather than a
+    square. PETR uses it in the backbone's last two stages, where the features are coarse enough
+    that a rigid grid costs accuracy.
     """
     def __init__(
         self,
@@ -28,21 +42,9 @@ class DCNWrapper(nn.Module):
         groups: int,
         bias: bool
     ):
-        """Initialize the DCNWrapper.
-
-        Args:
-            in_channels (int): Number of input channels.
-            out_channels (int): Number of output channels.
-            stride (int): Stride of the convolution.
-            padding (int): Padding of the convolution.
-            dilation (int): Dilation of the convolution.
-            groups (int): Number of groups for grouped convolution.
-            bias (bool): Whether to use bias.
-        """
-
         super(DCNWrapper, self).__init__()
 
-        # Learnable offset and mask
+        # One 2D offset and one weight per kernel tap, predicted per pixel.
         self.offset_conv = nn.Conv2d(
             in_channels,
             # 3 * kernel_size^2 for 2D offsets + mask
@@ -68,14 +70,7 @@ class DCNWrapper(nn.Module):
         )
 
     def forward(self, x: Tensor) -> Tensor:
-        """Forward pass.
-
-        Args:
-            x (Tensor): Input tensor (BN, C, H, W)
-
-        Returns:
-            Tensor: Output tensor (BN, C, H, W)
-        """
+        """``(BN, C, H, W)`` in, ``(BN, C, H, W)`` out."""
         out = self.offset_conv(x)
         o1, o2, mask = torch.chunk(out, 3, dim=1)
         offset = torch.cat((o1, o2), dim=1)
@@ -84,18 +79,12 @@ class DCNWrapper(nn.Module):
 
 
 class CPFPN(nn.Module):
-    """CPFPN: Feature Pyramid Network with Checkpointing support and specific
-    convolution logic.
+    """PETR's feature pyramid, which is a standard FPN with most of the smoothing left out.
 
-    Adapted from PETR official implementation
-    (projects/mmdet3d_plugin/models/necks/cp_fpn.py).
-    Differences from standard FPN:
-    - Only applies 3x3 convolution to the highest resolution output
-        (first level).
-    - Lower resolution feature maps (from backbone) are passed through 1x1
-        lateral convs but NOT 3x3 smoothed.
-    - Supports gradient checkpointing (though we handle that in backbone/
-        transformer wrappers).
+    A standard FPN runs a 3x3 convolution over every level after the top-down merge. This one does
+    it for the highest-resolution level only; the rest are the 1x1 lateral outputs as they come.
+    PETR ships it this way (``cp_fpn.py`` in its mmdet3d plugin) and the weights expect it, so the
+    missing convolutions are not an omission.
     """
     def __init__(
         self,
@@ -107,14 +96,12 @@ class CPFPN(nn.Module):
         add_extra_convs: bool = False,
     ):
         """
-        Args:
-            in_channels (List[int]): Number of input channels per scale.
-            out_channels (int): Number of output channels (used at each scale)
-            num_outs (int): Number of output scales.
-            start_level (int): Index of the start input backbone level.
-            end_level (int): Index of the end input backbone level.
-            add_extra_convs (bool): Whether to add extra conv layers
-                (not used in default PETR).
+        :param in_channels: Channel count of each input scale.
+        :param out_channels: Channel count every output scale is brought to.
+        :param num_outs: How many scales to emit.
+        :param start_level: First backbone level to read.
+        :param end_level: Last backbone level to read; -1 means all of them.
+        :param add_extra_convs: Extra downsampling levels on top. Default PETR uses none.
         """
         super().__init__()
         self.in_channels = in_channels
@@ -137,36 +124,25 @@ class CPFPN(nn.Module):
             l_conv = nn.Conv2d(in_channels[i], out_channels, kernel_size=1)
             self.lateral_convs.append(l_conv)
 
-            # Official PETR CPFPN only adds 3x3 conv for the FIRST level
-            # (i==0 relative to start_level).
-            # Other levels just use the lateral output directly
+            # Official PETR's CPFPN smooths the first level only; the others pass the lateral
+            # output through untouched.
             if i == 0:
                 fpn_conv = nn.Conv2d(
                     out_channels, out_channels, kernel_size=3, padding=1
                 )
                 self.fpn_convs.append(fpn_conv)
             else:
-                # Placeholder to keep indexing simple
-                # In official repo, they just don't append to fpn_convs for
-                # i > 0
+                # Nothing to append: fpn_convs stays shorter than the level count, as upstream.
                 pass
 
     def forward(self, inputs: List[Tensor]) -> List[Tensor]:
-        """Forward pass.
-
-        Args:
-            inputs (List[Tensor]): List of backbone features.
-
-        Returns:
-            List[Tensor]: FPN outputs.
-        """
-        # Build laterals
+        """Backbone features in, one tensor per output scale."""
         laterals = [
             lateral_conv(inputs[i + self.start_level])
             for i, lateral_conv in enumerate(self.lateral_convs)
         ]
 
-        # Build top-down path
+        # Top-down path: each level gains the one above it, upsampled.
         used_backbone_levels = len(laterals)
         for i in range(used_backbone_levels - 1, 0, -1):
             # Upsample top level and add to current level
@@ -193,9 +169,8 @@ class CPFPN(nn.Module):
 class FeatureExtractor(nn.Module):
     """Feature extractor for 3D object detection.
 
-    Feature extractor based on ResNet-101/50 with FPN and Deformable
-    Convolutions.
-    Aligns with official PETR implementation using CPFPN logic.
+    The image backbone: a ResNet with deformable convolutions in its last two stages, feeding
+    PETR's CPFPN. This is what the official PETR configuration builds.
     """
     def __init__(
         self, 
@@ -209,17 +184,17 @@ class FeatureExtractor(nn.Module):
         norm_eval: bool = True,
         with_cp: bool = True,
     ):
-        """Initialize the FeatureExtractor.
-
-        Args:
-            out_channels (int): Number of output channels.
-            return_layers (dict, optional): Mapping of layer names to return
-                keys.Defaults to {'layer2': '0', 'layer3': '1', 'layer4': '2'}.
-            backbone (str): Backbone name ('resnet50' or 'resnet101').
-            train_backbone (bool): Whether to train the backbone.
-            frozen_stages (int): Stages to freeze.
-            norm_eval (bool): Whether to force BN layers to eval mode.
-            with_cp (bool): Whether to use gradient checkpointing on backbone.
+        """
+        :param out_channels: Channel count of every FPN output.
+        :param return_layers: Which ResNet stages to tap, as torchvision's
+            ``IntermediateLayerGetter`` wants them. Defaults to C3, C4 and C5, which is what
+            DETR3D and PETR use.
+        :param backbone: ``resnet50`` or ``resnet101``.
+        :param train_backbone: Let the backbone's weights receive gradients.
+        :param frozen_stages: How deep to freeze: -1 trains everything, 0 freezes the stem, 1 also
+            freezes ``layer1``.
+        :param norm_eval: Keep BatchNorm in eval mode even during training.
+        :param with_cp: Gradient-checkpoint the ResNet blocks, trading step time for memory.
         """
         super().__init__()
 
@@ -294,23 +269,18 @@ class FeatureExtractor(nn.Module):
             for n, p in self.backbone.named_parameters():
                 p.requires_grad = False
 
-        # Return features
         if return_layers is None:
-            # Default used by DETR3D (C3, C4, C5) -> 512, 1024, 2048
+            # C3, C4, C5, as DETR3D and PETR use.
             return_layers = {'layer2': '0', 'layer3': '1', 'layer4': '2'}
             in_channels_list = [512, 1024, 2048]
         else:
-            # Infer in_channels_list based on layers
             in_channels_list = []
             layer_dims = {
                 'layer1': 256, 'layer2': 512, 'layer3': 1024, 'layer4': 2048
             }
-            # return_layers keys must be sorted to ensure order matches FPN
-            # expectation
-            # IntermediateLayerGetter returns OrderedDict based on insertion
-            # order (which is iteration order)
-            # So we rely on the caller passing return_layers in correct order
-            # or sorted here
+            # IntermediateLayerGetter yields its features in insertion order, so the channel list
+            # has to be built in the same order the FPN will see them. Sorting the layer names
+            # gives that regardless of how the caller spelled the dict.
             sorted_layers = sorted(return_layers.keys())
             for name in sorted_layers:
                 if name in layer_dims:
@@ -322,11 +292,10 @@ class FeatureExtractor(nn.Module):
             self.backbone, return_layers=return_layers
         )
 
-        # Replace torchvision FPN with CPFPN (Checkpoint FPN) logic
+        # PETR's CPFPN rather than torchvision's FPN; see the class above for the difference.
         self.fpn = CPFPN(
             in_channels=in_channels_list,
             out_channels=out_channels,
-            # Default to same number of outputs as inputs
             num_outs=len(in_channels_list)
         )
 
@@ -357,33 +326,20 @@ class FeatureExtractor(nn.Module):
                 block.forward = make_checkpoint_forward(original_forward)
 
     def forward(self, x: Tensor) -> List[Tensor]:
-        """Forward pass.
-
-        Args:
-            x (Tensor): Input tensor (BN, C, H, W)
-
-        Returns:
-            List[Tensor]: List of tensors (FPN outputs)
-        """
-        # IntermediateLayerGetter returns an OrderedDict
+        """``(BN, C, H, W)`` in, one tensor per FPN level out."""
+        # The dict is ordered by the stage order the constructor sorted, so this list matches the
+        # channel counts the FPN was built with.
         x_dict = self.body(x)
-        # Convert to list of tensors for CPFPN
-        # Ensure correct order based on layer sorting if needed,
-        # but OrderedDict preserves insertion
-        # which depends on iteration order in IntermediateLayerGetter,
-        # which depends on return_layers
         x_list = list(x_dict.values())
 
         features = self.fpn(x_list)
-        # print("DONE EXTRACTING FEATURES")
         return features
 
     def train(self, mode=True):
-        """Override train to ensure BN stays in eval mode if norm_eval is True.
-        """
+        """Put the module in training mode, keeping BatchNorm frozen if ``norm_eval`` is set."""
         super(FeatureExtractor, self).train(mode)
         if mode and self.norm_eval:
             for m in self.modules():
-                # trick: eval have effect on BatchNorm only
+                # Only BatchNorm behaves differently between train and eval here.
                 if isinstance(m, nn.BatchNorm2d):
                     m.eval()

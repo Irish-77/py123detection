@@ -2,8 +2,8 @@
 
 In the thesis, ``BEVFormer`` subclassed ``PETR``: it inherited PETR's forward, so every change to
 PETR was a silent change to BEVFormer. The port gives both detectors one shared
-``MultiViewDetector`` and a head each — a restructuring, not a rewrite, so the parameter count, the
-forward outputs and every loss term must come out exactly as they did. That is checked here
+``MultiViewDetector`` and a head each. That is a restructuring and not a rewrite, so the parameter
+count, the forward outputs and every loss term must come out exactly as they did. That is checked
 against ``tests/golden/bevformer_golden.json``, frozen from the thesis model by
 ``tools/freeze_bevformer_golden.py``, in both camera-embedding modes the port kept.
 
@@ -111,7 +111,7 @@ class TestTheRestructuringIsInvisible:
     def test_the_parameter_count_is_unchanged(self, golden, ported, camera_embedding) -> None:
         """No module was lost in the move, and none was added.
 
-        Only ``"bevformer"`` has parameters of its own — the learned per-camera table — so the two
+        Only ``"bevformer"`` has parameters of its own, the learned per-camera table, so the two
         modes must also differ by exactly ``num_cameras * hidden_dim``.
         """
         assert ported[camera_embedding]["parameters"] == golden["runs"][camera_embedding]["parameters"]

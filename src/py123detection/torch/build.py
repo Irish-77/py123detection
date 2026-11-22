@@ -61,9 +61,9 @@ def build_datasets(
 ) -> List[Py123DDetectionDataset]:
     """One dataset per entry under ``data.<stage>``.
 
-    Training entries get augmentation, validation entries never do. Everything else — the
-    taxonomy, the filters, the image size — is shared, which is what makes a mixed-dataset run a
-    fair comparison rather than several differently prepared ones.
+    Training entries get augmentation, validation entries never do. Everything else is shared:
+    the taxonomy, the filters and the image size. That is what makes a mixed-dataset run a fair
+    comparison rather than several differently prepared ones.
 
     :param filters: Use these instead of the config's, which evaluation needs in order to score
         frames whose ground truth is empty without otherwise changing the box population.
@@ -116,7 +116,7 @@ def build_datasets(
 def build_model(cfg: DictConfig, **overrides: Any):
     """The detector named by ``cfg.model``.
 
-    ``name`` is metadata — it labels the run directory — so it is dropped before the rest of the
+    ``name`` is metadata that labels the run directory, so it is dropped before the rest of the
     node is handed to the constructor.
     """
     from hydra.utils import instantiate

@@ -6,19 +6,17 @@ import torch.nn.functional as F
 
 
 class MultiScaleDeformableAttention(nn.Module):
-    """Multi-Scale Deformable Attention Module.
+    """Multi-scale deformable attention.
 
-    For each query, this module:
-    1. Predicts sampling offsets around reference points
-    2. Predicts attention weights for each sampling point
-    3. Samples value features at the offset locations via bilinear interpolation
-    4. Computes weighted sum of sampled features
+    Full attention over a feature map costs its area; this attends to a handful of learned
+    locations instead. Each query predicts where to look, as offsets from its reference point, and
+    how much to weight each of those samples. The features there are read by bilinear interpolation
+    and summed.
 
-    Args:
-        embed_dims: Feature dimension (default: 256).
-        num_heads: Number of attention heads (default: 8).
-        num_levels: Number of feature map levels (default: 1).
-        num_points: Number of sampling points per head per level (default: 4).
+    :param embed_dims: Feature dimension.
+    :param num_heads: Attention heads.
+    :param num_levels: Feature-map levels.
+    :param num_points: Sampling points per head, per level.
     """
 
     def __init__(
@@ -72,11 +70,11 @@ class MultiScaleDeformableAttention(nn.Module):
         with torch.no_grad():
             self.sampling_offsets.bias = nn.Parameter(grid_init.view(-1))
 
-        # Initialize attention weights uniformly
+        # Uniform weights to start: no sampling point is preferred before training.
         nn.init.constant_(self.attention_weights.weight, 0.0)
         nn.init.constant_(self.attention_weights.bias, 0.0)
 
-        # Xavier init for projections
+        # Xavier, as in Deformable DETR.
         nn.init.xavier_uniform_(self.value_proj.weight)
         nn.init.constant_(self.value_proj.bias, 0.0)
         nn.init.xavier_uniform_(self.output_proj.weight)
@@ -91,21 +89,16 @@ class MultiScaleDeformableAttention(nn.Module):
         level_start_index: torch.Tensor,
         key_padding_mask: torch.Tensor = None,
     ) -> torch.Tensor:
-        """Forward pass.
-
-        Args:
-            query: (B, Q, C) query features.
-            reference_points: (B, Q, num_levels, 2) normalized [0,1] reference
-                points for each query at each level.
-            value: (B, S, C) flattened multi-scale value features, where
-                S = sum(H_l * W_l) across levels.
-            spatial_shapes: (num_levels, 2) spatial dimensions (H, W) per level.
-            level_start_index: (num_levels,) start index of each level in the
-                flattened sequence.
-            key_padding_mask: (B, S) True for padded/invalid positions.
-
-        Returns:
-            output: (B, Q, C) attended features.
+        """
+        :param query: ``(B, Q, C)``.
+        :param reference_points: ``(B, Q, num_levels, 2)``, normalised to ``[0, 1]``, one per
+            query per level.
+        :param value: ``(B, S, C)``, every level's features flattened and concatenated, so
+            ``S = sum(H_l * W_l)``.
+        :param spatial_shapes: ``(num_levels, 2)``, each level's ``(H, W)``.
+        :param level_start_index: ``(num_levels,)``, where each level begins in ``value``.
+        :param key_padding_mask: ``(B, S)``, ``True`` at padded positions.
+        :returns: ``(B, Q, C)``.
         """
         B, Q, _ = query.shape
         B, S, _ = value.shape
@@ -208,17 +201,16 @@ class MultiScaleDeformableAttention3D(nn.Module):
     ``num_Z_anchors`` 3D reference points (one per pillar height) that
     project to distinct 2D locations in each camera view. The ``num_points``
     sampling offsets predicted per query are **shared** across all height
-    anchors — only the 2D reference location changes with height — and the
+    anchors, so only the 2D reference location changes with height, and the
     sampled features are averaged across heights before weighted-summing
     across points. This matches ``MSDeformableAttention3D`` in
     ``external/BEVFormer/projects/mmdet3d_plugin/bevformer/modules/spatial_cross_attention.py``.
 
-    Args:
-        embed_dims: Feature dimension (default: 256).
-        num_heads: Number of attention heads (default: 8).
-        num_levels: Number of feature map levels (default: 1).
-        num_points: Sampling points per query per head per level (default: 8).
-        num_Z_anchors: Number of height samples per pillar (default: 4).
+    :param embed_dims: Feature dimension.
+    :param num_heads: Attention heads.
+    :param num_levels: Feature-map levels.
+    :param num_points: Sampling points per query, per head, per level.
+    :param num_Z_anchors: Height samples per pillar.
     """
 
     def __init__(
@@ -244,8 +236,8 @@ class MultiScaleDeformableAttention3D(nn.Module):
         self.sampling_offsets = nn.Linear(
             embed_dims, num_heads * num_levels * num_points * 2
         )
-        # Weights: softmax over (levels × points); NOT over heights — heights
-        # are averaged before the weighted sum.
+        # Weights are a softmax over levels and points, never over heights: heights are
+        # averaged before the weighted sum.
         self.attention_weights = nn.Linear(
             embed_dims, num_heads * num_levels * num_points
         )
@@ -288,20 +280,15 @@ class MultiScaleDeformableAttention3D(nn.Module):
         level_start_index: torch.Tensor,
         key_padding_mask: torch.Tensor = None,
     ) -> torch.Tensor:
-        """Forward pass.
-
-        Args:
-            query: (B, Q, C) query features.
-            reference_points: (B, Q, num_Z_anchors, 2) normalized [0, 1] 2D
-                reference points, one per pillar height.
-            value: (B, S, C) flattened multi-scale value features.
-            spatial_shapes: (num_levels, 2) -> (H_l, W_l) per level.
-            level_start_index: (num_levels,) start indices in the flattened
-                value sequence.
-            key_padding_mask: (B, S) True at padded positions.
-
-        Returns:
-            output: (B, Q, C) attended features.
+        """
+        :param query: ``(B, Q, C)``.
+        :param reference_points: ``(B, Q, num_Z_anchors, 2)``, normalised to ``[0, 1]``, one per
+            pillar height.
+        :param value: ``(B, S, C)``, every level's features flattened and concatenated.
+        :param spatial_shapes: ``(num_levels, 2)``, each level's ``(H, W)``.
+        :param level_start_index: ``(num_levels,)``, where each level begins in ``value``.
+        :param key_padding_mask: ``(B, S)``, ``True`` at padded positions.
+        :returns: ``(B, Q, C)``.
         """
         B, Q, _ = query.shape
         B_v, S, _ = value.shape

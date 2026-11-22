@@ -13,8 +13,8 @@ pipeline resized twice (to the rig's size, then by the augmentation scale), whic
 interpolation and left the intrinsics and the pixels a fraction of a pixel apart, because
 ``cv2.resize`` samples at pixel centres and the matrix scaled about the corner.
 
-What is chosen per sample lives in :class:`ImageDraw` — a zoom, a horizontal crop position, a
-flip — and is shared by every camera of the frame. :meth:`ImagePipeline.resolve` turns a draw into
+What is chosen per sample lives in :class:`ImageDraw`, a zoom, a horizontal crop position and a
+flip, shared by every camera of the frame. :meth:`ImagePipeline.resolve` turns a draw into
 the concrete transform for one camera's size. The validation path is the default draw: no zoom,
 centred, not flipped.
 """

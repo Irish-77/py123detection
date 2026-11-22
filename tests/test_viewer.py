@@ -1,7 +1,7 @@
 """The interactive viewer: the element py123d's viewer is given, not py123d's viewer itself.
 
 Nothing here starts a server or loads a log. What is worth pinning is the part this package
-actually wrote — which boxes are drawn for a given frame and score threshold, where they are
+actually wrote: which boxes are drawn for a given frame and score threshold, where they are
 drawn relative to the scene centre, and the two ways a predictions file can fail to line up with
 the scenes it names. py123d's viewer, playback and elements are py123d's to test.
 """

@@ -3,7 +3,7 @@
 :class:`Detector3D` owns the Lightning loop, the optimiser and the logging; a subclass supplies a
 backbone and a head and says how one batch becomes predictions. PETR and BEVFormer are then
 siblings rather than one inheriting from the other, which is what stops a change to PETR silently
-changing BEVFormer — in the thesis they were the same class and it did.
+changing BEVFormer. In the thesis they were the same class, and it did.
 
 The one piece of real machinery here is **per-dataset loss**. Training on nuScenes and Argoverse
 together means a batch holds frames from both, and averaging their losses into one number hides

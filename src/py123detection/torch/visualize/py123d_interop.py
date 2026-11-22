@@ -7,9 +7,9 @@ piece that was genuinely missing: the conversion from a predictions file to the 
 already knows how to draw.
 
 Two levels are offered, because they fail differently. :func:`to_box_array` is pure geometry and
-depends on nothing but numpy — if a box comes out in the wrong place, it is wrong here and a test
+depends on nothing but numpy, so if a box comes out in the wrong place it is wrong here and a test
 can say so. :func:`to_detections` builds py123d's object graph on top of it and needs py123d
-imported; it is a translation of labels and bookkeeping, not of geometry.
+imported. That part translates labels and bookkeeping, not geometry.
 
 Needs the ``viz`` extra for the drawing helpers; the conversion itself needs only py123d, which the
 base install already requires.
@@ -65,7 +65,7 @@ def to_box_array(boxes: np.ndarray) -> np.ndarray:
 def label_lookup(taxonomy: "Taxonomy") -> Dict[str, Any]:
     """Our class names back to py123d labels, inverting the taxonomy's own map.
 
-    A taxonomy records py123d label to class name, which is many-to-one — ``general_3cls`` sends
+    A taxonomy records py123d label to class name, which is many-to-one: ``general_3cls`` sends
     both ``VEHICLE`` and ``TRAIN`` to ``vehicle``. Going back therefore loses information, and the
     first label that maps to a class wins, which is the representative one in every taxonomy
     shipped here. Inverting the taxonomy rather than writing a second table means the two cannot
@@ -86,8 +86,9 @@ def label_lookup(taxonomy: "Taxonomy") -> Dict[str, Any]:
 def unmapped_classes(taxonomy: "Taxonomy") -> Sequence[str]:
     """Classes of this taxonomy that py123d has no label for.
 
-    py123d's vocabulary is coarse on purpose — ``VEHICLE`` and ``TWO_WHEELER``, not car, truck, bus,
-    trailer, bicycle, motorcycle — so a fine-grained taxonomy cannot round-trip through it.
+    py123d's vocabulary is coarse on purpose, ``VEHICLE`` and ``TWO_WHEELER`` rather than car,
+    truck, bus, trailer, bicycle and motorcycle, so a fine-grained taxonomy cannot round-trip
+    through it.
     ``mixed_8cls`` loses four of its eight classes, and ``nuscenes_detection_10cls`` loses all ten
     because it is built from ``native_map`` rather than ``default_map``. Those boxes still draw,
     as ``GENERIC_OBJECT``; what they lose is their colour in the viewer's legend.
@@ -119,8 +120,8 @@ def to_detections(
     :param ground_truth: Convert the frame's ground truth instead of its predictions.
     :param score_threshold: Predictions below this are left out; ignored for ground truth, which
         carries no score.
-    :param timestamp_us: The frame's time. A predictions file does not record one — the metric has
-        no use for it — so the caller supplies it when the viewer needs frames ordered.
+    :param timestamp_us: The frame's time. A predictions file records none, because the metric has
+        no use for one, so the caller supplies it when the viewer needs frames ordered.
     """
     from py123d.datatypes.detections import (
         BoxDetectionAttributes,
@@ -171,8 +172,8 @@ def wireframe(boxes: np.ndarray) -> np.ndarray:
 
     This is what a viser overlay draws. Using py123d's helpers rather than
     :mod:`py123detection.torch.visualize.boxes` keeps the viewer's geometry identical to everything
-    else py123d renders in the same scene — the two agree, which a test checks, but agreeing by
-    construction is better than agreeing by coincidence.
+    else py123d renders in the same scene. A test checks that the two agree, but agreeing by
+    construction beats agreeing by coincidence.
     """
     from py123d.geometry.utils.bounding_box_utils import bbse3_array_to_corners_array
     from py123d.visualization.viser.elements.box_detections_se3_element import (

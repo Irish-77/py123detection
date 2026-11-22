@@ -19,24 +19,21 @@ from py123detection.torch.models.bevformer.spatial_cross_attention import (
 
 
 class BEVFormerEncoderLayer(nn.Module):
-    """Single BEV encoder layer.
+    """One layer of the BEV encoder.
 
-    Processing order (pre-norm style):
-        1. Deformable self-attention on BEV grid + residual + norm
-        2. Spatial cross-attention to image features + residual + norm
-        3. FFN + residual + norm
+    Pre-norm, three blocks, each with a residual: deformable self-attention over the BEV grid, so
+    a cell can read its neighbours; spatial cross-attention into the camera features, so it can
+    read the images; then a feed-forward network.
 
-    Args:
-        embed_dims: Feature dimension (default: 256).
-        num_heads: Number of attention heads (default: 8).
-        feedforward_channels: FFN hidden dimension (default: 512).
-        dropout: Dropout rate (default: 0.1).
-        num_points_self: Deformable self-attention sampling points (default: 4).
-        num_points_cross: SCA sampling points (default: 8).
-        num_heights: Pillar height count for the spatial cross-attention
-            (must match the num_Z_anchors dimension of the 3D reference
-            points). Default: 4.
-        with_cp: Use gradient checkpointing (default: True).
+    :param embed_dims: Feature dimension.
+    :param num_heads: Attention heads.
+    :param feedforward_channels: Hidden width of the feed-forward network.
+    :param dropout: Dropout rate.
+    :param num_points_self: Sampling points for the self-attention.
+    :param num_points_cross: Sampling points for the cross-attention.
+    :param num_heights: Pillar height count, which has to match the ``num_Z_anchors`` dimension
+        of the 3D reference points.
+    :param with_cp: Gradient-checkpoint the layer.
     """
 
     def __init__(
@@ -97,23 +94,19 @@ class BEVFormerEncoderLayer(nn.Module):
         pad_h: int,
         pad_w: int,
     ) -> torch.Tensor:
-        """Actual forward computation.
-
-        Args:
-            bev_queries: (B, Q_bev, C) current BEV features.
-            bev_pos: (B, Q_bev, C) BEV positional encoding.
-            image_features: (B, N, C, H, W) multi-view image features.
-            reference_points_3d: (Q_bev, num_heights, 3) pillar ref points.
-            bev_ref_2d: (1, Q_bev, 1, 2) 2D BEV reference points for self-attn.
-            spatial_shapes_bev: (1, 2) -> (bev_h, bev_w).
-            level_start_index_bev: (1,) -> [0].
-            imu2img: (B, N, 4, 4) projection matrices.
-            cam_mask: (B, N) camera validity mask.
-            pad_h: Padded image height.
-            pad_w: Padded image width.
-
-        Returns:
-            bev_queries: (B, Q_bev, C) updated BEV features.
+        """
+        :param bev_queries: ``(B, Q_bev, C)``, the BEV features as they stand.
+        :param bev_pos: ``(B, Q_bev, C)`` positional encoding.
+        :param image_features: ``(B, N, C, H, W)``.
+        :param reference_points_3d: ``(Q_bev, num_heights, 3)`` pillar points.
+        :param bev_ref_2d: ``(1, Q_bev, 1, 2)`` reference points for the self-attention.
+        :param spatial_shapes_bev: ``(1, 2)``, the grid's ``(bev_h, bev_w)``.
+        :param level_start_index_bev: ``(1,)``, always ``[0]``: there is one BEV level.
+        :param imu2img: ``(B, N, 4, 4)``.
+        :param cam_mask: ``(B, N)`` camera validity.
+        :param pad_h: Padded image height.
+        :param pad_w: Padded image width.
+        :returns: ``(B, Q_bev, C)``, the updated BEV features.
         """
         B = bev_queries.shape[0]
 
@@ -157,18 +150,17 @@ class BEVFormerEncoderLayer(nn.Module):
 
 
 class BEVFormerEncoder(nn.Module):
-    """BEV Encoder that stacks multiple encoder layers.
+    """A stack of :class:`BEVFormerEncoderLayer`.
 
-    Args:
-        num_layers: Number of encoder layers (default: 3 for BEVFormer-S).
-        embed_dims: Feature dimension (default: 256).
-        num_heads: Attention heads (default: 8).
-        feedforward_channels: FFN hidden dim (default: 512).
-        dropout: Dropout rate (default: 0.1).
-        num_points_self: Self-attention sampling points (default: 4).
-        num_points_cross: Cross-attention sampling points (default: 8).
-        num_heights: Pillar height count for SCA (default: 4).
-        with_cp: Gradient checkpointing (default: True).
+    :param num_layers: How many layers; 3 is BEVFormer-S.
+    :param embed_dims: Feature dimension.
+    :param num_heads: Attention heads.
+    :param feedforward_channels: Hidden width of each layer's feed-forward network.
+    :param dropout: Dropout rate.
+    :param num_points_self: Sampling points for the self-attention.
+    :param num_points_cross: Sampling points for the cross-attention.
+    :param num_heights: Pillar height count for the spatial cross-attention.
+    :param with_cp: Gradient-checkpoint each layer.
     """
 
     def __init__(

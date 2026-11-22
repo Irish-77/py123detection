@@ -85,17 +85,13 @@ class DeformableDETRDecoderLayer(nn.Module):
         level_start_index: torch.Tensor,
     ) -> torch.Tensor:
         """
-        Args:
-            query: (B, num_query, C) object query content features.
-            query_pos: (B, num_query, C) object query positional encoding.
-            reference_points: (B, num_query, 1, 2) normalized [0,1] BEV
-                reference points.
-            bev_features: (B, bev_h*bev_w, C) flattened BEV feature map.
-            spatial_shapes: (1, 2) -> (bev_h, bev_w).
-            level_start_index: (1,) -> [0].
-
-        Returns:
-            query: (B, num_query, C) updated query features.
+        :param query: ``(B, num_query, C)`` query content.
+        :param query_pos: ``(B, num_query, C)`` query positional encoding.
+        :param reference_points: ``(B, num_query, 1, 2)``, normalised to ``[0, 1]``.
+        :param bev_features: ``(B, bev_h * bev_w, C)``, the BEV map flattened.
+        :param spatial_shapes: ``(1, 2)``, the grid's ``(bev_h, bev_w)``.
+        :param level_start_index: ``(1,)``, always ``[0]``.
+        :returns: ``(B, num_query, C)``, the updated queries.
         """
         # 1. Self-attention among object queries
         # nn.MultiheadAttention expects (seq, batch, dim) when batch_first=False
@@ -194,44 +190,37 @@ class DeformableDETRDecoder(nn.Module):
         return torch.stack(intermediate)  # (num_layers, B, num_query, C)
 
 
-# ---------------------------------------------------------------------------
-# BEVFormerHead
-# ---------------------------------------------------------------------------
-
 DEFAULT_CODE_WEIGHTS = [
     1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.2, 0.2
 ]
 
 
 class BEVFormerHead(nn.Module):
-    """BEVFormer detection head: BEV encoder + detection decoder.
+    """BEVFormer's head: build a bird's-eye feature map, then detect in it.
 
-    Stage 1: BEV encoder builds dense BEV features from multi-view images.
-    Stage 2: Detection decoder predicts 3D bounding boxes from BEV features.
+    The encoder turns multi-view image features into a dense BEV map. The decoder then works only
+    in that map, so detection never touches a pixel again. The output is laid out exactly as
+    ``PETRHead``'s, which is what lets both detectors share one loss and one metric.
 
-    Output format is identical to PETRHead for loss/eval compatibility.
-
-    Args:
-        num_classes: Number of object classes.
-        in_channels: Input feature channels from FPN (default: 256).
-        embed_dims: Internal feature dimension (default: 256).
-        bev_h: BEV grid height (default: 50).
-        bev_w: BEV grid width (default: 50).
-        num_query: Number of detection queries (default: 900).
-        num_encoder_layers: BEV encoder layers (default: 3).
-        num_decoder_layers: Detection decoder layers (default: 6).
-        num_heads: Attention heads (default: 8).
-        num_heights: Height samples per pillar (default: 4).
-        num_points: Deformable attention sampling points (default: 4).
-        pc_range: Detection range [x_min, y_min, z_min, x_max, y_max, z_max].
-        code_weights: Per-component loss weights for bbox regression.
-        feedforward_channels_encoder: FFN dim in encoder (default: 512).
-        feedforward_channels_decoder: FFN dim in decoder (default: 2048).
-        dropout: Dropout rate (default: 0.1).
-        with_box_refine: If True, iteratively refine 2D BEV reference
-            points between decoder layers and give each layer its own
-            prediction branches (Deformable DETR-style). Default: True.
-        with_cp: Gradient checkpointing (default: True).
+    :param num_classes: Object classes.
+    :param in_channels: Channels arriving from the FPN.
+    :param embed_dims: Internal feature dimension.
+    :param bev_h: BEV grid height.
+    :param bev_w: BEV grid width.
+    :param num_query: Detection queries.
+    :param num_encoder_layers: Layers in the BEV encoder.
+    :param num_decoder_layers: Layers in the detection decoder.
+    :param num_heads: Attention heads.
+    :param num_heights: Height samples per pillar.
+    :param num_points: Deformable sampling points.
+    :param pc_range: Detection range, ``[x_min, y_min, z_min, x_max, y_max, z_max]``.
+    :param code_weights: Per-column weights for the box regression loss.
+    :param feedforward_channels_encoder: Hidden width of the encoder's feed-forward networks.
+    :param feedforward_channels_decoder: Hidden width of the decoder's.
+    :param dropout: Dropout rate.
+    :param with_box_refine: Refine the 2D BEV reference points between decoder layers and give
+        each layer its own prediction branches, as Deformable DETR does.
+    :param with_cp: Gradient-checkpoint the encoder and decoder layers.
     """
 
     def __init__(
@@ -309,7 +298,7 @@ class BEVFormerHead(nn.Module):
             num_cameras=num_cameras,
         )
 
-        # --- Stage 1: BEV Encoder ---
+        # Stage 1: images to a BEV feature map.
         self.encoder = BEVFormerEncoder(
             num_layers=num_encoder_layers,
             embed_dims=embed_dims,
@@ -322,7 +311,7 @@ class BEVFormerHead(nn.Module):
             with_cp=with_cp,
         )
 
-        # --- Stage 2: Detection Decoder ---
+        # Stage 2: boxes out of that map.
         self.detection_query_embed = nn.Embedding(num_query, embed_dims * 2)
         self.detection_reference_points = nn.Linear(embed_dims, 2)
 
@@ -336,11 +325,9 @@ class BEVFormerHead(nn.Module):
             with_cp=with_cp,
         )
 
-        # --- Prediction heads ---
-        # With box refinement, each decoder layer needs its OWN prediction
-        # branches so successive layers can produce progressively better
-        # reference-point corrections. Without refinement, branches are
-        # shared (same module instance repeated).
+        # With box refinement each decoder layer needs its own prediction branches, so that
+        # successive layers can correct the reference points further. Without it they share one
+        # module instance, repeated, which is what keeps the parameter count the same.
         self.num_pred = num_decoder_layers
         if self.with_box_refine:
             self.cls_branches = nn.ModuleList([
@@ -360,7 +347,6 @@ class BEVFormerHead(nn.Module):
                 [reg_branch for _ in range(self.num_pred)]
             )
 
-        # --- Loss ---
         self.matcher = HungarianMatcher(
             cost_class=2.0,
             cost_bbox=0.25,
@@ -449,17 +435,13 @@ class BEVFormerHead(nn.Module):
         imu2img=None,
         **kwargs,
     ):
-        """Forward pass.
-
-        Args:
-            x: List of FPN features, first level used: (B, N, C, H, W).
-            img_metas: List of metadata dicts with 'pad_shape'.
-            cam_mask: (B, N) bool. True = valid camera.
-            imu2img: (B, N, 4, 4) projection matrices.
-
-        Returns:
-            dict with 'all_cls_scores' (L, B, num_query, num_classes) and
-                'all_bbox_preds' (L, B, num_query, 10).
+        """
+        :param x: FPN features; only the first level is used, ``(B, N, C, H, W)``.
+        :param img_metas: One metadata dict per sample, carrying ``pad_shape``.
+        :param cam_mask: ``(B, N)``, ``True`` for a real camera.
+        :param imu2img: ``(B, N, 4, 4)``.
+        :returns: ``all_cls_scores`` ``(L, B, num_query, num_classes)`` and ``all_bbox_preds``
+            ``(L, B, num_query, 10)``, one entry per decoder layer.
         """
         feat = x[0]  # (B, N, C, H, W)
         B, N, C, H, W = feat.shape

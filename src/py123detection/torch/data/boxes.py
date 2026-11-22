@@ -37,7 +37,7 @@ class BoxFilters:
     A count of ``-1`` means the dataset does not record one and is always kept."""
 
     lidar_point_cache: Optional[str] = None
-    """Take point counts from this cache instead, where it has them — see
+    """Take point counts from this cache instead, where it has them; see
     :mod:`py123detection.core.lidar_points`. Waymo's 123D logs record no counts, so without it
     no Waymo box is ever dropped as unseen."""
 

@@ -2,7 +2,7 @@
 
 The two modes answer different questions:
 
-* ``lidar2ego_mode`` — is ``lidar2ego`` the rig calibration, or is it re-derived from the ego pose
+* ``lidar2ego_mode``: is ``lidar2ego`` the rig calibration, or is it re-derived from the ego pose
   at the lidar's own capture time? 123D stores no per-frame lidar pose, so "dynamic" is
   reconstructed from the ego stream, and it can only differ from "static" when that stream is
   denser than the exported frames.

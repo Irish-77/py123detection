@@ -1,7 +1,19 @@
-"""
-TODO:
-- Add docstrings
-- Do we still need eps adjustable? Should be fixed by back casting to float32
+"""PETR's detection head: position-aware queries over multi-view image features.
+
+The head does three things. It turns each feature-map pixel into a 3D ray of points through that
+camera's own projection, with
+:func:`~py123detection.torch.models.common.position_embedding.compute_frustum_coords3d`, then
+embeds those coordinates and adds them to the features, so a pixel carries where in space it could
+be looking. It then lets learned queries, themselves embedded from 3D reference points, attend
+across every camera at once with ordinary attention. Finally it reads class scores and box
+residuals off each decoder layer.
+
+There is no view transformation, no depth prediction and no bird's-eye grid. That is the whole
+point of the paper, and it is why a new camera rig needs nothing from this file.
+
+``eps`` is fixed at 1e-5 throughout. The frustum coordinates are cast back to float32 before
+``inverse_sigmoid``, which is what the official implementation does with ``out_fp32=True``,
+because at fp16 an eps of 1e-5 is lost in the rounding.
 """
 
 from typing import List
@@ -106,11 +118,8 @@ class PETRHead(nn.Module):
             self.in_channels, self.embed_dims, kernel_size=1
         )
 
-        # Input channel count depends on the PE strategy:
-        #   frustum:        D*3  (e.g. 64*3 = 192), heavy MLP 192->1024->256
-        #   da3_depth_lift: 3    (single xyz per pixel from DA3 depth)
-        #   da3_ray:        6    (ray direction + origin from DA3)
-        # PETR lifts each pixel to a column of 3D points and embeds the column.
+        # Each pixel becomes a column of depth_num 3D points, so the embedding MLP reads
+        # depth_num * 3 channels: 192 at PETR's default of 64 bins.
         pe_in_channels = self.depth_num * 3
         pe_hidden = self.embed_dims * 4
         self.position_encoder = nn.Sequential(
@@ -238,6 +247,9 @@ class PETRHead(nn.Module):
         Every pixel is lifted to a column of points at increasing depth, transformed into the ego
         frame, and the column embedded. That is what gives a 2D feature a 3D position without any
         depth prediction.
+
+        ``depth``, ``ray``, ``intrinsics`` and ``extrinsics`` are accepted but unused; see
+        :meth:`forward`.
         """
         eps = 1e-5
         # img_feats is (B, N, C, H, W)
@@ -321,26 +333,19 @@ class PETRHead(nn.Module):
         ray=None,
         coverage_mask=None,
     ):
-        """Forward pass.
-
-        Args:
-            x: List of features from FPN, first level used: (B, N, C, H, W)
-            img_metas: List of metadata dicts per sample
-            cam_mask: Optional camera validity mask (B, N).
-                True = valid camera, False = padded camera.
-                If None, all cameras are assumed valid.
-            imu2img: IMU-to-image projection matrices (B, N, 4, 4).
-                Used to build the 3-D position embedding.
-            extrinsics: Camera extrinsics (B, N, 4, 4), cam <- world.
-                Used by GTA/PRoPE attention.
-            intrinsics: Camera intrinsics (B, N, 4, 4) or (B, N, 3, 3).
-                Used by PRoPE attention (normalised internally).
-            coverage_mask: Cylindrical-input only. (B, 1, Hc, Wc) bool, True
-                where a real camera covers the canvas pixel. Folded into the
-                key-padding mask so blind sectors are excluded from attention.
         """
-        # x is a list of features from FPN
-        # PETRHead source uses mlvl_feats[0].
+        :param x: FPN features; only the first level is used, ``(B, N, C, H, W)``.
+        :param img_metas: One metadata dict per sample.
+        :param cam_mask: ``(B, N)``, ``True`` for a real camera and ``False`` for a padded slot.
+            ``None`` treats every camera as real.
+        :param imu2img: ``(B, N, 4, 4)``, which is what the 3D position embedding is built from.
+
+        ``depth``, ``ray``, ``intrinsics``, ``extrinsics`` and ``coverage_mask`` belong to
+        variants of the head that were not ported (a predicted-depth lift, PRoPE attention, a
+        cylindrical canvas). They are still in the signature so that a checkpoint or a caller
+        from the thesis loads, but the frustum path ignores them.
+        """
+        # Official PETRHead reads mlvl_feats[0]; so does this.
         x = x[0]
         B, N, C, H, W = x.shape
 
@@ -466,7 +471,7 @@ class PETRHead(nn.Module):
 
         # Sanitize transformer output
         if self.debug_nan_checks and torch.isnan(outs_dec).any():
-            print("\n!!! WARNING: NaN detected in transformer output !!!")
+            print("\nNaN in the transformer output:")
             print(
                 "  outs_dec NaN count: "
                 f"{torch.isnan(outs_dec).sum().item()} / {outs_dec.numel()}"
@@ -543,10 +548,6 @@ class PETRHead(nn.Module):
             sync=sync,
             num_boxes_synced=num_boxes_synced,
         )
-        # Phase 4 — fold in the auxiliary rig-raymap loss if produced in
-        # ``forward``. Weight is applied here, so PETR.training_step's
-        # ``sum(loss_dict.values())`` already accounts for it. SetCriterion
-        # tolerates the extra key in preds_dicts (only reads cls/bbox).
         return loss_dict
 
     def get_bboxes(self, preds_dicts, img_metas=None, rescale=False):

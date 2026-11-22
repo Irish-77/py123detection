@@ -57,7 +57,7 @@ class BevTransform:
     def inverse_matrix(self) -> np.ndarray:
         """Augmented ego frame back to the original one, i.e. ``R(-angle) / scale``.
 
-        A matrix mapping *from* the ego frame — ``imu2img``, ``imu2cam``, ``imu2global`` — is
+        A matrix mapping *from* the ego frame (``imu2img``, ``imu2cam``, ``imu2global``) is
         right-multiplied by this, because its input now arrives already rotated and scaled.
         """
         inverse_rotation = self.rotation_matrix().T

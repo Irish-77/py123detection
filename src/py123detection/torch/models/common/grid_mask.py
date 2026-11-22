@@ -18,16 +18,14 @@ class GridMask(nn.Module):
         mode: int = 0,
         prob: float = 1.
     ):
-        """Initialize GridMask.
-
-        Args:
-            use_h: Whether to mask horizontally
-            use_w: Whether to mask vertically
-            rotate: Maximum rotation angle (degrees)
-            offset: Whether to add offset
-            ratio: Ratio of masked area
-            mode: Mode of masking (0=mask grid, 1=keep grid)
-            prob: Probability of masking
+        """
+        :param use_h: Mask horizontally.
+        :param use_w: Mask vertically.
+        :param rotate: Largest rotation of the grid, in degrees.
+        :param offset: Fill the masked cells with noise instead of zeros.
+        :param ratio: Fraction of each grid cell that is masked.
+        :param mode: 0 masks the grid cells, 1 keeps only them.
+        :param prob: Probability that a sample is masked at all.
         """
         super(GridMask, self).__init__()
         self.use_h = use_h
@@ -40,22 +38,17 @@ class GridMask(nn.Module):
         self.prob = prob
 
     def set_prob(self, epoch: int, max_epoch: int):
-        """Set the probability of masking.
+        """Ramp the masking probability linearly over training.
 
-        Args:
-            epoch: Current epoch
-            max_epoch: Maximum epoch
+        The original PETR schedule starts at nothing and reaches the configured probability at the
+        last epoch, so early training sees whole images. Nothing in this package calls this yet.
         """
         self.prob = self.st_prob * epoch / max_epoch
 
     def forward(self, x: Tensor):
-        """Apply grid masking to image.
+        """Mask a batch of camera images, ``(B * N_cams, C, H, W)``.
 
-        Args:
-            x: Image to mask (B*N_cams, C, H, W)
-
-        Returns:
-            Masked image
+        A no-op outside training, and on the fraction of samples the probability leaves alone.
         """
         if torch.rand(1).item() > self.prob or not self.training:
             return x

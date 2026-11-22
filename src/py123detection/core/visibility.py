@@ -3,8 +3,8 @@
 A camera-only detector is scored on every annotated object, including the ones behind it. On a
 360-degree rig like nuScenes' that is harmless. On Waymo's five forward-facing cameras, which
 between them cover about 230 degrees, roughly a third of the annotations are objects no camera
-observed — and counting them makes recall look worse than the model is, for reasons that have
-nothing to do with the model.
+observed. Counting those makes recall look worse than the model is, for reasons that have nothing
+to do with the model.
 
 :class:`RigVisibility` reads the rig geometry once and then answers, per box, whether any camera
 could have seen it. Two tests, in increasing cost:

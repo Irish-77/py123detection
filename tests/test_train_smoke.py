@@ -1,7 +1,7 @@
 """One real training step, end to end.
 
 Nothing here ran a backward pass before. ``test_training_loop.py`` drives a stub head whose loss is
-a constant, and the two golden fixtures do a forward pass and compare numbers — so the optimiser,
+a constant, and the two golden fixtures do a forward pass and compare numbers, so the optimiser,
 the schedule, ``configure_optimizers`` and the gradient path through the real backbone and head were
 exercised only by hand. ``conf/trainer/smoke.yaml`` exists to prove the loop runs end to end and
 nothing automated invoked it.
@@ -133,7 +133,7 @@ def loader_for(batch, length: int = 2) -> torch.utils.data.DataLoader:
 
 
 def test_a_training_step_produces_a_finite_loss_and_moves_the_weights():
-    """Forward, loss, backward, step — by hand, so a failure says which part broke."""
+    """Forward, loss, backward, step, by hand, so a failure says which part broke."""
     torch.manual_seed(SEED)
     model = tiny_model().train()
     batch = tiny_batch()
@@ -222,7 +222,7 @@ def test_the_loop_runs_end_to_end_under_a_trainer():
 def test_the_loss_falls_when_overfitting_one_batch():
     """The one property shapes cannot show: the thing actually trains.
 
-    Five steps on a single batch at a high learning rate. Not a convergence claim — just that the
+    Five steps on a single batch at a high learning rate. Not a convergence claim, just that the
     gradient points somewhere useful rather than nowhere, which a wrongly wired matcher or a
     detached loss term would break while every other test here still passed.
     """
@@ -263,14 +263,14 @@ def test_validation_reports_a_loss_per_dataset():
 def test_hidden_dim_only_works_at_its_default():
     """``hidden_dim`` is a constructor parameter that accepts exactly one value.
 
-    ``PETRHead`` hardcodes ``self.embed_dims = 256`` (``petr/head.py:54``) and projects the
-    backbone's ``in_channels`` up to it, but the position-embedding reshape later uses the
-    detector's ``hidden_dim``. The two agree only at 256, and anything else dies in a forward pass
-    with a shape error that names neither parameter.
+    ``PETRHead`` hardcodes ``self.embed_dims = 256`` and projects the backbone's ``in_channels`` up
+    to it, but the position-embedding reshape later uses the detector's ``hidden_dim``. The two
+    agree only at 256, and anything else dies in a forward pass with a shape error that names
+    neither parameter.
 
-    Every shipped config sets 256, so nothing in the tree is broken — this is a trap rather than a
-    bug, and it is recorded here so that whoever makes ``hidden_dim`` mean something sees a failing
-    test rather than having to rediscover this.
+    Every shipped config sets 256, so nothing in the tree is broken. This is a trap rather than a
+    bug, recorded here so that whoever makes ``hidden_dim`` mean something sees a failing test
+    rather than having to rediscover it.
     """
     model = tiny_model(hidden_dim=64)
     with pytest.raises(RuntimeError, match="invalid for input of size"):

@@ -16,8 +16,9 @@ Some datasets box a rider separately from the vehicle they are on: Argoverse 2 a
 annotate ``BICYCLIST`` next to ``BICYCLE``, while nuScenes and Waymo annotate one object.
 :class:`MergeRule` reconciles them by pairing the two boxes and emitting their hull, so the same
 scene yields the same objects whichever dataset it came from. A rule's sources are *intermediate*
-class names — reachable from a label but not in :attr:`Taxonomy.class_names` — which is what keeps
-a rule scoped to the datasets that need it. Anything still intermediate after merging is dropped.
+class names, reachable from a label but absent from :attr:`Taxonomy.class_names`, which is what
+keeps a rule scoped to the datasets that need it. Anything still intermediate after merging is
+dropped.
 """
 
 from __future__ import annotations
@@ -40,8 +41,8 @@ class MergeRule:
 
     Secondaries are paired to primaries by bird's-eye-view IoU, greedily and highest first, and a
     pair becomes the tight box around both sets of corners, keeping the primary's orientation and
-    velocity. A secondary that pairs with nothing is dropped — a rider with no vehicle is not an
-    object this taxonomy has a class for.
+    velocity. A secondary that pairs with nothing is dropped, since a rider with no vehicle is not
+    an object this taxonomy has a class for.
     """
 
     target: str

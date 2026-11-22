@@ -2,7 +2,7 @@
 
 ``core`` sits underneath :mod:`py123detection.mmcv` (export a 123D dataset to an mmdetection3d
 info pickle) and :mod:`py123detection.torch` (read 123D logs straight into a PyTorch pipeline).
-It depends on py123d and numpy only — never on torch, mmcv or mmdetection3d — so it imports in
+It depends on py123d and numpy only, never on torch, mmcv or mmdetection3d, so it imports in
 either environment.
 
 What lives here is the part of "3D detection on 123D data" that has nothing to do with which

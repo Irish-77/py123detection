@@ -16,16 +16,18 @@ Start at [Quick start](quickstart.md).
 ## Train without mmcv — `py123detection.torch`
 
 Reads 123D logs straight into PyTorch. PETR and BEVFormer on Lightning and Hydra, no mmcv
-anywhere. Ported from the thesis these numbers come from and held to it by frozen fixtures.
+anywhere. Ported from the thesis these numbers come from, and held to it by frozen fixtures.
 
 Start at [First run](guides/first-run.md).
 
 ## Why this exists
 
-123D already normalizes a dozen driving datasets into one schema. mmdetection3d natively supports exactly one data format: the nuScenes `info` pickle. Every camera-based detector built on it (PETR,
-StreamPETR, BEVDet, CoIn3D) reads that specific data format, and for example CoIn3D's cross-dataset training works by converting Waymo and Lyft into it and concatenating the results.
+123D already normalizes a dozen driving datasets into one schema. mmdetection3d reads exactly one
+format, the nuScenes `info` pickle, and every camera-based detector built on it (PETR, StreamPETR,
+BEVDet, CoIn3D) reads that and nothing else. CoIn3D's cross-dataset training, for instance, works
+by converting Waymo and Lyft into the pickle and concatenating the results.
 
-One converter from 123D to that exact data format makes every 123D dataset trainable with off-the-shelf
+So one converter from 123D into that format makes every 123D dataset trainable with off-the-shelf
 configs, individually or mixed.
 
 ## How it fits together
@@ -93,7 +95,7 @@ flowchart TD
     style LOGS fill:#fdf1ea,stroke:#eb6834
 ```
 
-The CLI is the same three objects behind a flag parser: `py123det-export-mmcv export` builds a
+The CLI is the same three objects behind a flag parser. `py123det-export-mmcv export` builds a
 `Source` and an `ExportConfig` from its arguments and calls `export_to_mmdet3d`.
 
 ```{toctree}

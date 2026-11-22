@@ -1,28 +1,36 @@
+"""Box encoding and the small numerical helpers both heads use.
+
+A detection head does not regress a box in metres and radians. Sizes are learned in log space, so
+a 20 cm error on a pedestrian and on a bus cost the same relatively, and yaw is learned as a
+``(sin, cos)`` pair, so the discontinuity at ±pi does not sit in the middle of the loss.
+:func:`normalize_bbox` and :func:`denormalize_bbox` move between that encoding and world units.
+"""
+
 import math
 
 import torch
 
 
 def normalize_bbox(bboxes, pc_range=None):
-    """Normalize bboxes to match model output format.
+    """World-unit boxes into the head's encoding.
 
-    Input bbox format: [cx, cy, cz, w, l, h, rot, vx, vy]
-    (9 values, world coords)
-    Output format: [
-        x_norm, y_norm, log(w), log(l), z_norm, log(h),
-        sin(rot), cos(rot),
-        vx, vy
-    ] (10 values)
+    ``[cx, cy, cz, w, l, h, rot, vx, vy]`` in, and
+    ``[cx, cy, log w, log l, cz, log h, sin rot, cos rot, vx, vy]`` out. Note the column order:
+    ``cz`` sits between ``log l`` and ``log h`` rather than with ``cx`` and ``cy``. That is
+    official PETR's layout, and the code weights are indexed by it.
 
-    x_norm, y_norm, z_norm are in [0, 1] if pc_range is provided.
+    Boxes without velocity (7 columns) come back without the last two.
+
+    Centres stay in world coordinates. ``pc_range`` is accepted so that call sites can pass it
+    uniformly, but nothing here reads it: the head's forward pass already denormalises its own
+    sigmoid outputs into world units, which is what official PETR does.
     """
     cx = bboxes[..., 0:1]
     cy = bboxes[..., 1:2]
     cz = bboxes[..., 2:3]
 
-    # NOTE: cx, cy, cz are kept in world coordinates (NOT normalized to [0,1]).
-    # This matches original PETR where the head forward pass denormalizes
-    # sigmoid outputs to world coords, and normalize_bbox does not re-normalize
+    # Centres stay in world coordinates: the head denormalises its own sigmoid outputs, so
+    # normalising again here would halve every coordinate the loss sees.
 
     w = bboxes[..., 3:4].clamp(min=1e-5).log()
     l = bboxes[..., 4:5].clamp(min=1e-5).log()  # noqa: E741
@@ -43,21 +51,17 @@ def normalize_bbox(bboxes, pc_range=None):
 
 
 def denormalize_bbox(normalized_bboxes, pc_range=None):
-    """Denormalize bboxes from model output format to world coordinates.
+    """The head's encoding back into world units, the inverse of :func:`normalize_bbox`.
 
-    Input format: [
-        x_norm, y_norm, log(w), log(l), z_norm, log(h),
-        sin(rot), cos(rot),
-        vx, vy
-    ] (10 values)
-    Output format: [cx, cy, cz, w, l, h, rot, vx, vy] (9 values, world coords)
+    ``[cx, cy, log w, log l, cz, log h, sin rot, cos rot, vx, vy]`` in,
+    ``[cx, cy, cz, w, l, h, rot, vx, vy]`` out.
     """
     # rotation
     rot_sine = normalized_bboxes[..., 6:7]
     rot_cosine = normalized_bboxes[..., 7:8]
     rot = torch.atan2(rot_sine, rot_cosine)
 
-    # center in the bev (already in world coordinates — matches original PETR)
+    # Centres are already in world coordinates, as in official PETR.
     cx = normalized_bboxes[..., 0:1]
     cy = normalized_bboxes[..., 1:2]
     cz = normalized_bboxes[..., 4:5]
@@ -84,14 +88,9 @@ def denormalize_bbox(normalized_bboxes, pc_range=None):
 
 
 def inverse_sigmoid(x, eps=1e-5):
-    """Inverse function of sigmoid.
+    """The inverse of ``sigmoid``, clamped so that 0 and 1 do not become infinite.
 
-    Args:
-        x (Tensor): The tensor to do the inverse.
-        eps (float): EPS avoid numerical overflow. Defaults 1e-5.
-    Returns:
-        Tensor: The x has passed the inverse function of sigmoid, has same
-        shape with input.
+    :param eps: How far from the open interval the input may sit before it is pulled back in.
     """
     # Match official PETR implementation
     x = x.clamp(min=0, max=1)
@@ -101,17 +100,13 @@ def inverse_sigmoid(x, eps=1e-5):
 
 
 def pos2posemb3d(pos, num_pos_feats=128, temperature=10000):
-    """
-    Convert 3D positions to sinusoidal positional embeddings.
+    """Sinusoidal embedding of 3D positions: ``(B, N, 3)`` in, ``(B, N, 3 * num_pos_feats)`` out.
 
-    Args:
-        pos (torch.Tensor): Tensor of shape (B, N, 3) containing 3D positions.
-        num_pos_feats (int): Number of positional encoding features.
-        temperature (int): Temperature for positional encoding.
+    The three axes are concatenated in the order y, x, z, which is what official PETR does. The
+    order is arbitrary but not free to change: a checkpoint's query embedding learned one of them.
 
-    Returns:
-        torch.Tensor: Tensor of shape (B, N, num_pos_feats) containing
-        positional embeddings.
+    :param num_pos_feats: Width of the embedding per axis, before concatenation.
+    :param temperature: Wavelength spread of the sinusoids, as in the original transformer.
     """
     scale = 2 * math.pi
     pos = pos * scale

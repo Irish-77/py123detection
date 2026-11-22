@@ -5,6 +5,6 @@ mmdetection3d reads, so stock PETR / StreamPETR / BEVDet configs train on 123D d
 changed but ``ann_file``. :mod:`py123detection.mmcv.plugin` is the training-side half: a
 ``NuScenesDataset`` subclass and an evaluation that needs no nuScenes database.
 
-The two halves normally live in different Python environments — export needs py123d, the plugin
-needs mmdetection3d — so this module imports neither. Import the half you want.
+The two halves normally live in different Python environments, since export needs py123d and the
+plugin needs mmdetection3d, so this module imports neither. Import the half you want.
 """

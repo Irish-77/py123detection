@@ -3,8 +3,8 @@
 Evaluation used to hold every frame's boxes in memory until the whole run was scored, which on a
 three-dataset validation pass meant tens of millions of box objects and, in one case, an
 OOM kill at 67 GB. Writing each frame out as it is predicted keeps the peak at one frame, and
-makes the far more useful thing possible: scoring a checkpoint again — with a different class
-range, a different true-positive set, a different box cap — without running the model again.
+makes the far more useful thing possible: scoring a checkpoint again, with a different class
+range, true-positive set or box cap, without running the model again.
 
 The format is JSON Lines, one object per frame, with the boxes as arrays rather than one object per
 box::
@@ -173,7 +173,7 @@ def merge_rank_files(paths: Sequence[Path], out: Path) -> Dict[str, int]:
     one, so two indices can return the same frame.
 
     Scoring a frame twice inflates both its hits and its misses, and scoring a subset inflates
-    recall — neither shows up as an error, so the counts are returned for the caller to log.
+    recall. Neither shows up as an error, so the counts are returned for the caller to log.
 
     :returns: ``{"frames": kept, "duplicates": dropped}``.
     """

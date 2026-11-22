@@ -1,15 +1,13 @@
 # Exporting other 123D datasets (and proving the export right)
 
-**No converter code changes per dataset.** The export is driven by flags; what is
-dataset-specific is the taxonomy, a handful of convention choices, and — if you want proof — a
-small reference converter written from the raw data.
+No converter code changes per dataset. The export is driven by flags, and what is
+dataset-specific is the taxonomy, a handful of convention choices, and a small reference converter
+written from the raw data if you want proof.
 
-This page is the checklist, taken from doing it twice: first nuScenes, where the target format was
-born, then Argoverse 2 (sensor), where nothing about the source looks like nuScenes — 7 cameras
-with one portrait view, no native frame token, no annotated velocity, annotations in the ego
-frame, 10 Hz logs, 30 categories.
-
----
+This page is the checklist, taken from doing it twice. First nuScenes, where the target format was
+born, then Argoverse 2 (sensor), where nothing about the source looks like nuScenes: 7 cameras
+with one portrait view, no native frame token, no annotated velocity, annotations in the ego frame,
+10 Hz logs, 30 categories.
 
 ## 1. What is already dataset-agnostic
 
@@ -30,69 +28,60 @@ frame, 10 Hz logs, 30 categories.
 
 Everything the pickle needs is read through the 123D scene API, never from the raw dataset.
 
----
-
 ## 2. Reference frame: `--lidar-frame`
 
-mmdetection3d's nuScenes convention expresses boxes and camera extrinsics in the frame of the
-top lidar, because nuScenes point-cloud files are stored in that frame. Argoverse 2 (like Waymo)
-stores sweeps and annotations in the **ego-vehicle frame**. Exporting AV2 with the default
+mmdetection3d's nuScenes convention expresses boxes and camera extrinsics in the frame of the top
+lidar, because nuScenes point-cloud files are stored in that frame. Argoverse 2, like Waymo,
+stores sweeps and annotations in the ego-vehicle frame. Exporting AV2 with the default
 `--lidar-frame sensor` would put the boxes in the `up_lidar` frame while the referenced point
-clouds stay in the ego frame — harmless for a camera-only model, wrong for anything that reads
-the points. Use `--lidar-frame ego`: `lidar2ego` becomes the identity, `sensor2lidar` becomes
-camera-to-ego, and the boxes are the annotation rows verbatim.
+clouds stay in the ego frame. That is harmless for a camera-only model and wrong for anything that
+reads the points. Use `--lidar-frame ego` instead: `lidar2ego` becomes the identity, `sensor2lidar`
+becomes camera-to-ego, and the boxes are the annotation rows verbatim.
 
 Rule of thumb: match the frame the dataset's point clouds are stored in.
 
----
-
 ## 3. Taxonomy
 
-A `Taxonomy` maps a 123D label to one of an ordered list of class names, or drops it. Two levels:
+A `Taxonomy` maps a 123D label to one of an ordered list of class names, or drops it. There are
+two levels to write at.
 
-* **default level** — keys are `DefaultBoxDetectionLabel` names (`VEHICLE`, `PERSON`,
-  `TWO_WHEELER`, ...). A taxonomy written only at this level applies to *every* 123D dataset,
-  which is what cross-dataset training wants.
-* **native level** — keys are dataset enum member names, either bare (`VEHICLE_CAR`) or
-  **qualified** with the enum class (`AV2SensorBoxDetectionLabel.BICYCLIST`). Qualified keys
-  let one taxonomy carve out per-dataset exceptions without touching same-named members of
-  another dataset's enum. Lookup order: qualified native → bare native → default.
+The **default level** keys on `DefaultBoxDetectionLabel` names (`VEHICLE`, `PERSON`,
+`TWO_WHEELER`, ...). A taxonomy written only at this level applies to *every* 123D dataset, which
+is what cross-dataset training wants.
 
-`COIN3D_3CLS` is the worked example: CoIn3D's vehicle / pedestrian / two-wheel classes, spelled
-`car` / `pedestrian` / `motorcycle` because the nuScenes devkit's `DetectionBox` only accepts
-nuScenes class names (§8). It is a default-level taxonomy plus qualified exceptions: AV2's
-rider boxes (`BICYCLIST`, `MOTORCYCLIST`, `WHEELED_RIDER`) are dropped because nuScenes — and so
-CoIn3D — has no rider class; the rider is part of the two-wheeler box.
+The **native level** keys on dataset enum member names, either bare (`VEHICLE_CAR`) or qualified
+with the enum class (`AV2SensorBoxDetectionLabel.BICYCLIST`). Qualified keys let one taxonomy carve
+out per-dataset exceptions without touching same-named members of another dataset's enum. Lookup
+order is qualified native, then bare native, then default.
 
-To add one: append a `Taxonomy(...)` to `py123detection/core/taxonomy.py` and register it in
-`TAXONOMIES`, and it becomes a `--taxonomy` choice. Put the semantics in its docstring — that is
+`COIN3D_3CLS` is the worked example. It spells CoIn3D's vehicle / pedestrian / two-wheel classes
+as `car` / `pedestrian` / `motorcycle`, because the nuScenes devkit's `DetectionBox` only accepts
+nuScenes class names (§8). It is a default-level taxonomy plus qualified exceptions: AV2's rider
+boxes (`BICYCLIST`, `MOTORCYCLIST`, `WHEELED_RIDER`) are dropped, since nuScenes has no rider
+class and so neither does CoIn3D. The rider is part of the two-wheeler box.
+
+To add one, append a `Taxonomy(...)` to `py123detection/core/taxonomy.py` and register it in
+`TAXONOMIES`. It then becomes a `--taxonomy` choice. Put the semantics in its docstring, which is
 what a reviewer reads.
-
----
 
 ## 4. Tokens: `--token-style log_timestamp`
 
-123D stamps frames with a deterministic UUID. nuScenes exports restore the native
-`sample_token` (`--nuscenes-root` / `--token-map`) because the official evaluation keys on it.
-Most datasets have no such token, and a UUID is impossible for an independent converter to
-reproduce. `--token-style log_timestamp` writes `"{log_name}/{timestamp_us}"` instead: unique,
-readable, and trivially reproducible, so `tools/compare_infos.py` can align frames.
-
----
+123D stamps frames with a deterministic UUID. nuScenes exports restore the native `sample_token`
+(`--nuscenes-root` / `--token-map`) because the official evaluation keys on it. Most datasets have
+no such token, and a UUID is impossible for an independent converter to reproduce.
+`--token-style log_timestamp` writes `"{log_name}/{timestamp_us}"` instead. It is unique, readable
+and trivially reproducible, so `tools/compare_infos.py` can align frames.
 
 ## 5. Velocity: `--velocity-source tracks`
 
-PETR-family models regress velocity and the nuScenes metric scores it (mAVE). Datasets that do
-not annotate it (AV2, KITTI-360) leave zeros in the 123D log, which trains the head to predict
-zero and makes mAVE meaningless. `--velocity-source tracks` derives velocity per box as the
-central difference of the global box centre over the neighbouring annotations of the same track
-at the log's native rate (one-sided at track ends, zero without a neighbour within
-`--velocity-max-dt`, default 0.25 s). That is the nuScenes devkit's `box_velocity` rule, so the
+PETR-family models regress velocity and the nuScenes metric scores it (mAVE). Datasets that do not
+annotate it (AV2, KITTI-360) leave zeros in the 123D log, which trains the head to predict zero
+and makes mAVE meaningless. `--velocity-source tracks` derives velocity per box as the central
+difference of the global box centre over the neighbouring annotations of the same track, at the
+log's native rate. It goes one-sided at track ends, and to zero without a neighbour within
+`--velocity-max-dt` (default 0.25 s). That is the nuScenes devkit's `box_velocity` rule, so the
 result is what mmdetection3d would have written had the dataset been nuScenes. The rule is
-specified in `py123detection/core/velocity.py` precisely so a reference converter can reproduce
-it.
-
----
+specified in `py123detection/core/velocity.py` precisely so a reference converter can reproduce it.
 
 ## 6. Box layout: `--box-layout`
 
@@ -101,86 +90,80 @@ Two incompatible `gt_boxes` layouts exist in the mmdet3d ecosystem:
 | layout | columns | who reads it |
 |---|---|---|
 | `streampetr` (default) | `[x, y, z, l, w, h, yaw]` | StreamPETR, mmdetection3d ≥ 1.0 |
-| `mmdet3d_0.17` | `[x, y, z, w, l, h, -yaw - π/2]` | mmdetection3d 0.17's own converter and dataset — PETR v1's pin |
+| `mmdet3d_0.17` | `[x, y, z, w, l, h, -yaw - π/2]` | mmdetection3d 0.17's own converter and dataset, which is what PETR v1 pins |
 
-Choosing the wrong one does not crash; it trains on transposed, mis-rotated boxes. Match the
+Choosing the wrong one does not crash. It trains on transposed, mis-rotated boxes. Match the
 trainer, and if in doubt diff against the trainer's own converter output.
-
----
 
 ## 7. Ego pose: `--ego-pose-source nearest`
 
 By default a frame's `ego2global` is the ego-state row the log's sync table associated with the
-frame. The sync table is built as "first row at or after the reference timestamp", so it relies
-on the ego stream carrying a row at *exactly* the frame timestamp. On py123d 0.6.0's AV2 logs it
-does not: the parser round-tripped nanosecond stamps through float64 (`DataFrame.iterrows`),
-~5% of ego rows came back 1 µs early, and for ~40% of frames the sync table skipped the exact row
-and took the next one, 2–10 ms later — up to 9 cm of ego pose on a city log, propagated into
-every box and camera extrinsic of the frame. `--ego-pose-source nearest` looks the ego state up
-by the frame's timestamp and is immune. The parser is fixed in this tree
-(`py123d/parser/av2/av2_sensor_parser.py`, `itertuples`), but already-converted logs keep the
-old stamps, so use the flag.
+frame. The sync table is built as "first row at or after the reference timestamp", so it relies on
+the ego stream carrying a row at *exactly* the frame timestamp. On py123d 0.6.0's AV2 logs it does
+not. The parser round-tripped nanosecond stamps through float64 (`DataFrame.iterrows`), about 5% of
+ego rows came back 1 µs early, and for about 40% of frames the sync table skipped the exact row and
+took the next one, 2–10 ms later. On a city log that is up to 9 cm of ego pose, propagated into
+every box and camera extrinsic of the frame. `--ego-pose-source nearest` looks the ego state up by
+the frame's timestamp and is immune. The parser is fixed in this tree
+(`py123d/parser/av2/av2_sensor_parser.py`, `itertuples`), but already-converted logs keep the old
+stamps, so use the flag.
 
 The flag is cheap and never wrong when an exact row exists, so it is a sensible default for any
 dataset whose ego stream is denser than its frames.
 
----
-
 ## 8. Proving an export: the reference-converter pattern
 
-A diff needs two independent implementations. For nuScenes the second one was mmdetection3d's
-own converter. For a dataset without one, write a **reference converter** from the raw files —
+A diff needs two independent implementations. For nuScenes the second one was mmdetection3d's own
+converter. For a dataset without one, write a reference converter from the raw files.
 `tools/reference_av2_converter.py` is the template:
 
-* read the raw tables directly (feather / JSON), no 123D, no py123detection imports;
+* read the raw tables directly (feather / JSON), with no 123D and no py123detection imports;
 * implement the same conventions the export is configured with (frame selection, sync rule,
-  reference frame, velocity rule, class map, tokens, box layout) — each one documented in the
-  module docstring, so a reviewer can check both sides against one description;
+  reference frame, velocity rule, class map, tokens, box layout), each one documented in the module
+  docstring so a reviewer can check both sides against one description;
 * write the same `metadata` keys (`class_names`, `box_layout`, ...).
 
-Then `tools/compare_infos.py REF.pkl EXPORT.pkl --no-2d` reports the maximum absolute deviation
-of every field. On AV2 val the export matches the reference to `3.6e-12 m` on box centres and
-camera extrinsics, `0` on intrinsics, sizes, timestamps, paths and point counts, `9e-12 m/s` on
-velocity — i.e. float round-off of the two implementations' matrix products. Anything at `1e-3`
-or above is a convention mismatch, and the deviation table tells you which one.
+Then `tools/compare_infos.py REF.pkl EXPORT.pkl --no-2d` reports the maximum absolute deviation of
+every field. On AV2 val the export matches the reference to `3.6e-12 m` on box centres and camera
+extrinsics, `9e-12 m/s` on velocity, and exactly `0` on intrinsics, sizes, timestamps, paths and
+point counts. That is float round-off of the two implementations' matrix products. Anything at
+`1e-3` or above is a convention mismatch, and the deviation table tells you which one.
 
-Two 123D-side issues surfaced this way on AV2 and are worth knowing about:
+Two 123D-side issues surfaced this way on AV2 and are worth knowing about.
 
-1. **Camera sync convention.** py123d pairs each lidar sweep with the *first* image after the
-   sweep start (`forward`, +40 ms on AV2); av2-api's `SensorDataloader` pairs the *nearest*
-   image (−10 ms). The reference converter implements both (`--camera-matching`), so the
-   provenance test (`forward` vs export) and the convention effect (`nearest` vs `forward`) are
-   separable.
+1. **Camera sync convention.** py123d pairs each lidar sweep with the *first* image after the sweep
+   start (`forward`, +40 ms on AV2), while av2-api's `SensorDataloader` pairs the *nearest* image
+   (−10 ms). The reference converter implements both (`--camera-matching`), which keeps the
+   provenance test (`forward` vs export) separable from the convention effect (`nearest` vs
+   `forward`).
 2. **The 1 µs ego timestamp error** of §7.
-
----
 
 ## 9. Training side
 
 `py123detection.mmcv.plugin.Py123DNuScenesDataset` reads any export and adds three things to
 mmdetection3d's `NuScenesDataset`:
 
-* **PETR-family keys** — `get_data_info` also returns `intrinsics`, `extrinsics` (lidar-to-camera)
-  and `img_timestamp`, the additions PETR's and StreamPETR's `CustomNuScenesDataset` make, so
-  their configs can point at this dataset directly.
-* **Self-contained evaluation** — `eval_mode="self_contained"` (default) builds the nuScenes
-  devkit's GT boxes from the pickle itself and runs the devkit's metric code, so no nuScenes
-  database and no official split are needed. GT goes through the same
-  `output_to_nusc_box` → `lidar_nusc_box_to_global` path as predictions, so the box layout cannot
-  be misread on one side only. Differences from the official protocol: no bike-rack filter, ego
-  distance from the pickle's `ego2global_translation`, and — because exports carry no attributes —
-  `mAAE = 1.0` by construction (CoIn3D's Lyft and Waymo tables show the same). `eval_class_range`
-  overrides the per-class radius. Feeding the GT back as predictions must give mAP 1.0 and zero
-  TP errors; the AV2 dry run does.
+* `get_data_info` also returns `intrinsics`, `extrinsics` (lidar-to-camera) and `img_timestamp`,
+  the additions PETR's and StreamPETR's `CustomNuScenesDataset` make, so their configs can point at
+  this dataset directly.
+* `eval_mode="self_contained"` (the default) builds the nuScenes devkit's GT boxes from the pickle
+  itself and runs the devkit's metric code, so no nuScenes database and no official split are
+  needed. GT goes through the same `output_to_nusc_box` → `lidar_nusc_box_to_global` path as
+  predictions, so the box layout cannot be misread on one side only. It departs from the official
+  protocol in three ways: there is no bike-rack filter, ego distance comes from the pickle's
+  `ego2global_translation`, and `mAAE` is 1.0 by construction because exports carry no attributes
+  (CoIn3D's Lyft and Waymo tables show the same). `eval_class_range` overrides the per-class
+  radius. Feeding the GT back as predictions must give mAP 1.0 and zero TP errors, and the AV2 dry
+  run does.
 * `eval_mode="nuscenes"` restores the stock devkit path for nuScenes exports with native tokens.
 
-**Constraint:** the devkit's `DetectionBox` asserts that class names are nuScenes detection names
-(`car`, `truck`, `bus`, `trailer`, `construction_vehicle`, `pedestrian`, `motorcycle`,
-`bicycle`, `traffic_cone`, `barrier`), and mmdet3d's `_format_bbox` looks attributes up by those
-names. A taxonomy meant for this evaluator must spell its classes with them — which is exactly
-why CoIn3D did.
+One constraint. The devkit's `DetectionBox` asserts that class names are nuScenes detection names
+(`car`, `truck`, `bus`, `trailer`, `construction_vehicle`, `pedestrian`, `motorcycle`, `bicycle`,
+`traffic_cone`, `barrier`), and mmdet3d's `_format_bbox` looks attributes up by those names. A
+taxonomy meant for this evaluator has to spell its classes with them, which is exactly why CoIn3D
+did.
 
-The training environment does not need py123d: `import py123detection` degrades to
+The training environment does not need py123d. `import py123detection` degrades to
 `HAS_EXPORT_SIDE = False` and `py123detection.mmcv.plugin` keeps working. Put
 `py123detection/src` on `PYTHONPATH` and add to the config:
 
@@ -193,14 +176,12 @@ dataset_type = 'Py123DNuScenesDataset'
 
 mmdetection3d's `LoadMultiViewImageFromFiles` `np.stack`s the views and PETR's
 `ResizeCropFlipImage` derives resize dims from the config's `H, W`, so a rig with one portrait
-camera either crashes or gets that view squashed. PETR's plugin in this tree gains two classes
-(`projects/mmdet3d_plugin/datasets/pipelines/`): `LoadMultiViewImageFromFilesMixedSize` keeps the
+camera either crashes or gets that view squashed. PETR's plugin in this tree gains two classes in
+`projects/mmdet3d_plugin/datasets/pipelines/`. `LoadMultiViewImageFromFilesMixedSize` keeps the
 views as a list, and `ResizeCropFlipImagePerView` applies one shared scale to each view's true
-size, crops bottom-aligned and right-pads the narrow view — what Far3D's AV2 pipeline does. On a
-uniform rig they reproduce the stock behaviour, so they are safe defaults for any dataset. See
+size, crops bottom-aligned and right-pads the narrow view, which is what Far3D's AV2 pipeline does.
+On a uniform rig they reproduce the stock behaviour, so they are safe defaults for any dataset. See
 `PETR/projects/configs/petr/petr_r50dcn_gridmask_p4_av2.py` for the full recipe.
-
----
 
 ## 10. Worked example: Argoverse 2
 
@@ -223,14 +204,14 @@ python tools/compare_infos.py /data/av2/av2_infos_val.pkl /data/av2/py123d_av2_i
 
 Checklist for the next dataset:
 
-1. One-log export with `--max-logs 1`, then `py123det-export-mmcv inspect` — check cameras,
-   frame count, class histogram, velocity statistics.
+1. One-log export with `--max-logs 1`, then `py123det-export-mmcv inspect`. Check cameras, frame
+   count, class histogram and velocity statistics.
 2. Decide `--lidar-frame` from where the point clouds live (§2).
-3. Pick or write the taxonomy (§3); spell classes with nuScenes names if you want the
+3. Pick or write the taxonomy (§3). Spell classes with nuScenes names if you want the
    self-contained evaluator (§9).
 4. `--token-style log_timestamp`, `--velocity-source tracks` if the dataset annotates none,
-   `--ego-pose-source nearest`, the trainer's `--box-layout`.
-5. Write the reference converter from the raw files, diff, and expect `≤1e-9` everywhere; chase
+   `--ego-pose-source nearest`, and the trainer's `--box-layout`.
+5. Write the reference converter from the raw files, diff, and expect `≤1e-9` everywhere. Chase
    anything larger to a convention.
-6. Train with `Py123DNuScenesDataset`; if the rig mixes image sizes, use the two PETR pipeline
+6. Train with `Py123DNuScenesDataset`. If the rig mixes image sizes, use the two PETR pipeline
    classes.

@@ -6,11 +6,11 @@ Calibration and image size come from the log's camera metadata, which is rig-sta
 the map is known before any pixel is decoded.
 
 That lets the decoder do the first part of a large reduction. When the network input is at most
-half the sensor resolution, the image is decoded at 1/2, 1/4 or 1/8 size — for JPEG in the DCT
-domain, which is several times faster than a full decode and a proper low-pass filter, where a
+half the sensor resolution, the image is decoded at 1/2, 1/4 or 1/8 size, for JPEG in the DCT
+domain. That is several times faster than a full decode and a proper low-pass filter, where a
 bilinear warp over a 2x reduction samples single pixels and aliases.
 
-Images stay ``uint8``. Normalisation is the model's job, on the device — see
+Images stay ``uint8``. Normalisation is the model's job, on the device; see
 :meth:`~py123detection.torch.models.multiview.MultiViewDetector.normalize_images`.
 """
 

@@ -1,7 +1,7 @@
 """Feeding one or several 123D datasets to a Lightning trainer.
 
 Training concatenates the datasets and shuffles across all of them, so a batch may mix nuScenes
-and Argoverse frames. Validation keeps them apart — one loader each — because a single averaged
+and Argoverse frames. Validation keeps them apart, one loader each, because a single averaged
 number over several datasets hides which one regressed.
 
 The mix is set by how many frames each dataset serves rather than by a sampler: a dataset with

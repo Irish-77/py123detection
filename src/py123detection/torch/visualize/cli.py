@@ -168,8 +168,8 @@ def _token_index(datasets) -> dict:
     """``token -> (dataset, index)``, built from the frame index alone.
 
     A dataset is addressed by position and a predictions file by token. Loading ``dataset[index]``
-    to learn its token would decode every camera of every frame of the split — six images a frame,
-    hours of it on a full validation set — to answer a question the frame index already holds.
+    to learn its token would decode every camera of every frame of the split, six images a frame
+    and hours of it on a full validation set, to answer a question the frame index already holds.
     """
     locations = {}
     for dataset in datasets:

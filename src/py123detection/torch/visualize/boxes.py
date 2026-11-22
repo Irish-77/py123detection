@@ -1,6 +1,6 @@
 """Box corners, and the edges that join them.
 
-Both renderers need the same thing from a box — where its eight corners are — so the geometry lives
+Both renderers need the same thing from a box, where its eight corners are, so the geometry lives
 here once rather than in each of them. Pure numpy: no torch, no matplotlib, no py123d, which is what
 makes it cheap to test exhaustively.
 """

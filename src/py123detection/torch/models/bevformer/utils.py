@@ -1,17 +1,21 @@
+"""Geometry for BEVFormer's bird's-eye grid.
+
+Three pure functions: lay out the grid, lift each cell into a vertical pillar of 3D points, and
+project those points into every camera. No parameters, no modules, which is why they are tested
+directly and reused by the camera renderer rather than reimplemented there.
+"""
+
 from typing import List, Tuple
 
 import torch
 
 
 def create_bev_grid(bev_h: int, bev_w: int) -> torch.Tensor:
-    """Create a normalized [0, 1] 2D BEV grid of cell centers.
+    """Cell centres of the BEV grid, normalised to ``[0, 1]``.
 
-    Args:
-        bev_h: Number of BEV cells along the y-axis (height).
-        bev_w: Number of BEV cells along the x-axis (width).
-
-    Returns:
-        grid: (bev_h * bev_w, 2) tensor of (x_norm, y_norm) in [0, 1].
+    :param bev_h: Cells along y.
+    :param bev_w: Cells along x.
+    :returns: ``(bev_h * bev_w, 2)`` of ``(x, y)``, row-major in y.
     """
     xs = torch.linspace(0.5, bev_w - 0.5, bev_w) / bev_w
     ys = torch.linspace(0.5, bev_h - 0.5, bev_h) / bev_h
@@ -25,18 +29,15 @@ def create_3d_reference_points(
     num_heights: int,
     pc_range: List[float],
 ) -> torch.Tensor:
-    """Create 3D reference points for Spatial Cross-Attention.
+    """Lift each BEV cell into a vertical pillar of 3D points, for spatial cross-attention.
 
-    For each BEV cell, creates a vertical pillar of 3D points at uniformly
-    spaced heights within the detection range.
+    A cell has no height, but the cameras that see it do. Sampling a few evenly spaced heights
+    inside the detection range is how a cell finds the pixels that look at it.
 
-    Args:
-        bev_grid: (Q, 2) normalized [0, 1] BEV grid from create_bev_grid().
-        num_heights: Number of height samples per pillar.
-        pc_range: [x_min, y_min, z_min, x_max, y_max, z_max] detection range.
-
-    Returns:
-        ref_3d: (Q, num_heights, 3) 3D reference points in world coordinates.
+    :param bev_grid: ``(Q, 2)``, from :func:`create_bev_grid`.
+    :param num_heights: Points per pillar.
+    :param pc_range: ``[x_min, y_min, z_min, x_max, y_max, z_max]``.
+    :returns: ``(Q, num_heights, 3)`` in world coordinates.
     """
     Q = bev_grid.shape[0]
     x_min, y_min, z_min, x_max, y_max, z_max = pc_range
@@ -64,22 +65,18 @@ def project_3d_to_cameras(
     pad_h: int,
     pad_w: int,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
-    """Project 3D world-frame points to all camera image planes.
+    """Project world-frame points into every camera.
 
-    Uses the imu2img (= intrinsics @ extrinsics) projection matrices
-    from the dataset to map 3D reference points to 2D image coordinates.
+    The projections come from the dataset as ``imu2img``, which is already
+    ``intrinsics @ extrinsics``, so nothing here has to know how a rig is calibrated.
 
-    Args:
-        points_3d: (B, Q, P, 3) 3D points in world/IMU frame.
-            P = num_heights (pillar samples).
-        imu2img: (B, N, 4, 4) projection matrices (intrinsics @ extrinsics).
-        pad_h: Padded image height (from img_metas['pad_shape']).
-        pad_w: Padded image width.
-
-    Returns:
-        coords_2d: (B, N, Q, P, 2) normalized [0, 1] image coordinates.
-        valid_mask: (B, N, Q, P) bool tensor. True where projection is valid
-            (positive depth and within image bounds).
+    :param points_3d: ``(B, Q, P, 3)`` in the world (IMU) frame; ``P`` is the pillar height count.
+    :param imu2img: ``(B, N, 4, 4)``.
+    :param pad_h: Padded image height, as ``img_metas['pad_shape']`` reports it.
+    :param pad_w: Padded image width.
+    :returns: ``(coords_2d, valid_mask)``. Coordinates are ``(B, N, Q, P, 2)`` normalised to
+        ``[0, 1]``; the mask is ``(B, N, Q, P)`` and ``True`` where the point is in front of the
+        camera and inside the image.
     """
     B, Q, P, _ = points_3d.shape
     eps = 1e-5

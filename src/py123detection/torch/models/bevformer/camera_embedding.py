@@ -36,27 +36,22 @@ class CameraEmbedding(nn.Module):
 
 
 class BEVFormerCamEmbed(CameraEmbedding):
-    """Original BEVFormer learnable per-camera embedding.
+    """BEVFormer's own learnable per-camera embedding.
 
-    Implements the ``cams_embeds`` parameter from
-    ``external/BEVFormer/.../transformer.py:74-75, 164-175``:
+    This is the ``cams_embeds`` parameter of the official implementation's transformer: one vector
+    per camera, normal-initialised, broadcast-added to that camera's features.
 
-        cams_embeds: nn.Parameter(torch.Tensor(num_cams, embed_dims))
-        # normal_ init
-        feat = feat + cams_embeds[:, None, None, :]  # broadcast add
+    The table is indexed by camera position, so the number of cameras is fixed at construction and
+    a batch with a different ``N`` raises rather than silently reusing the wrong rows. That is the
+    official design, and the error is the point: these weights mean nothing on another rig.
 
-    Hard-locked to ``num_cameras``; raises on mismatch — matches the
-    official design and makes cross-dataset misuse immediately visible.
+    There is one FPN level here, so there are no ``level_embeds`` to go with it. Adding multi-scale
+    features later means adding both parameters together, since the official code adds them in the
+    same place.
 
-    NOTE: We currently have a single FPN level so there are no
-    ``level_embeds``. If multi-scale features are added later, both
-    parameters need to be added jointly (TODO).
-
-    Args:
-        num_cameras: Fixed number of cameras in the training setup
-            (e.g. 6 for nuScenes). Forward raises if a batch's ``N``
-            differs.
-        embed_dims: Feature dim to match ``image_features`` channels.
+    :param num_cameras: How many cameras the model is trained on, 6 for nuScenes. A forward pass
+        with any other count raises.
+    :param embed_dims: Feature dimension, matching ``image_features``.
     """
 
     def __init__(self, num_cameras: int, embed_dims: int):

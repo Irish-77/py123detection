@@ -1,7 +1,24 @@
-"""WIP - Not tested yet!
+"""The set-prediction loss both detectors train against.
 
-TODO:
-- Add docstrings
+A detection head emits a fixed number of queries, 900 in the shipped configs, and a frame holds a
+handful of objects. :class:`HungarianMatcher` decides which query is responsible for which box, by
+solving the assignment that minimises a cost of focal classification plus L1 on the normalised box.
+:class:`SetCriterion` then scores that assignment: focal loss over all queries, with the unmatched
+ones as background, and L1 over the matched ones only.
+
+The matching is what makes the loss order-invariant, and also what makes it easy to get subtly
+wrong. A matcher that pairs the wrong query with the wrong box still produces a loss that falls,
+just to a worse place, so ``tests/test_loss.py`` pins the matching itself rather than only the
+number that comes out.
+
+Every decoder layer is supervised, not just the last. The intermediate losses are keyed ``d0.``,
+``d1.``, ... and the final one carries no prefix, which is the convention the PETR and BEVFormer
+configs use.
+
+Under DDP the box count the loss normalises by is all-reduced across ranks, so each rank divides by
+the same number and the gradients agree. That reduction has to happen before any per-dataset split
+of the batch, because a split that differs between ranks would leave them reducing over a different
+number of groups and the job would hang instead of failing.
 """
 
 import torch
@@ -50,19 +67,18 @@ class HungarianMatcher(nn.Module):
             inf_count = torch.isinf(out_bbox).sum().item()
             valid_mask = ~(torch.isnan(out_bbox) | torch.isinf(out_bbox))
             print(
-                "\n!!! CRITICAL: NaN/Inf detected in model output"
-                "BEFORE cost computation !!!"
+                "\nNaN/Inf in the model output, before the matching cost is computed:"
             )
             print(f"  out_bbox NaN count: {nan_count}")
             print(f"  out_bbox Inf count: {inf_count}")
             if valid_mask.any():
                 valid_vals = out_bbox[valid_mask]
                 print(
-                    f"  out_bbox valid range: [{valid_vals.min().item():.4f},"
+                    f"  out_bbox finite range: [{valid_vals.min().item():.4f},"
                     f"{valid_vals.max().item():.4f}]"
                 )
             else:
-                print("  out_bbox: ALL values are NaN/Inf!")
+                print("  out_bbox: every value is NaN or Inf")
         # Always sanitize before matching for numerical safety.
         out_bbox = torch.nan_to_num(
             out_bbox, nan=0.0, posinf=100.0, neginf=-100.0
@@ -97,7 +113,8 @@ class HungarianMatcher(nn.Module):
             cost_class = pos_cost_class[i][:, tgt_ids] - \
                 neg_cost_class[i][:, tgt_ids]  # [num_queries, num_tgt_in_i]
 
-            # BBox L1 cost for this sample — use pre-computed norm if available
+            # BBox L1 cost for this sample, reusing the pre-normalised targets where the
+            # caller computed them.
             if precomputed_norm_bboxes is not None:
                 tgt_bbox_norm = precomputed_norm_bboxes[i]
             else:
@@ -210,8 +227,8 @@ class SetCriterion(nn.Module):
         )
         loss_ce = loss_ce.sum() / num_boxes
 
-        # BBox Loss — use pre-normalized targets if available to avoid
-        # redundant normalize_bbox (log/sin/cos) calls per decoder layer.
+        # Reuse the pre-normalised targets where they exist, to avoid a normalize_bbox
+        # (log, sin, cos) call per decoder layer.
         src_boxes = bbox_preds[idx]
         if precomputed_norm_bboxes is not None:
             target_boxes = torch.cat(
@@ -268,8 +285,8 @@ class SetCriterion(nn.Module):
             else:
                 num_boxes = torch.clamp(num_boxes, min=1.0)
 
-        # Pre-compute normalized GT boxes once for all layers.
-        # normalize_bbox involves log/sin/cos — cheap to do once, not per-layer
+        # Normalise the ground-truth boxes once for every layer: normalize_bbox costs a log,
+        # a sin and a cos per box, which is cheap once and not cheap six times.
         precomputed_norm_bboxes = [
             normalize_bbox(t['boxes_3d'].float(), self.pc_range)
             if len(t['labels']) > 0 else None

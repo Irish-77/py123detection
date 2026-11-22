@@ -19,8 +19,8 @@ py123det-export-mmcv token-map --nuscenes-root /data/nuscenes --out tokens.json
 py123det-export-mmcv export ... --token-map tokens.json
 ```
 
-Also set `--version v1.0-mini` (or `v1.0-trainval`) when you plan to run nuScenes evaluation:
-mmdet3d reads `metadata['version']` and looks it up in its `eval_set_map`.
+Also set `--version v1.0-mini` (or `v1.0-trainval`) when you plan to run nuScenes evaluation,
+because mmdet3d reads `metadata['version']` and looks it up in its `eval_set_map`.
 
 For datasets with no native token, `--token-style log_timestamp` writes
 `"{log_name}/{timestamp_us}"`, which an independent converter can reproduce exactly. That is what

@@ -2,17 +2,21 @@
 
 A 123D toolkit for 3D multi-view object detection.
 
-Two branches share the 123D data model:
+Two branches share the 123D data model.
 
-| Branch | Module | Status |
-| --- | --- | --- |
-| **mmcv export**: turn any 123D dataset into the `info` pickle the mmcv / mmdetection3d ecosystem reads, so existing PETR / StreamPETR / BEVDet configs train on 123D data unchanged | `py123detection.mmcv.export`, plus `py123detection.mmcv.plugin` on the training side | implemented |
-| **modern stack**: read 123D logs straight into PyTorch and train PETR or BEVFormer, no mmcv anywhere | `py123detection.torch` | implemented |
+**mmcv export** turns any 123D dataset into the `info` pickle the mmcv / mmdetection3d ecosystem
+reads, so existing PETR / StreamPETR / BEVDet configs train on 123D data unchanged. It lives in
+`py123detection.mmcv.export`, with `py123detection.mmcv.plugin` on the training side.
 
-123D already normalizes a dozen driving datasets into one schema. mmdetection3d natively supports exactly one data format: the nuScenes `info` pickle. Every camera-based detector built on it (PETR,
-StreamPETR, BEVDet, CoIn3D) reads that specific data format, and for example CoIn3D's cross-dataset training works by converting Waymo and Lyft into it and concatenating the results.
+**modern stack** reads 123D logs straight into PyTorch and trains PETR or BEVFormer with no mmcv
+anywhere. It lives in `py123detection.torch`.
 
-One converter from 123D to that exact data format makes every 123D dataset trainable with off-the-shelf
+123D already normalizes a dozen driving datasets into one schema. mmdetection3d reads exactly one
+format, the nuScenes `info` pickle, and every camera-based detector built on it (PETR, StreamPETR,
+BEVDet, CoIn3D) reads that and nothing else. CoIn3D's cross-dataset training, for instance, works
+by converting Waymo and Lyft into the pickle and concatenating the results.
+
+So one converter from 123D into that format makes every 123D dataset trainable with off-the-shelf
 configs, individually or mixed.
 
 ```mermaid
@@ -88,8 +92,8 @@ next dataset. Both detectors work from each camera's calibration instead, the ta
 three datasets onto shared classes, and the loss is reported per dataset so a mixed run stays
 readable.
 
-Everything is a config group — `model`, `taxonomy`, `images`, `trainer`, `experiment` — and any
-value can be overridden on the command line. See [Training without mmcv](docs/guides/training.md).
+Everything is a config group (`model`, `taxonomy`, `images`, `trainer`, `experiment`) and any value
+can be overridden on the command line. See [Training without mmcv](docs/guides/training.md).
 
 ## Documentation
 

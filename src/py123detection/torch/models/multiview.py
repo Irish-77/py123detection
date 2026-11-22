@@ -1,9 +1,9 @@
 """What every camera-based detector in this package does before its head.
 
 Flatten the rig's images into a batch, run one shared backbone over them, fold them back into
-per-camera features, and make sure the projection matrices are there. PETR and BEVFormer differ
-entirely in what happens next — queries attending to image features, or an explicit bird's-eye
-grid — so that is the only thing a subclass supplies.
+per-camera features, and make sure the projection matrices are there. What happens next is where
+PETR and BEVFormer part company, queries attending to image features against an explicit
+bird's-eye grid, so that is the only thing a subclass supplies.
 
 Keeping this separate from :class:`~py123detection.torch.models.base.Detector3D` keeps the
 Lightning loop free of anything camera-specific, and keeps the two detectors siblings. In the
@@ -140,9 +140,9 @@ class MultiViewDetector(Detector3D):
         through the worker queues and the host-to-device copy, and cheaper to produce: on the CPU,
         normalising cost more than decoding the JPEG. Here it is one fused operation on the device.
 
-        Everything that is not an image pixel — the padding up to the stride divisor, a camera
-        padded in to match a wider rig, a camera with no image this frame — is set to zero after
-        normalisation, i.e. to the mean colour, as the float pipeline always did.
+        Everything that is not an image pixel is set to zero after normalisation, which is the
+        mean colour, as the float pipeline always did. That covers the padding up to the stride
+        divisor, a camera padded in to match a wider rig, and a camera with no image this frame.
 
         A floating-point ``img`` is taken as already normalised and returned unchanged.
         """

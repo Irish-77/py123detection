@@ -7,7 +7,7 @@ happens once here, applied identically to predictions and ground truth, so an er
 flatter the score.
 
 **One score per dataset.** A mixed nuScenes + Argoverse 2 + Waymo run used to collapse into a
-single number, which cannot tell you which dataset regressed — the training loop has always kept
+single number, which cannot tell you which dataset regressed. The training loop has always kept
 its validation losses apart for exactly that reason, and this now matches it. Set
 ``evaluation.combined=true`` to additionally score every frame together, which is the number older
 runs reported.
@@ -15,9 +15,9 @@ runs reported.
 **Inference holds one frame.** Each dataset's predictions stream to
 ``<output_dir>/<dataset>/predictions.jsonl`` as they are made, and scoring reads them back. Peak
 memory is therefore one dataset's boxes rather than every dataset's at once, which is what an
-earlier three-split pass died of at 67 GB. It also means a run can be scored again — different
-class range, different true-positive set, different box cap — without the model:
-``evaluation.rescore_from=<output_dir>`` skips inference entirely.
+earlier three-split pass died of at 67 GB. It also means a run can be scored again with a
+different class range, a different true-positive set or a different box cap, and without the
+model: ``evaluation.rescore_from=<output_dir>`` skips inference entirely.
 """
 
 from __future__ import annotations
@@ -124,7 +124,7 @@ def top_scoring(scores: np.ndarray, limit: Optional[int]) -> Optional[np.ndarray
     """Indices of the ``limit`` highest-scoring boxes, or None to keep every one.
 
     The devkit caps a submission at 500 boxes a sample; this branch does not, so the cap is opt-in
-    via ``evaluation.max_boxes_per_sample`` and off by default — turning it on changes scores, and
+    via ``evaluation.max_boxes_per_sample`` and off by default. Turning it on changes scores, and
     numbers already published were produced without it. Applied before the metric's box objects are
     built, so the cap saves the memory rather than spending it first.
     """
@@ -231,7 +231,7 @@ def score_frames(
 ) -> Dict[str, Any]:
     """Score a stream of frames.
 
-    The metric needs every box of the set at once, so this is where memory peaks — at one dataset's
+    The metric needs every box of the set at once, so this is where memory peaks: at one dataset's
     worth when called per dataset, which is the point of calling it that way.
     """
     ground_truth: Dict[str, List[EvalBox]] = {}
@@ -289,8 +289,8 @@ def _settings(cfg: DictConfig) -> Dict[str, Any]:
 
     ``score_empty_frames`` defaults to false, which flatters the score: a frame whose ground truth
     is empty is dropped upstream, so the false positives a model puts on an empty scene are never
-    counted. That default is deliberate — it keeps already-published numbers reproducible — which
-    makes it all the more important that every metrics file says which setting produced it.
+    counted. That default is deliberate, since it keeps already-published numbers reproducible,
+    which makes it all the more important that every metrics file says which setting produced it.
     """
     return {
         "score_empty_frames": bool(cfg.evaluation.get("score_empty_frames", False)),

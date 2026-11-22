@@ -1,7 +1,7 @@
 """Which frames of the resolved logs a dataset serves.
 
 Two layers decide it. The :class:`~py123detection.core.sources.Source` thins each log while it is
-read — ``sample_rate_hz`` or ``frame_stride`` — which is the right tool when the rate itself
+read, by ``sample_rate_hz`` or ``frame_stride``, which is the right tool when the rate itself
 matters: 2 Hz is nuScenes' keyframe rate, and a 10 Hz log sampled at 2 Hz is comparable to it.
 
 :class:`FrameIndex` then optionally takes a fixed number of those frames, spread evenly across all

@@ -18,7 +18,7 @@ Differences from the official protocol, all deliberate:
   ego-pose record, because that is the quantity 123D actually stores;
 * there is no bike-rack filter, since there is no ``static_object.bicycle_rack`` to look up;
 * 123D carries no object attributes, so ``attr_err`` is ``nan`` per box and the devkit scores it
-  as a flat 1.0. :data:`TP_METRIC_SETS` lets you drop it instead — see :func:`evaluate`.
+  as a flat 1.0. :data:`TP_METRIC_SETS` lets you drop it instead; see :func:`evaluate`.
 """
 
 from __future__ import annotations
@@ -60,8 +60,8 @@ UNDEFINED_TP_ERRORS: Dict[str, Tuple[str, ...]] = {
 class EvalBox:
     """One box for the metric, in the global frame.
 
-    Field-compatible with the devkit's ``DetectionBox`` — the metric code reads these names — but
-    without its assertion that ``detection_name`` is one of the ten nuScenes classes.
+    Field-compatible with the devkit's ``DetectionBox``, since the metric code reads these names,
+    but without its assertion that ``detection_name`` is one of the ten nuScenes classes.
     """
 
     sample_token: str
@@ -118,7 +118,7 @@ class EvaluationInput:
     """Everything the metric needs about one evaluation run."""
 
     ground_truth: Dict[str, list] = field(default_factory=dict)
-    """Ground-truth boxes per frame token. Every evaluated frame needs an entry, empty or not —
+    """Ground-truth boxes per frame token. Every evaluated frame needs an entry, empty or not:
     a frame left out is a frame the model is not penalised for missing."""
 
     predictions: Dict[str, list] = field(default_factory=dict)

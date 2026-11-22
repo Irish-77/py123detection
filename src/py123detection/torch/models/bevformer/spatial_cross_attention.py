@@ -14,22 +14,20 @@ from py123detection.torch.models.bevformer.utils import project_3d_to_cameras
 
 
 class SpatialCrossAttention(nn.Module):
-    """Spatial Cross-Attention module with valid-query gating.
+    """How a BEV cell reads from the cameras that can see it.
 
-    For each BEV query:
-    1. Projects its 3D pillar reference points to all camera views.
-    2. Gates: only queries with at least one valid projection in a camera
-       participate in that camera's attention.
-    3. Batches all cameras into a single 3D deformable attention call.
-    4. Scatters per-camera contributions back to the full BEV grid.
-    5. Normalizes by the number of cameras each query appeared in.
+    Each query's pillar of 3D points is projected into every camera. A query takes part in a
+    camera's attention only where at least one of its points lands in that camera's image, so a
+    cell behind the vehicle does not attend to the front camera's pixels at all. All cameras go
+    into one deformable attention call, the per-camera results are scattered back onto the grid,
+    and each query is divided by the number of cameras it was seen by, so a cell in an overlap is
+    not weighted higher than one seen once.
 
-    Args:
-        embed_dims: Feature dimension (default: 256).
-        num_heads: Number of attention heads (default: 8).
-        num_points: Deformable attention sampling points per head (default: 8).
-        num_heights: Height samples per pillar (num_Z_anchors) (default: 4).
-        dropout: Dropout rate (default: 0.1).
+    :param embed_dims: Feature dimension.
+    :param num_heads: Attention heads.
+    :param num_points: Deformable sampling points per head.
+    :param num_heights: Height samples per pillar, the ``num_Z_anchors`` of the attention below.
+    :param dropout: Dropout rate.
     """
 
     def __init__(
@@ -68,21 +66,16 @@ class SpatialCrossAttention(nn.Module):
         pad_h: int,
         pad_w: int,
     ) -> torch.Tensor:
-        """Forward pass with valid-query gating.
-
-        Args:
-            bev_queries: (B, Q, C) BEV query features (with positional
-                encoding already added).
-            image_features: (B, N, C, H, W) multi-view image features.
-            reference_points_3d: (Q, num_heights, 3) 3D pillar reference
-                points in world coordinates (shared across batch).
-            imu2img: (B, N, 4, 4) projection matrices.
-            cam_mask: (B, N) bool. True = valid camera, False = padded.
-            pad_h: Padded image height.
-            pad_w: Padded image width.
-
-        Returns:
-            output: (B, Q, C) aggregated BEV features.
+        """
+        :param bev_queries: ``(B, Q, C)``, with the positional encoding already added.
+        :param image_features: ``(B, N, C, H, W)``.
+        :param reference_points_3d: ``(Q, num_heights, 3)`` in world coordinates, shared across
+            the batch.
+        :param imu2img: ``(B, N, 4, 4)``.
+        :param cam_mask: ``(B, N)``, ``True`` for a real camera and ``False`` for a padded slot.
+        :param pad_h: Padded image height.
+        :param pad_w: Padded image width.
+        :returns: ``(B, Q, C)``.
         """
         B, Q, C = bev_queries.shape
         N = image_features.shape[1]
@@ -96,9 +89,7 @@ class SpatialCrossAttention(nn.Module):
         # Expand 3D reference points for batch: (B, Q, P, 3)
         ref_3d = reference_points_3d[None].expand(B, -1, -1, -1)
 
-        # Project to all cameras
-        #   coords_2d: (B, N, Q, P, 2) in [0, 1]
-        #   valid:     (B, N, Q, P)
+        # coords_2d: (B, N, Q, P, 2) in [0, 1]; valid: (B, N, Q, P)
         coords_2d, valid = project_3d_to_cameras(
             ref_3d, imu2img, pad_h, pad_w
         )

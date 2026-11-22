@@ -56,7 +56,7 @@ py123det-export-mmcv export \
 ```
 
 `--sample-rate-hz 2.0` keeps every 5th frame of a 10 Hz log. Add `--max-logs 2` while trying a new
-dataset: seconds instead of hours.
+dataset, and it takes seconds instead of hours.
 
 ## Pick a different class set
 
@@ -83,9 +83,9 @@ py123det-export-mmcv export \
   --out /data/av2/py123d_infos_train.pkl
 ```
 
-Four decisions: a taxonomy that maps on default labels; velocity derived from tracks, since AV2
-annotates none; ego pose looked up by timestamp rather than trusted from the sync table; frame
-tokens built from log name and timestamp, since only nuScenes has native ones.
+Four decisions here. A taxonomy that maps on default labels. Velocity derived from tracks, since
+AV2 annotates none. Ego pose looked up by timestamp rather than trusted from the sync table. And
+frame tokens built from log name and timestamp, since only nuScenes has native ones.
 
 [Exporting other 123D datasets](other-datasets.md) is the full checklist, including how to prove a
 new export against a reference converter.

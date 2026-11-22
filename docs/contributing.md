@@ -14,31 +14,31 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
-The export side needs only py123d and numpy: it never imports mmcv, mmdet3d or torch, and the
+The export side needs only py123d and numpy. It never imports mmcv, mmdet3d or torch, and the
 training-side plugin imports mmdet3d lazily, inside the one module that needs it. So **you do not
-need a working mmdet3d installation to work on most of this codebase** -- which is deliberate,
-because a mmcv/mmdet3d environment is pinned to Python 3.8 and sometimes painful to build.
+need a working mmdet3d installation to work on most of this codebase**, which is deliberate: a
+mmcv/mmdet3d environment is pinned to Python 3.8 and sometimes painful to build.
 
-Concretely: 252 of the 562 unit tests run with nothing but `[dev]` installed, and `pytest -m "not
-torch"` is how you select exactly those. The rest need the `torch` extra. CI runs both selections as
-separate jobs, so neither can quietly stop working.
+Concretely, 252 of the 562 unit tests run with nothing but `[dev]` installed, and `pytest -m "not
+torch"` selects exactly those. The rest need the `torch` extra. CI runs both selections as separate
+jobs, so neither can quietly stop working.
 
 Add the extras for the part you are touching:
 
 | extra | pulls in | needed when |
 | --- | --- | --- |
-| `dev` | pytest, ruff | always -- it is what runs the checks below |
+| `dev` | pytest, ruff | always, since it is what runs the checks below |
 | `docs` | sphinx, furo, myst-parser, ... | editing anything under `docs/`, or a docstring you want to see rendered |
 | `nuscenes` | nuscenes-devkit | working on native nuScenes token restoration |
 | `images` | opencv-python | working on `image_mode=extract` |
-| `torch` | torch, torchvision, lightning, hydra, nuscenes-devkit, ... | anything under `py123detection.torch` -- install it in its own environment |
+| `torch` | torch, torchvision, lightning, hydra, nuscenes-devkit, ... | anything under `py123detection.torch`; install it in its own environment |
 | `viz` | matplotlib (>= 3.8), opencv-python | `py123det-viz` and `py123detection.torch.visualize` |
 
-One environment caveat worth knowing before you debug a confusing pickle failure: if your
+One environment caveat is worth knowing before you debug a confusing pickle failure. If your
 conversion environment is on numpy 2, the pickles it writes will not load under the numpy 1 that
-mmdet3d environments use. Installing `numpy<2` alongside py123d is the simple fix;
-[Crossing the Python version boundary](guides/python-version-boundary.md) explains the whole
-hazard and the alternative.
+mmdet3d environments use. Installing `numpy<2` alongside py123d is the simple fix, and
+[Crossing the Python version boundary](guides/python-version-boundary.md) explains the whole hazard
+and the alternative.
 
 ## Checks before a pull request
 
@@ -50,21 +50,21 @@ pytest                                      # the unit tests, about a minute
 sphinx-build -b dirhtml docs docs/_build    # only if you touched docs/ or a docstring
 ```
 
-Note that `ruff format` is deliberately **not** on that list. The tree is not formatter-managed,
-and running it today would reformat 26 files that have nothing to do with your change. Match the
-style of the code around you instead.
+`ruff format` is deliberately **not** on that list. The tree is not formatter-managed, and running
+it today would reformat 26 files that have nothing to do with your change. Match the style of the
+code around you instead.
 
-`.github/workflows/tests.yaml` runs the suite and `ruff check` on every pull request, as two jobs
--- one without the `torch` extra, one with everything -- and the full job fails outright if the
-extra did not install, because seven test modules skip themselves when torch is missing and a run
-that quietly drops them would otherwise report green. Running the checks locally first is still the
+`.github/workflows/tests.yaml` runs the suite and `ruff check` on every pull request, as two jobs,
+one without the `torch` extra and one with everything. The full job fails outright if the extra did
+not install, because seven test modules skip themselves when torch is missing and a run that
+quietly drops them would otherwise report green. Running the checks locally first is still the
 quicker loop.
 
 ### The integration tests
 
 Twenty-eight tests are marked `integration` and deselected by default (`addopts` in
-`pyproject.toml`). Twelve of them need a real nuScenes tree and its 123D conversion side by side;
-the other sixteen are the dataset-equivalence fixtures, which need converted 123D logs:
+`pyproject.toml`). Twelve of them need a real nuScenes tree and its 123D conversion side by side.
+The other sixteen are the dataset-equivalence fixtures, which need converted 123D logs:
 
 ```bash
 export NUSCENES_DATA_ROOT=/path/to/nuscenes    # holds v1.0-mini/, samples/, sweeps/
@@ -73,17 +73,17 @@ pytest -m integration
 ```
 
 They export a pickle, build the reference pickle on the fly with
-`tools/reference_nuscenes_converter.py` -- a port of the converter mmdetection3d and StreamPETR
-ship -- and compare the two field by field. That comparison is the project's central claim, so
-run it if you change anything under `src/py123detection/mmcv/export/`, and say in the pull request
-whether it still holds. [Validation](validation.md) describes what it checks and the two
-differences that are expected.
+`tools/reference_nuscenes_converter.py` (a port of the converter mmdetection3d and StreamPETR ship)
+and compare the two field by field. That comparison is the project's central claim, so run it if you
+change anything under `src/py123detection/mmcv/export/`, and say in the pull request whether it
+still holds. [Validation](validation.md) describes what it checks and the two differences that are
+expected.
 
 ## Conventions
 
-**Style.** ruff with `line-length = 120` and rules `E`, `F`, `I` -- pycodestyle errors, pyflakes,
-and import sorting -- ignoring `E501` and `E741`, with `__init__.py` excluded so re-exports can be
-grouped by hand. `ruff check .` is the authority; nothing else is enforced.
+**Style.** ruff with `line-length = 120` and rules `E`, `F` and `I` (pycodestyle errors, pyflakes
+and import sorting), ignoring `E501` and `E741`, with `__init__.py` excluded so re-exports can be
+grouped by hand. `ruff check .` is the authority, and nothing else is enforced.
 
 **Docstrings** are reST field lists, rendered by `sphinx.ext.autodoc` directly. There is no
 napoleon extension, so Google- and NumPy-style sections will not render. Types come from the
@@ -97,23 +97,23 @@ def export_to_mmdet3d(sources, output_path, config=None, version="py123d-v1.0") 
     """
 ```
 
-Document a parameter when its meaning is not obvious from its name and type; the existing
+Document a parameter when its meaning is not obvious from its name and type. The existing
 docstrings skip the ones that are.
 
-**Comments** in this codebase explain *why*, not *what* -- the constraint that forced a decision,
-the reason a default is what it is, the failure that a check exists to prevent. A comment
-restating the line below it is noise; a comment recording why protocol 4 is the default is the
-reason the next person does not break it. Please keep writing them that way.
+**Comments** in this codebase explain *why*, not *what*: the constraint that forced a decision, the
+reason a default is what it is, the failure that a check exists to prevent. A comment restating the
+line below it is noise. A comment recording why protocol 4 is the default is the reason the next
+person does not break it. Please keep writing them that way.
 
-**Tests** are named as sentences about the behaviour they pin down --
-`test_rebuild_preserves_the_shape_of_empty_arrays`, not `test_rebuild_2`. New behaviour goes in
-the `tests/test_<module>.py` that matches the module it lives in.
+**Tests** are named as sentences about the behaviour they pin down, so
+`test_rebuild_preserves_the_shape_of_empty_arrays` rather than `test_rebuild_2`. New behaviour goes
+in the `tests/test_<module>.py` that matches the module it lives in.
 
 ## Adding a documentation page
 
 Write the Markdown under `docs/` (or `docs/guides/` for a task-oriented one), then add it to a
-`toctree` in `docs/index.md` -- Sphinx warns about any page that no toctree includes, and the page
-is unreachable until you do.
+`toctree` in `docs/index.md`. Sphinx warns about any page that no toctree includes, and the page is
+unreachable until you do.
 
 MyST is configured so the same Markdown reads well on GitHub and on the site: heading anchors are
 generated down to `h3`, so `[text](validation.md#known-differences)` resolves in both places, and
@@ -123,9 +123,8 @@ a ` ```mermaid ` fence renders as a diagram rather than a code block. See
 ## Opening the pull request
 
 Branch off `main` with a `feat/` or `fix/` prefix, and avoid naming a branch after a top-level
-documentation page such as `guides` or `api` -- branch documentation previews are published
-alongside those pages and would shadow them, as
-[Publishing](development.md#publishing) explains.
+documentation page such as `guides` or `api`. Branch documentation previews are published alongside
+those pages and would shadow them, as [Publishing](development.md#publishing) explains.
 
 Say what changed and why. If the change affects what ends up in an exported pickle, say so
 explicitly and report the integration comparison. If a reviewer would benefit from reading the

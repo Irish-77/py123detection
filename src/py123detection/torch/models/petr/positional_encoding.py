@@ -6,23 +6,17 @@ import torch.nn as nn
 
 class SinePositionalEncoding3D(nn.Module):
     """Position encoding with sine and cosine functions.
-    See `End-to-End Object Detection with Transformers
-    <https://arxiv.org/pdf/2005.12872>`_ for details.
-    Args:
-        num_feats (int): The feature dimension for each position
-            along x-axis or y-axis. Note the final returned dimension
-            for each position is 2 times of this value.
-        temperature (int, optional): The temperature used for scaling
-            the position embedding. Defaults to 10000.
-        normalize (bool, optional): Whether to normalize the position
-            embedding. Defaults to False.
-        scale (float, optional): A scale factor that scales the position
-            embedding. The scale will be used only when `normalize` is True.
-            Defaults to 2*pi.
-        eps (float, optional): A value added to the denominator for
-            numerical stability. Defaults to 1e-6.
-        offset (float): offset add to embed when do the normalization.
-            Defaults to 0.
+
+    Adapted from mmcv's ``SinePositionalEncoding``, extended to three axes. See `End-to-End Object
+    Detection with Transformers <https://arxiv.org/pdf/2005.12872>`_ for the original.
+
+    :param num_feats: Feature dimension per position and per axis. The returned dimension is twice
+        this, because each axis contributes a sine and a cosine.
+    :param temperature: Scaling of the position embedding.
+    :param normalize: Normalise the embedding by the extent of the unmasked region.
+    :param scale: Factor applied to the normalised embedding; used only when ``normalize`` is set.
+    :param eps: Added to the denominator for numerical stability.
+    :param offset: Added to the embedding before normalising.
     """
 
     def __init__(self,
@@ -52,14 +46,9 @@ class SinePositionalEncoding3D(nn.Module):
         self.register_buffer('dim_t', dim_t, persistent=False)
 
     def forward(self, mask):
-        """Forward function for `SinePositionalEncoding`.
-        Args:
-            mask (Tensor): ByteTensor mask. Non-zero values representing
-                ignored positions, while zero values means valid positions
-                for this image. Shape [bs, h, w].
-        Returns:
-            pos (Tensor): Returned position embedding with shape
-                [bs, num_feats*2, h, w].
+        """
+        :param mask: ``[bs, h, w]``, non-zero where a position is to be ignored.
+        :returns: The position embedding, ``[bs, num_feats * 2, h, w]``.
         """
         # For convenience of exporting to ONNX, it's required to convert
         # `masks` from bool to int.

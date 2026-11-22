@@ -76,7 +76,7 @@ def draw_boxes(
     """Draw each box's twelve edges onto a copy of ``image``.
 
     An edge is drawn only where both of its corners project in front of the camera and inside the
-    frame. A box partly out of view therefore appears partly drawn, which is honest — joining it to
+    frame. A box partly out of view therefore appears partly drawn, which is honest: joining it to
     a clamped corner would invent a shape the model never predicted.
     """
     import cv2
@@ -132,8 +132,8 @@ def render_camera(
 def tile(images: Sequence[np.ndarray], columns: int = 3) -> np.ndarray:
     """Lay a rig's cameras out in a grid, so one picture covers the whole frame.
 
-    Cameras of a rig need not share a resolution — Argoverse 2's do not — so each row is padded to
-    its widest member rather than assuming they match.
+    Cameras of a rig need not share a resolution, and Argoverse 2's do not, so each row is padded
+    to its widest member rather than assuming they match.
     """
     if not images:
         raise ValueError("nothing to tile")

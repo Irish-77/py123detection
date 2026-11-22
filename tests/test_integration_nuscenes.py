@@ -14,10 +14,10 @@ Everything geometric is asserted to be equal within floating-point noise. The tw
 exceptions are asserted as *bounded* rather than exact, and each is a documented consequence of
 what 123D stores:
 
-* ``gt_velocity`` — 123D recomputes box velocity by finite differences at conversion time
+* ``gt_velocity``: 123D recomputes box velocity by finite differences at conversion time
   instead of copying ``nusc.box_velocity``. Both are the same central difference over the same
   keyframes, so the two agree to microns per second.
-* ``sweeps`` — a keyframe-only 123D conversion holds 2 Hz lidar, while nuScenes' own sweeps are
+* ``sweeps``: a keyframe-only 123D conversion holds 2 Hz lidar, while nuScenes' own sweeps are
   20 Hz. Sequence starts (an empty list) must still line up exactly, because StreamPETR's
   sequence grouping depends on them.
 """

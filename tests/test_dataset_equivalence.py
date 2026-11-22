@@ -4,7 +4,7 @@
 123D logs. These tests rebuild the same configurations with
 :class:`~py123detection.torch.data.Py123DDetectionDataset` and compare.
 
-Some differences are intended — a bug fixed, a class order changed — and
+Some differences are intended, a bug fixed or a class order changed, and
 :data:`tests.golden.configs.EXPECTED_DIFFERENCES` names each one with its reason. The comparison
 fails both ways: an unexpected difference is a regression, and an expected one that stopped
 appearing means the fixture or the reason has gone stale.
@@ -220,10 +220,10 @@ def test_images_match_the_legacy_pipeline(golden: Dict[str, Any], config_name: s
       differently normalised;
     * each camera agrees pixel for pixel with the legacy two-pass path, re-run here on the same
       source image, to within interpolation noise;
-    * and the two are aligned. The legacy pixels sat up to ~0.6 px off the legacy intrinsics —
-      ``cv2.resize`` samples at pixel centres and truncates the resized size to an integer,
-      neither of which the matrix knew about — so a shift below one pixel is the legacy's
-      inconsistency, not this pipeline's. A crop, flip or scale error would move whole pixels.
+    * and the two are aligned. The legacy pixels sat up to ~0.6 px off the legacy intrinsics,
+      because ``cv2.resize`` samples at pixel centres and truncates the resized size to an integer
+      and the matrix knew about neither, so a shift below one pixel is the legacy's inconsistency
+      rather than this pipeline's. A crop, flip or scale error would move whole pixels.
     """
     config = GOLDEN_CONFIGS[config_name]
     dataset = build_dataset(config)

@@ -7,12 +7,12 @@ Two branches sit on one shared core, and you pick the one that matches the ecosy
     :class:`~py123detection.core.taxonomy.Taxonomy`, the geometry, and the nuScenes detection
     metric. Needs py123d and numpy, nothing else.
 
-``py123detection.mmcv`` — the **export branch**
+``py123detection.mmcv``, the **export branch**
     ``mmcv.export`` writes mmdetection3d info pickles from 123D logs (needs py123d);
     ``mmcv.plugin`` is the training-side dataset and evaluation (needs mmdetection3d). Existing
     PETR / StreamPETR / BEVDet configs then train on 123D data unchanged.
 
-``py123detection.torch`` — the **torch branch**
+``py123detection.torch``, the **torch branch**
     123D logs straight into PyTorch: dataset, PETR and BEVFormer, training and evaluation, with
     no mmcv anywhere. Needs the ``torch`` extra.
 

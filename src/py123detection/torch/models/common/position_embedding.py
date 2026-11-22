@@ -1,21 +1,16 @@
-"""
-Shared PETR-style 3D frustum position embedding.
+"""PETR's 3D frustum position embedding, shared by both detectors.
 
-Provides:
-- ``compute_frustum_coords3d``: pure-math helper that turns per-camera
-  ``imu2img`` projection matrices into a per-pixel 3D coordinate volume
-  ready for an ``inverse_sigmoid`` + MLP embedding. Used by both PETRHead's
-  frustum branch and by :class:`PETRFrustumPositionEmbedding` (below).
-- :class:`PETRFrustumPositionEmbedding`: standalone ``nn.Module`` wrapping
-  the full PETR 3D position embedding pipeline (frustum math + MLP +
-  optional sine-PE + ``adapt_pos3d`` fusion). Used by BEVFormer's
-  ``"petr"`` camera-embedding option.
+:func:`compute_frustum_coords3d` is the geometry on its own: per-camera ``imu2img`` matrices in, a
+per-pixel 3D coordinate volume out, ready for ``inverse_sigmoid`` and an MLP. PETR's head and
+BEVFormer's ``"petr"`` camera-embedding option both call it.
 
-Factoring the math into a standalone helper keeps PETRHead's module
-ownership (and therefore its ``state_dict`` keys) unchanged while letting
-BEVFormer reuse the exact same geometry!
-Othwerwise, error for already trained weights as some layer weight keys not
-found!!!
+:class:`PETRFrustumPositionEmbedding` wraps the whole pipeline around that helper (the frustum
+geometry, the MLP, an optional sine embedding and the ``adapt_pos3d`` fusion) as a module BEVFormer
+can own.
+
+The geometry is a plain function rather than a method so that ``PETRHead`` keeps owning its own
+submodules, and therefore its ``state_dict`` keys. Moving the MLP into a shared module would rename
+those keys, and every checkpoint trained before the move would fail to load with missing keys.
 """
 
 from typing import Optional, Tuple
@@ -47,43 +42,35 @@ def compute_frustum_coords3d(
 ) -> Tuple[torch.Tensor, torch.Tensor]:
     """Build the 3D frustum coordinate volume and its validity mask.
 
-    Mirrors the frustum branch of ``PETRHead.position_embeding``
-    (petr/head.py:297-451). Returns tensors that are ready to be passed
-    through ``inverse_sigmoid`` and the per-model ``position_encoder`` MLP.
+    This is the frustum branch of ``PETRHead.position_embeding``, lifted out so BEVFormer can use
+    it too. The result still has to go through ``inverse_sigmoid`` and the model's own
+    ``position_encoder`` MLP.
 
-    Args:
-        B, N: Batch size and number of cameras.
-        H, W: Feature-grid spatial size.
-        pad_h, pad_w: Padded image dimensions (the feature grid is
-            downsampled from the padded image).
-        imu2img: ``(B, N, 4, 4)`` camera projection matrices
-            ``intrinsics @ extrinsics``. Singular matrices (padded cams,
-            ``|det| < 1e-6``) are replaced with the identity.
-        depth_num: Number of discrete depth bins along each ray (PETR
-            default: 64).
-        depth_start: Near-plane depth in meters (PETR default: 1.0).
-        LID: If ``True`` use log-increasing discretization (finer bins
-            near the camera); else uniform.
-        position_range_t: ``(6,)`` FP32 buffer with
-            ``[x_min, y_min, z_min, x_max, y_max, z_max]`` used for
-            normalization (should be **wider** than the detection
-            ``pc_range`` to avoid saturation at the inverse_sigmoid edges).
-        mask_strict: If ``True`` match official PETR's sum-of-violations
-            logic; else use the legacy "any component out" logic.
-        device: Device for the constructed tensors.
-        masks: Optional ``(B, N, H, W)`` bool tensor where ``True`` marks
-            invalid pixels (padded cameras, padded image borders). Used
-            to zero out those pixels' coordinates before inverse_sigmoid.
-        eps: Numerical floor for perspective division.
-
-    Returns:
-        coords3d: ``(B*N, depth_num * 3, H, W)`` flattened coordinate
-            volume. Still in ``[0, 1]`` (NOT yet inverse-sigmoid'd) so
-            the caller is free to pick its own FP32 autocast scope.
-        coords_mask: ``(B, N, H, W)`` bool tensor where ``True`` marks
-            pixels that should be masked in downstream attention. The
-            center pixel of every batch element is forced valid to
-            prevent all-masked rows.
+    :param B: Batch size.
+    :param N: Number of cameras.
+    :param H: Feature-grid height.
+    :param W: Feature-grid width.
+    :param pad_h: Padded image height; the feature grid is downsampled from it.
+    :param pad_w: Padded image width.
+    :param imu2img: ``(B, N, 4, 4)`` projections, ``intrinsics @ extrinsics``. A singular matrix
+        (a padded camera, ``|det| < 1e-6``) is replaced with the identity.
+    :param depth_num: Discrete depth bins along each ray. PETR uses 64.
+    :param depth_start: Near-plane depth in metres. PETR uses 1.0.
+    :param LID: Log-increasing bins, finer near the camera, rather than uniform ones.
+    :param position_range_t: ``(6,)`` float32 buffer,
+        ``[x_min, y_min, z_min, x_max, y_max, z_max]``, that the coordinates are normalised
+        against. Keep it **wider** than the detection ``pc_range``, or points at the edge of the
+        detection volume saturate the following ``inverse_sigmoid``.
+    :param mask_strict: Count the violations and compare the sum, as official PETR does, rather
+        than masking a pixel as soon as any one component leaves the range.
+    :param masks: ``(B, N, H, W)``, ``True`` where a pixel is invalid (a padded camera, a padded
+        image border). Those pixels' coordinates are zeroed before ``inverse_sigmoid``.
+    :param eps: Floor for the perspective division.
+    :returns: ``(coords3d, coords_mask)``. ``coords3d`` is ``(B*N, depth_num * 3, H, W)`` and
+        still in ``[0, 1]``, not yet inverse-sigmoid'd, so the caller chooses its own float32
+        autocast scope. ``coords_mask`` is ``(B, N, H, W)`` and ``True`` where downstream
+        attention should mask the pixel. The centre pixel of every batch element is forced valid,
+        because an all-masked row has no softmax.
     """
     D = depth_num
 
@@ -133,7 +120,7 @@ def compute_frustum_coords3d(
     # Broadcast matmul → world-frame coords (B, N, W, H, D, 3).
     coords3d = torch.matmul(img2imus, coords).squeeze(-1)[..., :3]
 
-    # Normalize to [0, 1] using position_range (no clamping — matches PETR).
+    # Normalise into [0, 1] against position_range, without clamping, as PETR does.
     coords3d[..., 0:1] = (coords3d[..., 0:1] - position_range_t[0]) \
         / (position_range_t[3] - position_range_t[0])
     coords3d[..., 1:2] = (coords3d[..., 1:2] - position_range_t[1]) \

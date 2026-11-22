@@ -47,7 +47,7 @@ src/py123detection/
       petr/                  PETR: 3D position embedding on image features
       bevformer/             BEVFormer: an explicit bird's-eye grid
       common/                backbone, losses, grid mask, shared helpers
-    visualize/             bird's-eye and camera renders of a predictions file
+    visualize/               bird's-eye and camera renders of a predictions file
 tools/
   reference_nuscenes_converter.py   ground truth: the mmdet3d/StreamPETR converter, ported
   reference_av2_converter.py        the same idea for Argoverse 2, written from the raw files
@@ -73,28 +73,28 @@ NUSCENES_DATA_ROOT=... PY123D_DATA_ROOT=... pytest -m integration    # the round
 
 `test_model_equivalence.py`, `test_bevformer_equivalence.py` and `test_dataset_equivalence.py`
 are the ones to watch when you touch a model or the data pipeline. Each replays fixed input at a
-fixed seed and compares against a fixture frozen from the thesis implementation (`tests/golden/`):
-the models by parameter count, forward outputs and every loss term, the dataset by every array in
-every sample.
+fixed seed and compares against a fixture frozen from the thesis implementation (`tests/golden/`).
+The models are compared by parameter count, forward outputs and every loss term, the dataset by
+every array in every sample.
 
-`test_evaluate.py` does the same for the metric, and `test_evaluate_distributed.py` pins that
-sharding inference across ranks cannot reach it — including a real `Trainer.predict` run on CPU, so
-the Lightning wiring is covered rather than assumed.
+`test_evaluate.py` does the same for the metric. Its fixture was frozen from the implementation
+that scored every dataset together in one process, so the per-dataset rework had to prove it
+changed no score, and two of its checks compare against that previous implementation inlined in the
+test file rather than against a stored number, which makes them bit-exact rather than rounded.
+`test_evaluate_distributed.py` pins that sharding inference across ranks cannot reach the score,
+with a real `Trainer.predict` run on CPU, so the Lightning wiring is covered rather than assumed.
 
 Four more modules cover what the fixtures reach only incidentally. `test_loss.py` drives the
-Hungarian matcher and the criterion directly — the matching is a bijection onto the targets, and a
-matcher that pairs the wrong query with the wrong target still produces a loss that falls, just to
-a worse place. `test_model_utils.py` pins the box encoding's unusual column order, the BEV grid and
-the camera projection. `test_train_smoke.py` runs a real optimiser step, including one that
-overfits a single batch, which is the only check here that the thing actually trains.
+Hungarian matcher and the criterion directly, checking that the matching is a bijection onto the
+targets: a matcher that pairs the wrong query with the wrong target still produces a loss that
+falls, just to a worse place. `test_model_utils.py` pins the box encoding's unusual column order,
+the BEV grid and the camera projection. `test_train_smoke.py` runs a real optimiser step, including
+one that overfits a single batch, which is the only check here that the thing actually trains.
 `test_compat_shims.py` covers the deprecated import paths, asserting the old name resolves to the
-*same module object* — a copy would re-run `@DATASETS.register_module()` and leave mmdet3d with two
-classes under one name. Its fixture was frozen from the implementation
-that scored every dataset together in one process, so the per-dataset rework had to prove it
-changed no score — and two of its checks compare against the previous implementation inlined in the
-test file rather than a stored number, which makes them bit-exact rather than rounded.
+*same module object*. A copy would re-run `@DATASETS.register_module()` and leave mmdet3d with two
+classes under one name.
 
-Regenerate a fixture only when the numbers themselves are meant to change; otherwise a failure
+Regenerate a fixture only when the numbers themselves are meant to change. Otherwise a failure
 there means the code moved, which is exactly what the fixtures exist to catch.
 
 ## Building the docs
@@ -113,7 +113,7 @@ documented without them. The [CLI reference](cli.md) is generated from
 ### Serving a build locally
 
 `sphinx-autobuild` is the usual way to look at the docs while writing them. To serve a finished
-build instead -- any static file server will do, since the site is plain HTML:
+build instead, any static file server will do, since the site is plain HTML:
 
 ```bash
 python -m http.server 8000 --directory docs/_build     # -> http://localhost:8000
@@ -145,9 +145,9 @@ On a cluster without a browser, run the server on the login node and forward the
 | any other branch | on demand: Actions -> *docs* -> *Run workflow* -> pick the branch | `/<branch>/` | `https://irish-77.github.io/py123detection/<branch>/validation/` |
 
 Previews are opt-in because a published preview is only worth having when someone else needs to
-read it -- for your own iteration the local server above beats a CI round-trip. A preview is a
+read it. For your own iteration the local server above beats a CI round-trip. A preview is a
 snapshot of the commit it was built from and says so in a banner naming the branch and short SHA,
-so it is mistaken neither for the released docs nor for the branch's current state; re-run the
+so it is mistaken neither for the released docs nor for the branch's current state. Re-run the
 workflow to refresh it.
 
 The branch directory is the branch name lowercased with URL-unfriendly characters replaced by
@@ -155,9 +155,9 @@ The branch directory is the branch name lowercased with URL-unfriendly character
 workflows and by the local command above.
 
 A preview is removed when its branch is deleted (`docs-cleanup.yaml`), and any that outlive that
-event are collected the next time `main` deploys: a root deploy keeps only the directories of
+event are collected the next time `main` deploys, since a root deploy keeps only the directories of
 branches that still exist on the remote.
 
-One thing to keep in mind when naming a branch: previews sit next to `main`'s own top-level
-pages, so a branch named `guides` or `api` would publish over that page's URL. Anything with a
-`feat/`, `fix/` or similar prefix is clear of them.
+One thing to keep in mind when naming a branch. Previews sit next to `main`'s own top-level pages,
+so a branch named `guides` or `api` would publish over that page's URL. Anything with a `feat/`,
+`fix/` or similar prefix is clear of them.

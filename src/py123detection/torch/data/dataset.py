@@ -1,15 +1,18 @@
 """A PyTorch dataset reading 123D scenes straight into camera-based 3D detection batches.
 
 One 123D frame becomes one sample: the rig's images, the matrices that project the ego frame into
-each of them, and the boxes in the ego frame. No pickle, no mmdetection3d, no conversion step —
+each of them, and the boxes in the ego frame. No pickle, no mmdetection3d and no conversion step.
 :class:`~py123detection.core.sources.Source` names the logs and the dataset reads them.
 
 The work is split by what it is about, and this class only puts the parts in order:
 
-* :class:`~py123detection.torch.data.frames.FrameIndex` — which frames, and how many;
-* :class:`~py123detection.torch.data.boxes.BoxLoader` — a frame's boxes, filtered, in the ego frame;
-* :class:`~py123detection.torch.data.augment.Augmentation` — the random draw for a training sample;
-* :class:`~py123detection.torch.data.cameras.CameraLoader` — the rig's images in network geometry.
+* :class:`~py123detection.torch.data.frames.FrameIndex` picks which frames, and how many.
+* :class:`~py123detection.torch.data.boxes.BoxLoader` gives a frame's boxes, filtered, in the ego
+  frame.
+* :class:`~py123detection.torch.data.augment.Augmentation` makes the random draw for a training
+  sample.
+* :class:`~py123detection.torch.data.cameras.CameraLoader` reads the rig's images in network
+  geometry.
 
 The sample is the layout the PETR family expects::
 
@@ -65,8 +68,8 @@ class Py123DDetectionDataset(Dataset):
     :param temporal: Add ``prev_exists`` to each sample, telling a temporal model whether the
         previous index is the same scene.
     :param name: Label carried in ``img_metas`` and used when several datasets are mixed.
-    :param missing_camera: What to do when a frame has no image for a camera — ``"skip"`` rejects
-        the frame, ``"zero"`` substitutes a blank image and clears its ``cam_valid_mask`` entry.
+    :param missing_camera: What to do when a frame has no image for a camera. ``"skip"`` rejects
+        the frame; ``"zero"`` substitutes a blank image and clears its ``cam_valid_mask`` entry.
     :param num_frames: Serve this many frames, spread evenly over all logs. See
         :class:`~py123detection.torch.data.frames.FrameIndex`.
     :param seed: Seeds the augmentation generator. The data module reseeds it per worker and rank.
@@ -117,8 +120,9 @@ class Py123DDetectionDataset(Dataset):
     def get(self, index: int, draw: Optional[Draw] = None) -> Dict[str, Any]:
         """One sample, or the next usable one.
 
-        A frame can be unusable — a camera dropped out, or every box was filtered away. Rather
-        than returning nothing and breaking the batch, the next frame is tried; scanning the whole
+        A frame can be unusable, because a camera dropped out or every box was filtered away.
+        Rather than returning nothing and breaking the batch, the next frame is tried; scanning the
+        whole
         dataset without success is an error worth raising.
 
         :param draw: Use this augmentation instead of drawing one, to reproduce a sample exactly.
