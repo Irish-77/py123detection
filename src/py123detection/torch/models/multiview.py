@@ -47,6 +47,9 @@ class MultiViewDetector(Detector3D):
     :param image_size: ``(height, width)`` of the padded network input.
     :param use_grid_mask: Blank a random grid of squares in each image during training. Cheap and
         effective here, where a model otherwise learns to lean on whichever view is easiest.
+    :param grid_mask_annealing: Ramp the masking probability from nothing at the first epoch to
+        ``grid_mask_prob`` at the last, which is what official PETR does. Off by default, as it
+        was in the thesis, so every number this branch has published stays reproducible.
     :param pixel_mean: Per-channel RGB mean subtracted from ``uint8`` input, on the device. The
         statistics belong to the backbone's pretraining, so they live here and not in the dataset.
     :param pixel_std: Per-channel RGB standard deviation, see ``pixel_mean``.
@@ -64,6 +67,7 @@ class MultiViewDetector(Detector3D):
         use_grid_mask: bool = True,
         grid_mask_ratio: float = 0.5,
         grid_mask_prob: float = 0.7,
+        grid_mask_annealing: bool = False,
         backbone_checkpointing: bool = False,
         head_checkpointing: bool = False,
         pretrained_weights: Optional[str] = None,
@@ -87,6 +91,7 @@ class MultiViewDetector(Detector3D):
             if use_grid_mask
             else None
         )
+        self.grid_mask_annealing = grid_mask_annealing
         self.backbone = FeatureExtractor(
             out_channels=hidden_dim,
             return_layers={"layer3": "0", "layer4": "1"},
@@ -117,6 +122,18 @@ class MultiViewDetector(Detector3D):
     def build_head(self, **kwargs: Any):
         """The detector's head. This is the one thing a subclass has to provide."""
         raise NotImplementedError
+
+    def on_train_epoch_start(self) -> None:
+        """Move the grid mask along its ramp, when one was asked for.
+
+        Official PETR raises the masking probability linearly from 0 at the first epoch to the
+        configured value at the last, so a model learns on whole images before it has to cope with
+        holes in them. ``max_epochs`` is the figure the schedule is drawn against, the same one the
+        cosine learning rate uses, rather than Lightning's trainer, so a run that stops early sees
+        the schedule it was configured with.
+        """
+        if self.grid_mask is not None and self.grid_mask_annealing:
+            self.grid_mask.set_prob(self.current_epoch, self.max_epochs)
 
     def extract_features(self, images: torch.Tensor) -> List[torch.Tensor]:
         """Backbone features per camera, as ``(B, N, C, H, W)`` per level.

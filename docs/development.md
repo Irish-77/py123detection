@@ -13,6 +13,7 @@ src/py123detection/
     visibility.py            which cameras can see a box, for visibility filtering
     evaluation.py            the nuScenes detection metric, run without the devkit's database
     lidar_points.py          cached per-box lidar return counts, for logs that record none
+    cameras.py               the nuScenes camera order, and why the two branches differ
   mmcv/                      branch one: export to the mmdetection3d info pickle
     export/
       export.py              export_to_mmdet3d: the one-call entry point
@@ -31,6 +32,7 @@ src/py123detection/
     train.py                 py123det-train
     evaluate.py              py123det-eval; ego -> global conversion and the metric call
     build.py                 config -> datasets and model
+    callbacks.py             checkpoints kept beyond ModelCheckpoint's best three
     data/
       dataset.py             Py123DDetectionDataset: puts the parts below in order
       frames.py              FrameIndex: which frames, and how many (num_frames)
@@ -48,6 +50,8 @@ src/py123detection/
       bevformer/             BEVFormer: an explicit bird's-eye grid
       common/                backbone, losses, grid mask, shared helpers
     visualize/               bird's-eye and camera renders of a predictions file
+scripts/
+  slurm/                     sbatch templates for training and scoring on a cluster
 tools/
   reference_nuscenes_converter.py   ground truth: the mmdet3d/StreamPETR converter, ported
   reference_av2_converter.py        the same idea for Argoverse 2, written from the raw files
@@ -61,7 +65,7 @@ docs/
   guides/                    task-oriented pages: what to export, extrinsics, training, ...
   api/                       API reference, generated from the docstrings
   other-datasets.md          exporting a dataset that is not nuScenes
-tests/                       562 unit tests + 28 integration tests
+tests/                       584 unit tests + 28 integration tests
 ```
 
 ## Tests

@@ -287,22 +287,22 @@ class TestGridMask:
         assert mask.prob == pytest.approx(0.7)
         assert mask.st_prob == pytest.approx(0.7), "the configured value is kept to ramp from"
 
-    def test_nothing_in_the_package_calls_set_prob(self):
-        """So the ramp above never happens in a real run.
+    def test_the_ramp_has_exactly_one_caller(self):
+        """And it is the epoch hook, not something in a forward pass.
 
-        The thesis annealed the probability each epoch; the port kept the method and dropped the
-        call, which leaves a feature that looks present and is not. Recorded here so the next person
-        either wires it to a config key or deletes it, rather than assuming it works.
+        This method went uncalled for a while, which left a feature that looked present and was
+        not. The guard now runs the other way: if the call disappears again, or turns up somewhere
+        that would re-ramp mid-epoch, this says so.
         """
         from pathlib import Path
 
         source = Path(__file__).resolve().parents[1] / "src"
-        mentions = [
-            f"{path.relative_to(source)}:{number}"
+        callers = [
+            str(path.relative_to(source))
             for path in sorted(source.rglob("*.py"))
-            for number, line in enumerate(path.read_text().splitlines(), 1)
+            for line in path.read_text().splitlines()
             if "set_prob" in line and "def set_prob" not in line
         ]
-        assert mentions == [], (
-            f"set_prob now has a caller ({mentions}); wire it to a config key and update this test"
+        assert callers == ["py123detection/torch/models/multiview.py"], (
+            f"set_prob is called from {callers}; the ramp belongs in on_train_epoch_start alone"
         )

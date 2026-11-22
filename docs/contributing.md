@@ -19,7 +19,7 @@ training-side plugin imports mmdet3d lazily, inside the one module that needs it
 need a working mmdet3d installation to work on most of this codebase**, which is deliberate: a
 mmcv/mmdet3d environment is pinned to Python 3.8 and sometimes painful to build.
 
-Concretely, 252 of the 562 unit tests run with nothing but `[dev]` installed, and `pytest -m "not
+Concretely, 255 of the 584 unit tests run with nothing but `[dev]` installed, and `pytest -m "not
 torch"` selects exactly those. The rest need the `torch` extra. CI runs both selections as separate
 jobs, so neither can quietly stop working.
 

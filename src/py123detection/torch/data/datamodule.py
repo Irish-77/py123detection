@@ -66,6 +66,8 @@ class Py123DDataModule(L.LightningDataModule):
 
     :param train: Datasets to concatenate and shuffle for training.
     :param val: Datasets to validate on, each getting its own dataloader in the order given.
+    :param prefetch_factor: Batches each worker keeps ready. One batch is a rig of decoded images,
+        so this trades host memory for a GPU that never waits. Ignored when ``num_workers`` is 0.
     :param collate_fn: Defaults to :func:`~py123detection.torch.data.collate.collate_rigs`, which
         handles rigs of different sizes.
     """

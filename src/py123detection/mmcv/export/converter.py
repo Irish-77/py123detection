@@ -26,6 +26,7 @@ from py123detection.core.annotations import (
     build_frame_annotations,
     extract_detection_records,
 )
+from py123detection.core.cameras import MMDET3D_NUSCENES_ORDER
 from py123detection.core.geometry import invert_rigid, matrix_to_translation_quaternion, pose_to_matrix
 from py123detection.core.taxonomy import NUSCENES_DETECTION, Taxonomy
 from py123detection.core.velocity import TrackVelocityTable
@@ -38,10 +39,9 @@ EGO_POSE_SOURCES = ("sync", "nearest")
 
 logger = logging.getLogger(__name__)
 
-#: 123D camera ids. On a nuScenes rig this is CAM_FRONT, CAM_FRONT_RIGHT, CAM_FRONT_LEFT, CAM_BACK,
-#: CAM_BACK_LEFT, CAM_BACK_RIGHT, the order mmdetection3d's converter uses and pretrained
-#: multi-view models expect.
-DEFAULT_CAMERA_ORDER: Tuple[str, ...] = ("PCAM_F0", "PCAM_R0", "PCAM_L0", "PCAM_B0", "PCAM_L1", "PCAM_R1")
+#: 123D camera ids in mmdetection3d's nuScenes order, which pretrained multi-view models expect.
+#: See :mod:`py123detection.core.cameras` for why the torch branch uses a different one.
+DEFAULT_CAMERA_ORDER: Tuple[str, ...] = MMDET3D_NUSCENES_ORDER
 
 # A camera as resolved for one log: (id, dataset-native name, metadata).
 Camera = Tuple[CameraID, str, BaseCameraMetadata]

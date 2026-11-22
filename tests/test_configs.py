@@ -68,6 +68,51 @@ def test_every_trainer_setting_is_usable(trainer: str) -> None:
     assert cfg.trainer.gradient_clip_val > 0
 
 
+@pytest.mark.parametrize("trainer", group("trainer"))
+def test_extra_checkpoints_are_opt_in_and_inside_the_run(trainer: str, tmp_path) -> None:
+    """Each named epoch costs a full checkpoint, so no shipped config asks for one.
+
+    This also pins where they land: the run's own ``checkpoints/``, beside the best-three, rather
+    than a directory of their own that a later tool would have to know about.
+    """
+    from py123detection.torch.callbacks import SaveEpochCheckpoints
+    from py123detection.torch.train import build_callbacks
+
+    cfg = composed([f"trainer={trainer}", f"paths.work_dir={tmp_path}"])
+    assert not cfg.trainer.get("save_epoch_checkpoints")
+    assert not [c for c in build_callbacks(cfg) if isinstance(c, SaveEpochCheckpoints)]
+
+    cfg = composed([f"trainer={trainer}", f"paths.work_dir={tmp_path}", "+trainer.save_epoch_checkpoints=[6,12]"])
+    extra = [c for c in build_callbacks(cfg) if isinstance(c, SaveEpochCheckpoints)]
+    assert len(extra) == 1
+    assert extra[0].dirpath == tmp_path / cfg.run.name / "checkpoints"
+
+
+@pytest.mark.parametrize("model", group("model"))
+def test_grid_mask_annealing_is_off_by_default(model: str) -> None:
+    """Turning it on changes what a run learns, so no shipped config may do it quietly."""
+    cfg = composed([f"model={model}"])
+    assert cfg.model.grid_mask_annealing is False
+
+
+def test_every_dataloader_setting_reaches_the_data_module() -> None:
+    """A key the data module accepts but nothing passes is a knob that does not turn.
+
+    ``prefetch_factor`` was exactly that: the data module took it, ``build_data`` never passed it,
+    and it sat pinned at 4 with no way to change it.
+    """
+    import inspect
+
+    from py123detection.torch.data import Py123DDataModule
+
+    cfg = composed([])
+    accepted = set(inspect.signature(Py123DDataModule).parameters)
+    assert set(cfg.dataloader) <= accepted, (
+        f"{set(cfg.dataloader) - accepted} is configured but not a Py123DDataModule parameter"
+    )
+    assert "prefetch_factor" in cfg.dataloader
+
+
 @pytest.mark.parametrize("images", group("images"))
 def test_image_sizes_suit_the_backbone(images: str) -> None:
     """A size the stride does not divide silently changes the feature grid the head assumes."""

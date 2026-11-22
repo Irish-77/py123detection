@@ -20,6 +20,7 @@ from py123detection.core.annotations import (
     build_frame_annotations,
     extract_detection_records,
 )
+from py123detection.core.cameras import MMDET3D_NUSCENES_ORDER, THESIS_NUSCENES_ORDER
 from py123detection.core.geometry import (
     YAW_CONVENTIONS,
     heading_yaw,
@@ -57,9 +58,11 @@ __all__ = [
     "MIXED2_3CLS",
     "MIXED3_1CLS",
     "MIXED_8CLS",
+    "MMDET3D_NUSCENES_ORDER",
     "NUSCENES_DETECTION",
     "Source",
     "TAXONOMIES",
+    "THESIS_NUSCENES_ORDER",
     "TrackVelocityTable",
     "Taxonomy",
     "VEHICLE_1CLS",

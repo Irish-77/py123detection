@@ -14,6 +14,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 import numpy as np
 
 from py123detection.core.annotations import DetectionRecord, extract_detection_records
+from py123detection.core.geometry import transform_points
 from py123detection.core.lidar_points import LidarPointCounts
 from py123detection.core.sources import Source
 from py123detection.core.taxonomy import Taxonomy
@@ -173,7 +174,7 @@ class BoxLoader:
                 return False
 
         if self._visibility is not None:
-            corners_ego = record.corners_global @ world_to_ego[:3, :3].T + world_to_ego[:3, 3]
+            corners_ego = transform_points(world_to_ego, record.corners_global)
             if not self._visibility.sees(self.filters.visibility, center_ego, corners_ego):
                 return False
 

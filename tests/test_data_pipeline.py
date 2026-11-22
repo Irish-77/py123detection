@@ -252,6 +252,15 @@ class TestDataset:
         assert dataset.draw() == reseeded
         assert reseeded != before
 
+    def test_prefetch_factor_reaches_the_loader_and_is_dropped_without_workers(self) -> None:
+        """torch refuses a prefetch_factor when there are no workers to prefetch in."""
+        from py123detection.torch.data import Py123DDataModule
+
+        dataset = fake_dataset()
+        module = Py123DDataModule(train=[dataset], num_workers=2, prefetch_factor=7)
+        assert module.train_dataloader().prefetch_factor == 7
+        assert Py123DDataModule(train=[dataset], num_workers=0).train_dataloader().prefetch_factor is None
+
 
 class TestNormalisationOnTheDevice:
     stub = SimpleNamespace(

@@ -11,3 +11,7 @@ warmup_steps: 500
 limit_train_batches: 1.0
 limit_val_batches: 1.0
 log_every_n_steps: 50
+# Epochs to keep a checkpoint of their own, counted from 1, next to the best-three that
+# ModelCheckpoint keeps. [6, 12, 18] on a 24-epoch run is enough to see whether a model is still
+# improving or peaked early. Each one is a full checkpoint, so this costs disk.
+save_epoch_checkpoints: []

@@ -240,6 +240,39 @@ class TestResume:
 
         assert resume_from(self.cfg(tmp_path, "/data/other_run/epoch=05.ckpt")) == "/data/other_run/epoch=05.ckpt"
 
+    def test_a_preemption_save_outranks_last_ckpt(self, tmp_path) -> None:
+        """It is newer. Lightning writes it when SLURM pre-empts the job, mid-epoch, while
+        ``last.ckpt`` is from the end of the previous epoch."""
+        from py123detection.torch.train import resume_from
+
+        run = tmp_path / "petr_nuscenes_10cls"
+        (run / "checkpoints").mkdir(parents=True)
+        (run / "checkpoints" / "last.ckpt").touch()
+        (run / "hpc_ckpt_1.ckpt").touch()
+
+        assert resume_from(self.cfg(tmp_path, "last")) == str(run / "hpc_ckpt_1.ckpt")
+
+    def test_the_newest_preemption_save_wins(self, tmp_path) -> None:
+        """A job requeued twice has two of them, and 10 sorts before 9 as text."""
+        from py123detection.torch.train import resume_from
+
+        run = tmp_path / "petr_nuscenes_10cls"
+        run.mkdir(parents=True)
+        for version in (1, 9, 10):
+            (run / f"hpc_ckpt_{version}.ckpt").touch()
+
+        assert resume_from(self.cfg(tmp_path, "last")) == str(run / "hpc_ckpt_10.ckpt")
+
+    def test_a_preemption_save_of_another_run_is_not_picked_up(self, tmp_path) -> None:
+        """Which is why the trainer's default_root_dir is the run's directory, not work_dir."""
+        from py123detection.torch.train import resume_from
+
+        (tmp_path / "hpc_ckpt_7.ckpt").touch()
+        (tmp_path / "bevformer_nuscenes_10cls").mkdir()
+        (tmp_path / "bevformer_nuscenes_10cls" / "hpc_ckpt_7.ckpt").touch()
+
+        assert resume_from(self.cfg(tmp_path, "last")) is None
+
 
 class TestLearningRateSchedule:
     """PETR's published schedule, which the thesis also trained with."""

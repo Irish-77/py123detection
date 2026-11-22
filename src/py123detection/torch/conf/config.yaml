@@ -35,6 +35,9 @@ run:
 dataloader:
   batch_size: 1
   num_workers: 4
+  # Batches each worker keeps ready. Raise it when the GPU waits on images and there is host
+  # memory to spare; each one holds a full batch of decoded camera images. Ignored without workers.
+  prefetch_factor: 4
 
 # Which ground truth counts. See py123detection.torch.data.BoxFilters.
 filters:

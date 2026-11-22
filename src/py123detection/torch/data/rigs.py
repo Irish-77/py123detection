@@ -22,6 +22,8 @@ from typing import Dict, Mapping, Optional, Tuple
 
 import numpy as np
 
+from py123detection.core.cameras import THESIS_NUSCENES_ORDER
+
 
 @dataclass(frozen=True)
 class CameraPreprocessing:
@@ -146,7 +148,8 @@ PREPROCESSING: Dict[str, CameraPreprocessing] = {
 #: Ready-made rigs, one per dataset the thesis trained on.
 RIGS: Dict[str, CameraRig] = {
     "nuscenes": CameraRig(
-        cameras=("PCAM_F0", "PCAM_L0", "PCAM_R0", "PCAM_L1", "PCAM_R1", "PCAM_B0"),
+        # Not mmdetection3d's order; py123detection.core.cameras says why.
+        cameras=THESIS_NUSCENES_ORDER,
         preprocessing=PREPROCESSING["nuscenes"],
     ),
     "av2": CameraRig(

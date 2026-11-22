@@ -43,6 +43,55 @@ py123det-train experiment=nuscenes model.learning_rate=1e-4 dataloader.batch_siz
 Each run gets its own directory, named after the model, the dataset mix and the taxonomy
 (`bevformer_nuscenes_av2_3cls`), so two runs never overwrite each other's checkpoints.
 
+## Checkpoints
+
+`checkpoints/` holds the best three by `val_loss` and a `last.ckpt` rewritten every epoch. That is
+what you want to get a trained model out of a run, and no help at all for asking what the model
+looked like partway through: by the time a 24-epoch run ends, epoch 12 is gone.
+
+```bash
+py123det-train experiment=nuscenes '+trainer.save_epoch_checkpoints=[6,12,18]'
+```
+
+keeps `epoch_6.ckpt`, `epoch_12.ckpt` and `epoch_18.ckpt` as well, and nothing overwrites them.
+Epochs are counted from 1, the way the training log prints them. Each one is a full checkpoint, so
+this costs disk and is off by default.
+
+Scoring one of them is the way to tell a model that is still improving from one that peaked early
+and has been drifting since, which the final number alone cannot say.
+
+:::{note}
+Weights do not cross between the two branches. A model trained through the export branch sees a
+nuScenes rig in mmdetection3d's camera order, this branch presents the same six cameras in the
+thesis's order, and anything with per-camera parameters (BEVFormer's `camera_embedding=bevformer`)
+has learned one of them. Both orders are named in `py123detection.core.cameras`, which says why
+neither can be changed.
+:::
+
+## On a cluster
+
+`scripts/slurm/train.sbatch` and `scripts/slurm/eval.sbatch` are templates. Both pass everything
+after the script name through to the command, so a submitted job takes the same overrides as a
+local one:
+
+```bash
+PY123D_DATA_ROOT=/data/py123d sbatch scripts/slurm/train.sbatch experiment=nuscenes
+PY123D_DATA_ROOT=/data/py123d sbatch --gres=gpu:2 scripts/slurm/train.sbatch experiment=nuscenes trainer=ddp
+```
+
+`--gres` has to match `trainer.devices`, as the second line does, or Lightning waits for ranks
+that were never allocated and the job sits there until the wall clock ends it.
+
+The training one survives pre-emption, which is what lets a multi-day run finish on a three-day
+queue. `--signal=SIGUSR1@90` has SLURM warn the job 90 seconds before killing it; Lightning
+answers that by saving `hpc_ckpt_<n>.ckpt` into the run directory and asking `scontrol` to
+requeue; `--requeue` allows that; and `run.resume=last` has the next attempt continue from the
+save. The first attempt finds nothing and starts fresh, which is why the same command serves both.
+
+That save is mid-epoch, so it outranks `last.ckpt` and `run.resume=last` prefers it. Lightning
+would find it on its own, but only when nothing else is passed as a checkpoint path, so naming
+`last.ckpt` explicitly would silently discard however much of the epoch had been trained.
+
 ## Training across datasets
 
 This is what the package is for. Camera rigs differ. nuScenes has six cameras, Argoverse 2
@@ -138,6 +187,13 @@ shared by its cameras:
 | `flip` | `true` | Mirror half the samples |
 | `rotation_range` | `[-0.3925, 0.3925]` | Bird's-eye yaw of the world about the ego vehicle, radians |
 | `scale_range` | `[0.95, 1.05]` | Bird's-eye scale of the world |
+
+Grid masking is the other augmentation, and it lives on the model rather than here, because it is
+applied on the device to the batch the backbone sees. `model.use_grid_mask` turns it on, which the
+shipped configs do, and `model.grid_mask_prob` sets how often a sample is masked.
+`model.grid_mask_annealing=true` ramps that probability from nothing at the first epoch to the
+configured value at the last, which is what official PETR does. It is off here, as it was in the
+thesis, so turning it on changes what a run learns.
 
 The zoom is relative on purpose. PETR's `resize_lim` is an absolute scale, right for one source
 resolution and one output size only. The same `(0.8, 1.0)` at 320x800 trains on objects twice the
@@ -254,6 +310,10 @@ py123det-train experiment=nuscenes trainer.accumulate_grad_batches=4      # a la
 
 Gradient checkpointing trades roughly a third of the step time for a large part of the activation
 memory, which is usually the right trade here.
+
+`dataloader.prefetch_factor` works the other way: it is how many batches each worker keeps ready,
+and one batch is a whole rig of decoded images. Raise it when the GPU is waiting on data and there
+is host memory to spare, lower it when the workers are what runs out of memory.
 
 ## Using the pieces directly
 

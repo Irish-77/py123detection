@@ -260,6 +260,31 @@ def test_validation_reports_a_loss_per_dataset():
     assert torch.isfinite(recorded) and frames == len(batch["gt_labels_3d"])
 
 
+def test_grid_mask_anneals_only_when_asked(monkeypatch):
+    """``grid_mask_annealing`` decides whether the epoch hook moves the masking probability.
+
+    Off, which is the default and what the thesis ran, the probability is whatever the config set,
+    at every epoch. On, it is the official PETR ramp: nothing at the first epoch, the configured
+    value at the last. Halfway through a 24-epoch run that is half of it.
+    """
+    for annealing, expected in ((False, 0.7), (True, 0.35)):
+        model = tiny_model(use_grid_mask=True, grid_mask_prob=0.7, grid_mask_annealing=annealing)
+        assert model.max_epochs == 24, "the ramp is drawn against the configured epoch count"
+        monkeypatch.setattr(type(model), "current_epoch", property(lambda self: 12), raising=False)
+
+        model.on_train_epoch_start()
+
+        assert model.grid_mask.prob == pytest.approx(expected)
+        assert model.grid_mask.st_prob == pytest.approx(0.7), "the configured value is kept"
+
+
+def test_the_epoch_hook_is_safe_without_a_grid_mask():
+    """``use_grid_mask=false`` leaves no mask to ramp, and the hook still has to run."""
+    model = tiny_model(use_grid_mask=False, grid_mask_annealing=True)
+    assert model.grid_mask is None
+    model.on_train_epoch_start()
+
+
 def test_hidden_dim_only_works_at_its_default():
     """``hidden_dim`` is a constructor parameter that accepts exactly one value.
 

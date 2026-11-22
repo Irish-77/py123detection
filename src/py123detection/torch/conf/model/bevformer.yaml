@@ -17,6 +17,9 @@ with_box_refine: true
 # counts differ. "bevformer" reproduces the paper's learned per-camera token on one dataset.
 camera_embedding: none
 use_grid_mask: true
+# Ramp the mask in over training, as official PETR does. Off here and in the thesis, so turning it
+# on changes what a run learns.
+grid_mask_annealing: false
 backbone_checkpointing: false
 head_checkpointing: false
 learning_rate: 2e-4
