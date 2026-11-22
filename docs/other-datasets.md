@@ -1,14 +1,13 @@
 # Exporting other 123D datasets (and proving the export right)
 
-`py123det-export-mmcv` was validated first on nuScenes, where the target format was born, and
-then on Argoverse 2 (sensor), where nothing about the source looks like nuScenes: 7 cameras with
-one portrait view, no native frame token, no annotated velocity, annotations in the ego frame,
-a 10 Hz log rate, and 30 categories. This page records what it took, so that the next dataset
-(Waymo, KITTI-360, PandaSet, ...) is a checklist rather than a research project.
+**No converter code changes per dataset.** The export is driven by flags; what is
+dataset-specific is the taxonomy, a handful of convention choices, and — if you want proof — a
+small reference converter written from the raw data.
 
-The short version: **no converter code changes per dataset.** The export is driven entirely by
-flags; what is dataset-specific is (1) the taxonomy, (2) a handful of convention choices, and
-(3) if you want proof, a small reference converter written from the raw data.
+This page is the checklist, taken from doing it twice: first nuScenes, where the target format was
+born, then Argoverse 2 (sensor), where nothing about the source looks like nuScenes — 7 cameras
+with one portrait view, no native frame token, no annotated velocity, annotations in the ego
+frame, 10 Hz logs, 30 categories.
 
 ---
 
@@ -65,9 +64,9 @@ nuScenes class names (§8). It is a default-level taxonomy plus qualified except
 rider boxes (`BICYCLIST`, `MOTORCYCLIST`, `WHEELED_RIDER`) are dropped because nuScenes — and so
 CoIn3D — has no rider class; the rider is part of the two-wheeler box.
 
-To add a taxonomy: append a `Taxonomy(...)` to `py123detection/taxonomy.py` and register it in
-`TAXONOMIES`; it becomes a `--taxonomy` choice. Keep the semantics written down in its docstring
-— that is what a reviewer will read.
+To add one: append a `Taxonomy(...)` to `py123detection/core/taxonomy.py` and register it in
+`TAXONOMIES`, and it becomes a `--taxonomy` choice. Put the semantics in its docstring — that is
+what a reviewer reads.
 
 ---
 
@@ -90,7 +89,8 @@ central difference of the global box centre over the neighbouring annotations of
 at the log's native rate (one-sided at track ends, zero without a neighbour within
 `--velocity-max-dt`, default 0.25 s). That is the nuScenes devkit's `box_velocity` rule, so the
 result is what mmdetection3d would have written had the dataset been nuScenes. The rule is
-specified in `py123detection/velocity.py` precisely so a reference converter can reproduce it.
+specified in `py123detection/core/velocity.py` precisely so a reference converter can reproduce
+it.
 
 ---
 

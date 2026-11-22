@@ -1,5 +1,8 @@
 # Quick start
 
+Turn a 123D split into an mmdetection3d `info` pickle, then train on it with a config you already
+have.
+
 ```bash
 export PY123D_DATA_ROOT=/data/py123d
 export NUSCENES_DATA_ROOT=/data/nuscenes      # only needed while images are referenced, not copied
@@ -46,5 +49,9 @@ data = dict(
 )
 ```
 
-Nothing else changes. The pickle *is* the nuScenes info schema. See
+Nothing else changes: the pickle *is* the nuScenes info schema. See
 {py:mod}`schema.py <py123detection.mmcv.export.schema>` for the field-by-field description.
+
+Next: [choosing what to export](guides/choosing-what-to-export.md) for splits, frame rates and
+classes, [examples](examples.md) for the other common commands, or
+[exporting other 123D datasets](other-datasets.md) if the source is not nuScenes.

@@ -17,8 +17,8 @@ py123d_infos_val.pkl            globals referenced: ['numpy.core.multiarray._rec
 py123d_infos_val_portable.pkl   globals referenced: NONE
 ```
 
-**3. numpy's own pickle format.** This is the one that actually bites. numpy 2 renamed `numpy.core`
-to `numpy._core`, so arrays pickled under numpy 2 fail to load under numpy 1 with
+**3. numpy's own pickle format.** The one that actually bites. numpy 2 renamed `numpy.core` to
+`numpy._core`, so arrays pickled under numpy 2 fail to load under numpy 1 with
 `ModuleNotFoundError: No module named 'numpy._core'`. The reverse direction is fine, and mmdet3d
 environments are essentially always on numpy 1.x.
 

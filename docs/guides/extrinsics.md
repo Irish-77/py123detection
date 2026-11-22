@@ -1,12 +1,12 @@
 # Static vs. dynamic extrinsics
 
-Sensors do not fire at the same instant, and where that offset gets booked is a real modelling
-choice. 123D exposes it asymmetrically, which is worth knowing before you pick a mode:
+Sensors do not fire at the same instant, and where that offset is booked is a modelling choice.
+123D exposes it asymmetrically:
 
-- the **camera** Arrow table stores a per-row, motion-compensated `camera_to_global_se3`, so a
-  camera's true pose at its own capture time is always available;
-- the **lidar** table stores only timestamps and the payload, with no per-row pose. The only lidar
-  extrinsic 123D holds is the static rig calibration in the modality metadata.
+- the **camera** table stores a per-row, motion-compensated `camera_to_global_se3`, so a camera's
+  pose at its own capture time is always available;
+- the **lidar** table stores timestamps and payload only. The sole lidar extrinsic 123D holds is
+  the static rig calibration in the modality metadata.
 
 Two options control what the export writes. **Both default to `static`, which is what
 mmdetection3d's own converter emits** and what the
