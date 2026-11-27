@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Where the torch branch puts its output: checkpoints and configs under paths.work_dir, Hydra's
+# own run directories, and the logs the sbatch templates write.
+work_dirs/
+outputs/
+slurm_logs/

@@ -1,0 +1,96 @@
+# Training a camera-based 3D detector on 123D data.
+#
+# The groups below are the axes an experiment actually varies: which detector, which classes,
+# which images, how to train, and which datasets. An experiment file then states only what makes
+# it different from this baseline.
+#
+#   py123det-train experiment=nuscenes
+#   py123det-train experiment=nuscenes_av2 model=bevformer taxonomy=mixed2_3cls
+#   py123det-train experiment=nuscenes trainer=smoke paths.data_root=/data/123d
+
+defaults:
+  - model: petr
+  - taxonomy: nuscenes_10cls
+  - images: petr_704
+  - trainer: default
+  - experiment: nuscenes
+  - _self_
+
+paths:
+  # 123D root holding logs/. Falls back to $PY123D_DATA_ROOT when null.
+  data_root: null
+  work_dir: ./work_dirs
+
+run:
+  # Unique per model, dataset mix and taxonomy, so two runs never share a directory.
+  name: ${model.name}_${data.name}_${taxonomy.label}
+  seed: 20260919
+  wandb: false
+  project: py123detection
+  # Checkpoint to continue from, weights and optimiser state alike. "last" picks this run's own
+  # last.ckpt when there is one and starts from scratch when there is not, which is what a
+  # requeued cluster job wants. Null always starts from scratch.
+  resume: null
+
+dataloader:
+  batch_size: 1
+  num_workers: 4
+  # Batches each worker keeps ready. Raise it when the GPU waits on images and there is host
+  # memory to spare; each one holds a full batch of decoded camera images. Ignored without workers.
+  prefetch_factor: 4
+
+# Which ground truth counts. See py123detection.torch.data.BoxFilters.
+filters:
+  drop_boxes_without_lidar_points: true
+  # Point counts for logs that record none (Waymo). E.g. ${oc.env:PY123D_DATA_ROOT}/num_points_cache
+  lidar_point_cache: null
+  drop_frames_without_boxes: true
+  pc_range: ${model.pc_range}
+  visibility: null
+  visibility_margin_deg: 0.0
+
+# Everything random about a training sample, drawn once per sample and shared by its cameras.
+# Validation data is never augmented; null disables augmentation for training too.
+augment:
+  # Image scale relative to the one at which the camera just covers `images.size`. (1.0, 1.25) is
+  # what the thesis trained with on Argoverse 2 and Waymo, at any input size.
+  zoom_range: [1.0, 1.25]
+  flip: true
+  # Bird's-eye rotation (radians) and scale of the world about the ego vehicle.
+  rotation_range: [-0.3925, 0.3925]
+  scale_range: [0.95, 1.05]
+
+evaluation:
+  # "nuscenes" is the official five true-positive errors; "no_attributes" drops attr_err, which
+  # is what data carrying no attributes needs. See py123detection.core.evaluation.TP_METRIC_SETS.
+  tp_metrics: no_attributes
+  # Scoring radius per class; comes from the taxonomy, which is what decides the classes.
+  class_range: ${taxonomy.class_range}
+  output_dir: ${paths.work_dir}/${run.name}/eval
+  checkpoint: null
+  # Score frames whose ground truth is empty. Default false, which is what every number published
+  # from this branch so far was produced with -- but it flatters the score, because a model is
+  # never charged for the boxes it invents on an empty scene. Every metrics file records which
+  # setting produced it, so a number is never ambiguous.
+  score_empty_frames: false
+  # Keep only this many highest-scoring boxes per frame. The devkit caps a submission at 500; this
+  # branch has never capped, so null keeps that. Setting it changes scores.
+  max_boxes_per_sample: null
+  # Also score every dataset together, the single number older runs reported. Off by default: a
+  # per-dataset score is what tells you which dataset moved, and the combined pass has to hold
+  # every dataset's boxes in memory at once.
+  combined: false
+  # Score the predictions a previous run wrote under this directory, with no model and no data.
+  rescore_from: null
+  # Shard inference across this many GPUs. Each rank writes its own predictions file and rank zero
+  # merges them, dropping the frames DistributedSampler padding hands to two ranks.
+  devices: 1
+  strategy: auto
+  # Evaluation's own precision, deliberately NOT inherited from trainer.precision: every shipped
+  # trainer config is 16-mixed, evaluation has always run in fp32, and adopting the training
+  # precision here would move every score.
+  precision: 32-true
+
+hydra:
+  run:
+    dir: ${paths.work_dir}/${run.name}

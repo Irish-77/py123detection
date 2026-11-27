@@ -1,20 +1,12 @@
-"""mmdetection3d-side plugin for pickles written by :mod:`py123detection.mmcv_export`.
+"""Deprecated alias for :mod:`py123detection.mmcv.plugin`.
 
-A ``numpy``-format export already works with the stock ``NuScenesDataset``. The plugin is needed
-for ``portable`` exports (arrays stored as lists), to take ``CLASSES`` from the pickle's
-taxonomy, and to evaluate without a nuScenes database. mmdet3d is only imported if available, so
-this also imports in a conversion environment.
-
-From an mmdet3d config::
-
-    plugin = True
-    plugin_dir = "py123detection/mmcv_plugin/"   # or add py123detection to custom_imports
-
-    data = dict(
-        train=dict(type="Py123DNuScenesDataset", ann_file="py123d_infos_train.pkl", ...),
-    )
+Kept as a real package directory so ``plugin_dir = "py123detection/mmcv_plugin/"`` in an existing
+mmdet3d config still imports, and still triggers the ``@DATASETS.register_module()`` exactly once.
 """
 
-from py123detection.mmcv_plugin.dataset import Py123DNuScenesDataset, rebuild_arrays
+from py123detection._compat import alias as _alias
 
-__all__ = ["Py123DNuScenesDataset", "rebuild_arrays"]
+_module = _alias("mmcv_plugin", "mmcv.plugin", ("dataset", "evaluation"))
+globals().update({k: v for k, v in vars(_module).items() if not k.startswith("__")})
+__all__ = list(getattr(_module, "__all__", []))
+del _alias, _module

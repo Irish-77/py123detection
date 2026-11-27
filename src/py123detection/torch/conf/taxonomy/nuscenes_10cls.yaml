@@ -1,0 +1,11 @@
+# @package taxonomy
+# The official nuScenes detection classes. The reference taxonomy for reproducing published numbers.
+#
+# Resolved by py123detection.core.taxonomy.get_taxonomy, which owns the class list, the label
+# mapping from each dataset, and any rider-merging rules.
+name: nuscenes_detection_10cls
+# Short form, used in run and directory names.
+label: 10cls
+
+# Every class here is a nuScenes class, so the devkit's own detection radii apply.
+class_range: null

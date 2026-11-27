@@ -1,0 +1,12 @@
+# @package _global_
+# The mini split, for checking a change runs before spending a GPU on it.
+data:
+  name: nuscenes_mini
+  train:
+    - dataset: nuscenes
+      splits: [nuscenes-mini_train]
+      sample_rate_hz: 2.0
+  val:
+    - dataset: nuscenes
+      splits: [nuscenes-mini_val]
+      sample_rate_hz: 2.0

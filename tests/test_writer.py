@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from py123detection.mmcv_export.writer import (
+from py123detection.mmcv.export.writer import (
     PortabilityError,
     build_metadata,
     dump_infos,
@@ -23,7 +23,7 @@ from py123detection.mmcv_export.writer import (
     to_portable_arrays,
     validate_portable,
 )
-from py123detection.mmcv_plugin import rebuild_arrays
+from py123detection.mmcv.plugin import rebuild_arrays
 
 
 class _Colour(Enum):

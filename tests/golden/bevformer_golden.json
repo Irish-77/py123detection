@@ -1,0 +1,124 @@
+{
+ "bevformer_kwargs": {
+  "bev_h": 25,
+  "bev_w": 25,
+  "feedforward_channels_decoder": 2048,
+  "feedforward_channels_encoder": 512,
+  "num_cameras": 6,
+  "num_encoder_layers": 2,
+  "num_heights": 4,
+  "num_points": 4,
+  "with_box_refine": true
+ },
+ "note": "Generated from the master-thesis BEVFormer with every extension at its default (off). Do not edit by hand; regenerate with tools/freeze_bevformer_golden.py.",
+ "petr_kwargs": {
+  "backbone_name": "resnet50",
+  "backbone_with_cp": false,
+  "hidden_dim": 256,
+  "image_height": 320,
+  "image_width": 800,
+  "num_classes": 10,
+  "num_decoder_layers": 2,
+  "num_query": 50,
+  "optimizer_fused": false,
+  "patches_x": 50,
+  "patches_y": 20,
+  "pc_range": [
+   -51.2,
+   -51.2,
+   -5.0,
+   51.2,
+   51.2,
+   3.0
+  ],
+  "position_range": [
+   -61.2,
+   -61.2,
+   -10.0,
+   61.2,
+   61.2,
+   10.0
+  ],
+  "transformer_with_cp": false,
+  "use_grid_mask": false
+ },
+ "runs": {
+  "bevformer": {
+   "losses": {
+    "d0.loss_bbox": 2.240895,
+    "d0.loss_ce": 2.213468,
+    "loss_bbox": 2.916663,
+    "loss_ce": 2.244893
+   },
+   "outputs": {
+    "all_bbox_preds": {
+     "max": 48.591587,
+     "mean": -0.048056,
+     "min": -47.545155,
+     "shape": [
+      2,
+      2,
+      50,
+      10
+     ],
+     "sum": -96.1119
+    },
+    "all_cls_scores": {
+     "max": -3.411464,
+     "mean": -4.582381,
+     "min": -6.116477,
+     "shape": [
+      2,
+      2,
+      50,
+      10
+     ],
+     "sum": -9164.7627
+    }
+   },
+   "parameters": 30813607
+  },
+  "none": {
+   "losses": {
+    "d0.loss_bbox": 2.975112,
+    "d0.loss_ce": 2.381874,
+    "loss_bbox": 2.902081,
+    "loss_ce": 2.304343
+   },
+   "outputs": {
+    "all_bbox_preds": {
+     "max": 47.774273,
+     "mean": -0.169633,
+     "min": -48.948135,
+     "shape": [
+      2,
+      2,
+      50,
+      10
+     ],
+     "sum": -339.265
+    },
+    "all_cls_scores": {
+     "max": -3.375431,
+     "mean": -4.679303,
+     "min": -5.703688,
+     "shape": [
+      2,
+      2,
+      50,
+      10
+     ],
+     "sum": -9358.6055
+    }
+   },
+   "parameters": 30812071
+  }
+ },
+ "seed": 20260919,
+ "shape": {
+  "batch": 2,
+  "cameras": 6,
+  "height": 320,
+  "width": 800
+ }
+}

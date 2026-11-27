@@ -27,7 +27,7 @@ Conventions (each one is also what the 123D export is configured to produce):
   sweep -> ego -> global -> ego' -> lidar chain as mmdetection3d.
 * **Classes**: CoIn3D's three classes with nuScenes spelling (``car`` / ``pedestrian`` /
   ``motorcycle``); riders, wheelchairs, strollers, animals, signs, cones and bollards are
-  dropped — see ``CATEGORY_TO_CLASS`` and ``py123detection.taxonomy.COIN3D_3CLS``.
+  dropped — see ``CATEGORY_TO_CLASS`` and ``py123detection.core.taxonomy.COIN3D_3CLS``.
 * **Velocity**: AV2 annotates none. Derived per box as the central difference of the global
   box centre over the neighbouring 10 Hz annotations of the same ``track_uuid`` (one-sided at
   track ends, zero without a neighbour within ``--velocity-max-dt``), rotated into the ego frame

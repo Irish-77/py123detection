@@ -9,8 +9,8 @@ from py123d.datatypes.sensors.pinhole_camera import PinholeCameraMetadata, Pinho
 from py123d.geometry import PoseSE3
 from pyquaternion import Quaternion
 
-from py123detection.annotations import extract_detection_records
-from py123detection.mmcv_export.annotations2d import project_records_to_camera
+from py123detection.core.annotations import extract_detection_records
+from py123detection.mmcv.export.annotations2d import project_records_to_camera
 from tests.test_annotations import make_detection, make_detections
 
 WIDTH, HEIGHT = 1600, 900
@@ -39,7 +39,7 @@ def camera_at(x: float = 0.0, y: float = 0.0, z: float = 0.0) -> np.ndarray:
 
 def records_for(**kwargs):
     """Build detection records from one synthetic box."""
-    from py123detection.taxonomy import NUSCENES_DETECTION
+    from py123detection.core.taxonomy import NUSCENES_DETECTION
 
     return extract_detection_records(make_detections(make_detection(**kwargs)), NUSCENES_DETECTION)
 
@@ -119,7 +119,7 @@ def test_yaw_conventions_differ_in_a_camera_frame() -> None:
 
 
 def test_arrays_have_matching_lengths() -> None:
-    from py123detection.taxonomy import NUSCENES_DETECTION
+    from py123detection.core.taxonomy import NUSCENES_DETECTION
 
     detections = make_detections(
         make_detection(center=(0.0, 0.0, 20.0), track_token="a"),

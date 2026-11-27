@@ -14,10 +14,10 @@ Everything geometric is asserted to be equal within floating-point noise. The tw
 exceptions are asserted as *bounded* rather than exact, and each is a documented consequence of
 what 123D stores:
 
-* ``gt_velocity`` — 123D recomputes box velocity by finite differences at conversion time
+* ``gt_velocity``: 123D recomputes box velocity by finite differences at conversion time
   instead of copying ``nusc.box_velocity``. Both are the same central difference over the same
   keyframes, so the two agree to microns per second.
-* ``sweeps`` — a keyframe-only 123D conversion holds 2 Hz lidar, while nuScenes' own sweeps are
+* ``sweeps``: a keyframe-only 123D conversion holds 2 Hz lidar, while nuScenes' own sweeps are
   20 Hz. Sequence starts (an empty list) must still line up exactly, because StreamPETR's
   sequence grouping depends on them.
 """
@@ -79,7 +79,7 @@ def reference_infos(tmp_path_factory) -> Dict[str, dict]:
 def exported_infos(tmp_path_factory) -> Dict[str, dict]:
     """Infos from the 123D export, keyed by the same (restored) sample token."""
     from py123detection import Source
-    from py123detection.mmcv_export import ExportConfig, NuScenesTokenResolver, export_to_mmdet3d
+    from py123detection.mmcv.export import ExportConfig, NuScenesTokenResolver, export_to_mmdet3d
 
     out = tmp_path_factory.mktemp("export") / "infos.pkl"
     report = export_to_mmdet3d(
@@ -276,7 +276,7 @@ def test_prev_next_links_are_consistent(exported_infos) -> None:
 
 @requires_data
 def test_exported_infos_satisfy_the_schema(exported_infos) -> None:
-    from py123detection.mmcv_export import validate_info
+    from py123detection.mmcv.export import validate_info
 
     for info in exported_infos.values():
         assert validate_info(info) == []

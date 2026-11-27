@@ -1,0 +1,29 @@
+# @package _global_
+# The same CARLA scenes recorded through three different camera rigs: nuScenes' six cameras,
+# Argoverse 2's seven and Waymo's five. Because the scenes are shared, a difference in the score
+# is a difference the rig caused and not a difference in the driving.
+#
+# This is the cleanest available test of the thing the package is for. Use mixed2_3cls or
+# another taxonomy all three can express.
+data:
+  name: carla_multirig
+  train:
+    - dataset: carla
+      splits: [carla_nuscenes_train]
+      sample_rate_hz: 2.0
+    - dataset: av2
+      splits: [carla_av2-sensor_train]
+      sample_rate_hz: 2.0
+    - dataset: wod
+      splits: [carla_wod-perception_train]
+      sample_rate_hz: 2.0
+  val:
+    - dataset: carla
+      splits: [carla_nuscenes_val]
+      sample_rate_hz: 2.0
+    - dataset: av2
+      splits: [carla_av2-sensor_val]
+      sample_rate_hz: 2.0
+    - dataset: wod
+      splits: [carla_wod-perception_val]
+      sample_rate_hz: 2.0

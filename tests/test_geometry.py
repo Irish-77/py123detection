@@ -7,7 +7,7 @@ import pytest
 from py123d.geometry import PoseSE3
 from pyquaternion import Quaternion
 
-from py123detection.geometry import (
+from py123detection.core.geometry import (
     heading_yaw,
     invert_rigid,
     matrix_to_translation_quaternion,

@@ -1,0 +1,23 @@
+# @package taxonomy
+# 123D's own native taxonomy, applied without remapping.
+#
+# Resolved by py123detection.core.taxonomy.get_taxonomy, which owns the class list, the label
+# mapping from each dataset, and any rider-merging rules.
+name: default_123d
+# Short form, used in run and directory names.
+label: 123d
+
+# How far out each class is scored, in metres. The devkit has no radius for a class
+# it does not know, and guessing one silently decides how much of the scene counts.
+class_range:
+  vehicle: 50.0
+  train: 50.0
+  two_wheeler: 40.0
+  person: 40.0
+  animal: 40.0
+  traffic_sign: 30.0
+  traffic_cone: 30.0
+  traffic_light: 30.0
+  barrier: 30.0
+  generic_object: 30.0
+  other: 30.0

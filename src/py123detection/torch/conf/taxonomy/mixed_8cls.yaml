@@ -1,0 +1,11 @@
+# @package taxonomy
+# Eight classes every major dataset can express, for training across nuScenes, Argoverse 2 and Waymo.
+#
+# Resolved by py123detection.core.taxonomy.get_taxonomy, which owns the class list, the label
+# mapping from each dataset, and any rider-merging rules.
+name: mixed_8cls
+# Short form, used in run and directory names.
+label: 8cls
+
+# Every class here is a nuScenes class, so the devkit's own detection radii apply.
+class_range: null

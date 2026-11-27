@@ -1,0 +1,6 @@
+# @package images
+# PETR's reference input: scale each camera until it covers 704x1280, then cut that out,
+# bottom-aligned. What is random about it — zoom, crop position, flip — is under `augment`.
+size: [704, 1280]
+mode: crop
+pad_divisor: 32

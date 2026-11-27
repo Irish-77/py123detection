@@ -1,0 +1,13 @@
+# @package _global_
+# CARLA re-simulated with the nuScenes rig. Small and always on disk, so this is the experiment
+# to run when checking that a change works before spending a real GPU-day on it.
+data:
+  name: carla_nuscenes
+  train:
+    - dataset: carla
+      splits: [carla_nuscenes_train]
+      sample_rate_hz: 2.0
+  val:
+    - dataset: carla
+      splits: [carla_nuscenes_val]
+      sample_rate_hz: 2.0

@@ -10,10 +10,10 @@ import numpy as np
 import pytest
 from py123d.parser.registry import AV2SensorBoxDetectionLabel, NuScenesBoxDetectionLabel
 
-from py123detection.annotations import BOX_LAYOUTS, build_frame_annotations, extract_detection_records
-from py123detection.mmcv_export.tokens import LogTimestampTokenResolver
-from py123detection.taxonomy import COIN3D_3CLS, TAXONOMIES, VOID, Taxonomy
-from py123detection.velocity import velocities_from_track
+from py123detection.core.annotations import BOX_LAYOUTS, build_frame_annotations, extract_detection_records
+from py123detection.core.taxonomy import COIN3D_3CLS, TAXONOMIES, VOID, Taxonomy
+from py123detection.core.velocity import velocities_from_track
+from py123detection.mmcv.export.tokens import LogTimestampTokenResolver
 from tests.test_annotations import make_detection, make_detections
 
 # -- velocity rule ------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ def test_velocity_overrides_replace_stored_velocity_by_track() -> None:
         make_detection(track_token="a", velocity=(1.0, 2.0, 3.0)),
         make_detection(track_token="b", velocity=(4.0, 5.0, 6.0)),
     )
-    from py123detection.taxonomy import NUSCENES_DETECTION
+    from py123detection.core.taxonomy import NUSCENES_DETECTION
 
     records = extract_detection_records(
         detections, NUSCENES_DETECTION, velocity_overrides={"a": np.array([9.0, 8.0, 7.0])}
@@ -58,7 +58,7 @@ def test_velocity_overrides_replace_stored_velocity_by_track() -> None:
 
 
 def test_box_layouts_are_an_exact_column_map() -> None:
-    from py123detection.taxonomy import NUSCENES_DETECTION
+    from py123detection.core.taxonomy import NUSCENES_DETECTION
 
     records = extract_detection_records(
         make_detections(make_detection(size=(4.0, 2.0, 1.5), yaw=0.3)), NUSCENES_DETECTION

@@ -1,0 +1,13 @@
+# @package taxonomy
+# Everything that drives, as one class. Useful for isolating localisation from classification.
+#
+# Resolved by py123detection.core.taxonomy.get_taxonomy, which owns the class list, the label
+# mapping from each dataset, and any rider-merging rules.
+name: vehicle_1cls
+# Short form, used in run and directory names.
+label: 1cls
+
+# How far out each class is scored, in metres. The devkit has no radius for a class
+# it does not know, and guessing one silently decides how much of the scene counts.
+class_range:
+  vehicle: 50.0
