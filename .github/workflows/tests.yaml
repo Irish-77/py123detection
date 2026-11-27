@@ -28,7 +28,9 @@ jobs:
       - name: Install
         run: |
           pip install uv
-          uv pip install --system "py123d==0.6.0" -e ".[dev]"
+          # The devkit is part of the export side (core.evaluation scores with it) and pulls no
+          # torch, so the metric tests run here instead of skipping.
+          uv pip install --system "py123d==0.6.0" -e ".[dev,nuscenes]"
 
       - name: torch really is absent
         # The point of this job. If the base install ever starts dragging torch in, the suite would

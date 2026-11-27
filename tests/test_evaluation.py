@@ -11,7 +11,9 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from py123detection.core.evaluation import (
+pytest.importorskip("nuscenes", reason="scoring runs the devkit's own algo.py; needs the nuscenes extra")
+
+from py123detection.core.evaluation import (  # noqa: E402
     TP_METRIC_SETS,
     EvalBox,
     build_detection_config,
