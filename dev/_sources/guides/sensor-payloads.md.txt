@@ -22,8 +22,8 @@ layout that `LoadPointsFromFile(load_dim=5)` expects. 123D's lossy lidar codecs 
 `laz`-stored log round-trips to about 5 mm of coordinate quantization. Use `ipc`/`ipc_zstd` at 123D
 conversion time if that matters.
 
-One subtlety worth knowing. 123D reframes point clouds to the **ego** frame on load, while the
-original files it references are in the **sensor** frame. The exporter reconciles this: extracted
-points are transformed into whichever frame the export's boxes use, so annotations and points
-always agree. `--lidar-frame ego` switches the whole export to the ego frame instead (`lidar2ego`
-becomes identity), which is the right choice when referencing files a 123D parser already reframed.
+One subtlety. 123D reframes point clouds to the **ego** frame on load, while the original files it
+references are in the **sensor** frame. The exporter reconciles the two by transforming extracted
+points into whichever frame the export's boxes use, so annotations and points always agree.
+`--lidar-frame ego` switches the whole export to the ego frame instead (`lidar2ego` becomes
+identity), which is the right choice when referencing files a 123D parser already reframed.

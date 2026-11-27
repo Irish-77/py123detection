@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../genindex/"><link rel="search" title="Search" href="../../../search/"><link rel="next" title="py123detection.geometry" href="../py123detection.geometry/"><link rel="prev" title="py123detection" href="../py123detection/">
+<link rel="index" title="Index" href="../../../genindex/"><link rel="search" title="Search" href="../../../search/"><link rel="next" title="py123detection.core" href="../py123detection.core/"><link rel="prev" title="py123detection" href="../py123detection/">
         <link rel="canonical" href="https://irish-77.github.io/py123detection/dev/api/generated/py123detection.annotations/">
 
     <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=75e05936" />
     
     
 
@@ -155,7 +156,7 @@
 
 <div class="announcement">
   <aside class="announcement-content">
-     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+     Preview of branch <code>dev</code> at <code>bfe7efb</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
   </aside>
 </div>
 
@@ -196,21 +197,27 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Start here</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/">Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples/">Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<p class="caption" role="heading"><span class="caption-text">Export to mmdetection3d</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Train without mmcv</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/first-run/">First run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/training/">Training without mmcv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/visualisation/">Looking at what the model found</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
@@ -219,8 +226,39 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2 current has-children"><a class="reference internal" href="../py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">py123detection.annotations</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.core/">py123detection.core</a><input aria-label="Toggle navigation of py123detection.core" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.annotations/">py123detection.core.annotations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.cameras/">py123detection.core.cameras</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.evaluation/">py123detection.core.evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.geometry/">py123detection.core.geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.lidar_points/">py123detection.core.lidar_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.sources/">py123detection.core.sources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.taxonomy/">py123detection.core.taxonomy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.velocity/">py123detection.core.velocity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.visibility/">py123detection.core.visibility</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.geometry/">py123detection.geometry</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv/">py123detection.mmcv</a><input aria-label="Toggle navigation of py123detection.mmcv" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.mmcv.export/">py123detection.mmcv.export</a><input aria-label="Toggle navigation of py123detection.mmcv.export" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.annotations2d/">py123detection.mmcv.export.annotations2d</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.cli/">py123detection.mmcv.export.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.converter/">py123detection.mmcv.export.converter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.export/">py123detection.mmcv.export.export</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.schema/">py123detection.mmcv.export.schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.sensors/">py123detection.mmcv.export.sensors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.tokens/">py123detection.mmcv.export.tokens</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.writer/">py123detection.mmcv.export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.mmcv.plugin/">py123detection.mmcv.plugin</a><input aria-label="Toggle navigation of py123detection.mmcv.plugin" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.plugin.dataset/">py123detection.mmcv.plugin.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.plugin.evaluation/">py123detection.mmcv.plugin.evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
@@ -231,13 +269,74 @@
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.sources/">py123detection.sources</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.torch/">py123detection.torch</a><input aria-label="Toggle navigation of py123detection.torch" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.build/">py123detection.torch.build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.callbacks/">py123detection.torch.callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.conf/">py123detection.torch.conf</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.data/">py123detection.torch.data</a><input aria-label="Toggle navigation of py123detection.torch.data" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.augment/">py123detection.torch.data.augment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.boxes/">py123detection.torch.data.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.cameras/">py123detection.torch.data.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.collate/">py123detection.torch.data.collate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.datamodule/">py123detection.torch.data.datamodule</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.dataset/">py123detection.torch.data.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.frames/">py123detection.torch.data.frames</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.images/">py123detection.torch.data.images</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.rigs/">py123detection.torch.data.rigs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.evaluate/">py123detection.torch.evaluate</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.models/">py123detection.torch.models</a><input aria-label="Toggle navigation of py123detection.torch.models" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.models.base/">py123detection.torch.models.base</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.bevformer/">py123detection.torch.models.bevformer</a><input aria-label="Toggle navigation of py123detection.torch.models.bevformer" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.camera_embedding/">py123detection.torch.models.bevformer.camera_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.deformable_attention/">py123detection.torch.models.bevformer.deformable_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.detector/">py123detection.torch.models.bevformer.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.encoder/">py123detection.torch.models.bevformer.encoder</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.head/">py123detection.torch.models.bevformer.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.spatial_cross_attention/">py123detection.torch.models.bevformer.spatial_cross_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.utils/">py123detection.torch.models.bevformer.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.common/">py123detection.torch.models.common</a><input aria-label="Toggle navigation of py123detection.torch.models.common" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.backbone/">py123detection.torch.models.common.backbone</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.grid_mask/">py123detection.torch.models.common.grid_mask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.loss/">py123detection.torch.models.common.loss</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.position_embedding/">py123detection.torch.models.common.position_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.util/">py123detection.torch.models.common.util</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.models.multiview/">py123detection.torch.models.multiview</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.petr/">py123detection.torch.models.petr</a><input aria-label="Toggle navigation of py123detection.torch.models.petr" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.detector/">py123detection.torch.models.petr.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.head/">py123detection.torch.models.petr.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.positional_encoding/">py123detection.torch.models.petr.positional_encoding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.transformer/">py123detection.torch.models.petr.transformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.predictions/">py123detection.torch.predictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.train/">py123detection.torch.train</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.visualize/">py123detection.torch.visualize</a><input aria-label="Toggle navigation of py123detection.torch.visualize" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.bev/">py123detection.torch.visualize.bev</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.boxes/">py123detection.torch.visualize.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.cameras/">py123detection.torch.visualize.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.cli/">py123detection.torch.visualize.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.frame/">py123detection.torch.visualize.frame</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.py123d_interop/">py123detection.torch.visualize.py123d_interop</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.viewer/">py123detection.torch.visualize.viewer</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.velocity/">py123detection.velocity</a></li>
 </ul>
 </li>
@@ -306,10 +405,13 @@ origin to the bottom face at load time) and <code class="docutils literal notran
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.annotations.build_frame_annotations" title="py123detection.annotations.build_frame_annotations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_frame_annotations</span></code></a>(records, global_to_lidar)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_merge_rules</span></code>(records, taxonomy)</p></td>
+<td><p>Combine riders with their vehicles, and drop what is left merge-only.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_frame_annotations</span></code>(records, global_to_lidar)</p></td>
 <td><p>Move global-frame records into the lidar frame and build the mmdet3d arrays.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#py123detection.annotations.extract_detection_records" title="py123detection.annotations.extract_detection_records"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_detection_records</span></code></a>(detections, taxonomy)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_detection_records</span></code>(detections, taxonomy)</p></td>
 <td><p>Map 123D detections onto taxonomy classes, dropping unmapped ones.</p></td>
 </tr>
 </tbody>
@@ -319,10 +421,10 @@ origin to the bottom face at load time) and <code class="docutils literal notran
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.annotations.DetectionRecord" title="py123detection.annotations.DetectionRecord"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DetectionRecord</span></code></a>(class_name, label_id, ...)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DetectionRecord</span></code>(class_name, label_id, ...)</p></td>
 <td><p>One annotated object, in the global frame.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#py123detection.annotations.FrameAnnotations" title="py123detection.annotations.FrameAnnotations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameAnnotations</span></code></a>(gt_boxes, gt_names, ...)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FrameAnnotations</span></code>(gt_boxes, gt_names, ...)</p></td>
 <td><p>The 3D annotation block of one info, in the lidar frame.</p></td>
 </tr>
 </tbody>
@@ -336,139 +438,6 @@ origin to the bottom face at load time) and <code class="docutils literal notran
 converter and fed verbatim into LiDARInstance3DBoxes by its dataset (PETR v1 pins 0.17).</p>
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">py123detection.annotations.</span></span><span class="sig-name descname"><span class="pre">DetectionRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_global</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation_global</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_lwh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_global</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_lidar_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corners_global</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/annotations/#DetectionRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.annotations.DetectionRecord" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>One annotated object, in the global frame.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.class_name">
-<span class="sig-name descname"><span class="pre">class_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.class_name" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.label_id">
-<span class="sig-name descname"><span class="pre">label_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.label_id" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.center_global">
-<span class="sig-name descname"><span class="pre">center_global</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.center_global" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.rotation_global">
-<span class="sig-name descname"><span class="pre">rotation_global</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.rotation_global" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.size_lwh">
-<span class="sig-name descname"><span class="pre">size_lwh</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.size_lwh" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.velocity_global">
-<span class="sig-name descname"><span class="pre">velocity_global</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.velocity_global" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.num_lidar_points">
-<span class="sig-name descname"><span class="pre">num_lidar_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.num_lidar_points" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.track_token">
-<span class="sig-name descname"><span class="pre">track_token</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.track_token" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.DetectionRecord.corners_global">
-<span class="sig-name descname"><span class="pre">corners_global</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.DetectionRecord.corners_global" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">py123detection.annotations.</span></span><span class="sig-name descname"><span class="pre">FrameAnnotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gt_boxes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_velocity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_lidar_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_radar_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track_tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/annotations/#FrameAnnotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.annotations.FrameAnnotations" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>The 3D annotation block of one info, in the lidar frame.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations.gt_boxes">
-<span class="sig-name descname"><span class="pre">gt_boxes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.FrameAnnotations.gt_boxes" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations.gt_names">
-<span class="sig-name descname"><span class="pre">gt_names</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.FrameAnnotations.gt_names" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations.gt_velocity">
-<span class="sig-name descname"><span class="pre">gt_velocity</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.FrameAnnotations.gt_velocity" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations.num_lidar_pts">
-<span class="sig-name descname"><span class="pre">num_lidar_pts</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.FrameAnnotations.num_lidar_pts" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations.num_radar_pts">
-<span class="sig-name descname"><span class="pre">num_radar_pts</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.FrameAnnotations.num_radar_pts" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations.valid_flag">
-<span class="sig-name descname"><span class="pre">valid_flag</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span><a class="headerlink" href="#py123detection.annotations.FrameAnnotations.valid_flag" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations.track_tokens">
-<span class="sig-name descname"><span class="pre">track_tokens</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#py123detection.annotations.FrameAnnotations.track_tokens" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.annotations.FrameAnnotations.records">
-<span class="sig-name descname"><span class="pre">records</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#py123detection.annotations.DetectionRecord" title="py123detection.annotations.DetectionRecord"><span class="pre">DetectionRecord</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#py123detection.annotations.FrameAnnotations.records" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="py123detection.annotations.extract_detection_records">
-<span class="sig-prename descclassname"><span class="pre">py123detection.annotations.</span></span><span class="sig-name descname"><span class="pre">extract_detection_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detections</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taxonomy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/annotations/#extract_detection_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.annotations.extract_detection_records" title="Link to this definition">¶</a></dt>
-<dd><p>Map 123D detections onto taxonomy classes, dropping unmapped ones.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>velocity_overrides</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>]]</span>) – Global-frame velocities by track token (see
-<a class="reference internal" href="../py123detection.velocity/#py123detection.velocity.TrackVelocityTable" title="py123detection.velocity.TrackVelocityTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">py123detection.velocity.TrackVelocityTable</span></code></a>). Tracks not in it keep the stored velocity.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#py123detection.annotations.DetectionRecord" title="py123detection.annotations.DetectionRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">DetectionRecord</span></code></a>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="py123detection.annotations.build_frame_annotations">
-<span class="sig-prename descclassname"><span class="pre">py123detection.annotations.</span></span><span class="sig-name descname"><span class="pre">build_frame_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_to_lidar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw_convention</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mmdet3d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planar_velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'streampetr'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/annotations/#build_frame_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.annotations.build_frame_annotations" title="Link to this definition">¶</a></dt>
-<dd><p>Move global-frame records into the lidar frame and build the mmdet3d arrays.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>yaw_convention</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – See <a class="reference internal" href="../py123detection.geometry/#py123detection.geometry.YAW_CONVENTIONS" title="py123detection.geometry.YAW_CONVENTIONS"><code class="xref py py-data docutils literal notranslate"><span class="pre">py123detection.geometry.YAW_CONVENTIONS</span></code></a>.</p></li>
-<li><p><strong>planar_velocity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Zero the vertical velocity before rotating, as mmdetection3d does.
-Otherwise a tilted lidar leaks it into <code class="docutils literal notranslate"><span class="pre">(vx,</span> <span class="pre">vy)</span></code>.</p></li>
-<li><p><strong>box_layout</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – One of <a class="reference internal" href="#py123detection.annotations.BOX_LAYOUTS" title="py123detection.annotations.BOX_LAYOUTS"><code class="xref py py-data docutils literal notranslate"><span class="pre">BOX_LAYOUTS</span></code></a>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#py123detection.annotations.FrameAnnotations" title="py123detection.annotations.FrameAnnotations"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameAnnotations</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 
         </article>
@@ -476,12 +445,12 @@ Otherwise a tilted lidar leaks it into <code class="docutils literal notranslate
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../py123detection.geometry/">
+          <a class="next-page" href="../py123detection.core/">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">py123detection.geometry</div>
+                <div class="title">py123detection.core</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -528,31 +497,6 @@ Otherwise a tilted lidar leaks it into <code class="docutils literal notranslate
             <ul>
 <li><a class="reference internal" href="#">py123detection.annotations</a><ul>
 <li><a class="reference internal" href="#py123detection.annotations.BOX_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">BOX_LAYOUTS</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord"><code class="docutils literal notranslate"><span class="pre">DetectionRecord</span></code></a><ul>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.class_name"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.class_name</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.label_id"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.label_id</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.center_global"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.center_global</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.rotation_global"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.rotation_global</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.size_lwh"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.size_lwh</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.velocity_global"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.velocity_global</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.num_lidar_points"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.num_lidar_points</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.track_token"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.track_token</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.DetectionRecord.corners_global"><code class="docutils literal notranslate"><span class="pre">DetectionRecord.corners_global</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations</span></code></a><ul>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations.gt_boxes"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations.gt_boxes</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations.gt_names"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations.gt_names</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations.gt_velocity"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations.gt_velocity</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations.num_lidar_pts"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations.num_lidar_pts</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations.num_radar_pts"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations.num_radar_pts</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations.valid_flag"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations.valid_flag</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations.track_tokens"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations.track_tokens</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.FrameAnnotations.records"><code class="docutils literal notranslate"><span class="pre">FrameAnnotations.records</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#py123detection.annotations.extract_detection_records"><code class="docutils literal notranslate"><span class="pre">extract_detection_records()</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.annotations.build_frame_annotations"><code class="docutils literal notranslate"><span class="pre">build_frame_annotations()</span></code></a></li>
 </ul>
 </li>
 </ul>

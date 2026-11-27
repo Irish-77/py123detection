@@ -1,0 +1,21 @@
+py123detection.torch.data.cameras
+=================================
+
+.. automodule:: py123detection.torch.data.cameras
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      decode_factor
+      decoded_to_source
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Calibration
+      CameraLoader
+      Cameras
+   

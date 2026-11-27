@@ -12,6 +12,9 @@ py123detection.taxonomy
       NUSCENES_DETECTION
       GENERAL_3CLS
       COIN3D_3CLS
+      MIXED_8CLS
+      MIXED2_3CLS
+      MIXED3_1CLS
       VEHICLE_1CLS
       DEFAULT_123D
       TAXONOMIES
@@ -20,11 +23,14 @@ py123detection.taxonomy
 
    .. autosummary::
    
+      class_permutation
       get_taxonomy
+      remap_head_classes
    
    .. rubric:: Classes
 
    .. autosummary::
    
+      MergeRule
       Taxonomy
    

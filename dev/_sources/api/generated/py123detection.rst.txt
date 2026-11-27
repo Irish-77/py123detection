@@ -11,9 +11,12 @@
    :recursive:
 
    annotations
+   core
    geometry
+   mmcv
    mmcv_export
    mmcv_plugin
    sources
    taxonomy
+   torch
    velocity

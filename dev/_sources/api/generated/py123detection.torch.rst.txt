@@ -1,0 +1,21 @@
+py123detection.torch
+====================
+
+.. automodule:: py123detection.torch
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   build
+   callbacks
+   conf
+   data
+   evaluate
+   models
+   predictions
+   train
+   visualize

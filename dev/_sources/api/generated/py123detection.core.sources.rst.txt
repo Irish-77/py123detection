@@ -1,0 +1,12 @@
+py123detection.core.sources
+===========================
+
+.. automodule:: py123detection.core.sources
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Source
+   

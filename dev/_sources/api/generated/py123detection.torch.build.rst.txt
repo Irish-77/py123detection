@@ -1,0 +1,16 @@
+py123detection.torch.build
+==========================
+
+.. automodule:: py123detection.torch.build
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_augmentation
+      build_datasets
+      build_filters
+      build_images
+      build_model
+   

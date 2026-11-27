@@ -1,0 +1,26 @@
+py123detection.torch.data.rigs
+==============================
+
+.. automodule:: py123detection.torch.data.rigs
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      PREPROCESSING
+      RIGS
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_rig
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CameraPreprocessing
+      CameraRig
+   

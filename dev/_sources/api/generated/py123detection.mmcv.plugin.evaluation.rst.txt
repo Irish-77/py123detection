@@ -1,0 +1,13 @@
+py123detection.mmcv.plugin.evaluation
+=====================================
+
+.. automodule:: py123detection.mmcv.plugin.evaluation
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      evaluate_from_infos
+      ground_truth_from_infos
+   

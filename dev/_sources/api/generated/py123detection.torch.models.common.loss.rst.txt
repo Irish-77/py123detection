@@ -1,0 +1,13 @@
+py123detection.torch.models.common.loss
+=======================================
+
+.. automodule:: py123detection.torch.models.common.loss
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      HungarianMatcher
+      SetCriterion
+   

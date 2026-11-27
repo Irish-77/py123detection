@@ -1,0 +1,29 @@
+py123detection.torch.predictions
+================================
+
+.. automodule:: py123detection.torch.predictions
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      BOX_COLUMNS
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      dataset_names
+      frames_for
+      merge_rank_files
+      rank_files
+      read_predictions
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      FramePrediction
+      PredictionWriter
+   

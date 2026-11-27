@@ -1,0 +1,18 @@
+py123detection.torch.data.dataset
+=================================
+
+.. automodule:: py123detection.torch.data.dataset
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      assemble
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Py123DDetectionDataset
+   

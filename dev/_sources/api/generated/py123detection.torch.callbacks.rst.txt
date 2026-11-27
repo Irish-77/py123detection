@@ -1,0 +1,12 @@
+py123detection.torch.callbacks
+==============================
+
+.. automodule:: py123detection.torch.callbacks
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SaveEpochCheckpoints
+   

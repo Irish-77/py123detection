@@ -1,0 +1,12 @@
+py123detection.torch.models.petr.positional\_encoding
+=====================================================
+
+.. automodule:: py123detection.torch.models.petr.positional_encoding
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SinePositionalEncoding3D
+   

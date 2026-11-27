@@ -1,6 +1,7 @@
 # Cross-dataset training
 
-CoIn3D trains across datasets by converting each into the nuScenes data format specified by mmcv and concatenating them into one `ann_file` under a shared class list. That is one command here:
+CoIn3D trains across datasets by converting each one into the nuScenes format and concatenating
+them into a single `ann_file` under a shared class list. Here that is one command:
 
 ```bash
 py123det-export-mmcv export \
@@ -15,8 +16,8 @@ py123det-export-mmcv export \
 
 Three flags do the work:
 
-- `--taxonomy general_3cls` picks a taxonomy defined over default labels, so every source maps into
-  the same three classes.
+- `--taxonomy general_3cls` maps on default labels, so every source lands in the same three
+  classes.
 - `--camera-key camera_id` keys `info['cams']` by the 123D camera id (`PCAM_F0`) instead of the
   dataset-native name (`CAM_FRONT`), so the camera dictionaries are consistent across datasets. The
   default camera order is already expressed in 123D ids and resolves to mmdet3d's nuScenes order on

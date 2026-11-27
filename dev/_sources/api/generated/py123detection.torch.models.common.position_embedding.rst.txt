@@ -1,0 +1,12 @@
+py123detection.torch.models.common.position\_embedding
+======================================================
+
+.. automodule:: py123detection.torch.models.common.position_embedding
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      compute_frustum_coords3d
+   

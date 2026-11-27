@@ -1,0 +1,14 @@
+py123detection.torch.data.augment
+=================================
+
+.. automodule:: py123detection.torch.data.augment
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Augmentation
+      BevTransform
+      Draw
+   

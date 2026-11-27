@@ -1,0 +1,21 @@
+py123detection.core
+===================
+
+.. automodule:: py123detection.core
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   annotations
+   cameras
+   evaluation
+   geometry
+   lidar_points
+   sources
+   taxonomy
+   velocity
+   visibility

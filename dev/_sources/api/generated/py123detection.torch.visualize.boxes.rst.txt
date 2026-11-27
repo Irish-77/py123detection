@@ -1,0 +1,21 @@
+py123detection.torch.visualize.boxes
+====================================
+
+.. automodule:: py123detection.torch.visualize.boxes
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      YAW
+      EDGES
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      corners
+      footprints
+      to_ego
+   

@@ -1,0 +1,30 @@
+py123detection.torch.visualize.viewer
+=====================================
+
+.. automodule:: py123detection.torch.visualize.viewer
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      PREDICTION_COLOUR
+      TRUTH_COLOUR
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_parser
+      check_alignment
+      frames_by_scene
+      load_scenes
+      main
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PredictionViewer
+      PredictionsElement
+   

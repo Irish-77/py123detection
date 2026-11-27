@@ -1,0 +1,13 @@
+py123detection.core.cameras
+===========================
+
+.. automodule:: py123detection.core.cameras
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      MMDET3D_NUSCENES_ORDER
+      THESIS_NUSCENES_ORDER
+   

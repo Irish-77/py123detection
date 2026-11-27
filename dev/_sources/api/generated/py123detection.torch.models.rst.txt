@@ -1,0 +1,17 @@
+py123detection.torch.models
+===========================
+
+.. automodule:: py123detection.torch.models
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   base
+   bevformer
+   common
+   multiview
+   petr

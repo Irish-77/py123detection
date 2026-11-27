@@ -1,0 +1,14 @@
+py123detection.torch.models.bevformer.head
+==========================================
+
+.. automodule:: py123detection.torch.models.bevformer.head
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BEVFormerHead
+      DeformableDETRDecoder
+      DeformableDETRDecoderLayer
+   

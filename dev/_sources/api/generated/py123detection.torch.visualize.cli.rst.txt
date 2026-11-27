@@ -1,0 +1,13 @@
+py123detection.torch.visualize.cli
+==================================
+
+.. automodule:: py123detection.torch.visualize.cli
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_parser
+      main
+   

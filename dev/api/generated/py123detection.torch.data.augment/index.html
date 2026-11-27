@@ -1,0 +1,670 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../genindex/"><link rel="search" title="Search" href="../../../search/"><link rel="next" title="py123detection.torch.data.boxes" href="../py123detection.torch.data.boxes/"><link rel="prev" title="py123detection.torch.data" href="../py123detection.torch.data/">
+        <link rel="canonical" href="https://irish-77.github.io/py123detection/dev/api/generated/py123detection.torch.data.augment/">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>py123detection.torch.data.augment - py123detection 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=75e05936" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     Preview of branch <code>dev</code> at <code>bfe7efb</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../"><div class="brand">py123detection 0.1.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../">
+  
+  <span class="sidebar-brand-text">py123detection 0.1.0</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search/" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Start here</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/">Install</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Export to mmdetection3d</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/cross-dataset-training/">Cross-dataset training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Train without mmcv</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/first-run/">First run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/training/">Training without mmcv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/visualisation/">Looking at what the model found</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../validation/">Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/">CLI reference</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.core/">py123detection.core</a><input aria-label="Toggle navigation of py123detection.core" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.annotations/">py123detection.core.annotations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.cameras/">py123detection.core.cameras</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.evaluation/">py123detection.core.evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.geometry/">py123detection.core.geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.lidar_points/">py123detection.core.lidar_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.sources/">py123detection.core.sources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.taxonomy/">py123detection.core.taxonomy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.velocity/">py123detection.core.velocity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.visibility/">py123detection.core.visibility</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../py123detection.geometry/">py123detection.geometry</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv/">py123detection.mmcv</a><input aria-label="Toggle navigation of py123detection.mmcv" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.mmcv.export/">py123detection.mmcv.export</a><input aria-label="Toggle navigation of py123detection.mmcv.export" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.annotations2d/">py123detection.mmcv.export.annotations2d</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.cli/">py123detection.mmcv.export.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.converter/">py123detection.mmcv.export.converter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.export/">py123detection.mmcv.export.export</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.schema/">py123detection.mmcv.export.schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.sensors/">py123detection.mmcv.export.sensors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.tokens/">py123detection.mmcv.export.tokens</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.writer/">py123detection.mmcv.export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.mmcv.plugin/">py123detection.mmcv.plugin</a><input aria-label="Toggle navigation of py123detection.mmcv.plugin" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.plugin.dataset/">py123detection.mmcv.plugin.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.plugin.evaluation/">py123detection.mmcv.plugin.evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.export/">py123detection.mmcv_export.export</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.schema/">py123detection.mmcv_export.schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.sensors/">py123detection.mmcv_export.sensors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.tokens/">py123detection.mmcv_export.tokens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../py123detection.sources/">py123detection.sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="../py123detection.torch/">py123detection.torch</a><input aria-label="Toggle navigation of py123detection.torch" checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.build/">py123detection.torch.build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.callbacks/">py123detection.torch.callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.conf/">py123detection.torch.conf</a></li>
+<li class="toctree-l4 current has-children"><a class="reference internal" href="../py123detection.torch.data/">py123detection.torch.data</a><input aria-label="Toggle navigation of py123detection.torch.data" checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l5 current current-page"><a class="current reference internal" href="#">py123detection.torch.data.augment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.boxes/">py123detection.torch.data.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.cameras/">py123detection.torch.data.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.collate/">py123detection.torch.data.collate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.datamodule/">py123detection.torch.data.datamodule</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.dataset/">py123detection.torch.data.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.frames/">py123detection.torch.data.frames</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.images/">py123detection.torch.data.images</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.rigs/">py123detection.torch.data.rigs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.evaluate/">py123detection.torch.evaluate</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.models/">py123detection.torch.models</a><input aria-label="Toggle navigation of py123detection.torch.models" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.models.base/">py123detection.torch.models.base</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.bevformer/">py123detection.torch.models.bevformer</a><input aria-label="Toggle navigation of py123detection.torch.models.bevformer" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.camera_embedding/">py123detection.torch.models.bevformer.camera_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.deformable_attention/">py123detection.torch.models.bevformer.deformable_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.detector/">py123detection.torch.models.bevformer.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.encoder/">py123detection.torch.models.bevformer.encoder</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.head/">py123detection.torch.models.bevformer.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.spatial_cross_attention/">py123detection.torch.models.bevformer.spatial_cross_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.utils/">py123detection.torch.models.bevformer.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.common/">py123detection.torch.models.common</a><input aria-label="Toggle navigation of py123detection.torch.models.common" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.backbone/">py123detection.torch.models.common.backbone</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.grid_mask/">py123detection.torch.models.common.grid_mask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.loss/">py123detection.torch.models.common.loss</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.position_embedding/">py123detection.torch.models.common.position_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.util/">py123detection.torch.models.common.util</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.models.multiview/">py123detection.torch.models.multiview</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.petr/">py123detection.torch.models.petr</a><input aria-label="Toggle navigation of py123detection.torch.models.petr" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.detector/">py123detection.torch.models.petr.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.head/">py123detection.torch.models.petr.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.positional_encoding/">py123detection.torch.models.petr.positional_encoding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.transformer/">py123detection.torch.models.petr.transformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.predictions/">py123detection.torch.predictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.train/">py123detection.torch.train</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.visualize/">py123detection.torch.visualize</a><input aria-label="Toggle navigation of py123detection.torch.visualize" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.bev/">py123detection.torch.visualize.bev</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.boxes/">py123detection.torch.visualize.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.cameras/">py123detection.torch.visualize.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.cli/">py123detection.torch.visualize.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.frame/">py123detection.torch.visualize.frame</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.py123d_interop/">py123detection.torch.visualize.py123d_interop</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.viewer/">py123detection.torch.visualize.viewer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../py123detection.velocity/">py123detection.velocity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../development/">Development</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../_sources/api/generated/py123detection.torch.data.augment.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-py123detection.torch.data.augment">
+<span id="py123detection-torch-data-augment"></span><h1>py123detection.torch.data.augment<a class="headerlink" href="#module-py123detection.torch.data.augment" title="Link to this heading">¶</a></h1>
+<p>The random part of a training sample, in one place.</p>
+<p>A sample is augmented twice over, and both halves are drawn together, once per sample:</p>
+<ul class="simple">
+<li><p>in the image: a zoom, a crop position and a horizontal flip (<a class="reference internal" href="../py123detection.torch.data.images/#py123detection.torch.data.images.ImageDraw" title="py123detection.torch.data.images.ImageDraw"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageDraw</span></code></a>),
+shared by every camera of the frame and folded into each camera’s intrinsics;</p></li>
+<li><p>in bird’s-eye view: a rotation and a scale of the world about the ego vehicle
+(<a class="reference internal" href="#py123detection.torch.data.augment.BevTransform" title="py123detection.torch.data.augment.BevTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">BevTransform</span></code></a>), applied to the boxes and folded, inverted, into every matrix that reads
+from the ego frame, so the images need no change.</p></li>
+</ul>
+<p>Validation is the default <a class="reference internal" href="#py123detection.torch.data.augment.Draw" title="py123detection.torch.data.augment.Draw"><code class="xref py py-class docutils literal notranslate"><span class="pre">Draw</span></code></a>: no zoom, a centred crop, no flip, no rotation.</p>
+<p><strong>Randomness.</strong> A dataset draws from its own generator, which the data module reseeds in every
+worker from the worker’s seed and the trainer’s rank. So each epoch sees a fresh augmentation of
+every frame, the same run repeated gives the same augmentations, and two ranks never draw the
+same stream. (The first version seeded each sample from its index, which is reproducible but gave
+every frame the <em>same</em> augmentation in every epoch.) To reproduce one sample exactly, pass its
+<a class="reference internal" href="#py123detection.torch.data.augment.Draw" title="py123detection.torch.data.augment.Draw"><code class="xref py py-class docutils literal notranslate"><span class="pre">Draw</span></code></a> to the dataset.</p>
+<p><strong>Zoom is relative.</strong> PETR’s <code class="docutils literal notranslate"><span class="pre">resize_lim</span></code> is an absolute scale, meaningful only for one source
+resolution and one output size: <code class="docutils literal notranslate"><span class="pre">(0.8,</span> <span class="pre">1.0)</span></code> suits 1600x900 images cropped to 704x1280 and is
+wrong by a factor of two at 320x800. Here the zoom multiplies the scale at which the image just
+covers the network input, so one range works for every rig and every size. <code class="docutils literal notranslate"><span class="pre">(1.0,</span> <span class="pre">1.25)</span></code> is
+exactly what the thesis trained with on Argoverse 2 and Waymo (on nuScenes it was
+<code class="docutils literal notranslate"><span class="pre">(1.025,</span> <span class="pre">1.28)</span></code>), and PETR’s own configs, rewritten this way, come to <code class="docutils literal notranslate"><span class="pre">(0.94,</span> <span class="pre">1.25)</span></code> at both
+320x800 and 640x1600.</p>
+<p class="rubric">Classes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.torch.data.augment.Augmentation" title="py123detection.torch.data.augment.Augmentation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Augmentation</span></code></a>([zoom_range, flip, ...])</p></td>
+<td><p>The distribution a training sample's <a class="reference internal" href="#py123detection.torch.data.augment.Draw" title="py123detection.torch.data.augment.Draw"><code class="xref py py-class docutils literal notranslate"><span class="pre">Draw</span></code></a> comes from.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform" title="py123detection.torch.data.augment.BevTransform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BevTransform</span></code></a>([angle, scale])</p></td>
+<td><p>The rotation and scale chosen for one sample.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.torch.data.augment.Draw" title="py123detection.torch.data.augment.Draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Draw</span></code></a>([image, bev])</p></td>
+<td><p>Everything random about one sample.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.BevTransform">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">py123detection.torch.data.augment.</span></span><span class="sig-name descname"><span class="pre">BevTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#BevTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.BevTransform" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The rotation and scale chosen for one sample. The identity when not augmenting.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.BevTransform.angle">
+<span class="sig-name descname"><span class="pre">angle</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#py123detection.torch.data.augment.BevTransform.angle" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.BevTransform.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#py123detection.torch.data.augment.BevTransform.scale" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.BevTransform.is_identity">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_identity</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><span class="pre">bool</span></a></span><a class="headerlink" href="#py123detection.torch.data.augment.BevTransform.is_identity" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.BevTransform.rotation_matrix">
+<span class="sig-name descname"><span class="pre">rotation_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#BevTransform.rotation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.BevTransform.rotation_matrix" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.BevTransform.inverse_matrix">
+<span class="sig-name descname"><span class="pre">inverse_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#BevTransform.inverse_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.BevTransform.inverse_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Augmented ego frame back to the original one, i.e. <code class="docutils literal notranslate"><span class="pre">R(-angle)</span> <span class="pre">/</span> <span class="pre">scale</span></code>.</p>
+<p>A matrix mapping <em>from</em> the ego frame (<code class="docutils literal notranslate"><span class="pre">imu2img</span></code>, <code class="docutils literal notranslate"><span class="pre">imu2cam</span></code>, <code class="docutils literal notranslate"><span class="pre">imu2global</span></code>) is
+right-multiplied by this, because its input now arrives already rotated and scaled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.BevTransform.forward_matrix">
+<span class="sig-name descname"><span class="pre">forward_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#BevTransform.forward_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.BevTransform.forward_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Original ego frame to the augmented one, for matrices that map <em>into</em> it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.BevTransform.apply_to_boxes">
+<span class="sig-name descname"><span class="pre">apply_to_boxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boxes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#BevTransform.apply_to_boxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.BevTransform.apply_to_boxes" title="Link to this definition">¶</a></dt>
+<dd><p>Rotate and scale <code class="docutils literal notranslate"><span class="pre">[x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">w,</span> <span class="pre">l,</span> <span class="pre">h,</span> <span class="pre">yaw,</span> <span class="pre">vx,</span> <span class="pre">vy]</span></code> rows.</p>
+<p>Centres, sizes, velocities and yaw all turn the same way. The legacy implementation turned
+the centres by <code class="docutils literal notranslate"><span class="pre">+angle</span></code> and the yaw by <code class="docutils literal notranslate"><span class="pre">-angle</span></code>, which left every augmented box facing
+the wrong way by twice the angle; a symmetric range hid it on average.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Draw">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">py123detection.torch.data.augment.</span></span><span class="sig-name descname"><span class="pre">Draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#Draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.Draw" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Everything random about one sample. The default is the unaugmented, validation sample.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Draw.image">
+<span class="sig-name descname"><span class="pre">image</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../py123detection.torch.data.images/#py123detection.torch.data.images.ImageDraw" title="py123detection.torch.data.images.ImageDraw"><span class="pre">ImageDraw</span></a></span><a class="headerlink" href="#py123detection.torch.data.augment.Draw.image" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Draw.bev">
+<span class="sig-name descname"><span class="pre">bev</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform" title="py123detection.torch.data.augment.BevTransform"><span class="pre">BevTransform</span></a></span><a class="headerlink" href="#py123detection.torch.data.augment.Draw.bev" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Draw.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#Draw.metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.Draw.metadata" title="Link to this definition">¶</a></dt>
+<dd><p>What was drawn, for <code class="docutils literal notranslate"><span class="pre">img_metas</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Augmentation">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">py123detection.torch.data.augment.</span></span><span class="sig-name descname"><span class="pre">Augmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zoom_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.25)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(-0.3925,</span> <span class="pre">0.3925)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.95,</span> <span class="pre">1.05)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#Augmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.Augmentation" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The distribution a training sample’s <a class="reference internal" href="#py123detection.torch.data.augment.Draw" title="py123detection.torch.data.augment.Draw"><code class="xref py py-class docutils literal notranslate"><span class="pre">Draw</span></code></a> comes from.</p>
+<p>A dataset without one is not augmented, which is the whole difference between training and
+validation data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Augmentation.zoom_range">
+<span class="sig-name descname"><span class="pre">zoom_range</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.15)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(1.0,</span> <span class="pre">1.25)</span></span><a class="headerlink" href="#py123detection.torch.data.augment.Augmentation.zoom_range" title="Link to this definition">¶</a></dt>
+<dd><p>Image scale relative to the covering one; see the module notes. Ignored in <code class="docutils literal notranslate"><span class="pre">stretch</span></code> mode.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Augmentation.flip">
+<span class="sig-name descname"><span class="pre">flip</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#py123detection.torch.data.augment.Augmentation.flip" title="Link to this definition">¶</a></dt>
+<dd><p>Mirror the images of half the samples.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Augmentation.rotation_range">
+<span class="sig-name descname"><span class="pre">rotation_range</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.15)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(-0.3925,</span> <span class="pre">0.3925)</span></span><a class="headerlink" href="#py123detection.torch.data.augment.Augmentation.rotation_range" title="Link to this definition">¶</a></dt>
+<dd><p>Bird’s-eye yaw in radians, about +/- 22.5 degrees by default.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Augmentation.scale_range">
+<span class="sig-name descname"><span class="pre">scale_range</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.15)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(0.95,</span> <span class="pre">1.05)</span></span><a class="headerlink" href="#py123detection.torch.data.augment.Augmentation.scale_range" title="Link to this definition">¶</a></dt>
+<dd><p>Bird’s-eye scale of the world about the ego vehicle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py123detection.torch.data.augment.Augmentation.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/torch/data/augment/#Augmentation.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.torch.data.augment.Augmentation.draw" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#py123detection.torch.data.augment.Draw" title="py123detection.torch.data.augment.Draw"><code class="xref py py-class docutils literal notranslate"><span class="pre">Draw</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../py123detection.torch.data.boxes/">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">py123detection.torch.data.boxes</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../py123detection.torch.data/">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">py123detection.torch.data</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">py123detection.torch.data.augment</a><ul>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform"><code class="docutils literal notranslate"><span class="pre">BevTransform</span></code></a><ul>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform.angle"><code class="docutils literal notranslate"><span class="pre">BevTransform.angle</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform.scale"><code class="docutils literal notranslate"><span class="pre">BevTransform.scale</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform.is_identity"><code class="docutils literal notranslate"><span class="pre">BevTransform.is_identity</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform.rotation_matrix"><code class="docutils literal notranslate"><span class="pre">BevTransform.rotation_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform.inverse_matrix"><code class="docutils literal notranslate"><span class="pre">BevTransform.inverse_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform.forward_matrix"><code class="docutils literal notranslate"><span class="pre">BevTransform.forward_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.BevTransform.apply_to_boxes"><code class="docutils literal notranslate"><span class="pre">BevTransform.apply_to_boxes()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Draw"><code class="docutils literal notranslate"><span class="pre">Draw</span></code></a><ul>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Draw.image"><code class="docutils literal notranslate"><span class="pre">Draw.image</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Draw.bev"><code class="docutils literal notranslate"><span class="pre">Draw.bev</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Draw.metadata"><code class="docutils literal notranslate"><span class="pre">Draw.metadata()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Augmentation"><code class="docutils literal notranslate"><span class="pre">Augmentation</span></code></a><ul>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Augmentation.zoom_range"><code class="docutils literal notranslate"><span class="pre">Augmentation.zoom_range</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Augmentation.flip"><code class="docutils literal notranslate"><span class="pre">Augmentation.flip</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Augmentation.rotation_range"><code class="docutils literal notranslate"><span class="pre">Augmentation.rotation_range</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Augmentation.scale_range"><code class="docutils literal notranslate"><span class="pre">Augmentation.scale_range</span></code></a></li>
+<li><a class="reference internal" href="#py123detection.torch.data.augment.Augmentation.draw"><code class="docutils literal notranslate"><span class="pre">Augmentation.draw()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../_static/documentation_options.js?v=b2731ba4"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

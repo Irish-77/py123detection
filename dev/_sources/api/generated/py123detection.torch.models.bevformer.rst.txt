@@ -1,0 +1,19 @@
+py123detection.torch.models.bevformer
+=====================================
+
+.. automodule:: py123detection.torch.models.bevformer
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   camera_embedding
+   deformable_attention
+   detector
+   encoder
+   head
+   spatial_cross_attention
+   utils

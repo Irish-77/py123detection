@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=75e05936" />
     
     
 
@@ -155,7 +156,7 @@
 
 <div class="announcement">
   <aside class="announcement-content">
-     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+     Preview of branch <code>dev</code> at <code>bfe7efb</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
   </aside>
 </div>
 
@@ -196,21 +197,27 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Start here</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/">Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../quickstart/">Quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/">Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<p class="caption" role="heading"><span class="caption-text">Export to mmdetection3d</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Train without mmcv</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/first-run/">First run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/training/">Training without mmcv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/visualisation/">Looking at what the model found</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
@@ -219,8 +226,39 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/generated/py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.core/">py123detection.core</a><input aria-label="Toggle navigation of py123detection.core" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.annotations/">py123detection.core.annotations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.cameras/">py123detection.core.cameras</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.evaluation/">py123detection.core.evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.geometry/">py123detection.core.geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.lidar_points/">py123detection.core.lidar_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.sources/">py123detection.core.sources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.taxonomy/">py123detection.core.taxonomy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.velocity/">py123detection.core.velocity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.visibility/">py123detection.core.visibility</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.geometry/">py123detection.geometry</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv/">py123detection.mmcv</a><input aria-label="Toggle navigation of py123detection.mmcv" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv.export/">py123detection.mmcv.export</a><input aria-label="Toggle navigation of py123detection.mmcv.export" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.annotations2d/">py123detection.mmcv.export.annotations2d</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.cli/">py123detection.mmcv.export.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.converter/">py123detection.mmcv.export.converter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.export/">py123detection.mmcv.export.export</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.schema/">py123detection.mmcv.export.schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.sensors/">py123detection.mmcv.export.sensors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.tokens/">py123detection.mmcv.export.tokens</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.writer/">py123detection.mmcv.export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv.plugin/">py123detection.mmcv.plugin</a><input aria-label="Toggle navigation of py123detection.mmcv.plugin" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.plugin.dataset/">py123detection.mmcv.plugin.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.plugin.evaluation/">py123detection.mmcv.plugin.evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
@@ -231,13 +269,74 @@
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.sources/">py123detection.sources</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.torch/">py123detection.torch</a><input aria-label="Toggle navigation of py123detection.torch" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.build/">py123detection.torch.build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.callbacks/">py123detection.torch.callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.conf/">py123detection.torch.conf</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.data/">py123detection.torch.data</a><input aria-label="Toggle navigation of py123detection.torch.data" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.augment/">py123detection.torch.data.augment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.boxes/">py123detection.torch.data.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.cameras/">py123detection.torch.data.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.collate/">py123detection.torch.data.collate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.datamodule/">py123detection.torch.data.datamodule</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.dataset/">py123detection.torch.data.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.frames/">py123detection.torch.data.frames</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.images/">py123detection.torch.data.images</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.rigs/">py123detection.torch.data.rigs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.evaluate/">py123detection.torch.evaluate</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.models/">py123detection.torch.models</a><input aria-label="Toggle navigation of py123detection.torch.models" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.models.base/">py123detection.torch.models.base</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer/">py123detection.torch.models.bevformer</a><input aria-label="Toggle navigation of py123detection.torch.models.bevformer" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.camera_embedding/">py123detection.torch.models.bevformer.camera_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.deformable_attention/">py123detection.torch.models.bevformer.deformable_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.detector/">py123detection.torch.models.bevformer.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.encoder/">py123detection.torch.models.bevformer.encoder</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.head/">py123detection.torch.models.bevformer.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.spatial_cross_attention/">py123detection.torch.models.bevformer.spatial_cross_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.utils/">py123detection.torch.models.bevformer.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.models.common/">py123detection.torch.models.common</a><input aria-label="Toggle navigation of py123detection.torch.models.common" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.backbone/">py123detection.torch.models.common.backbone</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.grid_mask/">py123detection.torch.models.common.grid_mask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.loss/">py123detection.torch.models.common.loss</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.position_embedding/">py123detection.torch.models.common.position_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.util/">py123detection.torch.models.common.util</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.models.multiview/">py123detection.torch.models.multiview</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr/">py123detection.torch.models.petr</a><input aria-label="Toggle navigation of py123detection.torch.models.petr" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr.detector/">py123detection.torch.models.petr.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr.head/">py123detection.torch.models.petr.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr.positional_encoding/">py123detection.torch.models.petr.positional_encoding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr.transformer/">py123detection.torch.models.petr.transformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.predictions/">py123detection.torch.predictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.train/">py123detection.torch.train</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.visualize/">py123detection.torch.visualize</a><input aria-label="Toggle navigation of py123detection.torch.visualize" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.bev/">py123detection.torch.visualize.bev</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.boxes/">py123detection.torch.visualize.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.cameras/">py123detection.torch.visualize.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.cli/">py123detection.torch.visualize.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.frame/">py123detection.torch.visualize.frame</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.py123d_interop/">py123detection.torch.visualize.py123d_interop</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.viewer/">py123detection.torch.visualize.viewer</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.velocity/">py123detection.velocity</a></li>
 </ul>
 </li>
@@ -297,7 +396,7 @@ the argument parser, so it always matches the installed version.</p>
 </pre></div>
 </div>
 <section id="py123det-export-mmcv-positional-arguments">
-<span id="py123detection.mmcv_export.cli-build_parser-positional-arguments"></span><h2>Positional Arguments<a class="headerlink" href="#py123det-export-mmcv-positional-arguments" title="Link to this heading">¶</a></h2>
+<span id="py123detection.mmcv.export.cli-build_parser-positional-arguments"></span><h2>Positional Arguments<a class="headerlink" href="#py123det-export-mmcv-positional-arguments" title="Link to this heading">¶</a></h2>
 <dl class="option-list">
 <dt><kbd>command</kbd></dt>
 <dd><p>Possible choices: export, inspect, token-map</p>
@@ -305,7 +404,7 @@ the argument parser, so it always matches the installed version.</p>
 </dl>
 </section>
 <section id="py123det-export-mmcv-named-arguments">
-<span id="py123detection.mmcv_export.cli-build_parser-named-arguments"></span><h2>Named Arguments<a class="headerlink" href="#py123det-export-mmcv-named-arguments" title="Link to this heading">¶</a></h2>
+<span id="py123detection.mmcv.export.cli-build_parser-named-arguments"></span><h2>Named Arguments<a class="headerlink" href="#py123det-export-mmcv-named-arguments" title="Link to this heading">¶</a></h2>
 <dl class="option-list">
 <dt><kbd>-v, --verbose</kbd></dt>
 <dd><p>Enable debug logging.</p>
@@ -329,7 +428,7 @@ the argument parser, so it always matches the installed version.</p>
                             <span class="p">[</span><span class="o">--</span><span class="n">version</span> <span class="n">VERSION</span><span class="p">]</span>
                             <span class="p">[</span><span class="o">--</span><span class="n">array</span><span class="o">-</span><span class="nb">format</span> <span class="p">{</span><span class="n">numpy</span><span class="p">,</span><span class="n">portable</span><span class="p">}]</span>
                             <span class="p">[</span><span class="o">--</span><span class="n">pickle</span><span class="o">-</span><span class="n">protocol</span> <span class="n">PICKLE_PROTOCOL</span><span class="p">]</span>
-                            <span class="p">[</span><span class="o">--</span><span class="n">taxonomy</span> <span class="p">{</span><span class="n">coin3d_3cls</span><span class="p">,</span><span class="n">default_123d</span><span class="p">,</span><span class="n">general_3cls</span><span class="p">,</span><span class="n">nuscenes_detection_10cls</span><span class="p">,</span><span class="n">vehicle_1cls</span><span class="p">}]</span>
+                            <span class="p">[</span><span class="o">--</span><span class="n">taxonomy</span> <span class="p">{</span><span class="n">coin3d_3cls</span><span class="p">,</span><span class="n">default_123d</span><span class="p">,</span><span class="n">general_3cls</span><span class="p">,</span><span class="n">mixed2_3cls</span><span class="p">,</span><span class="n">mixed3_1cls</span><span class="p">,</span><span class="n">mixed_8cls</span><span class="p">,</span><span class="n">nuscenes_detection_10cls</span><span class="p">,</span><span class="n">vehicle_1cls</span><span class="p">}]</span>
                             <span class="p">[</span><span class="o">--</span><span class="n">camera</span><span class="o">-</span><span class="n">order</span> <span class="n">CAMERA_ORDER</span><span class="p">]</span>
                             <span class="p">[</span><span class="o">--</span><span class="n">camera</span><span class="o">-</span><span class="n">key</span> <span class="p">{</span><span class="n">native</span><span class="p">,</span><span class="n">camera_id</span><span class="p">}]</span>
                             <span class="p">[</span><span class="o">--</span><span class="n">reference</span><span class="o">-</span><span class="n">lidar</span> <span class="n">REFERENCE_LIDAR</span><span class="p">]</span>
@@ -403,7 +502,7 @@ the argument parser, so it always matches the installed version.</p>
 </dd>
 <dt><kbd>--array-format</kbd></dt>
 <dd><p>Possible choices: numpy, portable</p>
-<p>‘portable’ stores arrays as nested lists, sidestepping numpy’s pickle format (needs py123detection.mmcv_plugin on the training side).</p>
+<p>‘portable’ stores arrays as nested lists, sidestepping numpy’s pickle format (needs py123detection.mmcv.plugin on the training side).</p>
 <p>Default: <code class="docutils literal notranslate"><span class="pre">'numpy'</span></code></p>
 </dd>
 <dt><kbd>--pickle-protocol</kbd></dt>
@@ -416,7 +515,7 @@ the argument parser, so it always matches the installed version.</p>
 <span id="-content"></span><h4>content<a class="headerlink" href="#py123det-export-mmcv-export-content" title="Link to this heading">¶</a></h4>
 <dl class="option-list">
 <dt><kbd>--taxonomy</kbd></dt>
-<dd><p>Possible choices: coin3d_3cls, default_123d, general_3cls, nuscenes_detection_10cls, vehicle_1cls</p>
+<dd><p>Possible choices: coin3d_3cls, default_123d, general_3cls, mixed2_3cls, mixed3_1cls, mixed_8cls, nuscenes_detection_10cls, vehicle_1cls</p>
 <p>Class taxonomy. Cross-dataset exports want a default-label taxonomy like general_3cls.</p>
 <p>Default: <code class="docutils literal notranslate"><span class="pre">'nuscenes_detection_10cls'</span></code></p>
 </dd>
@@ -567,6 +666,248 @@ the argument parser, so it always matches the installed version.</p>
 </section>
 </section>
 </section>
+<section id="py123det-viz">
+<h2>py123det-viz<a class="headerlink" href="#py123det-viz" title="Link to this heading">¶</a></h2>
+<p>Rendering a run’s predictions. See <a class="reference internal" href="../guides/visualisation/"><span class="std std-doc">Looking at what the model found</span></a>.</p>
+<p><p>Render the predictions a py123det-eval run wrote.</p>
+</p>
+<div class="highlight-default notranslate" id="id0"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">py123det</span><span class="o">-</span><span class="n">viz</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">{</span><span class="n">bev</span><span class="p">,</span><span class="n">cameras</span><span class="p">,</span><span class="n">frame</span><span class="p">}</span> <span class="o">...</span>
+</pre></div>
+</div>
+<section id="py123det-viz-positional-arguments">
+<span id="py123detection.torch.visualize.cli-build_parser-positional-arguments"></span><h3>Positional Arguments<a class="headerlink" href="#py123det-viz-positional-arguments" title="Link to this heading">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>command</kbd></dt>
+<dd><p>Possible choices: bev, cameras, frame</p>
+</dd>
+</dl>
+</section>
+<section id="Sub-commands">
+<h3>Sub-commands<a class="headerlink" href="#Sub-commands" title="Link to this heading">¶</a></h3>
+<section id="py123det-viz-bev">
+<span id="bev"></span><h4>bev<a class="headerlink" href="#py123det-viz-bev" title="Link to this heading">¶</a></h4>
+<p>bird’s-eye view; needs nothing but the file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">py123det</span><span class="o">-</span><span class="n">viz</span> <span class="n">bev</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">o</span> <span class="n">OUT</span> <span class="p">[</span><span class="o">--</span><span class="n">score</span><span class="o">-</span><span class="n">threshold</span> <span class="n">SCORE_THRESHOLD</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">limit</span> <span class="n">LIMIT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dataset</span> <span class="n">DATASET</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">taxonomy</span> <span class="n">TAXONOMY</span><span class="p">]</span>
+                 <span class="p">[</span><span class="o">--</span><span class="n">radius</span> <span class="n">RADIUS</span><span class="p">]</span>
+                 <span class="n">predictions</span>
+</pre></div>
+</div>
+<section id="py123det-viz-bev-positional-arguments">
+<span id="-positional-arguments"></span><h5>Positional Arguments<a class="headerlink" href="#py123det-viz-bev-positional-arguments" title="Link to this heading">¶</a></h5>
+<dl class="option-list">
+<dt><kbd>predictions</kbd></dt>
+<dd><p>a predictions.jsonl from py123det-eval</p>
+</dd>
+</dl>
+</section>
+<section id="py123det-viz-bev-named-arguments">
+<span id="-named-arguments"></span><h5>Named Arguments<a class="headerlink" href="#py123det-viz-bev-named-arguments" title="Link to this heading">¶</a></h5>
+<dl class="option-list">
+<dt><kbd>-o, --out</kbd></dt>
+<dd><p>directory for the PNGs</p>
+</dd>
+<dt><kbd>--score-threshold</kbd></dt>
+<dd><p>leave out predictions below this score (default: 0.3). A detector emits one box per query, so an unfiltered picture shows nothing.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">0.3</span></code></p>
+</dd>
+<dt><kbd>--limit</kbd></dt>
+<dd><p>render at most this many frames</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">20</span></code></p>
+</dd>
+<dt><kbd>--dataset</kbd></dt>
+<dd><p>only frames of this dataset</p>
+</dd>
+<dt><kbd>--taxonomy</kbd></dt>
+<dd><p>name a taxonomy to label classes by name instead of index</p>
+</dd>
+<dt><kbd>--radius</kbd></dt>
+<dd><p>half-width of the view in metres</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">50.0</span></code></p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="py123det-viz-cameras">
+<span id="cameras"></span><h4>cameras<a class="headerlink" href="#py123det-viz-cameras" title="Link to this heading">¶</a></h4>
+<p>boxes drawn on every camera image; needs the 123D logs</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">py123det</span><span class="o">-</span><span class="n">viz</span> <span class="n">cameras</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">o</span> <span class="n">OUT</span> <span class="p">[</span><span class="o">--</span><span class="n">score</span><span class="o">-</span><span class="n">threshold</span> <span class="n">SCORE_THRESHOLD</span><span class="p">]</span>
+                     <span class="p">[</span><span class="o">--</span><span class="n">limit</span> <span class="n">LIMIT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dataset</span> <span class="n">DATASET</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">taxonomy</span> <span class="n">TAXONOMY</span><span class="p">]</span>
+                     <span class="o">--</span><span class="n">experiment</span> <span class="n">EXPERIMENT</span> <span class="p">[</span><span class="o">--</span><span class="n">images</span> <span class="n">IMAGES</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">O</span> <span class="n">KEY</span><span class="o">=</span><span class="n">VALUE</span><span class="p">]</span>
+                     <span class="p">[</span><span class="o">--</span><span class="n">columns</span> <span class="n">COLUMNS</span><span class="p">]</span>
+                     <span class="n">predictions</span>
+</pre></div>
+</div>
+<section id="py123det-viz-cameras-positional-arguments">
+<span id="-positional-arguments_repeat1"></span><h5>Positional Arguments<a class="headerlink" href="#py123det-viz-cameras-positional-arguments" title="Link to this heading">¶</a></h5>
+<dl class="option-list">
+<dt><kbd>predictions</kbd></dt>
+<dd><p>a predictions.jsonl from py123det-eval</p>
+</dd>
+</dl>
+</section>
+<section id="py123det-viz-cameras-named-arguments">
+<span id="-named-arguments_repeat1"></span><h5>Named Arguments<a class="headerlink" href="#py123det-viz-cameras-named-arguments" title="Link to this heading">¶</a></h5>
+<dl class="option-list">
+<dt><kbd>-o, --out</kbd></dt>
+<dd><p>directory for the PNGs</p>
+</dd>
+<dt><kbd>--score-threshold</kbd></dt>
+<dd><p>leave out predictions below this score (default: 0.3). A detector emits one box per query, so an unfiltered picture shows nothing.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">0.3</span></code></p>
+</dd>
+<dt><kbd>--limit</kbd></dt>
+<dd><p>render at most this many frames</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">20</span></code></p>
+</dd>
+<dt><kbd>--dataset</kbd></dt>
+<dd><p>only frames of this dataset</p>
+</dd>
+<dt><kbd>--taxonomy</kbd></dt>
+<dd><p>name a taxonomy to label classes by name instead of index</p>
+</dd>
+<dt><kbd>--experiment</kbd></dt>
+<dd><p>the experiment config naming the datasets and splits</p>
+</dd>
+<dt><kbd>--images</kbd></dt>
+<dd><p>the images config group to use</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'petr_704'</span></code></p>
+</dd>
+<dt><kbd>-O, --override</kbd></dt>
+<dd><p>an extra Hydra override, repeatable. Needed whenever the run was not scored on a stock config: -O ‘hydra.searchpath=[<a class="reference external" href="file:///path/to/conf">file:///path/to/conf</a>]’ to reach an experiment outside the package, and -O ‘data.val=[…]’ to rebuild the exact frames it scored.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">[]</span></code></p>
+</dd>
+<dt><kbd>--columns</kbd></dt>
+<dd><p>cameras per row in the tiled image</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">3</span></code></p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="py123det-viz-frame">
+<span id="frame"></span><h4>frame<a class="headerlink" href="#py123det-viz-frame" title="Link to this heading">¶</a></h4>
+<p>front camera beside the bird’s-eye view; needs the 123D logs</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">py123det</span><span class="o">-</span><span class="n">viz</span> <span class="n">frame</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">o</span> <span class="n">OUT</span> <span class="p">[</span><span class="o">--</span><span class="n">score</span><span class="o">-</span><span class="n">threshold</span> <span class="n">SCORE_THRESHOLD</span><span class="p">]</span>
+                   <span class="p">[</span><span class="o">--</span><span class="n">limit</span> <span class="n">LIMIT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dataset</span> <span class="n">DATASET</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">taxonomy</span> <span class="n">TAXONOMY</span><span class="p">]</span>
+                   <span class="o">--</span><span class="n">experiment</span> <span class="n">EXPERIMENT</span> <span class="p">[</span><span class="o">--</span><span class="n">images</span> <span class="n">IMAGES</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">O</span> <span class="n">KEY</span><span class="o">=</span><span class="n">VALUE</span><span class="p">]</span>
+                   <span class="p">[</span><span class="o">--</span><span class="n">radius</span> <span class="n">RADIUS</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">camera</span> <span class="n">CAMERA</span><span class="p">]</span>
+                   <span class="n">predictions</span>
+</pre></div>
+</div>
+<section id="py123det-viz-frame-positional-arguments">
+<span id="-positional-arguments_repeat2"></span><h5>Positional Arguments<a class="headerlink" href="#py123det-viz-frame-positional-arguments" title="Link to this heading">¶</a></h5>
+<dl class="option-list">
+<dt><kbd>predictions</kbd></dt>
+<dd><p>a predictions.jsonl from py123det-eval</p>
+</dd>
+</dl>
+</section>
+<section id="py123det-viz-frame-named-arguments">
+<span id="-named-arguments_repeat2"></span><h5>Named Arguments<a class="headerlink" href="#py123det-viz-frame-named-arguments" title="Link to this heading">¶</a></h5>
+<dl class="option-list">
+<dt><kbd>-o, --out</kbd></dt>
+<dd><p>directory for the PNGs</p>
+</dd>
+<dt><kbd>--score-threshold</kbd></dt>
+<dd><p>leave out predictions below this score (default: 0.3). A detector emits one box per query, so an unfiltered picture shows nothing.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">0.3</span></code></p>
+</dd>
+<dt><kbd>--limit</kbd></dt>
+<dd><p>render at most this many frames</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">20</span></code></p>
+</dd>
+<dt><kbd>--dataset</kbd></dt>
+<dd><p>only frames of this dataset</p>
+</dd>
+<dt><kbd>--taxonomy</kbd></dt>
+<dd><p>name a taxonomy to label classes by name instead of index</p>
+</dd>
+<dt><kbd>--experiment</kbd></dt>
+<dd><p>the experiment config naming the datasets and splits</p>
+</dd>
+<dt><kbd>--images</kbd></dt>
+<dd><p>the images config group to use</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'petr_704'</span></code></p>
+</dd>
+<dt><kbd>-O, --override</kbd></dt>
+<dd><p>an extra Hydra override, repeatable. Needed whenever the run was not scored on a stock config: -O ‘hydra.searchpath=[<a class="reference external" href="file:///path/to/conf">file:///path/to/conf</a>]’ to reach an experiment outside the package, and -O ‘data.val=[…]’ to rebuild the exact frames it scored.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">[]</span></code></p>
+</dd>
+<dt><kbd>--radius</kbd></dt>
+<dd><p>half-width of the view in metres</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">50.0</span></code></p>
+</dd>
+<dt><kbd>--camera</kbd></dt>
+<dd><p>which camera of the rig; 0 is the front one</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+</section>
+<section id="py123det-view">
+<h2>py123det-view<a class="headerlink" href="#py123det-view" title="Link to this heading">¶</a></h2>
+<p>The same predictions in py123d’s interactive viewer. See
+<a class="reference internal" href="../guides/visualisation/"><span class="std std-doc">Looking at what the model found</span></a>.</p>
+<p><p>Open a run’s predictions in py123d’s Viser viewer.</p>
+</p>
+<div class="highlight-default notranslate" id="id1"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">py123det</span><span class="o">-</span><span class="n">view</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dataset</span> <span class="n">DATASET</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">split</span> <span class="n">SPLIT</span><span class="p">]</span>
+                     <span class="p">[</span><span class="o">--</span><span class="n">data</span><span class="o">-</span><span class="n">root</span> <span class="n">DATA_ROOT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">frame</span><span class="o">-</span><span class="n">stride</span> <span class="n">FRAME_STRIDE</span><span class="p">]</span>
+                     <span class="p">[</span><span class="o">--</span><span class="n">sample</span><span class="o">-</span><span class="n">rate</span><span class="o">-</span><span class="n">hz</span> <span class="n">SAMPLE_RATE_HZ</span><span class="p">]</span>
+                     <span class="p">[</span><span class="o">--</span><span class="n">score</span><span class="o">-</span><span class="n">threshold</span> <span class="n">SCORE_THRESHOLD</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">ground</span><span class="o">-</span><span class="n">truth</span><span class="p">]</span>
+                     <span class="p">[</span><span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">scenes</span> <span class="n">MAX_SCENES</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span>
+                     <span class="n">predictions</span>
+</pre></div>
+</div>
+<section id="py123det-view-positional-arguments">
+<span id="py123detection.torch.visualize.viewer-build_parser-positional-arguments"></span><h3>Positional Arguments<a class="headerlink" href="#py123det-view-positional-arguments" title="Link to this heading">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>predictions</kbd></dt>
+<dd><p>a predictions.jsonl from py123det-eval</p>
+</dd>
+</dl>
+</section>
+<section id="py123det-view-named-arguments">
+<span id="py123detection.torch.visualize.viewer-build_parser-named-arguments"></span><h3>Named Arguments<a class="headerlink" href="#py123det-view-named-arguments" title="Link to this heading">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>--dataset</kbd></dt>
+<dd><p>only frames of this dataset</p>
+</dd>
+<dt><kbd>--split</kbd></dt>
+<dd><p>123D split to look the logs up in, e.g. nuscenes_val. Repeatable. Without it every split under the data root is searched, which is slower.</p>
+</dd>
+<dt><kbd>--data-root</kbd></dt>
+<dd><p>123D root holding logs/; defaults to $PY123D_DATA_ROOT</p>
+</dd>
+<dt><kbd>--frame-stride</kbd></dt>
+<dd><p>the frame stride the run was EVALUATED with, which is what its frame numbering means. Default: every frame.</p>
+</dd>
+<dt><kbd>--sample-rate-hz</kbd></dt>
+<dd><p>the evaluation’s sample rate, instead of a stride</p>
+</dd>
+<dt><kbd>--score-threshold</kbd></dt>
+<dd><p>initial score slider position</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">0.3</span></code></p>
+</dd>
+<dt><kbd>--ground-truth</kbd></dt>
+<dd><p>also draw the run’s filtered ground truth</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt><kbd>--max-scenes</kbd></dt>
+<dd><p>open at most this many logs</p>
+</dd>
+<dt><kbd>--host</kbd></dt>
+<dd><p>address to serve on; 0.0.0.0 to allow a tunnel</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'localhost'</span></code></p>
+</dd>
+<dt><kbd>--port</kbd></dt>
+<dd><p>port to serve on</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">8080</span></code></p>
+</dd>
+</dl>
+</section>
+</section>
 </section>
 
         </article>
@@ -644,6 +985,33 @@ the argument parser, so it always matches the installed version.</p>
 <li><a class="reference internal" href="#py123det-export-mmcv-token-map-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a class="reference internal" href="#py123det-viz">py123det-viz</a><ul>
+<li><a class="reference internal" href="#py123det-viz-positional-arguments">Positional Arguments</a></li>
+<li><a class="reference internal" href="#Sub-commands">Sub-commands</a><ul>
+<li><a class="reference internal" href="#py123det-viz-bev">bev</a><ul>
+<li><a class="reference internal" href="#py123det-viz-bev-positional-arguments">Positional Arguments</a></li>
+<li><a class="reference internal" href="#py123det-viz-bev-named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#py123det-viz-cameras">cameras</a><ul>
+<li><a class="reference internal" href="#py123det-viz-cameras-positional-arguments">Positional Arguments</a></li>
+<li><a class="reference internal" href="#py123det-viz-cameras-named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#py123det-viz-frame">frame</a><ul>
+<li><a class="reference internal" href="#py123det-viz-frame-positional-arguments">Positional Arguments</a></li>
+<li><a class="reference internal" href="#py123det-viz-frame-named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#py123det-view">py123det-view</a><ul>
+<li><a class="reference internal" href="#py123det-view-positional-arguments">Positional Arguments</a></li>
+<li><a class="reference internal" href="#py123det-view-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
 </ul>

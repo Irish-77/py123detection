@@ -1,0 +1,12 @@
+py123detection.torch.models.bevformer.spatial\_cross\_attention
+===============================================================
+
+.. automodule:: py123detection.torch.models.bevformer.spatial_cross_attention
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SpatialCrossAttention
+   

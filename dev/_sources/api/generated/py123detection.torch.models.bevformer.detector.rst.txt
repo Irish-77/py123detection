@@ -1,0 +1,12 @@
+py123detection.torch.models.bevformer.detector
+==============================================
+
+.. automodule:: py123detection.torch.models.bevformer.detector
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BEVFormer
+   

@@ -1,0 +1,27 @@
+py123detection.core.visibility
+==============================
+
+.. automodule:: py123detection.core.visibility
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      FULL_COVERAGE_DEG
+      MIN_DEPTH_M
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      coverage_degrees
+      rig_visibility
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CameraView
+      RigVisibility
+   

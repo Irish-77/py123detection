@@ -1,0 +1,18 @@
+py123detection.core.velocity
+============================
+
+.. automodule:: py123detection.core.velocity
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      velocities_from_track
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      TrackVelocityTable
+   

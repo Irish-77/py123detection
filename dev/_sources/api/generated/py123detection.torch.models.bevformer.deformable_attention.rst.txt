@@ -1,0 +1,13 @@
+py123detection.torch.models.bevformer.deformable\_attention
+===========================================================
+
+.. automodule:: py123detection.torch.models.bevformer.deformable_attention
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      MultiScaleDeformableAttention
+      MultiScaleDeformableAttention3D
+   

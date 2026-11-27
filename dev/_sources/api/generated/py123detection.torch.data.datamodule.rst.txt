@@ -1,0 +1,12 @@
+py123detection.torch.data.datamodule
+====================================
+
+.. automodule:: py123detection.torch.data.datamodule
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Py123DDataModule
+   

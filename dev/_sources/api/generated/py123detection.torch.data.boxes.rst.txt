@@ -1,0 +1,20 @@
+py123detection.torch.data.boxes
+===============================
+
+.. automodule:: py123detection.torch.data.boxes
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      BOX_COLUMNS
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BoxFilters
+      BoxLoader
+      Boxes
+   

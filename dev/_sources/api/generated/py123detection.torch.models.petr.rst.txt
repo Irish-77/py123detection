@@ -1,0 +1,16 @@
+py123detection.torch.models.petr
+================================
+
+.. automodule:: py123detection.torch.models.petr
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   detector
+   head
+   positional_encoding
+   transformer

@@ -1,0 +1,12 @@
+py123detection.torch.models.petr.head
+=====================================
+
+.. automodule:: py123detection.torch.models.petr.head
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PETRHead
+   

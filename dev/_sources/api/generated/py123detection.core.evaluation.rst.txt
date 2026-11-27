@@ -1,0 +1,32 @@
+py123detection.core.evaluation
+==============================
+
+.. automodule:: py123detection.core.evaluation
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      TP_METRIC_SETS
+      UNDEFINED_TP_ERRORS
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_center_distances
+      build_detection_config
+      evaluate
+      filter_eval_boxes
+      format_summary
+      load_predictions
+      to_eval_boxes
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      EvalBox
+      EvaluationInput
+   

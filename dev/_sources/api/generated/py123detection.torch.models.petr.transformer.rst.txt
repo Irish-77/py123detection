@@ -1,0 +1,15 @@
+py123detection.torch.models.petr.transformer
+============================================
+
+.. automodule:: py123detection.torch.models.petr.transformer
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PETRMultiheadAttention
+      PETRTransformer
+      PETRTransformerDecoder
+      PETRTransformerDecoderLayer
+   

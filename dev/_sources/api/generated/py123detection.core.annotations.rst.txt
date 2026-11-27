@@ -1,0 +1,27 @@
+py123detection.core.annotations
+===============================
+
+.. automodule:: py123detection.core.annotations
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      BOX_LAYOUTS
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      apply_merge_rules
+      build_frame_annotations
+      extract_detection_records
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      DetectionRecord
+      FrameAnnotations
+   

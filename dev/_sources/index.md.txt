@@ -1,20 +1,33 @@
 # py123detection
 
-A [123D](https://kesai.eu/py123d/) toolkit for 3D multi-view object detection.
+Camera-based 3D object detection on [123D](https://kesai.eu/py123d/) data.
 
-Two branches share the 123D data model:
+The package is two halves that share a data model, a taxonomy and an evaluation metric. Pick the
+one that matches the stack you are already in.
 
-| Branch | Module | Status |
-| --- | --- | --- |
-| **mmcv export**: turn any 123D dataset into the `info` pickle the mmcv / mmdetection3d ecosystem reads, so existing PETR / StreamPETR / BEVDet configs train on 123D data unchanged | `py123detection.mmcv_export`, plus `py123detection.mmcv_plugin` on the training side | implemented |
-| **modern stack**: the mmcv-free path from the master thesis | | not started |
+## Export to mmdetection3d — `py123detection.mmcv`
+
+Writes the `info` pickle mmdet3d reads, so existing PETR, StreamPETR, BEVDet and CoIn3D configs
+train on any 123D dataset, or several at once, unchanged. The exporter itself needs no mmcv; only
+the environment that trains does.
+
+Start at [Quick start](quickstart.md).
+
+## Train without mmcv — `py123detection.torch`
+
+Reads 123D logs straight into PyTorch. PETR and BEVFormer on Lightning and Hydra, no mmcv
+anywhere. Ported from the thesis these numbers come from, and held to it by frozen fixtures.
+
+Start at [First run](guides/first-run.md).
 
 ## Why this exists
 
-123D already normalizes a dozen driving datasets into one schema. mmdetection3d natively supports exactly one data format: the nuScenes `info` pickle. Every camera-based detector built on it (PETR,
-StreamPETR, BEVDet, CoIn3D) reads that specific data format, and for example CoIn3D's cross-dataset training works by converting Waymo and Lyft into it and concatenating the results.
+123D already normalizes a dozen driving datasets into one schema. mmdetection3d reads exactly one
+format, the nuScenes `info` pickle, and every camera-based detector built on it (PETR, StreamPETR,
+BEVDet, CoIn3D) reads that and nothing else. CoIn3D's cross-dataset training, for instance, works
+by converting Waymo and Lyft into the pickle and concatenating the results.
 
-One converter from 123D to that exact data format makes every 123D dataset trainable with off-the-shelf
+So one converter from 123D into that format makes every 123D dataset trainable with off-the-shelf
 configs, individually or mixed.
 
 ## How it fits together
@@ -58,8 +71,8 @@ flowchart TD
     subgraph EXPORTENV ["conversion environment: py123d + numpy"]
         SRC["<b>Source</b><br/><code>py123detection</code><br/>which logs, which splits,<br/>what frame rate"]
         TAX["<b>Taxonomy</b><br/><code>py123detection</code><br/>123D labels to class names<br/><i>presets: nuscenes_detection_10cls,<br/>general_3cls, coin3d_3cls, ...</i>"]
-        CONF["<b>ExportConfig</b><br/><code>py123detection.mmcv_export</code><br/>cameras, reference frame, box layout,<br/>sweeps, velocity, tokens, paths"]
-        RUN["<b>export_to_mmdet3d()</b><br/><code>py123detection.mmcv_export</code>"]
+        CONF["<b>ExportConfig</b><br/><code>py123detection.mmcv.export</code><br/>cameras, reference frame, box layout,<br/>sweeps, velocity, tokens, paths"]
+        RUN["<b>export_to_mmdet3d()</b><br/><code>py123detection.mmcv.export</code>"]
         REP["<b>ExportReport</b><br/>frame / box / class counts,<br/>skips, warnings"]
 
         SRC --> RUN
@@ -72,7 +85,7 @@ flowchart TD
 
     subgraph TRAINENV ["training environment: mmcv / mmdet3d"]
         STOCK["<b>NuScenesDataset</b><br/>stock mmdet3d,<br/>nothing to install"]
-        PLUG["<b>Py123DNuScenesDataset</b><br/><code>py123detection.mmcv_plugin</code><br/>portable arrays, taxonomy classes,<br/>evaluation without a nuScenes DB"]
+        PLUG["<b>Py123DNuScenesDataset</b><br/><code>py123detection.mmcv.plugin</code><br/>portable arrays, taxonomy classes,<br/>evaluation without a nuScenes DB"]
     end
 
     PKL --> STOCK
@@ -82,29 +95,38 @@ flowchart TD
     style LOGS fill:#fdf1ea,stroke:#eb6834
 ```
 
-The CLI is the same three objects behind a flag parser: `py123det-export-mmcv export` builds a
+The CLI is the same three objects behind a flag parser. `py123det-export-mmcv export` builds a
 `Source` and an `ExportConfig` from its arguments and calls `export_to_mmdet3d`.
 
 ```{toctree}
 :hidden:
-:caption: Getting started
+:caption: Start here
 
 installation
+```
+
+```{toctree}
+:hidden:
+:caption: Export to mmdetection3d
+
 quickstart
+guides/choosing-what-to-export
+guides/cross-dataset-training
+guides/extrinsics
+guides/sensor-payloads
+guides/tokens-and-evaluation
+guides/python-version-boundary
+other-datasets
 examples
 ```
 
 ```{toctree}
 :hidden:
-:caption: Guides
+:caption: Train without mmcv
 
-guides/choosing-what-to-export
-guides/extrinsics
-guides/sensor-payloads
-guides/cross-dataset-training
-guides/tokens-and-evaluation
-guides/python-version-boundary
-other-datasets
+guides/first-run
+guides/training
+guides/visualisation
 ```
 
 ```{toctree}

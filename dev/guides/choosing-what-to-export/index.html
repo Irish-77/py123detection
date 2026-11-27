@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex/"><link rel="search" title="Search" href="../../search/"><link rel="next" title="Static vs. dynamic extrinsics" href="../extrinsics/"><link rel="prev" title="Examples" href="../../examples/">
+<link rel="index" title="Index" href="../../genindex/"><link rel="search" title="Search" href="../../search/"><link rel="next" title="Cross-dataset training" href="../cross-dataset-training/"><link rel="prev" title="Quick start" href="../../quickstart/">
         <link rel="canonical" href="https://irish-77.github.io/py123detection/dev/guides/choosing-what-to-export/">
 
     <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=75e05936" />
     
     
 
@@ -155,7 +156,7 @@
 
 <div class="announcement">
   <aside class="announcement-content">
-     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+     Preview of branch <code>dev</code> at <code>bfe7efb</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
   </aside>
 </div>
 
@@ -196,21 +197,27 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Start here</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/">Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples/">Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<p class="caption" role="heading"><span class="caption-text">Export to mmdetection3d</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quick start</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../extrinsics/">Static vs. dynamic extrinsics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sensor-payloads/">Images and point clouds: references or copies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python-version-boundary/">Crossing the Python version boundary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Train without mmcv</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../first-run/">First run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../training/">Training without mmcv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualisation/">Looking at what the model found</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -219,8 +226,39 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../api/generated/py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../api/generated/py123detection.core/">py123detection.core</a><input aria-label="Toggle navigation of py123detection.core" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.annotations/">py123detection.core.annotations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.cameras/">py123detection.core.cameras</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.evaluation/">py123detection.core.evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.geometry/">py123detection.core.geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.lidar_points/">py123detection.core.lidar_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.sources/">py123detection.core.sources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.taxonomy/">py123detection.core.taxonomy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.velocity/">py123detection.core.velocity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.core.visibility/">py123detection.core.visibility</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/py123detection.geometry/">py123detection.geometry</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../api/generated/py123detection.mmcv/">py123detection.mmcv</a><input aria-label="Toggle navigation of py123detection.mmcv" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export/">py123detection.mmcv.export</a><input aria-label="Toggle navigation of py123detection.mmcv.export" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export.annotations2d/">py123detection.mmcv.export.annotations2d</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export.cli/">py123detection.mmcv.export.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export.converter/">py123detection.mmcv.export.converter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export.export/">py123detection.mmcv.export.export</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export.schema/">py123detection.mmcv.export.schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export.sensors/">py123detection.mmcv.export.sensors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export.tokens/">py123detection.mmcv.export.tokens</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.export.writer/">py123detection.mmcv.export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../api/generated/py123detection.mmcv.plugin/">py123detection.mmcv.plugin</a><input aria-label="Toggle navigation of py123detection.mmcv.plugin" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.plugin.dataset/">py123detection.mmcv.plugin.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.mmcv.plugin.evaluation/">py123detection.mmcv.plugin.evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
@@ -231,13 +269,74 @@
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/py123detection.sources/">py123detection.sources</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../api/generated/py123detection.torch/">py123detection.torch</a><input aria-label="Toggle navigation of py123detection.torch" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.torch.build/">py123detection.torch.build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.torch.callbacks/">py123detection.torch.callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.torch.conf/">py123detection.torch.conf</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../api/generated/py123detection.torch.data/">py123detection.torch.data</a><input aria-label="Toggle navigation of py123detection.torch.data" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.augment/">py123detection.torch.data.augment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.boxes/">py123detection.torch.data.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.cameras/">py123detection.torch.data.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.collate/">py123detection.torch.data.collate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.datamodule/">py123detection.torch.data.datamodule</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.dataset/">py123detection.torch.data.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.frames/">py123detection.torch.data.frames</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.images/">py123detection.torch.data.images</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.data.rigs/">py123detection.torch.data.rigs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.torch.evaluate/">py123detection.torch.evaluate</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../api/generated/py123detection.torch.models/">py123detection.torch.models</a><input aria-label="Toggle navigation of py123detection.torch.models" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.models.base/">py123detection.torch.models.base</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../api/generated/py123detection.torch.models.bevformer/">py123detection.torch.models.bevformer</a><input aria-label="Toggle navigation of py123detection.torch.models.bevformer" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.bevformer.camera_embedding/">py123detection.torch.models.bevformer.camera_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.bevformer.deformable_attention/">py123detection.torch.models.bevformer.deformable_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.bevformer.detector/">py123detection.torch.models.bevformer.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.bevformer.encoder/">py123detection.torch.models.bevformer.encoder</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.bevformer.head/">py123detection.torch.models.bevformer.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.bevformer.spatial_cross_attention/">py123detection.torch.models.bevformer.spatial_cross_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.bevformer.utils/">py123detection.torch.models.bevformer.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../api/generated/py123detection.torch.models.common/">py123detection.torch.models.common</a><input aria-label="Toggle navigation of py123detection.torch.models.common" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.common.backbone/">py123detection.torch.models.common.backbone</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.common.grid_mask/">py123detection.torch.models.common.grid_mask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.common.loss/">py123detection.torch.models.common.loss</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.common.position_embedding/">py123detection.torch.models.common.position_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.common.util/">py123detection.torch.models.common.util</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.models.multiview/">py123detection.torch.models.multiview</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../api/generated/py123detection.torch.models.petr/">py123detection.torch.models.petr</a><input aria-label="Toggle navigation of py123detection.torch.models.petr" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.petr.detector/">py123detection.torch.models.petr.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.petr.head/">py123detection.torch.models.petr.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.petr.positional_encoding/">py123detection.torch.models.petr.positional_encoding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../api/generated/py123detection.torch.models.petr.transformer/">py123detection.torch.models.petr.transformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.torch.predictions/">py123detection.torch.predictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/py123detection.torch.train/">py123detection.torch.train</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../api/generated/py123detection.torch.visualize/">py123detection.torch.visualize</a><input aria-label="Toggle navigation of py123detection.torch.visualize" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.visualize.bev/">py123detection.torch.visualize.bev</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.visualize.boxes/">py123detection.torch.visualize.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.visualize.cameras/">py123detection.torch.visualize.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.visualize.cli/">py123detection.torch.visualize.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.visualize.frame/">py123detection.torch.visualize.frame</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.visualize.py123d_interop/">py123detection.torch.visualize.py123d_interop</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../api/generated/py123detection.torch.visualize.viewer/">py123detection.torch.visualize.viewer</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/py123detection.velocity/">py123detection.velocity</a></li>
 </ul>
 </li>
@@ -288,83 +387,140 @@
         <article role="main" id="furo-main-content">
           <section id="choosing-what-to-export">
 <h1>Choosing what to export<a class="headerlink" href="#choosing-what-to-export" title="Link to this heading">¶</a></h1>
-<section id="pass-a-folder-not-a-scene-list">
-<h2>Pass a folder, not a scene list<a class="headerlink" href="#pass-a-folder-not-a-scene-list" title="Link to this heading">¶</a></h2>
-<p>The 123D <code class="docutils literal notranslate"><span class="pre">SceneFilter</span></code> is expressive, but only one corner of it produces what a frame-indexed
-pickle needs: <strong>one scene per log, spanning the whole log</strong>. <code class="docutils literal notranslate"><span class="pre">Source</span></code> encodes that corner and
-exposes only the knobs that matter for an export:</p>
+<p>Which logs, how many frames, and which classes. Everything else about an export has a defensible
+default.</p>
+<section id="which-logs">
+<h2>Which logs<a class="headerlink" href="#which-logs" title="Link to this heading">¶</a></h2>
+<p>A frame-indexed pickle needs one scene per log, spanning the whole log. <code class="docutils literal notranslate"><span class="pre">Source</span></code> is 123D’s
+<code class="docutils literal notranslate"><span class="pre">SceneFilter</span></code> restricted to that case, with only the knobs an export uses:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Source</span><span class="p">(</span>
-    <span class="n">data_root</span><span class="o">=</span><span class="s2">"/data/py123d"</span><span class="p">,</span>          <span class="c1"># or $PY123D_DATA_ROOT</span>
-    <span class="n">splits</span><span class="o">=</span><span class="p">[</span><span class="s2">"nuscenes_train"</span><span class="p">],</span>          <span class="c1"># or datasets=/split_types=/log_names=</span>
+    <span class="n">data_root</span><span class="o">=</span><span class="s2">"/data/py123d"</span><span class="p">,</span>           <span class="c1"># or $PY123D_DATA_ROOT</span>
+    <span class="n">splits</span><span class="o">=</span><span class="p">[</span><span class="s2">"nuscenes_train"</span><span class="p">],</span>          <span class="c1"># or datasets= / split_types= / log_names=</span>
     <span class="n">sample_rate_hz</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>                 <span class="c1"># or frame_stride=5</span>
-    <span class="n">required_modalities</span><span class="o">=</span><span class="p">[</span><span class="s2">"camera:all"</span><span class="p">],</span> <span class="c1"># 123D modality requirements</span>
+    <span class="n">required_modalities</span><span class="o">=</span><span class="p">[</span><span class="s2">"camera:all"</span><span class="p">],</span>
     <span class="n">max_logs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>If you want the full filter, <code class="docutils literal notranslate"><span class="pre">Source(scene_filter=...)</span></code> takes one verbatim, and
-<code class="docutils literal notranslate"><span class="pre">Source.from_scenes(scenes)</span></code> takes scenes you built yourself. Both stay compatible with the rest
-of the pipeline as long as the filter yields whole logs.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Source(scene_filter=...)</span></code> takes a full <code class="docutils literal notranslate"><span class="pre">SceneFilter</span></code> instead, and <code class="docutils literal notranslate"><span class="pre">Source.from_scenes(scenes)</span></code>
+takes scenes you built yourself. Both work as long as the filter yields whole logs.</p>
 </section>
-<section id="sample-rate">
-<h2>Sample rate<a class="headerlink" href="#sample-rate" title="Link to this heading">¶</a></h2>
+<section id="how-many-frames">
+<h2>How many frames<a class="headerlink" href="#how-many-frames" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">sample_rate_hz</span></code> (or <code class="docutils literal notranslate"><span class="pre">frame_stride</span></code>) thins the exported frames. <strong>Sweeps are not thinned with
 them.</strong> The exporter loads a second, unsampled view of each log and draws <code class="docutils literal notranslate"><span class="pre">info['sweeps']</span></code> from
-that, so a 2 Hz export off a 10 Hz log still gets 10 Hz sweeps. Verified on the mini kit: a 1 Hz
+that, so a 2 Hz export off a 10 Hz log still gets 10 Hz sweeps. Measured on the mini kit, a 1 Hz
 export produced frames 1.0 s apart with sweeps 0.5 s apart.</p>
 </section>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">--taxonomy</span></code> picks how 123D labels become the strings in <code class="docutils literal notranslate"><span class="pre">gt_names</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">--taxonomy</span></code> decides how 123D labels become the strings in <code class="docutils literal notranslate"><span class="pre">gt_names</span></code>. Eight ship:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Taxonomy</p></th>
-<th class="head"><p>Classes</p></th>
-<th class="head"><p>Works on</p></th>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>classes</p></th>
+<th class="head"><p>applies to</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nuscenes_detection_10cls</span></code> (default)</p></td>
 <td><p>the standard 10, in mmdet3d’s order</p></td>
-<td><p>nuScenes-derived logs</p></td>
+<td><p><strong>nuScenes-derived logs only</strong></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">general_3cls</span></code></p></td>
 <td><p>vehicle, pedestrian, cyclist</p></td>
-<td><p><strong>every 123D dataset</strong></p></td>
+<td><p>every 123D dataset</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">coin3d_3cls</span></code></p></td>
-<td><p>car, pedestrian, motorcycle (CoIn3D’s vehicle / pedestrian / two-wheel, spelled with nuScenes names so the nuScenes devkit accepts them)</p></td>
-<td><p><strong>every 123D dataset</strong></p></td>
+<td><p>car, pedestrian, motorcycle</p></td>
+<td><p>every 123D dataset</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vehicle_1cls</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mixed_8cls</span></code></p></td>
+<td><p>car, truck, bus, trailer, traffic_cone, pedestrian, motorcycle, bicycle</p></td>
+<td><p>every 123D dataset</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mixed2_3cls</span></code></p></td>
+<td><p>vehicle, pedestrian, bicycle</p></td>
+<td><p>every 123D dataset</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mixed3_1cls</span></code></p></td>
 <td><p>vehicle</p></td>
 <td><p>every 123D dataset</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">default_123d</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vehicle_1cls</span></code></p></td>
+<td><p>vehicle</p></td>
+<td><p>every 123D dataset</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">default_123d</span></code></p></td>
 <td><p>the 11 <code class="docutils literal notranslate"><span class="pre">DefaultBoxDetectionLabel</span></code> classes</p></td>
 <td><p>every 123D dataset</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>The cross-dataset ones are expressed over <code class="docutils literal notranslate"><span class="pre">DefaultBoxDetectionLabel</span></code>, which every 123D dataset enum
-implements via <code class="docutils literal notranslate"><span class="pre">to_default()</span></code>. That is what makes one taxonomy apply to nuScenes, Waymo and AV2
-without per-dataset code. Custom taxonomies are a dataclass:</p>
+<p>The default maps native nuScenes labels only. <strong>Exporting any other dataset with it drops every
+box</strong>; pick one of the others.</p>
+<p><code class="docutils literal notranslate"><span class="pre">coin3d_3cls</span></code> spells CoIn3D’s vehicle / pedestrian / two-wheeler classes with nuScenes names
+because the nuScenes devkit’s <code class="docutils literal notranslate"><span class="pre">DetectionBox</span></code> rejects anything else — see
+<a class="reference internal" href="../../other-datasets/#training-side"><span class="std std-ref">the evaluation constraint</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">vehicle_1cls</span></code> and <code class="docutils literal notranslate"><span class="pre">mixed3_1cls</span></code> both have one <code class="docutils literal notranslate"><span class="pre">vehicle</span></code> class and are not the same.
+<code class="docutils literal notranslate"><span class="pre">vehicle_1cls</span></code> is the default label <code class="docutils literal notranslate"><span class="pre">VEHICLE</span></code> plus <code class="docutils literal notranslate"><span class="pre">TRAIN</span></code>, while <code class="docutils literal notranslate"><span class="pre">mixed3_1cls</span></code> adds the
+per-dataset rules that make nuScenes, AV2 and Waymo agree on what a vehicle is. A motorcycle
+counts, a tram does not.</p>
+<section id="how-a-label-is-looked-up">
+<h3>How a label is looked up<a class="headerlink" href="#how-a-label-is-looked-up" title="Link to this heading">¶</a></h3>
+<p>A taxonomy can key on three kinds of name, and the first hit wins:</p>
+<ol class="arabic simple">
+<li><p><strong>qualified native</strong> — <code class="docutils literal notranslate"><span class="pre">&quot;AV2SensorBoxDetectionLabel.BICYCLIST&quot;</span></code>, which changes one dataset
+without touching a same-named member of another;</p></li>
+<li><p><strong>bare native</strong> — <code class="docutils literal notranslate"><span class="pre">&quot;VEHICLE_CAR&quot;</span></code>, the dataset’s own enum member, at full granularity;</p></li>
+<li><p><strong>default</strong> — <code class="docutils literal notranslate"><span class="pre">&quot;PERSON&quot;</span></code>, a <code class="docutils literal notranslate"><span class="pre">DefaultBoxDetectionLabel</span></code> member.</p></li>
+</ol>
+<p>A taxonomy written only at the default level applies to every 123D dataset, because every parser
+implements <code class="docutils literal notranslate"><span class="pre">to_default()</span></code>. That is what makes one taxonomy work across nuScenes, Waymo and AV2
+with no per-dataset code.</p>
+<p>Labels mapped to <code class="docutils literal notranslate"><span class="pre">VOID</span></code>, and labels with no entry at all, are dropped. Listing the ones you drop on
+purpose is optional and keeps the mapping readable.</p>
+</section>
+<section id="merge-rules">
+<h3>Merge rules<a class="headerlink" href="#merge-rules" title="Link to this heading">¶</a></h3>
+<p>Some datasets box a rider separately from the vehicle. A merge rule folds them back into one box
+after mapping:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">merge_rules</span><span class="o">=</span><span class="p">(</span><span class="n">MergeRule</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s2">"vehicle"</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="p">(</span><span class="s2">"av2_motorcycle"</span><span class="p">,</span> <span class="s2">"av2_motorcyclist"</span><span class="p">)),)</span>
+</pre></div>
+</div>
+<p>The sources are intermediate class names the native map produces and <code class="docutils literal notranslate"><span class="pre">class_names</span></code> does not
+contain, so they cannot leak into <code class="docutils literal notranslate"><span class="pre">gt_names</span></code>. Secondaries are paired to primaries by bird’s-eye
+IoU, greedily and highest first. A pair becomes the tight box around both sets of corners, keeping
+the primary’s orientation and velocity, and a secondary that pairs with nothing is dropped.
+<code class="docutils literal notranslate"><span class="pre">mixed2_3cls</span></code> and <code class="docutils literal notranslate"><span class="pre">mixed3_1cls</span></code> use this for Argoverse 2, which boxes riders separately.</p>
+</section>
+<section id="writing-one">
+<h3>Writing one<a class="headerlink" href="#writing-one" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">py123detection</span><span class="w"> </span><span class="kn">import</span> <span class="n">Taxonomy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.taxonomy</span><span class="w"> </span><span class="kn">import</span> <span class="n">VOID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py123detection.core.taxonomy</span><span class="w"> </span><span class="kn">import</span> <span class="n">VOID</span>
 
-<span class="n">MY_TAXONOMY</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">"cars_and_people"</span><span class="p">,</span>
-    <span class="n">class_names</span><span class="o">=</span><span class="p">(</span><span class="s2">"car"</span><span class="p">,</span> <span class="s2">"person"</span><span class="p">),</span>
-    <span class="n">native_map</span><span class="o">=</span><span class="p">{</span><span class="s2">"VEHICLE_CAR"</span><span class="p">:</span> <span class="s2">"car"</span><span class="p">,</span> <span class="s2">"ANIMAL"</span><span class="p">:</span> <span class="n">VOID</span><span class="p">},</span>   <span class="c1"># dataset-native names, full granularity</span>
-    <span class="n">default_map</span><span class="o">=</span><span class="p">{</span><span class="s2">"PERSON"</span><span class="p">:</span> <span class="s2">"person"</span><span class="p">},</span>                     <span class="c1"># applies to any 123D dataset</span>
+<span class="n">ROAD_USERS</span> <span class="o">=</span> <span class="n">Taxonomy</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"road_users_2cls"</span><span class="p">,</span>
+    <span class="n">class_names</span><span class="o">=</span><span class="p">(</span><span class="s2">"vehicle"</span><span class="p">,</span> <span class="s2">"person"</span><span class="p">),</span>
+    <span class="n">default_map</span><span class="o">=</span><span class="p">{</span><span class="s2">"VEHICLE"</span><span class="p">:</span> <span class="s2">"vehicle"</span><span class="p">,</span> <span class="s2">"TRAIN"</span><span class="p">:</span> <span class="s2">"vehicle"</span><span class="p">,</span> <span class="s2">"TWO_WHEELER"</span><span class="p">:</span> <span class="s2">"vehicle"</span><span class="p">,</span>
+                 <span class="s2">"PERSON"</span><span class="p">:</span> <span class="s2">"person"</span><span class="p">,</span> <span class="s2">"EGO"</span><span class="p">:</span> <span class="n">VOID</span><span class="p">,</span> <span class="s2">"ANIMAL"</span><span class="p">:</span> <span class="n">VOID</span><span class="p">},</span>
+    <span class="n">native_map</span><span class="o">=</span><span class="p">{</span><span class="s2">"AV2SensorBoxDetectionLabel.BICYCLIST"</span><span class="p">:</span> <span class="n">VOID</span><span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>A <code class="docutils literal notranslate"><span class="pre">native_map</span></code> key can also be qualified with the label enum
-(<code class="docutils literal notranslate"><span class="pre">&quot;AV2SensorBoxDetectionLabel.BICYCLIST&quot;</span></code>) to override one dataset without touching a same-named
-member of another. Lookup order is qualified native, then bare native, then default.</p>
+<p>A class name’s index in <code class="docutils literal notranslate"><span class="pre">class_names</span></code> is its label id in the mmdet3d config.</p>
+<p>The constructor checks both maps against <code class="docutils literal notranslate"><span class="pre">class_names</span></code>, so a typo raises instead of silently
+dropping boxes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Taxonomy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"typo"</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="p">(</span><span class="s2">"vehicle"</span><span class="p">,),</span> <span class="n">default_map</span><span class="o">=</span><span class="p">{</span><span class="s2">"VEHICLE"</span><span class="p">:</span> <span class="s2">"vehicles"</span><span class="p">})</span>
+<span class="c1"># ValueError: Taxonomy 'typo' default_map targets unknown class names ['vehicles'];</span>
+<span class="c1"># declared class_names are ('vehicle',) and merge sources are [].</span>
+</pre></div>
+</div>
+<p>To ship it as a <code class="docutils literal notranslate"><span class="pre">--taxonomy</span></code> choice, add it to <code class="docutils literal notranslate"><span class="pre">TAXONOMIES</span></code> in
+<code class="docutils literal notranslate"><span class="pre">py123detection/core/taxonomy.py</span></code>, with the semantics in its docstring.</p>
+</section>
 </section>
 </section>
 
@@ -373,23 +529,23 @@ member of another. Lookup order is qualified native, then bare native, then defa
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../extrinsics/">
+          <a class="next-page" href="../cross-dataset-training/">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Static vs. dynamic extrinsics</div>
+                <div class="title">Cross-dataset training</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../../examples/">
+          <a class="prev-page" href="../../quickstart/">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Examples</div>
+                <div class="title">Quick start</div>
                 
               </div>
             </a>
@@ -424,9 +580,14 @@ member of another. Lookup order is qualified native, then bare native, then defa
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Choosing what to export</a><ul>
-<li><a class="reference internal" href="#pass-a-folder-not-a-scene-list">Pass a folder, not a scene list</a></li>
-<li><a class="reference internal" href="#sample-rate">Sample rate</a></li>
-<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#which-logs">Which logs</a></li>
+<li><a class="reference internal" href="#how-many-frames">How many frames</a></li>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#how-a-label-is-looked-up">How a label is looked up</a></li>
+<li><a class="reference internal" href="#merge-rules">Merge rules</a></li>
+<li><a class="reference internal" href="#writing-one">Writing one</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

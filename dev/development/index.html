@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=75e05936" />
     
     
 
@@ -155,7 +156,7 @@
 
 <div class="announcement">
   <aside class="announcement-content">
-     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+     Preview of branch <code>dev</code> at <code>bfe7efb</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
   </aside>
 </div>
 
@@ -196,21 +197,27 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Start here</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/">Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../quickstart/">Quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/">Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<p class="caption" role="heading"><span class="caption-text">Export to mmdetection3d</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Train without mmcv</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/first-run/">First run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/training/">Training without mmcv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/visualisation/">Looking at what the model found</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -219,8 +226,39 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/generated/py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.core/">py123detection.core</a><input aria-label="Toggle navigation of py123detection.core" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.annotations/">py123detection.core.annotations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.cameras/">py123detection.core.cameras</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.evaluation/">py123detection.core.evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.geometry/">py123detection.core.geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.lidar_points/">py123detection.core.lidar_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.sources/">py123detection.core.sources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.taxonomy/">py123detection.core.taxonomy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.velocity/">py123detection.core.velocity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.core.visibility/">py123detection.core.visibility</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.geometry/">py123detection.geometry</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv/">py123detection.mmcv</a><input aria-label="Toggle navigation of py123detection.mmcv" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv.export/">py123detection.mmcv.export</a><input aria-label="Toggle navigation of py123detection.mmcv.export" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.annotations2d/">py123detection.mmcv.export.annotations2d</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.cli/">py123detection.mmcv.export.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.converter/">py123detection.mmcv.export.converter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.export/">py123detection.mmcv.export.export</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.schema/">py123detection.mmcv.export.schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.sensors/">py123detection.mmcv.export.sensors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.tokens/">py123detection.mmcv.export.tokens</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.export.writer/">py123detection.mmcv.export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv.plugin/">py123detection.mmcv.plugin</a><input aria-label="Toggle navigation of py123detection.mmcv.plugin" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.plugin.dataset/">py123detection.mmcv.plugin.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.mmcv.plugin.evaluation/">py123detection.mmcv.plugin.evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
@@ -231,13 +269,74 @@
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.sources/">py123detection.sources</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/generated/py123detection.torch/">py123detection.torch</a><input aria-label="Toggle navigation of py123detection.torch" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.build/">py123detection.torch.build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.callbacks/">py123detection.torch.callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.conf/">py123detection.torch.conf</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.data/">py123detection.torch.data</a><input aria-label="Toggle navigation of py123detection.torch.data" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.augment/">py123detection.torch.data.augment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.boxes/">py123detection.torch.data.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.cameras/">py123detection.torch.data.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.collate/">py123detection.torch.data.collate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.datamodule/">py123detection.torch.data.datamodule</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.dataset/">py123detection.torch.data.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.frames/">py123detection.torch.data.frames</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.images/">py123detection.torch.data.images</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.data.rigs/">py123detection.torch.data.rigs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.evaluate/">py123detection.torch.evaluate</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.models/">py123detection.torch.models</a><input aria-label="Toggle navigation of py123detection.torch.models" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.models.base/">py123detection.torch.models.base</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer/">py123detection.torch.models.bevformer</a><input aria-label="Toggle navigation of py123detection.torch.models.bevformer" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.camera_embedding/">py123detection.torch.models.bevformer.camera_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.deformable_attention/">py123detection.torch.models.bevformer.deformable_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.detector/">py123detection.torch.models.bevformer.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.encoder/">py123detection.torch.models.bevformer.encoder</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.head/">py123detection.torch.models.bevformer.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.spatial_cross_attention/">py123detection.torch.models.bevformer.spatial_cross_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.bevformer.utils/">py123detection.torch.models.bevformer.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.models.common/">py123detection.torch.models.common</a><input aria-label="Toggle navigation of py123detection.torch.models.common" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.backbone/">py123detection.torch.models.common.backbone</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.grid_mask/">py123detection.torch.models.common.grid_mask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.loss/">py123detection.torch.models.common.loss</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.position_embedding/">py123detection.torch.models.common.position_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.common.util/">py123detection.torch.models.common.util</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.models.multiview/">py123detection.torch.models.multiview</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr/">py123detection.torch.models.petr</a><input aria-label="Toggle navigation of py123detection.torch.models.petr" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr.detector/">py123detection.torch.models.petr.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr.head/">py123detection.torch.models.petr.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr.positional_encoding/">py123detection.torch.models.petr.positional_encoding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../api/generated/py123detection.torch.models.petr.transformer/">py123detection.torch.models.petr.transformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.predictions/">py123detection.torch.predictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/generated/py123detection.torch.train/">py123detection.torch.train</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/generated/py123detection.torch.visualize/">py123detection.torch.visualize</a><input aria-label="Toggle navigation of py123detection.torch.visualize" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.bev/">py123detection.torch.visualize.bev</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.boxes/">py123detection.torch.visualize.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.cameras/">py123detection.torch.visualize.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.cli/">py123detection.torch.visualize.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.frame/">py123detection.torch.visualize.frame</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.py123d_interop/">py123detection.torch.visualize.py123d_interop</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/generated/py123detection.torch.visualize.viewer/">py123detection.torch.visualize.viewer</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../api/generated/py123detection.velocity/">py123detection.velocity</a></li>
 </ul>
 </li>
@@ -291,42 +390,99 @@
 <section id="layout">
 <h2>Layout<a class="headerlink" href="#layout" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">src</span><span class="o">/</span><span class="n">py123detection</span><span class="o">/</span>
-  <span class="n">sources</span><span class="o">.</span><span class="n">py</span>                 <span class="n">Source</span><span class="p">:</span> <span class="n">a</span> <span class="mi">123</span><span class="n">D</span> <span class="n">data</span> <span class="n">root</span> <span class="o">+</span> <span class="n">splits</span> <span class="o">-&gt;</span> <span class="n">scenes</span><span class="p">,</span> <span class="k">with</span> <span class="n">sampling</span>
-  <span class="n">taxonomy</span><span class="o">.</span><span class="n">py</span>                <span class="n">Taxonomy</span> <span class="o">+</span> <span class="n">presets</span><span class="p">:</span> <span class="mi">123</span><span class="n">D</span> <span class="n">labels</span> <span class="o">-&gt;</span> <span class="n">mmdet3d</span> <span class="k">class</span><span class="w"> </span><span class="nc">names</span>
-  <span class="n">annotations</span><span class="o">.</span><span class="n">py</span>             <span class="k">global</span><span class="o">-</span><span class="n">frame</span> <span class="n">records</span> <span class="o">-&gt;</span> <span class="n">lidar</span><span class="o">-</span><span class="n">frame</span> <span class="n">gt_boxes</span> <span class="o">/</span> <span class="n">gt_velocity</span>
-  <span class="n">velocity</span><span class="o">.</span><span class="n">py</span>                <span class="n">track</span> <span class="n">central</span> <span class="n">differences</span><span class="p">,</span> <span class="k">for</span> <span class="n">datasets</span> <span class="k">with</span> <span class="n">no</span> <span class="n">annotated</span> <span class="n">velocity</span>
-  <span class="n">geometry</span><span class="o">.</span><span class="n">py</span>                <span class="n">SE</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">helpers</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">two</span> <span class="n">yaw</span> <span class="n">conventions</span>
-  <span class="n">mmcv_export</span><span class="o">/</span>
-    <span class="n">export</span><span class="o">.</span><span class="n">py</span>                <span class="n">export_to_mmdet3d</span><span class="p">:</span> <span class="n">the</span> <span class="n">one</span><span class="o">-</span><span class="n">call</span> <span class="n">entry</span> <span class="n">point</span>
-    <span class="n">converter</span><span class="o">.</span><span class="n">py</span>             <span class="n">ExportConfig</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">scenes</span> <span class="o">-&gt;</span> <span class="n">info</span> <span class="n">dicts</span> <span class="n">conversion</span>
-    <span class="n">annotations2d</span><span class="o">.</span><span class="n">py</span>         <span class="n">per</span><span class="o">-</span><span class="n">camera</span> <span class="mi">2</span><span class="n">D</span> <span class="o">/</span> <span class="n">mono</span><span class="o">-</span><span class="mi">3</span><span class="n">D</span> <span class="n">annotations</span> <span class="p">(</span><span class="n">StreamPETR</span><span class="p">)</span>
-    <span class="n">sensors</span><span class="o">.</span><span class="n">py</span>               <span class="n">reference</span> <span class="n">vs</span> <span class="n">extract</span><span class="p">;</span> <span class="n">path</span> <span class="n">resolution</span>
-    <span class="n">tokens</span><span class="o">.</span><span class="n">py</span>                <span class="mi">123</span><span class="n">D</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">native</span> <span class="n">dataset</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">log</span><span class="o">/</span><span class="n">timestamp</span> <span class="n">tokens</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">py</span>                <span class="n">pickle</span> <span class="n">writing</span><span class="p">,</span> <span class="n">portability</span> <span class="n">validation</span><span class="p">,</span> <span class="n">numpy</span> <span class="n">compatibility</span>
-    <span class="n">schema</span><span class="o">.</span><span class="n">py</span>                <span class="n">the</span> <span class="n">info</span> <span class="n">schema</span><span class="p">,</span> <span class="n">documented</span> <span class="ow">and</span> <span class="n">checkable</span>
-    <span class="n">cli</span><span class="o">.</span><span class="n">py</span>                   <span class="n">py123det</span><span class="o">-</span><span class="n">export</span><span class="o">-</span><span class="n">mmcv</span>
-  <span class="n">mmcv_plugin</span><span class="o">/</span>
-    <span class="n">dataset</span><span class="o">.</span><span class="n">py</span>               <span class="n">Py123DNuScenesDataset</span> <span class="p">(</span><span class="n">training</span> <span class="n">side</span><span class="p">;</span> <span class="n">imports</span> <span class="n">mmdet3d</span> <span class="n">lazily</span><span class="p">)</span>
-    <span class="n">evaluation</span><span class="o">.</span><span class="n">py</span>            <span class="n">nuScenes</span><span class="o">-</span><span class="n">metric</span> <span class="n">evaluation</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">pickle</span><span class="s1">'s own ground truth</span>
+  <span class="n">core</span><span class="o">/</span>                      <span class="n">shared</span> <span class="n">by</span> <span class="n">both</span> <span class="n">branches</span><span class="p">;</span> <span class="n">needs</span> <span class="n">py123d</span> <span class="ow">and</span> <span class="n">numpy</span><span class="p">,</span> <span class="n">nothing</span> <span class="k">else</span>
+    <span class="n">sources</span><span class="o">.</span><span class="n">py</span>               <span class="n">Source</span><span class="p">:</span> <span class="n">a</span> <span class="mi">123</span><span class="n">D</span> <span class="n">data</span> <span class="n">root</span> <span class="o">+</span> <span class="n">splits</span> <span class="o">-&gt;</span> <span class="n">scenes</span><span class="p">,</span> <span class="k">with</span> <span class="n">sampling</span>
+    <span class="n">taxonomy</span><span class="o">.</span><span class="n">py</span>              <span class="n">Taxonomy</span> <span class="o">+</span> <span class="n">presets</span><span class="p">:</span> <span class="mi">123</span><span class="n">D</span> <span class="n">labels</span> <span class="o">-&gt;</span> <span class="k">class</span><span class="w"> </span><span class="nc">names</span>
+    <span class="n">annotations</span><span class="o">.</span><span class="n">py</span>           <span class="k">global</span><span class="o">-</span><span class="n">frame</span> <span class="n">records</span> <span class="o">-&gt;</span> <span class="n">ego</span><span class="o">/</span><span class="n">lidar</span><span class="o">-</span><span class="n">frame</span> <span class="n">boxes</span> <span class="ow">and</span> <span class="n">velocity</span>
+    <span class="n">velocity</span><span class="o">.</span><span class="n">py</span>              <span class="n">track</span> <span class="n">central</span> <span class="n">differences</span><span class="p">,</span> <span class="k">for</span> <span class="n">datasets</span> <span class="k">with</span> <span class="n">no</span> <span class="n">annotated</span> <span class="n">velocity</span>
+    <span class="n">geometry</span><span class="o">.</span><span class="n">py</span>              <span class="n">SE</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">helpers</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">two</span> <span class="n">yaw</span> <span class="n">conventions</span>
+    <span class="n">visibility</span><span class="o">.</span><span class="n">py</span>            <span class="n">which</span> <span class="n">cameras</span> <span class="n">can</span> <span class="n">see</span> <span class="n">a</span> <span class="n">box</span><span class="p">,</span> <span class="k">for</span> <span class="n">visibility</span> <span class="n">filtering</span>
+    <span class="n">evaluation</span><span class="o">.</span><span class="n">py</span>            <span class="n">the</span> <span class="n">nuScenes</span> <span class="n">detection</span> <span class="n">metric</span><span class="p">,</span> <span class="n">run</span> <span class="n">without</span> <span class="n">the</span> <span class="n">devkit</span><span class="s1">'s database</span>
+    <span class="n">lidar_points</span><span class="o">.</span><span class="n">py</span>          <span class="n">cached</span> <span class="n">per</span><span class="o">-</span><span class="n">box</span> <span class="n">lidar</span> <span class="k">return</span> <span class="n">counts</span><span class="p">,</span> <span class="k">for</span> <span class="n">logs</span> <span class="n">that</span> <span class="n">record</span> <span class="n">none</span>
+    <span class="n">cameras</span><span class="o">.</span><span class="n">py</span>               <span class="n">the</span> <span class="n">nuScenes</span> <span class="n">camera</span> <span class="n">order</span><span class="p">,</span> <span class="ow">and</span> <span class="n">why</span> <span class="n">the</span> <span class="n">two</span> <span class="n">branches</span> <span class="n">differ</span>
+  <span class="n">mmcv</span><span class="o">/</span>                      <span class="n">branch</span> <span class="n">one</span><span class="p">:</span> <span class="n">export</span> <span class="n">to</span> <span class="n">the</span> <span class="n">mmdetection3d</span> <span class="n">info</span> <span class="n">pickle</span>
+    <span class="n">export</span><span class="o">/</span>
+      <span class="n">export</span><span class="o">.</span><span class="n">py</span>              <span class="n">export_to_mmdet3d</span><span class="p">:</span> <span class="n">the</span> <span class="n">one</span><span class="o">-</span><span class="n">call</span> <span class="n">entry</span> <span class="n">point</span>
+      <span class="n">converter</span><span class="o">.</span><span class="n">py</span>           <span class="n">ExportConfig</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">scenes</span> <span class="o">-&gt;</span> <span class="n">info</span> <span class="n">dicts</span> <span class="n">conversion</span>
+      <span class="n">annotations2d</span><span class="o">.</span><span class="n">py</span>       <span class="n">per</span><span class="o">-</span><span class="n">camera</span> <span class="mi">2</span><span class="n">D</span> <span class="o">/</span> <span class="n">mono</span><span class="o">-</span><span class="mi">3</span><span class="n">D</span> <span class="n">annotations</span> <span class="p">(</span><span class="n">StreamPETR</span><span class="p">)</span>
+      <span class="n">sensors</span><span class="o">.</span><span class="n">py</span>             <span class="n">reference</span> <span class="n">vs</span> <span class="n">extract</span><span class="p">;</span> <span class="n">path</span> <span class="n">resolution</span>
+      <span class="n">tokens</span><span class="o">.</span><span class="n">py</span>              <span class="mi">123</span><span class="n">D</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">native</span> <span class="n">dataset</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">log</span><span class="o">/</span><span class="n">timestamp</span> <span class="n">tokens</span>
+      <span class="n">writer</span><span class="o">.</span><span class="n">py</span>              <span class="n">pickle</span> <span class="n">writing</span><span class="p">,</span> <span class="n">portability</span> <span class="n">validation</span><span class="p">,</span> <span class="n">numpy</span> <span class="n">compatibility</span>
+      <span class="n">schema</span><span class="o">.</span><span class="n">py</span>              <span class="n">the</span> <span class="n">info</span> <span class="n">schema</span><span class="p">,</span> <span class="n">documented</span> <span class="ow">and</span> <span class="n">checkable</span>
+      <span class="n">cli</span><span class="o">.</span><span class="n">py</span>                 <span class="n">py123det</span><span class="o">-</span><span class="n">export</span><span class="o">-</span><span class="n">mmcv</span>
+    <span class="n">plugin</span><span class="o">/</span>
+      <span class="n">dataset</span><span class="o">.</span><span class="n">py</span>             <span class="n">Py123DNuScenesDataset</span> <span class="p">(</span><span class="n">training</span> <span class="n">side</span><span class="p">;</span> <span class="n">imports</span> <span class="n">mmdet3d</span> <span class="n">lazily</span><span class="p">)</span>
+      <span class="n">evaluation</span><span class="o">.</span><span class="n">py</span>          <span class="n">nuScenes</span><span class="o">-</span><span class="n">metric</span> <span class="n">evaluation</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">pickle</span><span class="s1">'s own ground truth</span>
+  <span class="n">torch</span><span class="o">/</span>                     <span class="n">branch</span> <span class="n">two</span><span class="p">:</span> <span class="n">train</span> <span class="n">on</span> <span class="mi">123</span><span class="n">D</span> <span class="n">logs</span> <span class="n">directly</span><span class="p">,</span> <span class="n">no</span> <span class="n">mmcv</span>
+    <span class="n">conf</span><span class="o">/</span>                    <span class="n">Hydra</span> <span class="n">config</span> <span class="n">groups</span><span class="p">:</span> <span class="n">model</span><span class="p">,</span> <span class="n">taxonomy</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">experiment</span>
+    <span class="n">train</span><span class="o">.</span><span class="n">py</span>                 <span class="n">py123det</span><span class="o">-</span><span class="n">train</span>
+    <span class="n">evaluate</span><span class="o">.</span><span class="n">py</span>              <span class="n">py123det</span><span class="o">-</span><span class="nb">eval</span><span class="p">;</span> <span class="n">ego</span> <span class="o">-&gt;</span> <span class="k">global</span> <span class="n">conversion</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">metric</span> <span class="n">call</span>
+    <span class="n">build</span><span class="o">.</span><span class="n">py</span>                 <span class="n">config</span> <span class="o">-&gt;</span> <span class="n">datasets</span> <span class="ow">and</span> <span class="n">model</span>
+    <span class="n">callbacks</span><span class="o">.</span><span class="n">py</span>             <span class="n">checkpoints</span> <span class="n">kept</span> <span class="n">beyond</span> <span class="n">ModelCheckpoint</span><span class="s1">'s best three</span>
+    <span class="n">data</span><span class="o">/</span>
+      <span class="n">dataset</span><span class="o">.</span><span class="n">py</span>             <span class="n">Py123DDetectionDataset</span><span class="p">:</span> <span class="n">puts</span> <span class="n">the</span> <span class="n">parts</span> <span class="n">below</span> <span class="ow">in</span> <span class="n">order</span>
+      <span class="n">frames</span><span class="o">.</span><span class="n">py</span>              <span class="n">FrameIndex</span><span class="p">:</span> <span class="n">which</span> <span class="n">frames</span><span class="p">,</span> <span class="ow">and</span> <span class="n">how</span> <span class="n">many</span> <span class="p">(</span><span class="n">num_frames</span><span class="p">)</span>
+      <span class="n">boxes</span><span class="o">.</span><span class="n">py</span>               <span class="n">BoxFilters</span><span class="p">,</span> <span class="n">BoxLoader</span><span class="p">:</span> <span class="n">a</span> <span class="n">frame</span><span class="s1">'s boxes in the ego frame</span>
+      <span class="n">cameras</span><span class="o">.</span><span class="n">py</span>             <span class="n">CameraLoader</span><span class="p">:</span> <span class="n">a</span> <span class="n">rig</span><span class="s1">'s images through one affine warp each</span>
+      <span class="n">images</span><span class="o">.</span><span class="n">py</span>              <span class="n">ImagePipeline</span><span class="p">:</span> <span class="n">the</span> <span class="n">network</span> <span class="nb">input</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">per</span><span class="o">-</span><span class="n">camera</span> <span class="n">affine</span> <span class="nb">map</span>
+      <span class="n">augment</span><span class="o">.</span><span class="n">py</span>             <span class="n">Augmentation</span><span class="p">,</span> <span class="n">Draw</span><span class="p">:</span> <span class="n">everything</span> <span class="n">random</span> <span class="n">about</span> <span class="n">a</span> <span class="n">training</span> <span class="n">sample</span>
+      <span class="n">rigs</span><span class="o">.</span><span class="n">py</span>                <span class="n">which</span> <span class="n">cameras</span> <span class="n">each</span> <span class="n">dataset</span> <span class="n">has</span><span class="p">,</span> <span class="ow">and</span> <span class="n">which</span> <span class="n">rows</span> <span class="n">of</span> <span class="n">each</span> <span class="n">to</span> <span class="n">keep</span>
+      <span class="n">datamodule</span><span class="o">.</span><span class="n">py</span>          <span class="n">concatenate</span> <span class="k">for</span> <span class="n">training</span><span class="p">,</span> <span class="n">one</span> <span class="n">loader</span> <span class="n">per</span> <span class="n">dataset</span><span class="p">;</span> <span class="n">worker</span> <span class="n">seeding</span>
+      <span class="n">collate</span><span class="o">.</span><span class="n">py</span>             <span class="n">batching</span> <span class="n">rigs</span> <span class="n">whose</span> <span class="n">camera</span> <span class="n">counts</span> <span class="n">differ</span>
+    <span class="n">models</span><span class="o">/</span>
+      <span class="n">base</span><span class="o">.</span><span class="n">py</span>                <span class="n">Detector3D</span><span class="p">:</span> <span class="n">the</span> <span class="n">Lightning</span> <span class="n">loop</span><span class="p">,</span> <span class="n">per</span><span class="o">-</span><span class="n">dataset</span> <span class="n">loss</span><span class="p">,</span> <span class="n">optimiser</span>
+      <span class="n">multiview</span><span class="o">.</span><span class="n">py</span>           <span class="n">MultiViewDetector</span><span class="p">:</span> <span class="n">the</span> <span class="n">shared</span> <span class="n">backbone</span> <span class="n">over</span> <span class="n">a</span> <span class="n">camera</span> <span class="n">rig</span>
+      <span class="n">petr</span><span class="o">/</span>                  <span class="n">PETR</span><span class="p">:</span> <span class="mi">3</span><span class="n">D</span> <span class="n">position</span> <span class="n">embedding</span> <span class="n">on</span> <span class="n">image</span> <span class="n">features</span>
+      <span class="n">bevformer</span><span class="o">/</span>             <span class="n">BEVFormer</span><span class="p">:</span> <span class="n">an</span> <span class="n">explicit</span> <span class="n">bird</span><span class="s1">'s-eye grid</span>
+      <span class="n">common</span><span class="o">/</span>                <span class="n">backbone</span><span class="p">,</span> <span class="n">losses</span><span class="p">,</span> <span class="n">grid</span> <span class="n">mask</span><span class="p">,</span> <span class="n">shared</span> <span class="n">helpers</span>
+    <span class="n">visualize</span><span class="o">/</span>               <span class="n">bird</span><span class="s1">'s-eye and camera renders of a predictions file</span>
+<span class="n">scripts</span><span class="o">/</span>
+  <span class="n">slurm</span><span class="o">/</span>                     <span class="n">sbatch</span> <span class="n">templates</span> <span class="k">for</span> <span class="n">training</span> <span class="ow">and</span> <span class="n">scoring</span> <span class="n">on</span> <span class="n">a</span> <span class="n">cluster</span>
 <span class="n">tools</span><span class="o">/</span>
   <span class="n">reference_nuscenes_converter</span><span class="o">.</span><span class="n">py</span>   <span class="n">ground</span> <span class="n">truth</span><span class="p">:</span> <span class="n">the</span> <span class="n">mmdet3d</span><span class="o">/</span><span class="n">StreamPETR</span> <span class="n">converter</span><span class="p">,</span> <span class="n">ported</span>
   <span class="n">reference_av2_converter</span><span class="o">.</span><span class="n">py</span>        <span class="n">the</span> <span class="n">same</span> <span class="n">idea</span> <span class="k">for</span> <span class="n">Argoverse</span> <span class="mi">2</span><span class="p">,</span> <span class="n">written</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">raw</span> <span class="n">files</span>
   <span class="n">compare_infos</span><span class="o">.</span><span class="n">py</span>                  <span class="n">field</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">field</span> <span class="n">diff</span> <span class="n">of</span> <span class="n">two</span> <span class="n">info</span> <span class="n">pickles</span>
+  <span class="n">freeze_model_golden</span><span class="o">.</span><span class="n">py</span>            <span class="n">freezes</span> <span class="n">the</span> <span class="n">model</span> <span class="n">fixture</span> <span class="n">the</span> <span class="n">equivalence</span> <span class="n">test</span> <span class="n">compares</span> <span class="n">against</span>
+  <span class="n">freeze_bevformer_golden</span><span class="o">.</span><span class="n">py</span>        <span class="n">the</span> <span class="n">same</span> <span class="k">for</span> <span class="n">BEVFormer</span><span class="p">,</span> <span class="ow">in</span> <span class="n">both</span> <span class="n">camera</span><span class="o">-</span><span class="n">embedding</span> <span class="n">modes</span>
+  <span class="n">freeze_dataset_golden</span><span class="o">.</span><span class="n">py</span>          <span class="n">freezes</span> <span class="n">the</span> <span class="n">dataset</span> <span class="n">fixture</span><span class="p">,</span> <span class="n">including</span> <span class="n">expected</span> <span class="n">differences</span>
+  <span class="n">freeze_evaluation_golden</span><span class="o">.</span><span class="n">py</span>       <span class="n">freezes</span> <span class="n">the</span> <span class="n">metric</span><span class="p">,</span> <span class="n">so</span> <span class="n">an</span> <span class="n">evaluation</span> <span class="n">change</span> <span class="n">proves</span> <span class="n">it</span> <span class="n">moved</span> <span class="n">nothing</span>
 <span class="n">docs</span><span class="o">/</span>
   <span class="n">conf</span><span class="o">.</span><span class="n">py</span>                    <span class="n">Sphinx</span> <span class="n">configuration</span> <span class="k">for</span> <span class="n">this</span> <span class="n">site</span>
-  <span class="n">guides</span><span class="o">/</span>                    <span class="n">task</span><span class="o">-</span><span class="n">oriented</span> <span class="n">pages</span><span class="p">:</span> <span class="n">what</span> <span class="n">to</span> <span class="n">export</span><span class="p">,</span> <span class="n">extrinsics</span><span class="p">,</span> <span class="n">sensors</span><span class="p">,</span> <span class="o">...</span>
+  <span class="n">guides</span><span class="o">/</span>                    <span class="n">task</span><span class="o">-</span><span class="n">oriented</span> <span class="n">pages</span><span class="p">:</span> <span class="n">what</span> <span class="n">to</span> <span class="n">export</span><span class="p">,</span> <span class="n">extrinsics</span><span class="p">,</span> <span class="n">training</span><span class="p">,</span> <span class="o">...</span>
   <span class="n">api</span><span class="o">/</span>                       <span class="n">API</span> <span class="n">reference</span><span class="p">,</span> <span class="n">generated</span> <span class="kn">from</span><span class="w"> </span><span class="nn">the</span> <span class="n">docstrings</span>
   <span class="n">other</span><span class="o">-</span><span class="n">datasets</span><span class="o">.</span><span class="n">md</span>          <span class="n">exporting</span> <span class="n">a</span> <span class="n">dataset</span> <span class="n">that</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">nuScenes</span>
-<span class="n">tests</span><span class="o">/</span>                       <span class="mi">179</span> <span class="n">unit</span> <span class="n">tests</span> <span class="o">+</span> <span class="mi">12</span> <span class="n">integration</span> <span class="n">tests</span>
+<span class="n">tests</span><span class="o">/</span>                       <span class="mi">584</span> <span class="n">unit</span> <span class="n">tests</span> <span class="o">+</span> <span class="mi">28</span> <span class="n">integration</span> <span class="n">tests</span>
 </pre></div>
 </div>
 </section>
 <section id="tests">
 <h2>Tests<a class="headerlink" href="#tests" title="Link to this heading">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w">                                  </span><span class="c1"># 179 unit tests, no data needed</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w">                                  </span><span class="c1"># the unit tests, no data needed</span>
 <span class="nv">NUSCENES_DATA_ROOT</span><span class="o">=</span>...<span class="w"> </span><span class="nv">PY123D_DATA_ROOT</span><span class="o">=</span>...<span class="w"> </span>pytest<span class="w"> </span>-m<span class="w"> </span>integration<span class="w">    </span><span class="c1"># the round-trip comparison</span>
 </pre></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">test_model_equivalence.py</span></code>, <code class="docutils literal notranslate"><span class="pre">test_bevformer_equivalence.py</span></code> and <code class="docutils literal notranslate"><span class="pre">test_dataset_equivalence.py</span></code>
+are the ones to watch when you touch a model or the data pipeline. Each replays fixed input at a
+fixed seed and compares against a fixture frozen from the thesis implementation (<code class="docutils literal notranslate"><span class="pre">tests/golden/</span></code>).
+The models are compared by parameter count, forward outputs and every loss term, the dataset by
+every array in every sample.</p>
+<p><code class="docutils literal notranslate"><span class="pre">test_evaluate.py</span></code> does the same for the metric. Its fixture was frozen from the implementation
+that scored every dataset together in one process, so the per-dataset rework had to prove it
+changed no score, and two of its checks compare against that previous implementation inlined in the
+test file rather than against a stored number, which makes them bit-exact rather than rounded.
+<code class="docutils literal notranslate"><span class="pre">test_evaluate_distributed.py</span></code> pins that sharding inference across ranks cannot reach the score,
+with a real <code class="docutils literal notranslate"><span class="pre">Trainer.predict</span></code> run on CPU, so the Lightning wiring is covered rather than assumed.</p>
+<p>Four more modules cover what the fixtures reach only incidentally. <code class="docutils literal notranslate"><span class="pre">test_loss.py</span></code> drives the
+Hungarian matcher and the criterion directly, checking that the matching is a bijection onto the
+targets: a matcher that pairs the wrong query with the wrong target still produces a loss that
+falls, just to a worse place. <code class="docutils literal notranslate"><span class="pre">test_model_utils.py</span></code> pins the box encoding’s unusual column order,
+the BEV grid and the camera projection. <code class="docutils literal notranslate"><span class="pre">test_train_smoke.py</span></code> runs a real optimiser step, including
+one that overfits a single batch, which is the only check here that the thing actually trains.
+<code class="docutils literal notranslate"><span class="pre">test_compat_shims.py</span></code> covers the deprecated import paths, asserting the old name resolves to the
+<em>same module object</em>. A copy would re-run <code class="docutils literal notranslate"><span class="pre">&#64;DATASETS.register_module()</span></code> and leave mmdet3d with two
+classes under one name.</p>
+<p>Regenerate a fixture only when the numbers themselves are meant to change. Otherwise a failure
+there means the code moved, which is exactly what the fixtures exist to catch.</p>
 </section>
 <section id="building-the-docs">
 <h2>Building the docs<a class="headerlink" href="#building-the-docs" title="Link to this heading">¶</a></h2>
@@ -338,11 +494,11 @@ sphinx-autobuild<span class="w"> </span>--builder<span class="w"> </span>dirhtml
 <p>The API pages import the package, so build in an environment that has py123d. mmcv, mmdet3d and
 torch are mocked (<code class="docutils literal notranslate"><span class="pre">autodoc_mock_imports</span></code> in <code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code>), so the training-side classes are
 documented without them. The <a class="reference internal" href="../cli/"><span class="std std-doc">CLI reference</span></a> is generated from
-<code class="docutils literal notranslate"><span class="pre">py123detection.mmcv_export.cli.build_parser</span></code>, so new flags show up without editing the docs.</p>
+<code class="docutils literal notranslate"><span class="pre">py123detection.mmcv.export.cli.build_parser</span></code>, so new flags show up without editing the docs.</p>
 <section id="serving-a-build-locally">
 <h3>Serving a build locally<a class="headerlink" href="#serving-a-build-locally" title="Link to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">sphinx-autobuild</span></code> is the usual way to look at the docs while writing them. To serve a finished
-build instead – any static file server will do, since the site is plain HTML:</p>
+build instead, any static file server will do, since the site is plain HTML:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8000</span><span class="w"> </span>--directory<span class="w"> </span>docs/_build<span class="w">     </span><span class="c1"># -&gt; http://localhost:8000</span>
 </pre></div>
 </div>
@@ -387,19 +543,19 @@ python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="
 </table>
 </div>
 <p>Previews are opt-in because a published preview is only worth having when someone else needs to
-read it – for your own iteration the local server above beats a CI round-trip. A preview is a
+read it. For your own iteration the local server above beats a CI round-trip. A preview is a
 snapshot of the commit it was built from and says so in a banner naming the branch and short SHA,
-so it is mistaken neither for the released docs nor for the branch’s current state; re-run the
+so it is mistaken neither for the released docs nor for the branch’s current state. Re-run the
 workflow to refresh it.</p>
 <p>The branch directory is the branch name lowercased with URL-unfriendly characters replaced by
 <code class="docutils literal notranslate"><span class="pre">-</span></code>. <code class="docutils literal notranslate"><span class="pre">.github/scripts/branch-slug.sh</span></code> is the single definition of that mapping, used by both
 workflows and by the local command above.</p>
 <p>A preview is removed when its branch is deleted (<code class="docutils literal notranslate"><span class="pre">docs-cleanup.yaml</span></code>), and any that outlive that
-event are collected the next time <code class="docutils literal notranslate"><span class="pre">main</span></code> deploys: a root deploy keeps only the directories of
+event are collected the next time <code class="docutils literal notranslate"><span class="pre">main</span></code> deploys, since a root deploy keeps only the directories of
 branches that still exist on the remote.</p>
-<p>One thing to keep in mind when naming a branch: previews sit next to <code class="docutils literal notranslate"><span class="pre">main</span></code>’s own top-level
-pages, so a branch named <code class="docutils literal notranslate"><span class="pre">guides</span></code> or <code class="docutils literal notranslate"><span class="pre">api</span></code> would publish over that page’s URL. Anything with a
-<code class="docutils literal notranslate"><span class="pre">feat/</span></code>, <code class="docutils literal notranslate"><span class="pre">fix/</span></code> or similar prefix is clear of them.</p>
+<p>One thing to keep in mind when naming a branch. Previews sit next to <code class="docutils literal notranslate"><span class="pre">main</span></code>’s own top-level pages,
+so a branch named <code class="docutils literal notranslate"><span class="pre">guides</span></code> or <code class="docutils literal notranslate"><span class="pre">api</span></code> would publish over that page’s URL. Anything with a <code class="docutils literal notranslate"><span class="pre">feat/</span></code>,
+<code class="docutils literal notranslate"><span class="pre">fix/</span></code> or similar prefix is clear of them.</p>
 </section>
 </section>
 

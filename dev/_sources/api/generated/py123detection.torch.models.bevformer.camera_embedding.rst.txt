@@ -1,0 +1,25 @@
+py123detection.torch.models.bevformer.camera\_embedding
+=======================================================
+
+.. automodule:: py123detection.torch.models.bevformer.camera_embedding
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      VALID_CAM_EMBED_TYPES
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_camera_embedding
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BEVFormerCamEmbed
+      CameraEmbedding
+   

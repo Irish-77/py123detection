@@ -1,0 +1,20 @@
+py123detection.torch.data.collate
+=================================
+
+.. automodule:: py123detection.torch.data.collate
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      PER_SAMPLE_KEYS
+      PER_CAMERA_KEYS
+      PER_CAMERA_METADATA
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      collate_rigs
+   

@@ -1,0 +1,18 @@
+py123detection.torch.models.base
+================================
+
+.. automodule:: py123detection.torch.models.base
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      petr_schedule
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Detector3D
+   

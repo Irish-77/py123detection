@@ -1,0 +1,17 @@
+py123detection.torch.train
+==========================
+
+.. automodule:: py123detection.torch.train
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_callbacks
+      build_data
+      build_logger
+      main
+      preemption_checkpoint
+      resume_from
+   

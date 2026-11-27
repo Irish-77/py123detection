@@ -1,0 +1,20 @@
+py123detection.torch.models.multiview
+=====================================
+
+.. automodule:: py123detection.torch.models.multiview
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      BACKBONE_STRIDE
+      DEFAULT_PC_RANGE
+      IMAGENET_MEAN
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      MultiViewDetector
+   

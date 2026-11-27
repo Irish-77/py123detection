@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=75e05936" />
     
     
 
@@ -155,7 +156,7 @@
 
 <div class="announcement">
   <aside class="announcement-content">
-     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+     Preview of branch <code>dev</code> at <code>bfe7efb</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
   </aside>
 </div>
 
@@ -196,21 +197,27 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Start here</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/">Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples/">Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<p class="caption" role="heading"><span class="caption-text">Export to mmdetection3d</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Train without mmcv</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/first-run/">First run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/training/">Training without mmcv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/visualisation/">Looking at what the model found</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
@@ -219,8 +226,39 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2 current has-children"><a class="reference internal" href="../py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.core/">py123detection.core</a><input aria-label="Toggle navigation of py123detection.core" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.annotations/">py123detection.core.annotations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.cameras/">py123detection.core.cameras</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.evaluation/">py123detection.core.evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.geometry/">py123detection.core.geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.lidar_points/">py123detection.core.lidar_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.sources/">py123detection.core.sources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.taxonomy/">py123detection.core.taxonomy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.velocity/">py123detection.core.velocity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.visibility/">py123detection.core.visibility</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.geometry/">py123detection.geometry</a></li>
-<li class="toctree-l3 current has-children"><a class="reference internal" href="../py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv/">py123detection.mmcv</a><input aria-label="Toggle navigation of py123detection.mmcv" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.mmcv.export/">py123detection.mmcv.export</a><input aria-label="Toggle navigation of py123detection.mmcv.export" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.annotations2d/">py123detection.mmcv.export.annotations2d</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.cli/">py123detection.mmcv.export.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.converter/">py123detection.mmcv.export.converter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.export/">py123detection.mmcv.export.export</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.schema/">py123detection.mmcv.export.schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.sensors/">py123detection.mmcv.export.sensors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.tokens/">py123detection.mmcv.export.tokens</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.writer/">py123detection.mmcv.export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.mmcv.plugin/">py123detection.mmcv.plugin</a><input aria-label="Toggle navigation of py123detection.mmcv.plugin" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.plugin.dataset/">py123detection.mmcv.plugin.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.plugin.evaluation/">py123detection.mmcv.plugin.evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="../py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">py123detection.mmcv_export.converter</a></li>
@@ -231,13 +269,74 @@
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_plugin.evaluation/">py123detection.mmcv_plugin.evaluation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.sources/">py123detection.sources</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.torch/">py123detection.torch</a><input aria-label="Toggle navigation of py123detection.torch" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.build/">py123detection.torch.build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.callbacks/">py123detection.torch.callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.conf/">py123detection.torch.conf</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.data/">py123detection.torch.data</a><input aria-label="Toggle navigation of py123detection.torch.data" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.augment/">py123detection.torch.data.augment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.boxes/">py123detection.torch.data.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.cameras/">py123detection.torch.data.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.collate/">py123detection.torch.data.collate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.datamodule/">py123detection.torch.data.datamodule</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.dataset/">py123detection.torch.data.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.frames/">py123detection.torch.data.frames</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.images/">py123detection.torch.data.images</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.rigs/">py123detection.torch.data.rigs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.evaluate/">py123detection.torch.evaluate</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.models/">py123detection.torch.models</a><input aria-label="Toggle navigation of py123detection.torch.models" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.models.base/">py123detection.torch.models.base</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.bevformer/">py123detection.torch.models.bevformer</a><input aria-label="Toggle navigation of py123detection.torch.models.bevformer" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.camera_embedding/">py123detection.torch.models.bevformer.camera_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.deformable_attention/">py123detection.torch.models.bevformer.deformable_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.detector/">py123detection.torch.models.bevformer.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.encoder/">py123detection.torch.models.bevformer.encoder</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.head/">py123detection.torch.models.bevformer.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.spatial_cross_attention/">py123detection.torch.models.bevformer.spatial_cross_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.utils/">py123detection.torch.models.bevformer.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.common/">py123detection.torch.models.common</a><input aria-label="Toggle navigation of py123detection.torch.models.common" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.backbone/">py123detection.torch.models.common.backbone</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.grid_mask/">py123detection.torch.models.common.grid_mask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.loss/">py123detection.torch.models.common.loss</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.position_embedding/">py123detection.torch.models.common.position_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.util/">py123detection.torch.models.common.util</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.models.multiview/">py123detection.torch.models.multiview</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.petr/">py123detection.torch.models.petr</a><input aria-label="Toggle navigation of py123detection.torch.models.petr" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.detector/">py123detection.torch.models.petr.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.head/">py123detection.torch.models.petr.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.positional_encoding/">py123detection.torch.models.petr.positional_encoding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.transformer/">py123detection.torch.models.petr.transformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.predictions/">py123detection.torch.predictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.train/">py123detection.torch.train</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.visualize/">py123detection.torch.visualize</a><input aria-label="Toggle navigation of py123detection.torch.visualize" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.bev/">py123detection.torch.visualize.bev</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.boxes/">py123detection.torch.visualize.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.cameras/">py123detection.torch.visualize.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.cli/">py123detection.torch.visualize.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.frame/">py123detection.torch.visualize.frame</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.py123d_interop/">py123detection.torch.visualize.py123d_interop</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.viewer/">py123detection.torch.visualize.viewer</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.velocity/">py123detection.velocity</a></li>
 </ul>
 </li>
@@ -291,13 +390,13 @@
 <p>123D scenes -&gt; mmdetection3d <code class="docutils literal notranslate"><span class="pre">info</span></code> dicts, one per frame.</p>
 <p>The reference frame is the keyframe’s lidar frame, as in mmdet3d. 123D stores everything in the
 global frame, so each frame composes <code class="docutils literal notranslate"><span class="pre">lidar</span> <span class="pre">-&gt;</span> <span class="pre">ego</span> <span class="pre">-&gt;</span> <span class="pre">global</span></code> from the ego state and rig
-extrinsics and inverts it. See <a class="reference internal" href="../py123detection.mmcv_export.schema/#module-py123detection.mmcv_export.schema" title="py123detection.mmcv_export.schema"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py123detection.mmcv_export.schema</span></code></a> for the fields.</p>
+extrinsics and inverts it. See <a class="reference internal" href="../py123detection.mmcv.export.schema/#module-py123detection.mmcv.export.schema" title="py123detection.mmcv.export.schema"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py123detection.mmcv.export.schema</span></code></a> for the fields.</p>
 <p class="rubric">Module Attributes</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.mmcv_export.converter.DEFAULT_CAMERA_ORDER" title="py123detection.mmcv_export.converter.DEFAULT_CAMERA_ORDER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DEFAULT_CAMERA_ORDER</span></code></a></p></td>
-<td><p>123D camera ids.</p></td>
+<td><p>123D camera ids in mmdetection3d's nuScenes order, which pretrained multi-view models expect.</p></td>
 </tr>
 </tbody>
 </table>
@@ -306,13 +405,13 @@ extrinsics and inverts it. See <a class="reference internal" href="../py123detec
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig" title="py123detection.mmcv_export.converter.ExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExportConfig</span></code></a>([taxonomy, camera_order, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExportConfig</span></code>([taxonomy, camera_order, ...])</p></td>
 <td><p>Everything that shapes an export, independent of which scenes are exported.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats" title="py123detection.mmcv_export.converter.ExportStats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExportStats</span></code></a>([num_logs, num_frames, ...])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExportStats</span></code>([num_logs, num_frames, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.mmcv_export.converter.MMDet3DConverter" title="py123detection.mmcv_export.converter.MMDet3DConverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MMDet3DConverter</span></code></a>([config])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">MMDet3DConverter</span></code>([config])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -320,280 +419,9 @@ extrinsics and inverts it. See <a class="reference internal" href="../py123detec
 </div>
 <dl class="py data">
 <dt class="sig sig-object py" id="py123detection.mmcv_export.converter.DEFAULT_CAMERA_ORDER">
-<span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_export.converter.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_CAMERA_ORDER</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('PCAM_F0',</span> <span class="pre">'PCAM_R0',</span> <span class="pre">'PCAM_L0',</span> <span class="pre">'PCAM_B0',</span> <span class="pre">'PCAM_L1',</span> <span class="pre">'PCAM_R1')</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.DEFAULT_CAMERA_ORDER" title="Link to this definition">¶</a></dt>
-<dd><p>123D camera ids. On a nuScenes rig this is CAM_FRONT, CAM_FRONT_RIGHT, CAM_FRONT_LEFT, CAM_BACK,
-CAM_BACK_LEFT, CAM_BACK_RIGHT, the order mmdetection3d’s converter uses and pretrained
-multi-view models expect.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_export.converter.</span></span><span class="sig-name descname"><span class="pre">ExportConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taxonomy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Taxonomy(name='nuscenes_detection_10cls')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('PCAM_F0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'PCAM_R0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'PCAM_L0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'PCAM_B0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'PCAM_L1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'PCAM_R1')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'native'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_lidar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_sweeps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_2d_annotations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_missing_camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'skip_frame'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_resolver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_track_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw_convention</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mmdet3d'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lidar2ego_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'static'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera2ego_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'static'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lidar_frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planar_velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'streampetr'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'stored'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_max_dt_s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ego_pose_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sync'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_export/converter/#ExportConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Everything that shapes an export, independent of which scenes are exported.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.taxonomy">
-<span class="sig-name descname"><span class="pre">taxonomy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../py123detection.taxonomy/#py123detection.taxonomy.Taxonomy" title="py123detection.taxonomy.Taxonomy"><span class="pre">Taxonomy</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Taxonomy(name='nuscenes_detection_10cls')</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.taxonomy" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.camera_order">
-<span class="sig-name descname"><span class="pre">camera_order</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('PCAM_F0',</span> <span class="pre">'PCAM_R0',</span> <span class="pre">'PCAM_L0',</span> <span class="pre">'PCAM_B0',</span> <span class="pre">'PCAM_L1',</span> <span class="pre">'PCAM_R1')</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.camera_order" title="Link to this definition">¶</a></dt>
-<dd><p>123D <a class="reference external" href="https://kesai.eu/py123d/reference/datatypes/sensors/01_camera/#py123d.datatypes.CameraID" title="(in py123d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">CameraID</span></code></a> names, in model input order.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.camera_key">
-<span class="sig-name descname"><span class="pre">camera_key</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'native'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.camera_key" title="Link to this definition">¶</a></dt>
-<dd><p>Key of each camera in <code class="docutils literal notranslate"><span class="pre">info['cams']</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;native&quot;</span></code> (<code class="docutils literal notranslate"><span class="pre">CAM_FRONT</span></code>, what stock configs
-expect) or <code class="docutils literal notranslate"><span class="pre">&quot;camera_id&quot;</span></code> (<code class="docutils literal notranslate"><span class="pre">PCAM_F0</span></code>, consistent across datasets in merged exports).</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.reference_lidar">
-<span class="sig-name descname"><span class="pre">reference_lidar</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.reference_lidar" title="Link to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kesai.eu/py123d/reference/datatypes/sensors/05_lidar/#py123d.datatypes.LidarID" title="(in py123d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">LidarID</span></code></a> name of the reference frame. <code class="docutils literal notranslate"><span class="pre">None</span></code> picks <code class="docutils literal notranslate"><span class="pre">LIDAR_TOP</span></code>, else the first lidar.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.max_sweeps">
-<span class="sig-name descname"><span class="pre">max_sweeps</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.max_sweeps" title="Link to this definition">¶</a></dt>
-<dd><p>Preceding lidar frames per info, taken at the log’s own rate rather than the export rate.</p>
-<p>A keyframe-only nuScenes conversion only holds 2 Hz lidar, so its sweeps are 2 Hz. The first
-frame of a log always gets an empty list, which StreamPETR reads as a sequence start.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.with_2d_annotations">
-<span class="sig-name descname"><span class="pre">with_2d_annotations</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.with_2d_annotations" title="Link to this definition">¶</a></dt>
-<dd><p>Per-camera 2D / mono-3D annotations, required by StreamPETR.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.on_missing_camera">
-<span class="sig-name descname"><span class="pre">on_missing_camera</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'skip_frame'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.on_missing_camera" title="Link to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">&quot;skip_frame&quot;</span></code> (multi-view models need a fixed camera count), <code class="docutils literal notranslate"><span class="pre">&quot;drop_camera&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;error&quot;</span></code>.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.sensors">
-<span class="sig-name descname"><span class="pre">sensors</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../py123detection.mmcv_export.sensors/#py123detection.mmcv_export.sensors.SensorResolverConfig" title="py123detection.mmcv_export.sensors.SensorResolverConfig"><span class="pre">SensorResolverConfig</span></a></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.sensors" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.token_resolver">
-<span class="sig-name descname"><span class="pre">token_resolver</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../py123detection.mmcv_export.tokens/#py123detection.mmcv_export.tokens.TokenResolver" title="py123detection.mmcv_export.tokens.TokenResolver"><span class="pre">TokenResolver</span></a></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.token_resolver" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.include_track_tokens">
-<span class="sig-name descname"><span class="pre">include_track_tokens</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.include_track_tokens" title="Link to this definition">¶</a></dt>
-<dd><p>Also write per-box <code class="docutils literal notranslate"><span class="pre">instance_tokens</span></code>.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.yaw_convention">
-<span class="sig-name descname"><span class="pre">yaw_convention</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mmdet3d'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.yaw_convention" title="Link to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">&quot;mmdet3d&quot;</span></code> matches pickles from mmdetection3d’s converter, <code class="docutils literal notranslate"><span class="pre">&quot;heading&quot;</span></code> the nuScenes
-devkit. See <a class="reference internal" href="../py123detection.geometry/#py123detection.geometry.mmdet3d_yaw" title="py123detection.geometry.mmdet3d_yaw"><code class="xref py py-func docutils literal notranslate"><span class="pre">py123detection.geometry.mmdet3d_yaw()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.lidar2ego_mode">
-<span class="sig-name descname"><span class="pre">lidar2ego_mode</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'static'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.lidar2ego_mode" title="Link to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">&quot;static&quot;</span></code> writes the rig extrinsic, like mmdetection3d’s converter.</p>
-<p><code class="docutils literal notranslate"><span class="pre">&quot;dynamic&quot;</span></code> also folds in the ego motion between the frame timestamp and the lidar’s own
-timestamp: <code class="docutils literal notranslate"><span class="pre">inv(ego2global_at_frame)</span> <span class="pre">&#64;</span> <span class="pre">ego2global_at_lidar_time</span> <span class="pre">&#64;</span> <span class="pre">lidar2ego_static</span></code>. 123D
-stores no per-row lidar pose, so this only differs from static when the ego stream is denser
-than the frames (not for keyframe-only nuScenes).</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.camera2ego_mode">
-<span class="sig-name descname"><span class="pre">camera2ego_mode</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'static'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.camera2ego_mode" title="Link to this definition">¶</a></dt>
-<dd><p>Where a camera’s timing offset to the frame is booked.</p>
-<p><code class="docutils literal notranslate"><span class="pre">&quot;static&quot;</span></code> keeps <code class="docutils literal notranslate"><span class="pre">sensor2ego</span></code> at the rig calibration and moves <code class="docutils literal notranslate"><span class="pre">ego2global</span></code> to the
-camera timestamp, like mmdetection3d. <code class="docutils literal notranslate"><span class="pre">&quot;dynamic&quot;</span></code> keeps the frame’s <code class="docutils literal notranslate"><span class="pre">ego2global</span></code> and folds
-the offset into <code class="docutils literal notranslate"><span class="pre">sensor2ego</span></code>. <code class="docutils literal notranslate"><span class="pre">sensor2lidar</span></code>, which PETR and StreamPETR use, is the same
-either way; BEVDet-style configs read the two parts separately.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.lidar_frame">
-<span class="sig-name descname"><span class="pre">lidar_frame</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sensor'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.lidar_frame" title="Link to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">&quot;sensor&quot;</span></code> uses the reference lidar’s frame (mmdet3d’s convention, and the frame of a
-referenced point cloud file). <code class="docutils literal notranslate"><span class="pre">&quot;ego&quot;</span></code> uses the ego/IMU frame, so <code class="docutils literal notranslate"><span class="pre">lidar2ego</span></code> is the identity.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.planar_velocity">
-<span class="sig-name descname"><span class="pre">planar_velocity</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.planar_velocity" title="Link to this definition">¶</a></dt>
-<dd><p>Drop the global vertical velocity before rotating into the lidar frame. mmdetection3d does
-this and its evaluation assumes it.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.box_layout">
-<span class="sig-name descname"><span class="pre">box_layout</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'streampetr'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.box_layout" title="Link to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">gt_boxes</span></code> column layout, see <a class="reference internal" href="../py123detection.annotations/#py123detection.annotations.BOX_LAYOUTS" title="py123detection.annotations.BOX_LAYOUTS"><code class="xref py py-data docutils literal notranslate"><span class="pre">py123detection.annotations.BOX_LAYOUTS</span></code></a>. A wrong
-choice does not crash, it trains on transposed, mis-rotated boxes.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.velocity_source">
-<span class="sig-name descname"><span class="pre">velocity_source</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'stored'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.velocity_source" title="Link to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">&quot;stored&quot;</span></code> uses the log’s velocity (zero if the dataset has none). <code class="docutils literal notranslate"><span class="pre">&quot;tracks&quot;</span></code> derives it
-from neighbouring annotations of each track, see <a class="reference internal" href="../py123detection.velocity/#module-py123detection.velocity" title="py123detection.velocity"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py123detection.velocity</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.velocity_max_dt_s">
-<span class="sig-name descname"><span class="pre">velocity_max_dt_s</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.25</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.velocity_max_dt_s" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportConfig.ego_pose_source">
-<span class="sig-name descname"><span class="pre">ego_pose_source</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sync'</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportConfig.ego_pose_source" title="Link to this definition">¶</a></dt>
-<dd><p>Which ego state gives a frame’s <code class="docutils literal notranslate"><span class="pre">ego2global</span></code>: the sync table row (<code class="docutils literal notranslate"><span class="pre">&quot;sync&quot;</span></code>) or the
-state nearest to the frame timestamp (<code class="docutils literal notranslate"><span class="pre">&quot;nearest&quot;</span></code>).</p>
-<p>The sync table takes the first ego row at or after the frame timestamp, so an ego timestamp
-that is 1 us early skips the right row. py123d 0.6.0’s Argoverse 2 parser round-trips the
-nanosecond stamps through float64: 5% of ego rows come back 1 us early and ~40% of frames get
-an ego pose 2-10 ms late (up to 9 cm). <code class="docutils literal notranslate"><span class="pre">&quot;nearest&quot;</span></code> avoids that.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_export.converter.</span></span><span class="sig-name descname"><span class="pre">ExportStats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_boxes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames_skipped_missing_camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames_skipped_missing_ego</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frames_skipped_missing_lidar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs_skipped</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dynamic_extrinsic_fallbacks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boxes_without_track_velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ego_pose_fallbacks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ego_pose_max_offset_us</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropped_cameras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_referenced_payloads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_extracted_payloads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_export/converter/#ExportStats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.num_logs">
-<span class="sig-name descname"><span class="pre">num_logs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.num_logs" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.num_frames">
-<span class="sig-name descname"><span class="pre">num_frames</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.num_frames" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.num_boxes">
-<span class="sig-name descname"><span class="pre">num_boxes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.num_boxes" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_camera">
-<span class="sig-name descname"><span class="pre">frames_skipped_missing_camera</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_camera" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_ego">
-<span class="sig-name descname"><span class="pre">frames_skipped_missing_ego</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_ego" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_lidar">
-<span class="sig-name descname"><span class="pre">frames_skipped_missing_lidar</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_lidar" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.logs_skipped">
-<span class="sig-name descname"><span class="pre">logs_skipped</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.logs_skipped" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.dynamic_extrinsic_fallbacks">
-<span class="sig-name descname"><span class="pre">dynamic_extrinsic_fallbacks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.dynamic_extrinsic_fallbacks" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.boxes_without_track_velocity">
-<span class="sig-name descname"><span class="pre">boxes_without_track_velocity</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.boxes_without_track_velocity" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.ego_pose_fallbacks">
-<span class="sig-name descname"><span class="pre">ego_pose_fallbacks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.ego_pose_fallbacks" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.ego_pose_max_offset_us">
-<span class="sig-name descname"><span class="pre">ego_pose_max_offset_us</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.ego_pose_max_offset_us" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.dropped_cameras">
-<span class="sig-name descname"><span class="pre">dropped_cameras</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.Counter" title="(in Python v3.14)"><span class="pre">Counter</span></a></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.dropped_cameras" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.class_counts">
-<span class="sig-name descname"><span class="pre">class_counts</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.Counter" title="(in Python v3.14)"><span class="pre">Counter</span></a></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.class_counts" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.num_referenced_payloads">
-<span class="sig-name descname"><span class="pre">num_referenced_payloads</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.num_referenced_payloads" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.num_extracted_payloads">
-<span class="sig-name descname"><span class="pre">num_extracted_payloads</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.num_extracted_payloads" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.ExportStats.as_dict">
-<span class="sig-name descname"><span class="pre">as_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_export/converter/#ExportStats.as_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_export.converter.ExportStats.as_dict" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.MMDet3DConverter">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_export.converter.</span></span><span class="sig-name descname"><span class="pre">MMDet3DConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_export/converter/#MMDet3DConverter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_export.converter.MMDet3DConverter" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.MMDet3DConverter.stats">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">stats</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats" title="py123detection.mmcv_export.converter.ExportStats"><span class="pre">ExportStats</span></a></span><a class="headerlink" href="#py123detection.mmcv_export.converter.MMDet3DConverter.stats" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.MMDet3DConverter.convert_scenes">
-<span class="sig-name descname"><span class="pre">convert_scenes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_offset_us</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">native_scenes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_export/converter/#MMDet3DConverter.convert_scenes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_export.converter.MMDet3DConverter.convert_scenes" title="Link to this definition">¶</a></dt>
-<dd><p>Convert scenes (one per log) into a flat list of infos.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>native_scenes</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://kesai.eu/py123d/reference/scene/#py123d.api.SceneAPI" title="(in py123d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SceneAPI</span></code></a>]]</span>) – Native-rate views of the same logs by <code class="docutils literal notranslate"><span class="pre">(split,</span> <span class="pre">log_name)</span></code>, needed
-for sweeps and track velocities when <code class="docutils literal notranslate"><span class="pre">scenes</span></code> are subsampled.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="py123detection.mmcv_export.converter.MMDet3DConverter.convert_scene">
-<span class="sig-name descname"><span class="pre">convert_scene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_offset_us</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">native_scene</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_export/converter/#MMDet3DConverter.convert_scene"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_export.converter.MMDet3DConverter.convert_scene" title="Link to this definition">¶</a></dt>
-<dd><p>Convert one full log into infos, in frame order.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>native_scene</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://kesai.eu/py123d/reference/scene/#py123d.api.SceneAPI" title="(in py123d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SceneAPI</span></code></a>]</span>) – Native-rate view of the log, for sweeps and <code class="docutils literal notranslate"><span class="pre">velocity_source=&quot;tracks&quot;</span></code>.
-Omit when <code class="docutils literal notranslate"><span class="pre">scene</span></code> is not subsampled.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</span></p>
-</dd>
-</dl>
-</dd></dl>
-
+<span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_export.converter.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_CAMERA_ORDER</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.15)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('PCAM_F0',</span> <span class="pre">'PCAM_R0',</span> <span class="pre">'PCAM_L0',</span> <span class="pre">'PCAM_B0',</span> <span class="pre">'PCAM_L1',</span> <span class="pre">'PCAM_R1')</span></span><a class="headerlink" href="#py123detection.mmcv_export.converter.DEFAULT_CAMERA_ORDER" title="Link to this definition">¶</a></dt>
+<dd><p>123D camera ids in mmdetection3d’s nuScenes order, which pretrained multi-view models expect.
+See <a class="reference internal" href="../py123detection.core.cameras/#module-py123detection.core.cameras" title="py123detection.core.cameras"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py123detection.core.cameras</span></code></a> for why the torch branch uses a different one.</p>
 </dd></dl>
 
 </section>
@@ -655,53 +483,6 @@ Omit when <code class="docutils literal notranslate"><span class="pre">scene</sp
             <ul>
 <li><a class="reference internal" href="#">py123detection.mmcv_export.converter</a><ul>
 <li><a class="reference internal" href="#py123detection.mmcv_export.converter.DEFAULT_CAMERA_ORDER"><code class="docutils literal notranslate"><span class="pre">DEFAULT_CAMERA_ORDER</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig"><code class="docutils literal notranslate"><span class="pre">ExportConfig</span></code></a><ul>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.taxonomy"><code class="docutils literal notranslate"><span class="pre">ExportConfig.taxonomy</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.camera_order"><code class="docutils literal notranslate"><span class="pre">ExportConfig.camera_order</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.camera_key"><code class="docutils literal notranslate"><span class="pre">ExportConfig.camera_key</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.reference_lidar"><code class="docutils literal notranslate"><span class="pre">ExportConfig.reference_lidar</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.max_sweeps"><code class="docutils literal notranslate"><span class="pre">ExportConfig.max_sweeps</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.with_2d_annotations"><code class="docutils literal notranslate"><span class="pre">ExportConfig.with_2d_annotations</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.on_missing_camera"><code class="docutils literal notranslate"><span class="pre">ExportConfig.on_missing_camera</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.sensors"><code class="docutils literal notranslate"><span class="pre">ExportConfig.sensors</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.token_resolver"><code class="docutils literal notranslate"><span class="pre">ExportConfig.token_resolver</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.include_track_tokens"><code class="docutils literal notranslate"><span class="pre">ExportConfig.include_track_tokens</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.yaw_convention"><code class="docutils literal notranslate"><span class="pre">ExportConfig.yaw_convention</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.lidar2ego_mode"><code class="docutils literal notranslate"><span class="pre">ExportConfig.lidar2ego_mode</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.camera2ego_mode"><code class="docutils literal notranslate"><span class="pre">ExportConfig.camera2ego_mode</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.lidar_frame"><code class="docutils literal notranslate"><span class="pre">ExportConfig.lidar_frame</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.planar_velocity"><code class="docutils literal notranslate"><span class="pre">ExportConfig.planar_velocity</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.box_layout"><code class="docutils literal notranslate"><span class="pre">ExportConfig.box_layout</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.velocity_source"><code class="docutils literal notranslate"><span class="pre">ExportConfig.velocity_source</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.velocity_max_dt_s"><code class="docutils literal notranslate"><span class="pre">ExportConfig.velocity_max_dt_s</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportConfig.ego_pose_source"><code class="docutils literal notranslate"><span class="pre">ExportConfig.ego_pose_source</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats"><code class="docutils literal notranslate"><span class="pre">ExportStats</span></code></a><ul>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.num_logs"><code class="docutils literal notranslate"><span class="pre">ExportStats.num_logs</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.num_frames"><code class="docutils literal notranslate"><span class="pre">ExportStats.num_frames</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.num_boxes"><code class="docutils literal notranslate"><span class="pre">ExportStats.num_boxes</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_camera"><code class="docutils literal notranslate"><span class="pre">ExportStats.frames_skipped_missing_camera</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_ego"><code class="docutils literal notranslate"><span class="pre">ExportStats.frames_skipped_missing_ego</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.frames_skipped_missing_lidar"><code class="docutils literal notranslate"><span class="pre">ExportStats.frames_skipped_missing_lidar</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.logs_skipped"><code class="docutils literal notranslate"><span class="pre">ExportStats.logs_skipped</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.dynamic_extrinsic_fallbacks"><code class="docutils literal notranslate"><span class="pre">ExportStats.dynamic_extrinsic_fallbacks</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.boxes_without_track_velocity"><code class="docutils literal notranslate"><span class="pre">ExportStats.boxes_without_track_velocity</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.ego_pose_fallbacks"><code class="docutils literal notranslate"><span class="pre">ExportStats.ego_pose_fallbacks</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.ego_pose_max_offset_us"><code class="docutils literal notranslate"><span class="pre">ExportStats.ego_pose_max_offset_us</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.dropped_cameras"><code class="docutils literal notranslate"><span class="pre">ExportStats.dropped_cameras</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.class_counts"><code class="docutils literal notranslate"><span class="pre">ExportStats.class_counts</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.num_referenced_payloads"><code class="docutils literal notranslate"><span class="pre">ExportStats.num_referenced_payloads</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.num_extracted_payloads"><code class="docutils literal notranslate"><span class="pre">ExportStats.num_extracted_payloads</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.ExportStats.as_dict"><code class="docutils literal notranslate"><span class="pre">ExportStats.as_dict()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.MMDet3DConverter"><code class="docutils literal notranslate"><span class="pre">MMDet3DConverter</span></code></a><ul>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.MMDet3DConverter.stats"><code class="docutils literal notranslate"><span class="pre">MMDet3DConverter.stats</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.MMDet3DConverter.convert_scenes"><code class="docutils literal notranslate"><span class="pre">MMDet3DConverter.convert_scenes()</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_export.converter.MMDet3DConverter.convert_scene"><code class="docutils literal notranslate"><span class="pre">MMDet3DConverter.convert_scene()</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>

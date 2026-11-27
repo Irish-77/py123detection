@@ -1,0 +1,24 @@
+py123detection.torch.visualize.cameras
+======================================
+
+.. automodule:: py123detection.torch.visualize.cameras
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      TRUTH_COLOUR
+      THICKNESS
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      draw_boxes
+      project_corners
+      render_camera
+      save_cameras
+      shade
+      tile
+   

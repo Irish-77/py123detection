@@ -1,0 +1,21 @@
+py123detection.torch.data
+=========================
+
+.. automodule:: py123detection.torch.data
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   augment
+   boxes
+   cameras
+   collate
+   datamodule
+   dataset
+   frames
+   images
+   rigs

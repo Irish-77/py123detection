@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=75e05936" />
     
     
 
@@ -155,7 +156,7 @@
 
 <div class="announcement">
   <aside class="announcement-content">
-     Preview of branch <code>dev</code> at <code>d489784</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
+     Preview of branch <code>dev</code> at <code>bfe7efb</code> &mdash; <a href="https://irish-77.github.io/py123detection/">go to the main docs</a> 
   </aside>
 </div>
 
@@ -178,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -196,21 +197,27 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Start here</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/">Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quick start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples/">Examples</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<p class="caption" role="heading"><span class="caption-text">Export to mmdetection3d</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/choosing-what-to-export/">Choosing what to export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/extrinsics/">Static vs. dynamic extrinsics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/sensor-payloads/">Images and point clouds: references or copies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/cross-dataset-training/">Cross-dataset training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/tokens-and-evaluation/">Frame identifiers and nuScenes evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/python-version-boundary/">Crossing the Python version boundary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../other-datasets/">Exporting other 123D datasets (and proving the export right)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Train without mmcv</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/first-run/">First run</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/training/">Training without mmcv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/visualisation/">Looking at what the model found</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
@@ -219,8 +226,39 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2 current has-children"><a class="reference internal" href="../py123detection/">py123detection</a><input aria-label="Toggle navigation of py123detection" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.annotations/">py123detection.annotations</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.core/">py123detection.core</a><input aria-label="Toggle navigation of py123detection.core" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.annotations/">py123detection.core.annotations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.cameras/">py123detection.core.cameras</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.evaluation/">py123detection.core.evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.geometry/">py123detection.core.geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.lidar_points/">py123detection.core.lidar_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.sources/">py123detection.core.sources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.taxonomy/">py123detection.core.taxonomy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.velocity/">py123detection.core.velocity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.core.visibility/">py123detection.core.visibility</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.geometry/">py123detection.geometry</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv/">py123detection.mmcv</a><input aria-label="Toggle navigation of py123detection.mmcv" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.mmcv.export/">py123detection.mmcv.export</a><input aria-label="Toggle navigation of py123detection.mmcv.export" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.annotations2d/">py123detection.mmcv.export.annotations2d</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.cli/">py123detection.mmcv.export.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.converter/">py123detection.mmcv.export.converter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.export/">py123detection.mmcv.export.export</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.schema/">py123detection.mmcv.export.schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.sensors/">py123detection.mmcv.export.sensors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.tokens/">py123detection.mmcv.export.tokens</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.export.writer/">py123detection.mmcv.export.writer</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.mmcv.plugin/">py123detection.mmcv.plugin</a><input aria-label="Toggle navigation of py123detection.mmcv.plugin" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.plugin.dataset/">py123detection.mmcv.plugin.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.mmcv.plugin.evaluation/">py123detection.mmcv.plugin.evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.mmcv_export/">py123detection.mmcv_export</a><input aria-label="Toggle navigation of py123detection.mmcv_export" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.annotations2d/">py123detection.mmcv_export.annotations2d</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.cli/">py123detection.mmcv_export.cli</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.converter/">py123detection.mmcv_export.converter</a></li>
@@ -231,13 +269,74 @@
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_export.writer/">py123detection.mmcv_export.writer</a></li>
 </ul>
 </li>
-<li class="toctree-l3 current has-children"><a class="reference internal" href="../py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 current has-children"><a class="reference internal" href="../py123detection.mmcv_plugin/">py123detection.mmcv_plugin</a><input aria-label="Toggle navigation of py123detection.mmcv_plugin" checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../py123detection.mmcv_plugin.dataset/">py123detection.mmcv_plugin.dataset</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">py123detection.mmcv_plugin.evaluation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.sources/">py123detection.sources</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.taxonomy/">py123detection.taxonomy</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../py123detection.torch/">py123detection.torch</a><input aria-label="Toggle navigation of py123detection.torch" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.build/">py123detection.torch.build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.callbacks/">py123detection.torch.callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.conf/">py123detection.torch.conf</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.data/">py123detection.torch.data</a><input aria-label="Toggle navigation of py123detection.torch.data" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.augment/">py123detection.torch.data.augment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.boxes/">py123detection.torch.data.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.cameras/">py123detection.torch.data.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.collate/">py123detection.torch.data.collate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.datamodule/">py123detection.torch.data.datamodule</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.dataset/">py123detection.torch.data.dataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.frames/">py123detection.torch.data.frames</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.images/">py123detection.torch.data.images</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.data.rigs/">py123detection.torch.data.rigs</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.evaluate/">py123detection.torch.evaluate</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.models/">py123detection.torch.models</a><input aria-label="Toggle navigation of py123detection.torch.models" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.models.base/">py123detection.torch.models.base</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.bevformer/">py123detection.torch.models.bevformer</a><input aria-label="Toggle navigation of py123detection.torch.models.bevformer" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.camera_embedding/">py123detection.torch.models.bevformer.camera_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.deformable_attention/">py123detection.torch.models.bevformer.deformable_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.detector/">py123detection.torch.models.bevformer.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.encoder/">py123detection.torch.models.bevformer.encoder</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.head/">py123detection.torch.models.bevformer.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.spatial_cross_attention/">py123detection.torch.models.bevformer.spatial_cross_attention</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.bevformer.utils/">py123detection.torch.models.bevformer.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.common/">py123detection.torch.models.common</a><input aria-label="Toggle navigation of py123detection.torch.models.common" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.backbone/">py123detection.torch.models.common.backbone</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.grid_mask/">py123detection.torch.models.common.grid_mask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.loss/">py123detection.torch.models.common.loss</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.position_embedding/">py123detection.torch.models.common.position_embedding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.common.util/">py123detection.torch.models.common.util</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.models.multiview/">py123detection.torch.models.multiview</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../py123detection.torch.models.petr/">py123detection.torch.models.petr</a><input aria-label="Toggle navigation of py123detection.torch.models.petr" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.detector/">py123detection.torch.models.petr.detector</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.head/">py123detection.torch.models.petr.head</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.positional_encoding/">py123detection.torch.models.petr.positional_encoding</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../py123detection.torch.models.petr.transformer/">py123detection.torch.models.petr.transformer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.predictions/">py123detection.torch.predictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../py123detection.torch.train/">py123detection.torch.train</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../py123detection.torch.visualize/">py123detection.torch.visualize</a><input aria-label="Toggle navigation of py123detection.torch.visualize" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.bev/">py123detection.torch.visualize.bev</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.boxes/">py123detection.torch.visualize.boxes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.cameras/">py123detection.torch.visualize.cameras</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.cli/">py123detection.torch.visualize.cli</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.frame/">py123detection.torch.visualize.frame</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.py123d_interop/">py123detection.torch.visualize.py123d_interop</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../py123detection.torch.visualize.viewer/">py123detection.torch.visualize.viewer</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../py123detection.velocity/">py123detection.velocity</a></li>
 </ul>
 </li>
@@ -281,104 +380,35 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="module-py123detection.mmcv_plugin.evaluation">
 <span id="py123detection-mmcv-plugin-evaluation"></span><h1>py123detection.mmcv_plugin.evaluation<a class="headerlink" href="#module-py123detection.mmcv_plugin.evaluation" title="Link to this heading">¶</a></h1>
-<p>nuScenes-style detection evaluation against the ground truth stored in an exported pickle.</p>
+<p>Evaluating an mmdetection3d run against the ground truth stored in an exported pickle.</p>
 <p>mmdetection3d’s <code class="docutils literal notranslate"><span class="pre">NuScenesDataset.evaluate</span></code> hands predictions to the devkit’s <code class="docutils literal notranslate"><span class="pre">NuScenesEval</span></code>,
-which reads ground truth from the nuScenes database and requires an official split. Here the
-devkit’s <code class="docutils literal notranslate"><span class="pre">EvalBoxes</span></code> are built from <code class="docutils literal notranslate"><span class="pre">data_infos</span></code> instead and its metric code
-(<code class="docutils literal notranslate"><span class="pre">accumulate</span></code> / <code class="docutils literal notranslate"><span class="pre">calc_ap</span></code> / <code class="docutils literal notranslate"><span class="pre">calc_tp</span></code>) runs on them, so any dataset can be evaluated as long
-as its class names are nuScenes detection names (<code class="docutils literal notranslate"><span class="pre">DetectionBox</span></code> asserts that).</p>
-<p>Ground truth goes through the same path as predictions (<code class="docutils literal notranslate"><span class="pre">LiDARInstance3DBoxes</span></code> -&gt;
-<code class="docutils literal notranslate"><span class="pre">output_to_nusc_box</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">lidar_nusc_box_to_global</span></code>), so a box layout mismatch cannot skew the
-metric.</p>
-<p>Differences from the official protocol:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">add_center_dist</span></code> uses the frame’s <code class="docutils literal notranslate"><span class="pre">ego2global_translation</span></code> instead of the <code class="docutils literal notranslate"><span class="pre">LIDAR_TOP</span></code>
-ego pose record, the same quantity read from the pickle;</p></li>
-<li><p>no bike-rack filter, since there is no <code class="docutils literal notranslate"><span class="pre">static_object.bicycle_rack</span></code> to look up;</p></li>
-<li><p>exports carry no attributes, so <code class="docutils literal notranslate"><span class="pre">attr_err</span></code> is <code class="docutils literal notranslate"><span class="pre">nan</span></code> per box and the devkit scores it as 1.0,
-as in CoIn3D’s Lyft / Waymo tables. NDS includes that fixed penalty.</p></li>
-</ul>
+which reads ground truth from a nuScenes database and requires an official split. Neither exists
+for a 123D export, so this module builds the ground truth from <code class="docutils literal notranslate"><span class="pre">data_infos</span></code> instead and hands it
+to <a class="reference internal" href="../py123detection.core.evaluation/#module-py123detection.core.evaluation" title="py123detection.core.evaluation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py123detection.core.evaluation</span></code></a>, which runs the devkit’s own metric code.</p>
+<p>Ground truth goes through the same conversion as predictions
+(<code class="docutils literal notranslate"><span class="pre">LiDARInstance3DBoxes</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">output_to_nusc_box</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">lidar_nusc_box_to_global</span></code>), so a box
+layout mismatch cannot skew the metric in either direction.</p>
+<p>The deviations from the official protocol are listed in <a class="reference internal" href="../py123detection.core.evaluation/#module-py123detection.core.evaluation" title="py123detection.core.evaluation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py123detection.core.evaluation</span></code></a>.</p>
 <p class="rubric">Functions</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.build_detection_config" title="py123detection.mmcv_plugin.evaluation.build_detection_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_detection_config</span></code></a>(class_names[, ...])</p></td>
-<td><p>A devkit <code class="docutils literal notranslate"><span class="pre">DetectionConfig</span></code> restricted to <code class="docutils literal notranslate"><span class="pre">class_names</span></code>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.evaluate_from_infos" title="py123detection.mmcv_plugin.evaluation.evaluate_from_infos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate_from_infos</span></code></a>(result_path, data_infos, ...)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate_from_infos</span></code>(result_path, data_infos, ...)</p></td>
 <td><p>Evaluate a nuScenes result JSON against the ground truth in the infos.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.format_summary" title="py123detection.mmcv_plugin.evaluation.format_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_summary</span></code></a>(summary)</p></td>
-<td><p>The metrics table as the devkit's <code class="docutils literal notranslate"><span class="pre">main()</span></code> prints it.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.ground_truth_from_infos" title="py123detection.mmcv_plugin.evaluation.ground_truth_from_infos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ground_truth_from_infos</span></code></a>(data_infos, ...[, ...])</p></td>
-<td><p>The devkit's ground-truth <code class="docutils literal notranslate"><span class="pre">EvalBoxes</span></code>, built from mmdet3d infos.</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ground_truth_from_infos</span></code>(data_infos, ...[, ...])</p></td>
+<td><p>Global-frame ground-truth boxes per frame token, built from mmdet3d infos.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<dl class="py function">
-<dt class="sig sig-object py" id="py123detection.mmcv_plugin.evaluation.build_detection_config">
-<span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_plugin.evaluation.</span></span><span class="sig-name descname"><span class="pre">build_detection_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'detection_cvpr_2019'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_plugin/evaluation/#build_detection_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_plugin.evaluation.build_detection_config" title="Link to this definition">¶</a></dt>
-<dd><p>A devkit <code class="docutils literal notranslate"><span class="pre">DetectionConfig</span></code> restricted to <code class="docutils literal notranslate"><span class="pre">class_names</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">DetectionConfig.__init__</span></code> insists on the ten nuScenes classes, so the named base config is
-created first and its plain attributes are narrowed afterwards.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>class_range</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span>) – Radius in metres per class, on top of the base config’s radii.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="py123detection.mmcv_plugin.evaluation.ground_truth_from_infos">
-<span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_plugin.evaluation.</span></span><span class="sig-name descname"><span class="pre">ground_truth_from_infos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'detection_cvpr_2019'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_plugin/evaluation/#ground_truth_from_infos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_plugin.evaluation.ground_truth_from_infos" title="Link to this definition">¶</a></dt>
-<dd><p>The devkit’s ground-truth <code class="docutils literal notranslate"><span class="pre">EvalBoxes</span></code>, built from mmdet3d infos.</p>
-<p>Boxes are converted exactly like mmdet3d converts predictions. Every frame gets an entry,
-empty when it has no box of an evaluated class.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="py123detection.mmcv_plugin.evaluation.evaluate_from_infos">
-<span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_plugin.evaluation.</span></span><span class="sig-name descname"><span class="pre">evaluate_from_infos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'detection_cvpr_2019'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_plugin/evaluation/#evaluate_from_infos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_plugin.evaluation.evaluate_from_infos" title="Link to this definition">¶</a></dt>
-<dd><p>Evaluate a nuScenes result JSON against the ground truth in the infos.</p>
-<p>Follows <code class="docutils literal notranslate"><span class="pre">nuscenes.eval.detection.evaluate.DetectionEval</span></code> and writes the same
-<code class="docutils literal notranslate"><span class="pre">metrics_summary.json</span></code> / <code class="docutils literal notranslate"><span class="pre">metrics_details.json</span></code> into <code class="docutils literal notranslate"><span class="pre">output_dir</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>result_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – <code class="docutils literal notranslate"><span class="pre">results_nusc.json</span></code> from <code class="docutils literal notranslate"><span class="pre">NuScenesDataset._format_bbox</span></code>.</p></li>
-<li><p><strong>data_infos</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</span>) – The dataset’s infos, in dataset order.</p></li>
-<li><p><strong>class_range</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span>) – Per-class radius overrides, see <a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.build_detection_config" title="py123detection.mmcv_plugin.evaluation.build_detection_config"><code class="xref py py-func docutils literal notranslate"><span class="pre">build_detection_config()</span></code></a>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The serialized <code class="docutils literal notranslate"><span class="pre">DetectionMetrics</span></code> plus <code class="docutils literal notranslate"><span class="pre">meta</span></code> and <code class="docutils literal notranslate"><span class="pre">evaluation</span></code> blocks.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="py123detection.mmcv_plugin.evaluation.format_summary">
-<span class="sig-prename descclassname"><span class="pre">py123detection.mmcv_plugin.evaluation.</span></span><span class="sig-name descname"><span class="pre">format_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">summary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/py123detection/mmcv_plugin/evaluation/#format_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py123detection.mmcv_plugin.evaluation.format_summary" title="Link to this definition">¶</a></dt>
-<dd><p>The metrics table as the devkit’s <code class="docutils literal notranslate"><span class="pre">main()</span></code> prints it.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 
         </article>
@@ -424,30 +454,8 @@ empty when it has no box of an evaluated class.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">py123detection.mmcv_plugin.evaluation</a><ul>
-<li><a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.build_detection_config"><code class="docutils literal notranslate"><span class="pre">build_detection_config()</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.ground_truth_from_infos"><code class="docutils literal notranslate"><span class="pre">ground_truth_from_infos()</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.evaluate_from_infos"><code class="docutils literal notranslate"><span class="pre">evaluate_from_infos()</span></code></a></li>
-<li><a class="reference internal" href="#py123detection.mmcv_plugin.evaluation.format_summary"><code class="docutils literal notranslate"><span class="pre">format_summary()</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

@@ -1,0 +1,22 @@
+py123detection.torch.visualize.bev
+==================================
+
+.. automodule:: py123detection.torch.visualize.bev
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      TRUTH_COLOUR
+      SCORE_THRESHOLD
+      RANGE
+      EGO_LENGTH
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      render_bev
+      save_bev
+   
